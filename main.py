@@ -8,12 +8,10 @@ import json
 import re
 
 def clean_price(price_text):
-    # Extract numbers from string like "4000,00 €"
     if not price_text:
         return None
     numbers = re.findall(r'[\d.,]+', price_text)
     if numbers:
-        # Convert "4.000,00" to 4000.00
         return float(numbers[0].replace('.', '').replace(',', '.'))
     return None
 
@@ -26,8 +24,21 @@ def get_search_results(keywords, latitude, longitude, distance=100000):
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-software-rasterizer')
+    options.add_argument('--disable-extensions')
+    options.add_argument('--remote-debugging-port=9222')
     
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    try:
+        driver = webdriver.Chrome(
+            service=Service('/usr/bin/chromedriver'),
+            options=options
+        )
+    except:
+        driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            options=options
+        )
     
     try:
         print(f"Accessing URL: {search_url}")
