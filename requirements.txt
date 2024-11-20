@@ -1,3 +1,5 @@
 streamlit
 selenium
-webdriver-manager 
+webdriver-manager
+streamlit_folium
+folium 
