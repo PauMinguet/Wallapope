@@ -14,24 +14,24 @@ def load_results():
 
 def main():
     st.set_page_config(
-        page_title="Wallapop Car Search",
+        page_title="Wallapope",
         page_icon="🚗",
         layout="wide"
     )
 
-    st.title("🚗 Wallapop Car Search")
+    st.title("🚗 Er Wallapope")
 
     # Create two columns: one narrow for search/map, one wide for results
     left_col, right_col = st.columns([1, 3])
     
     with left_col:
         # Search controls in vertical layout with visible labels
-        st.markdown("##### Search Term")
-        keywords = st.text_input("Search term", value="coche", label_visibility="collapsed")
+        st.markdown("##### Término de búsqueda")
+        keywords = st.text_input("Buscar", value="coche", label_visibility="collapsed")
         
-        st.markdown("##### Max Distance")
+        st.markdown("##### Distancia máxima")
         distance = st.number_input(
-            "Distance",
+            "Distancia",
             value=100,
             min_value=1,
             max_value=500,
@@ -39,16 +39,16 @@ def main():
         ) * 1000
         
         # Price filters with labels
-        st.markdown("##### Price Range")
+        st.markdown("##### Rango de precio")
         price_cols = st.columns(2)
         with price_cols[0]:
-            st.markdown("Min €")
-            min_price = st.number_input("Min price", value=0, step=1000, label_visibility="collapsed")
+            st.markdown("Mínimo €")
+            min_price = st.number_input("Precio mínimo", value=0, step=1000, label_visibility="collapsed")
         with price_cols[1]:
-            st.markdown("Max €")
-            max_price = st.number_input("Max price", value=1000000, step=1000, label_visibility="collapsed")
+            st.markdown("Máximo €")
+            max_price = st.number_input("Precio máximo", value=1000000, step=1000, label_visibility="collapsed")
         
-        st.markdown("##### Location")
+        st.markdown("##### Ubicación")
         # Small map
         if 'marker_position' not in st.session_state:
             st.session_state.marker_position = [41.224151, 1.7255678]
@@ -57,7 +57,7 @@ def main():
         
         folium.Marker(
             st.session_state.marker_position,
-            popup="Search location",
+            popup="Ubicación de búsqueda",
             icon=folium.Icon(color='red', icon='info-sign')
         ).add_to(m)
         
@@ -79,13 +79,13 @@ def main():
         latitude = st.session_state.marker_position[0]
         longitude = st.session_state.marker_position[1]
 
-        search_button = st.button("🔍 Search", use_container_width=True)
+        search_button = st.button("🔍 Buscar", use_container_width=True)
 
     with right_col:
         # Handle search
         if search_button:
             try:
-                with st.spinner("Searching..."):
+                with st.spinner("Buscando..."):
                     results = get_search_results(
                         keywords=keywords,
                         latitude=latitude,
@@ -95,9 +95,9 @@ def main():
                         max_price=max_price
                     )
                 if not results:
-                    st.warning("No results found.")
+                    st.warning("No se encontraron resultados.")
             except Exception as e:
-                st.error(f"Error during search: {str(e)}")
+                st.error(f"Error durante la búsqueda: {str(e)}")
 
         # Load and display results
         results = load_results()
@@ -110,32 +110,19 @@ def main():
         ]
 
         if filtered_results:
-            st.write(f"Found {len(filtered_results)} results")
+            st.write(f"Se encontraron {len(filtered_results)} resultados")
 
             # Display results in a grid
             cols = st.columns(3)
             for idx, item in enumerate(filtered_results):
                 with cols[idx % 3]:
+                    # Add minimal styling just for price and badge
                     st.markdown("""
                         <style>
-                        .stImage {
-                            margin-bottom: 0.5rem;
-                        }
-                        .product-card {
-                            border: 1px solid rgba(49, 51, 63, 0.2);
-                            padding: 10px;
-                            border-radius: 5px;
-                            margin-bottom: 20px;
-                        }
-                        .product-card:hover {
-                            border-color: rgba(49, 51, 63, 0.4);
-                            box-shadow: 0 2px 4px rgba(49, 51, 63, 0.1);
-                        }
                         .price-tag {
                             color: #2e7d32;
                             font-size: 1.5em;
                             font-weight: bold;
-                            margin-top: 0.5rem;
                         }
                         .featured-badge {
                             background-color: #ffd700;
@@ -143,11 +130,11 @@ def main():
                             border-radius: 12px;
                             font-size: 0.8em;
                         }
+                        .stImage img {
+                            border-radius: 10px;
+                        }
                         </style>
                     """, unsafe_allow_html=True)
-                    
-                    # Start product card
-                    st.markdown('<div class="product-card">', unsafe_allow_html=True)
                     
                     if item['image_url']:
                         st.image(
@@ -156,7 +143,7 @@ def main():
                             caption=item['title']
                         )
                     
-                    price_str = item['price_raw'] if item['price_raw'] else 'Price not available'
+                    price_str = item['price_raw'] if item['price_raw'] else 'Precio no disponible'
                     st.markdown(f'<div class="price-tag">{price_str}</div>', unsafe_allow_html=True)
                     st.markdown(f"**{item['title']}**")
                     
@@ -164,13 +151,23 @@ def main():
                         st.markdown(f"📍 {item['location']}")
                     
                     if item.get('highlighted'):
-                        st.markdown('<span class="featured-badge">🌟 Featured</span>', unsafe_allow_html=True)
+                        st.markdown('<span class="featured-badge">🌟 Destacado</span>', unsafe_allow_html=True)
                     
-                    if st.button("View Details 🔗", key=f"btn_{idx}"):
-                        webbrowser.open_new_tab(item['url'])
-                    
-                    # End product card
-                    st.markdown('</div>', unsafe_allow_html=True)
+                    # View Details link
+                    st.markdown(
+                        f'<div style="text-align: center;">'
+                        f'<a href="{item["url"]}" target="_blank" '
+                        f'style="text-decoration: none; display: inline-block; '
+                        f'padding: 0.3rem 1rem; margin-top: 0.5rem; '
+                        f'width: 60%; '
+                        f'background-color: #ff4b4b; color: white; '
+                        f'border-radius: 0.3rem; text-align: center; '
+                        f'font-size: 0.9em; '
+                        f'font-weight: 500;">'
+                        f'Ver Detalles 🔗</a>'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
 
 if __name__ == "__main__":
     main()
