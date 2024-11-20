@@ -15,9 +15,18 @@ def clean_price(price_text):
         return float(numbers[0].replace('.', '').replace(',', '.'))
     return None
 
-def get_search_results(keywords, latitude, longitude, distance=100000):
+def get_search_results(keywords, latitude, longitude, distance=100000, min_price=18, max_price=5000):
     base_url = "https://es.wallapop.com/app/search"
-    search_url = f"{base_url}?keywords={keywords}&latitude={latitude}&longitude={longitude}&distance={distance}"
+    search_url = (
+        f"{base_url}?"
+        f"keywords={keywords}"
+        f"&latitude={latitude}"
+        f"&longitude={longitude}"
+        f"&distance={distance}"
+        f"&min_sale_price={min_price}"
+        f"&max_sale_price={max_price}"
+        f"&order_by=newest"
+    )
     
     print("Setting up driver...")
     options = webdriver.ChromeOptions()
@@ -66,6 +75,10 @@ def get_search_results(keywords, latitude, longitude, distance=100000):
                 price_element = card.find_element(By.CSS_SELECTOR, '.ItemCard__price')
                 price_text = price_element.text if price_element else None
                 price = clean_price(price_text)
+                
+                # Skip items outside price range
+                if price and (price < min_price or price > max_price):
+                    continue
                 
                 # Image URL
                 try:
@@ -117,8 +130,17 @@ def get_search_results(keywords, latitude, longitude, distance=100000):
 
 if __name__ == "__main__":
     keywords = "coche"
-    latitude = 41.224151  # Near Barcelona
+    latitude = 41.224151
     longitude = 1.7255678
-    distance = 100000    # 100km radius
+    distance = 100000
+    min_price = 18
+    max_price = 5000
     
-    get_search_results(keywords, latitude, longitude, distance)
+    get_search_results(
+        keywords=keywords,
+        latitude=latitude,
+        longitude=longitude,
+        distance=distance,
+        min_price=min_price,
+        max_price=max_price
+    )
