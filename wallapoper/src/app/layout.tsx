@@ -6,6 +6,11 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Formulario de Compra de Coche',
   description: 'Ingresa los detalles del coche que deseas comprar',
+  icons: {
+    icon: '/car-icon.svg',
+    shortcut: '/car-icon.svg',
+    apple: '/car-icon.svg',
+  },
 }
 
 export default function RootLayout({
@@ -15,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
