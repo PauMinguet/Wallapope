@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Car, DollarSign, Mail, Gauge, Calendar, Palette } from 'lucide-react'
 
@@ -10,7 +10,7 @@ const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default function Home() {
+function FormComponent() {
   const [carData, setCarData] = useState({
     marca: '',
     modelo: '',
@@ -263,5 +263,19 @@ export default function Home() {
       </motion.div>
     </div>
   )
+}
+
+export default function Home() {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null // or a loading spinner
+  }
+
+  return <FormComponent />
 }
 
