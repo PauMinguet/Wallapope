@@ -9,7 +9,8 @@ export default function Home() {
     año: '',
     color: '',
     kilometraje: '',
-    precio: ''
+    precio: '',
+    email: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<{
@@ -57,7 +58,8 @@ export default function Home() {
         año: '',
         color: '',
         kilometraje: '',
-        precio: ''
+        precio: '',
+        email: ''
       })
     } catch (error) {
       setSubmitStatus({
@@ -86,7 +88,7 @@ export default function Home() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="marca" className="block text-sm font-medium text-gray-300">
-                Marca
+                Marca <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -100,7 +102,7 @@ export default function Home() {
             </div>
             <div>
               <label htmlFor="modelo" className="block text-sm font-medium text-gray-300">
-                Modelo
+                Modelo <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -114,7 +116,7 @@ export default function Home() {
             </div>
             <div>
               <label htmlFor="año" className="block text-sm font-medium text-gray-300">
-                Año
+                Año <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -135,7 +137,6 @@ export default function Home() {
                 name="color"
                 value={carData.color}
                 onChange={handleChange}
-                required
                 className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Selecciona un color</option>
@@ -148,7 +149,7 @@ export default function Home() {
             </div>
             <div>
               <label htmlFor="kilometraje" className="block text-sm font-medium text-gray-300">
-                Kilometraje
+                Kilometraje <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -162,13 +163,27 @@ export default function Home() {
             </div>
             <div>
               <label htmlFor="precio" className="block text-sm font-medium text-gray-300">
-                Precio Deseado (€)
+                Precio Deseado (€) <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
                 id="precio"
                 name="precio"
                 value={carData.precio}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={carData.email}
                 onChange={handleChange}
                 required
                 className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"

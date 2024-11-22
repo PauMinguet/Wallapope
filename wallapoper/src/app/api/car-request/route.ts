@@ -9,6 +9,7 @@ interface CarRequest {
   color: string
   kilometraje: number
   precio: number
+  email: string
 }
 
 // Initialize Supabase client
@@ -22,9 +23,9 @@ export async function POST(request: Request) {
     const body = await request.json()
 
     // Validate the data
-    if (!body.marca || !body.modelo || !body.año || !body.color || !body.kilometraje || !body.precio) {
+    if (!body.marca || !body.modelo || !body.año || !body.color || !body.kilometraje || !body.precio || !body.email) {
       return NextResponse.json(
-        { error: 'Todos los campos son requeridos' },
+        { error: 'Todos los campos marcados con * son requeridos' },
         { status: 400 }
       )
     }
@@ -34,9 +35,10 @@ export async function POST(request: Request) {
       marca: body.marca,
       modelo: body.modelo,
       año: parseInt(body.año),
-      color: body.color,
+      color: body.color || '',
       kilometraje: parseInt(body.kilometraje),
-      precio: parseFloat(body.precio)
+      precio: parseFloat(body.precio),
+      email: body.email
     }
 
     // Insert into Supabase
