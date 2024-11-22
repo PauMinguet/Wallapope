@@ -30,8 +30,12 @@ app.add_middleware(
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_KEY")
 
-# Initialize Supabase client
-supabase: Client = create_client(url, key)
+# Initialize Supabase client with basic configuration
+try:
+    supabase = create_client(url, key, options={'auth': {'autoRefreshToken': False}})
+except Exception as e:
+    logger.error(f"Failed to initialize Supabase client: {str(e)}")
+    supabase = None
 
 class SearchParameters(BaseModel):
     latitude: float = 41.224151
