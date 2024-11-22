@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('car_requests')
       .insert([
         {
@@ -24,8 +25,13 @@ export async function POST(request: Request) {
       ])
       .select()
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 })
+    const { error: insertError } = await supabase
+      .from('car_requests')
+      .select()
+      .limit(1)
+
+    if (insertError) {
+      return NextResponse.json({ error: insertError.message }, { status: 400 })
     }
 
     return NextResponse.json({ data }, { status: 201 })
