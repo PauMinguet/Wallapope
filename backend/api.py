@@ -26,16 +26,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Supabase configuration
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_KEY")
+def get_supabase_client():
+    """Get Supabase client with error handling"""
+    url = os.getenv("SUPABASE_URL")
+    key = os.getenv("SUPABASE_KEY")
+    
+    if not url or not key:
+        logger.error("Missing Supabase credentials")
+        raise HTTPException(status_code=500, detail="Missing Supabase credentials")
+        
+    try:
+        # Create client with minimal options
+        return create_client(url, key)
+    except Exception as e:
+        logger.error(f"Failed to create Supabase client: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to create Supabase client: {str(e)}")
 
-# Initialize Supabase client with basic configuration
-try:
-    supabase = create_client(url, key, options={'auth': {'autoRefreshToken': False}})
-except Exception as e:
-    logger.error(f"Failed to initialize Supabase client: {str(e)}")
-    supabase = None
+# Initialize Supabase client
+supabase = get_supabase_client()
 
 class SearchParameters(BaseModel):
     latitude: float = 41.224151
@@ -51,6 +59,7 @@ async def health_check():
         import ray
         
         # Test Supabase connection
+        supabase = get_supabase_client()  # Get fresh client
         response = supabase.table('car_requests').select("count").execute()
         
         return {
@@ -60,7 +69,11 @@ async def health_check():
                 "pandas": pandas.__version__,
                 "ray": ray.__version__
             },
-            "supabase": "connected"
+            "supabase": "connected",
+            "env_vars": {
+                "supabase_url": bool(os.getenv("SUPABASE_URL")),
+                "supabase_key": bool(os.getenv("SUPABASE_KEY"))
+            }
         }
     except Exception as e:
         logger.error(f"Health check failed: {str(e)}")
@@ -72,6 +85,9 @@ async def scrape_listings(params: SearchParameters):
     """Trigger car listing scraping process"""
     try:
         logger.info(f"Starting scraping process with parameters: {params.dict()}")
+        
+        # Get fresh Supabase client for each request
+        supabase = get_supabase_client()
         
         process_car_listings(
             latitude=params.latitude,
