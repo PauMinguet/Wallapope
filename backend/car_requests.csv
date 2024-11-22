@@ -1,2 +1,3 @@
 id,marca,modelo,año,color,kilometraje,precio,created_at,email,handled
 6ade5ec2-56e2-4249-aeb3-c647dea54717,bmw,serie 3,2013,negro,100000,11000,2024-11-22T03:28:15.573294+00:00,pablitumm@gmail.com,False
+8fb6c147-4536-4409-8194-8b3db0fe2334,porsche,cayenne,2010,negro,400000,20000,2024-11-22T17:08:24.407095+00:00,pablitumm@gmail.com,False
