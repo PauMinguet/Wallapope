@@ -118,7 +118,7 @@ function FormComponent() {
                     onChange={handleChange}
                     required
                     className="pl-10 w-full px-4 py-2 bg-white bg-opacity-10 border border-gray-300 border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                    placeholder="Ej: Toyota"
+                    placeholder="Ej: BMW"
                   />
                 </div>
               </div>
@@ -136,7 +136,7 @@ function FormComponent() {
                     onChange={handleChange}
                     required
                     className="pl-10 w-full px-4 py-2 bg-white bg-opacity-10 border border-gray-300 border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                    placeholder="Ej: Corolla"
+                    placeholder="Ej: 335i"
                   />
                 </div>
               </div>
@@ -154,7 +154,7 @@ function FormComponent() {
                     onChange={handleChange}
                     required
                     className="pl-10 w-full px-4 py-2 bg-white bg-opacity-10 border border-gray-300 border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                    placeholder="Ej: 2023"
+                    placeholder="Ej: 2013"
                   />
                 </div>
               </div>
@@ -194,7 +194,7 @@ function FormComponent() {
                     onChange={handleChange}
                     required
                     className="pl-10 w-full px-4 py-2 bg-white bg-opacity-10 border border-gray-300 border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                    placeholder="Ej: 50000"
+                    placeholder="Ej: 85000"
                   />
                 </div>
               </div>
@@ -212,7 +212,7 @@ function FormComponent() {
                     onChange={handleChange}
                     required
                     className="pl-10 w-full px-4 py-2 bg-white bg-opacity-10 border border-gray-300 border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                    placeholder="Ej: 25000"
+                    placeholder="Ej: 18000"
                   />
                 </div>
               </div>
@@ -235,6 +235,9 @@ function FormComponent() {
                 </div>
               </div>
             </div>
+            <p className="text-sm text-gray-300 text-center mb-4">
+              Te enviaremos por email las mejores opciones que se ajusten a tus criterios
+            </p>
             <motion.button 
               type="submit" 
               disabled={isSubmitting}
