@@ -1,0 +1,835 @@
+{
+  "Volkswagen Golf": {
+    "parameters": {
+      "year_range": "2020-2022",
+      "motors": [
+        "1.0 TSI (110 CV)",
+        " 1.5 TSI (130 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Gris",
+        " Negro"
+      ],
+      "kilometers": "30.000 - 60.000 km",
+      "price": "19.000 - 21.000 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-sport-1-6-tdi-77-kw-105-cv-1070353735"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-sport-1-6-tdi-77-kw-105-cv-1070055771"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-2010-1065087192"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-vii-2013-1064763234"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-c3-2010-1062510423"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-2010-1059213724"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-edition-1-4-59-kw-80-cv-1057750436"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-edition-1-4-59-kw-80-cv-1057457022"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-2010-1053493934"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-1-6-tdi-blueemotion-2012-1041907170"
+      },
+      {
+        "url": "https://es.wallapop.com/item/audi-a1-2011-993072624"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-astra-2012-927268408"
+      },
+      {
+        "url": "https://es.wallapop.com/item/volkswagen-golf-rabbit-2-5-170cv-auto-678812651"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2015-668902826"
+      }
+    ]
+  },
+  "Seat Ibiza": {
+    "parameters": {
+      "year_range": "2012-2016",
+      "motors": [
+        "1.2 TSI (90 CV)",
+        " 1.4 TDI (75 CV)"
+      ],
+      "colors": [
+        "Rojo",
+        " Blanco",
+        " Azul\r\n"
+      ],
+      "kilometers": "80.000 - 120.000 km",
+      "price": "8.700 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-reference-tech-1069571422"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-fr-1069087562"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-fr-1069087510"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-st-1-6-tdi-style-dpf-77-kw-105-cv-1069078781"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-st-1-6-tdi-style-dpf-77-kw-105-cv-1068742937"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-1-2-tsi-90cv-reference-1066181127"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-1-4-16v-reference-63-kw-85-cv-1065636943"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2014-1064290289"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2016-1060592334"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2014-105cv-fr-1060435205"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-reference-tech-2013-1058281318"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-1-2-85cv-edicion-especial-30-aniversari-1058197853"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2014-1048795352"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-1-2-12v-70cv-reference-1036692546"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2014-1029137173"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2012-1022516305"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-1-2-12v-70cv-reference-1009944290"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2016-980046855"
+      }
+    ]
+  },
+  "Ford Focus": {
+    "parameters": {
+      "year_range": "2011-2015",
+      "motors": [
+        "1.6 TDCI (115 CV)",
+        " 1.0 EcoBoost (100 CV)\r\n"
+      ],
+      "colors": [
+        "Gris",
+        " Negro",
+        " Plata"
+      ],
+      "kilometers": "90.000 - 140.000 km",
+      "price": "9.200 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/ford-focus-1-0-ecoboost-auto-start-stop-100cv-trend-1069426809"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-focus-2013-1067050894"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-unica-propietaria-1-ano-de-garantia-1066864282"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-focus-2014-1061876238"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-focus-ecoboost-2011-1055412602"
+      }
+    ]
+  },
+  "Renault Clio": {
+    "parameters": {
+      "year_range": "2013-2017",
+      "motors": [
+        "1.5 dCi (90 CV)",
+        " 0.9 TCe (90 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Negro",
+        " Rojo"
+      ],
+      "kilometers": "70.000 - 110.000 km",
+      "price": "8.900 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-iv-air-1-5-dci-75cv-bvm5-e6-vehiculo-comercial-1068521225"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-wolfnoir-energy-tce-66kw-90cv-1067694829"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-2014-1055977090"
+      },
+      {
+        "url": "https://es.wallapop.com/item/fiat-500c-automatico-1053513754"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2014-1048795352"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-80-000km-1016879750"
+      }
+    ]
+  },
+  "Opel Corsa": {
+    "parameters": {
+      "year_range": "2011-2015",
+      "motors": [
+        "1.3 CDTI (75 CV)",
+        " 1.4 (90 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Gris",
+        " Negro"
+      ],
+      "kilometers": "80.000 - 120.000 km",
+      "price": "8.500 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-1-4-selective-1068002982"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-unica-propietaria-1-ano-de-garantia-1066864282"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-1-0-turbo-start-stop-excellence-1066158661"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2014-1060325142"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2013-1058011179"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2014-1048795352"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-1-3-eco-flex-75cv-1009945642"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2013-1009122510"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-corsa-2014-861127482"
+      }
+    ]
+  },
+  "Renault Megane": {
+    "parameters": {
+      "year_range": "2010-2014",
+      "motors": [
+        "1.5 dCi (110 CV)",
+        " 1.6 (110 CV)"
+      ],
+      "colors": [
+        "Gris",
+        " Negro",
+        " Azul"
+      ],
+      "kilometers": "100.000 - 150.000 km",
+      "price": "9.100 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/renault-megane-2010-1-6-16v-1069868660"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-megane-2010-1069286352"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-unica-propietaria-1-ano-de-garantia-1066864282"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-megane-sport-tourer-business-1-5-dci-1066243250"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-megane-coupe-1-5-dci-dynamique-78-kw-105-cv-1035221221"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-megane-2014-1033279123"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-astra-2011-967603517"
+      },
+      {
+        "url": "https://es.wallapop.com/item/opel-astra-2012-927268408"
+      }
+    ]
+  },
+  "Peugeot 208": {
+    "parameters": {
+      "year_range": "2012-2016",
+      "motors": [
+        "1.4 HDi (68 CV)",
+        " 1.2 VTi (82 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Rojo",
+        " Negro"
+      ],
+      "kilometers": "75.000 - 115.000 km",
+      "price": "8.800 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-2013-1071223659"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-5p-active-1-2l-puretech-110-1070293236"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-5p-style-1-2l-puretech-82-1070290317"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-active-1068864422"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-5p-active-1-2l-puretech-82-1068311525"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-5p-style-1-2l-puretech-82-1067691735"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-2015-1066850435"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-2015-1066845713"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-pegatina-c-1066588571"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-5p-access-1-2l-puretech-60kw-82cv-1066162546"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-2015-1065918186"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-puretech-110-sands-allure-81-kw-110-cv-1063012420"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-puretech-110-sands-allure-81-kw-110-cv-1062719313"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-2015-1057732214"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-2012-1053220660"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-1-4-hdi-business-line-50-kw-68-cv-1044761944"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-1-4-hdi-business-line-50-kw-68-cv-1044347021"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-ibiza-2014-1029137173"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-208-1-0-access-puretech-964714361"
+      }
+    ]
+  },
+  "Citroën C3": {
+    "parameters": {
+      "year_range": "2011-2015",
+      "motors": [
+        "1.4 HDi (70 CV)",
+        " 1.2 VTi (82 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Rojo",
+        " Gris"
+      ],
+      "kilometers": "80.000 - 120.000 km",
+      "price": "8.300 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/citroen-c3-2013-1069213625"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-unica-propietaria-1-ano-de-garantia-1066864282"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-c3-puretech-60kw-82cv-tonic-1066338916"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-c3-picasso-vti-95cv-seduction-1066067605"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-c3-gasolina-pegatina-c-verde-1062377115"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-c3-2012-989665195"
+      }
+    ]
+  },
+  "Toyota Yaris": {
+    "parameters": {
+      "year_range": "2011-2015",
+      "motors": [
+        "1.4 D-4D (90 CV)",
+        " 1.0 VVT-i (69 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Plata",
+        " Negro"
+      ],
+      "kilometers": "70.000 - 110.000 km",
+      "price": "8.600 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/toyota-yaris-2015-1070559041"
+      }
+    ]
+  },
+  "Fiat 500": {
+    "parameters": {
+      "year_range": "2010-2014",
+      "motors": [
+        "1.3 Multijet (75 CV)",
+        " 1.2 (69 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Rojo",
+        " Negro"
+      ],
+      "kilometers": "60.000 - 100.000 km",
+      "price": "7.900 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/fiat-500c-1-2-by-diesel-8v-51-kw-69-cv-1070353768"
+      },
+      {
+        "url": "https://es.wallapop.com/item/fiat-500c-1-2-by-diesel-8v-51-kw-69-cv-1069743892"
+      },
+      {
+        "url": "https://es.wallapop.com/item/alfa-romeo-mito-2011-1066460713"
+      },
+      {
+        "url": "https://es.wallapop.com/item/fiat-500-1-2-8v-69-cv-lounge-1066395706"
+      },
+      {
+        "url": "https://es.wallapop.com/item/fiat-500-2011-1056818207"
+      },
+      {
+        "url": "https://es.wallapop.com/item/fiat-500-2011-1053261610"
+      },
+      {
+        "url": "https://es.wallapop.com/item/fiat-500-2012-996437364"
+      }
+    ]
+  },
+  "Seat León": {
+    "parameters": {
+      "year_range": "2020-2022",
+      "motors": [
+        "1.0 TSI (110 CV)",
+        " 1.5 eTSI (150 CV)"
+      ],
+      "colors": [
+        "Rojo",
+        " Blanco",
+        " Azul"
+      ],
+      "kilometers": "25.000 - 55.000 km",
+      "price": "18.500 - 20.500 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-96kw-s-s-style-1070561382"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-2-0-tdi-110kw-dsg-7-s-s-fr-go-xl-1070312572"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-2-0-tdi-110kw-dsg-7-s-s-fr-go-xl-1070293029"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-2-0-tdi-sands-style-dsg-110-kw-150-cv-1069744304"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-2-0-tdi-sands-style-dsg-110-kw-150-cv-1069419745"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-tsi-sands-fr-go-l-110-kw-150-cv-1069419481"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-tsi-sands-fr-go-l-110-kw-150-cv-1069418649"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-110kw-150cv-st-sp-fr-1068973651"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-style-go-1068870782"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-110kw-s-s-xcellence-1067692571"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-sands-fr-fast-edition-110-kw-150-cv-1067427593"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-sands-fr-fast-edition-110-kw-150-cv-1066771795"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-0-tsi-81kw-s-s-style-5-p-2022-1066372595"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-110kw-150cv-s-s-fr-black-ed-1066361656"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-sp-1-4-e-hybrid-dsg-s-s-fr-go-xl-1066356606"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-tsi-s-s-fr-150-1066298376"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-110kw-150cv-dsg-7-s-s-fr-ed-pl-1066178931"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-110kw-s-s-fr-1066172500"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tsi-110kw-s-s-fr-1066162630"
+      },
+      {
+        "url": "https://es.wallapop.com/item/tu-seat-leon-de-ocasion-1066131344"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-0-tsi-81kw-s-s-style-5-p-2022-1064576214"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-sp-1-4-e-hybrid-dsg-s-s-fr-go-xl-1064567550"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-ecotsi-sands-fr-fast-edition-plus-dsg-110-kw-150-cv-1060305406"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-ecotsi-sands-fr-fast-edition-plus-dsg-110-kw-150-cv-1060013219"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-0-tsi-sands-style-81-kw-110-cv-1052064230"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-0-tsi-sands-style-81-kw-110-cv-1052062574"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-tsi-sands-style-go-96-kw-130-cv-1047331819"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-tsi-sands-style-go-96-kw-130-cv-1047314586"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-ecotsi-sands-style-edition-96-kw-130-cv-1042806793"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-1-5-ecotsi-sands-style-edition-96-kw-130-cv-1042504235"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-0-tsi-sands-reference-go-66-kw-90-cv-1041532000"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-0-tsi-sands-reference-go-66-kw-90-cv-1041530851"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tgi-gnc-sands-fr-fast-edition-dsg-96-kw-130-cv-1036700478"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-1-5-tgi-gnc-sands-fr-fast-edition-dsg-96-kw-130-cv-1034073971"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-2-0-tdi-style-go-85-kw-115-cv-1023808873"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-st-2-0-tdi-style-go-85-kw-115-cv-1023500322"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-2021-994076842"
+      },
+      {
+        "url": "https://es.wallapop.com/item/seat-leon-2021-958755286"
+      }
+    ]
+  },
+  "Ford Puma": {
+    "parameters": {
+      "year_range": "2020-2022",
+      "motors": [
+        "1.0 EcoBoost (125 CV)",
+        " 1.0 EcoBoost Hybrid (155 CV)"
+      ],
+      "colors": [
+        "Gris",
+        " Negro",
+        " Azul"
+      ],
+      "kilometers": "20.000 - 50.000 km",
+      "price": "19.500 - 21.500 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-mhev-st-line-x-design-114-kw-155-cv-1070047976"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-mhev-st-line-x-design-114-kw-155-cv-1070041371"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-92kw-125cv-st-line-1066371732"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-titanium-mhev-1066367110"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-mhev-1066362356"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-titanium-design-mhev-1066354505"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-mhev-1066349183"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-design-mhev-1066347274"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-92kw-125cv-st-line-mhev-1066346656"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-design-mhev-1066344233"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-114kw-st-line-x-mhev-1066343797"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-92kw-125cv-st-line-mhev-1066341615"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-design-mhev-1066199465"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-92kw-125cv-titanium-auto-1066174248"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-x-mhev-1066174095"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-mhev-auto-1066130757"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-mhev-1066092082"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-92kw-125cv-st-line-mhev-1064563878"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-125cv-st-line-design-mhev-1063802508"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-mhev-st-line-design-auto-92-kw-125-cv-1060306192"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-1-0-ecoboost-mhev-st-line-design-auto-92-kw-125-cv-1060306004"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-2020-1052189795"
+      },
+      {
+        "url": "https://es.wallapop.com/item/ford-puma-2021-1019582827"
+      }
+    ]
+  },
+  "Peugeot 308": {
+    "parameters": {
+      "year_range": "2019-2021",
+      "motors": [
+        "1.2 PureTech (130 CV)",
+        " 1.5 BlueHDi (130 CV)"
+      ],
+      "colors": [
+        "Gris",
+        " Negro",
+        " Blanco"
+      ],
+      "kilometers": "35.000 - 65.000 km",
+      "price": "18.000 - 20.000 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-2019-1070501522"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-1-2-puretech-81kw-110cv-1070312812"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-1-2-puretech-81kw-110cv-1070293938"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-1-2-puretech-81kw-110cv-1069666648"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-allure-pack-1068865613"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-allure-pack-1068865592"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-active-1068865265"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-pack-puretech-110-s-s-1067695723"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-gt-line-1-2-puretech-96kw-130cv-1066374161"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-gt-line-1-2-puretech-96kw-130cv-1066365368"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-allure-1-2-puretech-96kw-130cv-1066351924"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-gt-line-1-2-puretech-96kw-130-auto-1066342009"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-pack-bluehdi-130-s-s-eat8-1066340578"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-tech-edition-puretech-130-s-s-eat8-1066183075"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-active-bluehdi-130-s-s-eat8-1066106501"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-pack-bluehdi-130-s-s-eat8-1064562020"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-2019-1062516719"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-s-s-eat8-130cv-2020-1057746580"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-active-pack-sands-puretech-96-kw-130-cv-1027661502"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-active-pack-sands-puretech-96-kw-130-cv-1027627922"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-5p-allure-pack-bluehdi-130-s-s-eat8-1022923766"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-puretech-130-sands-gt-line-eat8-96-kw-130-cv-985264680"
+      },
+      {
+        "url": "https://es.wallapop.com/item/peugeot-308-sw-puretech-130-sands-gt-line-eat8-96-kw-130-cv-985264153"
+      }
+    ]
+  },
+  "Citroën C4 Grand Spacetourer": {
+    "parameters": {
+      "year_range": "2018-2020",
+      "motors": [
+        "1.2 PureTech (130 CV)",
+        " 1.5 BlueHDi (130 CV)"
+      ],
+      "colors": [
+        "Blanco",
+        " Gris",
+        " Azul"
+      ],
+      "kilometers": "40.000 - 70.000 km",
+      "price": "19.000 - 21.000 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1070035192"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1069983442"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-c-series-5-p-2020-1066359455"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1066348262"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1066095580"
+      },
+      {
+        "url": "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-2019-1032493275"
+      }
+    ]
+  },
+  "Renault Clio E-Tech Híbrido": {
+    "parameters": {
+      "year_range": "2020-2022",
+      "motors": [
+        "1.6 E-Tech (140 CV)"
+      ],
+      "colors": [
+        "Rojo",
+        " Blanco",
+        " Negro"
+      ],
+      "kilometers": "15.000 - 45.000 km",
+      "price": "19.500 - 21.500 euros"
+    },
+    "results": [
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-zen-e-tech-hibrido-103-kw-140-cv-1069422640"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-zen-e-tech-hibrido-103-kw-140-cv-1069079730"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-2021-1067983952"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-2020-1067036567"
+      },
+      {
+        "url": "https://es.wallapop.com/item/renault-clio-clio-e-tech-hibrido-zen-103kw-zen-1059063321"
+      }
+    ]
+  }
+}

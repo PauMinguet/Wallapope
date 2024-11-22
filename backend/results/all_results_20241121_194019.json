@@ -1,0 +1,137 @@
+{
+  "6ade5ec2-56e2-4249-aeb3-c647dea54717": {
+    "request": {
+      "marca": "bmw",
+      "modelo": "serie 3",
+      "año": 2013,
+      "color": "negro",
+      "kilometraje": 100000,
+      "precio": 11000,
+      "email": "pablitumm@gmail.com"
+    },
+    "search_parameters": {
+      "latitude": 41.224151,
+      "longitude": 1.7255678,
+      "distance": 100000
+    },
+    "listings": [
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-1-2008-1061323924"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-1999-1054867521"
+      },
+      {
+        "url": "https://es.wallapop.com/item/despiece-328ia-1046301301"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2004-1025077078"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-318ci-serie-3-2003-973041465"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2001-1052324704"
+      },
+      {
+        "url": "https://es.wallapop.com/item/despiece-bmw-e46-compact-999422001"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2005-1047545751"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-1-2007-1046726056"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-e90-2007-1055613036"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2005-1029841433"
+      },
+      {
+        "url": "https://es.wallapop.com/item/despiece-bmw-320d-toyring-pack-m-1057639106"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2015-994063896"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-1998-986950218"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2003-1061447391"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2006-1060491942"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2004-1052642924"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2024-1010344062"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2004-815136837"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2008-789935593"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2002-1040655885"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2006-1039192417"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2002-538856046"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2004-1013876395"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2003-1003426859"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-5-2002-561549718"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2021-1068029589"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2004-1065707728"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2006-1060734369"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2018-1052400447"
+      },
+      {
+        "url": "https://es.wallapop.com/item/defensa-delantera-bmw-e-46-1058520130"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2001-1030766131"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2005-1002570922"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-1999-1051873782"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2006-1061867897"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2004-1039463422"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-1992-1024191327"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2010-995299473"
+      },
+      {
+        "url": "https://es.wallapop.com/item/bmw-serie-3-2007-607013622"
+      }
+    ]
+  }
+}

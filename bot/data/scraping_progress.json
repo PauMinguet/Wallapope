@@ -1,0 +1,33 @@
+{
+  "timestamp": "20241121_142345",
+  "total_processed": 184,
+  "models_summary": {
+    "Volkswagen Golf": 14,
+    "Seat Ibiza": 18,
+    "Ford Focus": 5,
+    "Renault Clio": 4,
+    "Opel Corsa": 9,
+    "Renault Megane": 6,
+    "Peugeot 208": 19,
+    "Citroën C3": 6,
+    "Toyota Yaris": 1,
+    "Fiat 500": 7,
+    "Seat León": 38,
+    "Ford Puma": 23,
+    "Peugeot 308": 23,
+    "Citroën C4 Grand Spacetourer": 6,
+    "Renault Clio E-Tech Híbrido": 5
+  },
+  "last_processed_urls": [
+    "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1069983442",
+    "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-c-series-5-p-2020-1066359455",
+    "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1066348262",
+    "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-puretech-96kw-130cv-s-s-6v-feel-1066095580",
+    "https://es.wallapop.com/item/citroen-grand-c4-spacetourer-2019-1032493275",
+    "https://es.wallapop.com/item/renault-clio-zen-e-tech-hibrido-103-kw-140-cv-1069422640",
+    "https://es.wallapop.com/item/renault-clio-zen-e-tech-hibrido-103-kw-140-cv-1069079730",
+    "https://es.wallapop.com/item/renault-clio-2021-1067983952",
+    "https://es.wallapop.com/item/renault-clio-2020-1067036567",
+    "https://es.wallapop.com/item/renault-clio-clio-e-tech-hibrido-zen-103kw-zen-1059063321"
+  ]
+}

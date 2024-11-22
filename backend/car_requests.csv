@@ -1,0 +1,2 @@
+id,marca,modelo,año,color,kilometraje,precio,created_at,email,handled
+6ade5ec2-56e2-4249-aeb3-c647dea54717,bmw,serie 3,2013,negro,100000,11000,2024-11-22T03:28:15.573294+00:00,pablitumm@gmail.com,False

@@ -1,0 +1,22 @@
+
+Marca  ,Motores,Colores,Kilometraje:,Precio medio,Año
+Volkswagen Golf ,"1.6 TDI (105 CV), 1.2 TSI (105 CV)","Blanco, Gris, Negro",100.000 - 150.000 km,9.500 euros,(2010-2015)
+Seat Ibiza,"1.2 TSI (90 CV), 1.4 TDI (75 CV)","Rojo, Blanco, Azul
+",80.000 - 120.000 km,8.700 euros,(2012-2016)
+Ford Focus,"1.6 TDCI (115 CV), 1.0 EcoBoost (100 CV)
+","Gris, Negro, Plata",90.000 - 140.000 km,9.200 euros,(2011-2015)
+Renault Clio ,"1.5 dCi (90 CV), 0.9 TCe (90 CV)","Blanco, Negro, Rojo",70.000 - 110.000 km,8.900 euros,(2013-2017)
+Opel Corsa ,"1.3 CDTI (75 CV), 1.4 (90 CV)","Blanco, Gris, Negro",80.000 - 120.000 km,8.500 euros,(2011-2015)
+Renault Megane ,"1.5 dCi (110 CV), 1.6 (110 CV)","Gris, Negro, Azul",100.000 - 150.000 km,9.100 euros,(2010-2014)
+Peugeot 208 ,"1.4 HDi (68 CV), 1.2 VTi (82 CV)","Blanco, Rojo, Negro",75.000 - 115.000 km,8.800 euros,(2012-2016)
+Citroën C3,"1.4 HDi (70 CV), 1.2 VTi (82 CV)","Blanco, Rojo, Gris",80.000 - 120.000 km,8.300 euros,(2011-2015)
+Toyota Yaris ,"1.4 D-4D (90 CV), 1.0 VVT-i (69 CV)","Blanco, Plata, Negro",70.000 - 110.000 km,8.600 euros,(2011-2015)
+Fiat 500 ,"1.3 Multijet (75 CV), 1.2 (69 CV)","Blanco, Rojo, Negro",60.000 - 100.000 km,7.900 euros,(2010-2014)
+
+Volkswagen Golf,"1.0 TSI (110 CV), 1.5 TSI (130 CV)","Blanco, Gris, Negro",30.000 - 60.000 km,19.000 - 21.000 euros,2020-2022
+Seat León,"1.0 TSI (110 CV), 1.5 eTSI (150 CV)","Rojo, Blanco, Azul",25.000 - 55.000 km,18.500 - 20.500 euros,2020-2022
+Ford Puma,"1.0 EcoBoost (125 CV), 1.0 EcoBoost Hybrid (155 CV)","Gris, Negro, Azul",20.000 - 50.000 km,19.500 - 21.500 euros,2020-2022
+Peugeot 308,"1.2 PureTech (130 CV), 1.5 BlueHDi (130 CV)","Gris, Negro, Blanco",35.000 - 65.000 km,18.000 - 20.000 euros,2019-2021
+Citroën C4 Grand Spacetourer,"1.2 PureTech (130 CV), 1.5 BlueHDi (130 CV)","Blanco, Gris, Azul",40.000 - 70.000 km,19.000 - 21.000 euros,2018-2020
+Renault Clio E-Tech Híbrido,1.6 E-Tech (140 CV),"Rojo, Blanco, Negro",15.000 - 45.000 km,19.500 - 21.500 euros,2020-2022
+Mitsubishi Outlander PHEV,2.4 PHEV (224 CV),"Blanco, Gris, Negro",50.000 - 80.000 km,19.000 - 22.000 euros,2018-2020
