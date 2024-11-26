@@ -13,6 +13,7 @@
     "framer-motion": "latest",
     "lucide-react": "latest",
     "next": "latest",
+    "puppeteer": "^23.9.0",
     "react": "latest",
     "react-dom": "latest"
   },

@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Formulario de Compra de Coche',
-  description: 'Ingresa los detalles del coche que deseas comprar',
+  title: 'Wallasnipe',
+  description: 'Pon los detalles del coche que quieres comprar',
   icons: {
     icon: '/car-icon.svg',
     shortcut: '/car-icon.svg',
