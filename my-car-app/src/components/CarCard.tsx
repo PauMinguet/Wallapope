@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material'
-import { Listing } from '@/types/listing'
+import { Listing } from '../../types/listing'
 
 interface CarCardProps {
   listing: Listing
