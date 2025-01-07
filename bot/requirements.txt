@@ -1,5 +1,0 @@
-streamlit
-selenium
-webdriver-manager
-streamlit_folium
-folium 
