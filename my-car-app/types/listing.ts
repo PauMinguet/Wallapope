@@ -17,5 +17,10 @@ export interface Listing {
     image_url: string
     image_order: number
   }>
+  searches: {
+    model: string
+    vehicle_type: 'car' | 'scooter'
+  }
+  price_difference: number
 }
 

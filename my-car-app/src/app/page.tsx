@@ -5,6 +5,16 @@ import { Container, CircularProgress, Typography, Button, IconButton } from '@mu
 import { ThumbUp, ThumbDown, OpenInNew } from '@mui/icons-material'
 import { Listing } from '../../types/listing'
 
+const formatPriceDifference = (diff: number) => {
+  const formatted = Math.abs(diff).toLocaleString('es-ES', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })
+  return diff > 0 ? `${formatted} below target` : `${formatted} above target`
+}
+
 export default function Home() {
   const [listings, setListings] = useState<Listing[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -81,32 +91,44 @@ export default function Home() {
                       .replace(/\s+\d{4}\s*$/, '')
                       .trim()}
                   </Typography>
-                  <Typography variant="h6" className="text-green-400">
-                    {listing.price_text
-                      .replace(/\([^)]*\)/g, '')
-                      .replace(/^Slide \d+ of \d+\s*/, '')
-                      .replace(/€.*$/, '€')
-                      .trim()}
-                  </Typography>
+                  <div className="flex items-baseline gap-2">
+                    <Typography variant="h6" className="text-green-400">
+                      {listing.price_text
+                        .replace(/\([^)]*\)/g, '')
+                        .replace(/^Slide \d+ of \d+\s*/, '')
+                        .replace(/€.*$/, '€')
+                        .trim()}
+                    </Typography>
+                    <Typography 
+                      variant="body2" 
+                      className={`${
+                        listing.price_difference > 0 ? 'text-green-400' : 'text-red-400'
+                      }`}
+                    >
+                      ({formatPriceDifference(listing.price_difference)})
+                    </Typography>
+                  </div>
                 </div>
               </div>
               
               <div className="grid grid-cols-4 gap-2">
                 <div>
                   <Typography variant="caption" className="text-gray-300">Year</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.year}</Typography>
+                  <Typography variant="body2" className="font-semibold">{listing.year || 'N/A'}</Typography>
                 </div>
                 <div>
                   <Typography variant="caption" className="text-gray-300">Mileage</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.kilometers.toLocaleString()} km</Typography>
+                  <Typography variant="body2" className="font-semibold">
+                    {listing.kilometers ? `${listing.kilometers.toLocaleString()} km` : 'N/A'}
+                  </Typography>
                 </div>
                 <div>
                   <Typography variant="caption" className="text-gray-300">Fuel</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.fuel_type}</Typography>
+                  <Typography variant="body2" className="font-semibold">{listing.fuel_type || 'N/A'}</Typography>
                 </div>
                 <div>
                   <Typography variant="caption" className="text-gray-300">Trans.</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.transmission}</Typography>
+                  <Typography variant="body2" className="font-semibold">{listing.transmission || 'N/A'}</Typography>
                 </div>
               </div>
               
