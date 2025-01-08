@@ -5,22 +5,27 @@ export interface Listing {
   title: string
   price: number
   price_text: string
+  price_difference: number
   location: string
-  year: number
-  fuel_type: string
-  transmission: string
-  power_cv: number
-  kilometers: number
   description: string
-  created_at: string
-  listing_images: Array<{
-    image_url: string
-    image_order: number
-  }>
+  year?: number
+  kilometers?: number
+  fuel_type?: string
+  transmission?: string
+  power_cv?: number
+  motor?: string
+  configuracion?: string
+  isReserved: boolean
+  vehicle_type: 'coches' | 'motos' | 'furgos'
+  listing_images: Array<{ image_url: string }>
+  listing_images_coches?: Array<{ image_url: string }>
+  listing_images_motos?: Array<{ image_url: string }>
+  listing_images_furgos?: Array<{ image_url: string }>
   searches: {
     model: string
-    vehicle_type: 'car' | 'scooter'
+    marca: string
+    vehicle_type: string
+    search_url: string
   }
-  price_difference: number
 }
 

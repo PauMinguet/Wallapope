@@ -1,98 +1,145 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '../../../../utils/supabase'
 
-export async function GET() {
-  // First get all cars with their target prices
-  const { data: cars, error: carsError } = await supabase
-    .from('coches')
-    .select('modelo, precio_compra')
+type VehicleType = 'coches' | 'motos' | 'furgos'
 
-  if (carsError) {
-    return NextResponse.json({ error: carsError.message }, { status: 500 })
+interface BaseVehicle {
+  id: number
+  modelo: string
+}
+
+interface Coche extends BaseVehicle {
+  precio_compra: string
+}
+
+interface Moto extends BaseVehicle {
+  model: string
+  price_range: string
+}
+
+interface Furgo extends BaseVehicle {
+  configuracion: string
+  motor: string
+  precio: string
+}
+
+interface Listing {
+  title: string
+  description: string
+  price: number
+  searches?: {
+    model: string
+  }
+  configuracion?: string
+  motor?: string
+  listing_images_coches?: Array<{ image_url: string }>
+  listing_images_motos?: Array<{ image_url: string }>
+  listing_images_furgos?: Array<{ image_url: string }>
+  [key: string]: any
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const vehicleType = (searchParams.get('type') || 'coches') as VehicleType
+
+  const { data: targetData, error: targetError } = await supabase
+    .from(vehicleType)
+    .select('*')
+
+  if (targetError) {
+    return NextResponse.json({ error: targetError.message }, { status: 500 })
   }
 
-  // Get listings with their images and search model and vehicle_type
   const { data: listings, error: listingsError } = await supabase
-    .from('listings')
+    .from(`listings_${vehicleType}`)
     .select(`
       *,
-      listing_images (
+      listing_images_${vehicleType} (
         image_url,
         image_order
       ),
       searches (
         model,
-        vehicle_type
+        marca,
+        vehicle_type,
+        search_url
       )
     `)
-    .order('created_at', { ascending: false })  // Get most recent first
+    .order('created_at', { ascending: false })
 
   if (listingsError) {
     console.error('Listings error:', listingsError)
     return NextResponse.json({ error: listingsError.message }, { status: 500 })
   }
 
-  // Debug log
-  console.log('Total listings:', listings?.length)
-  console.log('Listings with vehicle types:', listings?.map(l => ({
-    title: l.title,
-    vehicle_type: l.searches?.vehicle_type,
-    price: l.price
-  })))
-
-  // Create a map of model to target price
-  const targetPrices = new Map(cars.map(car => {
-    const minPrice = parseFloat(
-      car.precio_compra
-        .split('-')[0]
-        .replace('€', '')
-        .replace('.', '')
-        .replace(',', '.')
-        .trim()
+  const filteredListings = (listings as Listing[]).filter(listing => {
+    const lowerTitle = listing.title.toLowerCase()
+    const lowerDesc = (listing.description || '').toLowerCase()
+    const unwantedKeywords = ['accidentado', 'accidente', 'despiece', 'reparar']
+    
+    return !unwantedKeywords.some(keyword => 
+      lowerTitle.includes(keyword) || lowerDesc.includes(keyword)
     )
-    return [car.modelo, minPrice]
-  }))
+  })
 
-  // Calculate price differences and sort
-  const listingsWithDiff = listings
-    .map(listing => {
-      let targetPrice = 0
+  const targetPrices = new Map(
+    (targetData as (Coche | Moto | Furgo)[]).map(item => {
+      if (vehicleType === 'coches') {
+        const car = item as Coche
+        const price = parseFloat(car.precio_compra.split('-')[0].replace('€', '').replace('.', '').replace(',', '.').trim())
+        return [car.modelo, price] as const
+      } 
       
-      // If it's a scooter, use 900 as reference price
-      if (listing.searches?.vehicle_type === 'scooter') {
-        targetPrice = 900
-      } else {
-        // Otherwise use the car's target price
-        const searchModel = listing.searches?.model
-        targetPrice = searchModel ? targetPrices.get(searchModel) || 0 : 0
+      if (vehicleType === 'motos') {
+        const moto = item as Moto
+        const [min, max] = moto.price_range.split('-').map(p => 
+          parseFloat(p.replace('€', '').replace('.', '').replace(',', '').trim())
+        )
+        return [moto.model, (min + max) / 2] as const
+      } 
+      
+      if (vehicleType === 'furgos') {
+        const van = item as Furgo
+        const [min, max] = van.precio.split('-').map(p => 
+          parseFloat(p.replace('€', '').replace('.', '').replace(',', '').trim())
+        )
+        return [`${van.modelo}-${van.configuracion}-${van.motor}`, (min + max) / 2] as const
       }
-
-      const priceDiff = targetPrice - (listing.price || 0)
       
-      // Debug log for price calculations
-      console.log('Listing calculation:', {
-        title: listing.title,
-        type: listing.searches?.vehicle_type,
-        price: listing.price,
-        targetPrice,
-        priceDiff
-      })
+      return ['', 0] as const
+    })
+  )
+
+  const listingsWithDiff = filteredListings
+    .map(listing => {
+      const isReserved = listing.title.toLowerCase().startsWith('reservado')
+      const cleanTitle = isReserved 
+        ? listing.title.replace(/^reservado\s+/i, '')
+        : listing.title
+
+      let targetPrice = 0
+      if (vehicleType === 'furgos') {
+        const key = `${listing.searches?.model || ''}-${listing.configuracion || ''}-${listing.motor || ''}`
+        targetPrice = targetPrices.get(key) || 0
+      } else {
+        targetPrice = targetPrices.get(listing.searches?.model || '') || 0
+      }
 
       return {
         ...listing,
-        price_difference: priceDiff
+        title: cleanTitle,
+        isReserved,
+        price_difference: targetPrice - (listing.price || 0),
+        vehicle_type: vehicleType
       }
     })
     .sort((a, b) => b.price_difference - a.price_difference)
 
-  // Debug log final sorted results
-  console.log('Sorted listings:', listingsWithDiff.map(l => ({
-    title: l.title,
-    type: l.searches?.vehicle_type,
-    price: l.price,
-    diff: l.price_difference
-  })))
+  const listingsWithFormattedImages = listingsWithDiff.map(listing => ({
+    ...listing,
+    listing_images: listing[`listing_images_${vehicleType}`] || []
+  }))
 
-  return NextResponse.json(listingsWithDiff)
+  return NextResponse.json(listingsWithFormattedImages)
 }
 

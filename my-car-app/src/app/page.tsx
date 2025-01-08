@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Container, CircularProgress, Typography, Button, IconButton } from '@mui/material'
-import { ThumbUp, ThumbDown, OpenInNew } from '@mui/icons-material'
+import { Container, CircularProgress, Typography, Button, IconButton, Tabs, Tab } from '@mui/material'
+import { ThumbUp, ThumbDown, OpenInNew, Search } from '@mui/icons-material'
 import { Listing } from '../../types/listing'
 
 const formatPriceDifference = (diff: number) => {
@@ -16,6 +16,7 @@ const formatPriceDifference = (diff: number) => {
 }
 
 export default function Home() {
+  const [vehicleType, setVehicleType] = useState<'coches' | 'motos' | 'furgos'>('coches')
   const [listings, setListings] = useState<Listing[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -24,13 +25,15 @@ export default function Home() {
 
   useEffect(() => {
     fetchListings()
-  }, [])
+  }, [vehicleType])
 
   const fetchListings = async () => {
     try {
-      const response = await fetch('/api/listings')
+      setLoading(true)
+      const response = await fetch(`/api/listings?type=${vehicleType}`)
       const data = await response.json()
       setListings(data)
+      setCurrentIndex(0)
       setLoading(false)
     } catch (error) {
       console.error('Error fetching listings:', error)
@@ -43,6 +46,78 @@ export default function Home() {
     setCurrentIndex((prevIndex) => prevIndex + 1)
   }
 
+  const renderVehicleSpecs = (listing: Listing) => {
+    if (vehicleType === 'furgos') {
+      return (
+        <div className="grid grid-cols-4 gap-2">
+          <div>
+            <Typography variant="caption" className="text-gray-300">Year</Typography>
+            <Typography variant="body2" className="font-semibold">{listing.year || 'N/A'}</Typography>
+          </div>
+          <div>
+            <Typography variant="caption" className="text-gray-300">Engine</Typography>
+            <Typography variant="body2" className="font-semibold">{listing.motor || 'N/A'}</Typography>
+          </div>
+          <div>
+            <Typography variant="caption" className="text-gray-300">Config</Typography>
+            <Typography variant="body2" className="font-semibold">{listing.configuracion || 'N/A'}</Typography>
+          </div>
+          <div>
+            <Typography variant="caption" className="text-gray-300">KM</Typography>
+            <Typography variant="body2" className="font-semibold">
+              {listing.kilometers ? `${listing.kilometers.toLocaleString()} km` : 'N/A'}
+            </Typography>
+          </div>
+        </div>
+      )
+    }
+
+    if (vehicleType === 'motos') {
+      return (
+        <div className="grid grid-cols-3 gap-2">
+          <div>
+            <Typography variant="caption" className="text-gray-300">Year</Typography>
+            <Typography variant="body2" className="font-semibold">{listing.year || 'N/A'}</Typography>
+          </div>
+          <div>
+            <Typography variant="caption" className="text-gray-300">KM</Typography>
+            <Typography variant="body2" className="font-semibold">
+              {listing.kilometers ? `${listing.kilometers.toLocaleString()} km` : 'N/A'}
+            </Typography>
+          </div>
+          <div>
+            <Typography variant="caption" className="text-gray-300">Power</Typography>
+            <Typography variant="body2" className="font-semibold">{listing.power_cv ? `${listing.power_cv} CV` : 'N/A'}</Typography>
+          </div>
+        </div>
+      )
+    }
+
+    // Default car specs
+    return (
+      <div className="grid grid-cols-4 gap-2">
+        <div>
+          <Typography variant="caption" className="text-gray-300">Year</Typography>
+          <Typography variant="body2" className="font-semibold">{listing.year || 'N/A'}</Typography>
+        </div>
+        <div>
+          <Typography variant="caption" className="text-gray-300">Mileage</Typography>
+          <Typography variant="body2" className="font-semibold">
+            {listing.kilometers ? `${listing.kilometers.toLocaleString()} km` : 'N/A'}
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="caption" className="text-gray-300">Fuel</Typography>
+          <Typography variant="body2" className="font-semibold">{listing.fuel_type || 'N/A'}</Typography>
+        </div>
+        <div>
+          <Typography variant="caption" className="text-gray-300">Trans.</Typography>
+          <Typography variant="body2" className="font-semibold">{listing.transmission || 'N/A'}</Typography>
+        </div>
+      </div>
+    )
+  }
+
   if (loading) {
     return (
       <Container className="flex justify-center items-center h-screen bg-gray-900">
@@ -51,133 +126,155 @@ export default function Home() {
     )
   }
 
-  if (currentIndex >= listings.length) {
+  if (!listings.length || currentIndex >= listings.length) {
     return (
       <Container className="flex justify-center items-center h-screen bg-gray-900">
         <Typography variant="h4" className="text-white">
-          No more listings to show
+          No listings to show
         </Typography>
       </Container>
     )
   }
 
-  const listing = listings[currentIndex]
+  const currentListing = listings[currentIndex]
+  if (!currentListing) {
+    return null
+  }
 
   return (
     <div className="h-screen bg-gray-900 text-white relative">
-      <div
-        className="absolute inset-0 bg-center bg-cover bg-no-repeat cursor-pointer"
-        style={{
-          backgroundImage: `url(${listing.listing_images[0]?.image_url || '/placeholder.svg'})`,
-        }}
-        onClick={() => setHideText(!hideText)}
-      />
-      
-      {!hideText && (
-        <>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/70 to-gray-900" />
-          
-          <div className="relative h-full flex flex-col justify-end p-6">
-            <div className="space-y-2">
-              <div className="flex justify-between items-start">
-                <div>
-                  <Typography variant="h5" className="font-bold text-white">
-                    {listing.title
-                      .replace(/^Slide \d+ of \d+\s*/, '')
-                      .replace(/^\d+[\d.,]*\s*€\s*/, '')
-                      .split(' - ')[0]
-                      .split(/\d{5,}|\s+km/)[0]
-                      .split(/Gasolina|Diesel|Diésel/)[0]
-                      .replace(/\s+\d{4}\s*$/, '')
-                      .trim()}
-                  </Typography>
-                  <div className="flex items-baseline gap-2">
-                    <Typography variant="h6" className="text-green-400">
-                      {listing.price_text
-                        .replace(/\([^)]*\)/g, '')
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gray-800 shadow-lg">
+        <Tabs
+          value={vehicleType}
+          onChange={(_, newValue) => setVehicleType(newValue)}
+          className="text-white"
+          centered
+        >
+          <Tab value="coches" label="Cars" />
+          <Tab value="motos" label="Motorcycles" />
+          <Tab value="furgos" label="Vans" />
+        </Tabs>
+      </div>
+
+      <div className="h-full relative">
+        <div
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat cursor-pointer"
+          style={{
+            backgroundImage: `url(${
+              currentListing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
+              currentListing.listing_images?.[0]?.image_url || 
+              '/placeholder.svg'
+            })`,
+          }}
+          onClick={() => setHideText(!hideText)}
+        />
+        
+        {!hideText && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent" />
+            
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <div className="space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    {currentListing.isReserved && (
+                      <div className="inline-block px-2 py-1 mb-2 bg-yellow-500/80 text-black text-xs font-semibold rounded">
+                        Reserved
+                      </div>
+                    )}
+                    <Typography variant="h5" className="font-bold text-white">
+                      {currentListing.title
                         .replace(/^Slide \d+ of \d+\s*/, '')
-                        .replace(/€.*$/, '€')
+                        .replace(/^\d+[\d.,]*\s*€\s*/, '')
+                        .split(' - ')[0]
+                        .split(/\d{5,}|\s+km/)[0]
+                        .split(/Gasolina|Diesel|Diésel/)[0]
+                        .replace(/\s+\d{4}\s*$/, '')
                         .trim()}
                     </Typography>
-                    <Typography 
-                      variant="body2" 
-                      className={`${
-                        listing.price_difference > 0 ? 'text-green-400' : 'text-red-400'
-                      }`}
-                    >
-                      ({formatPriceDifference(listing.price_difference)})
-                    </Typography>
+                    <div className="flex items-baseline gap-2">
+                      <Typography variant="h6" className="text-green-400">
+                        {currentListing.price_text
+                          .replace(/\([^)]*\)/g, '')
+                          .replace(/^Slide \d+ of \d+\s*/, '')
+                          .replace(/€.*$/, '€')
+                          .trim()}
+                      </Typography>
+                      <Typography 
+                        variant="body2" 
+                        className={`${
+                          currentListing.price_difference > 0 ? 'text-green-400' : 'text-red-400'
+                        }`}
+                      >
+                        ({formatPriceDifference(currentListing.price_difference)})
+                      </Typography>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="grid grid-cols-4 gap-2">
-                <div>
-                  <Typography variant="caption" className="text-gray-300">Year</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.year || 'N/A'}</Typography>
-                </div>
-                <div>
-                  <Typography variant="caption" className="text-gray-300">Mileage</Typography>
-                  <Typography variant="body2" className="font-semibold">
-                    {listing.kilometers ? `${listing.kilometers.toLocaleString()} km` : 'N/A'}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="caption" className="text-gray-300">Fuel</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.fuel_type || 'N/A'}</Typography>
-                </div>
-                <div>
-                  <Typography variant="caption" className="text-gray-300">Trans.</Typography>
-                  <Typography variant="body2" className="font-semibold">{listing.transmission || 'N/A'}</Typography>
-                </div>
-              </div>
-              
-              <Typography variant="caption" className="text-gray-300 block">{listing.location}</Typography>
-              <div>
-                <Typography variant="caption" className="text-gray-100">
-                  {showFullDescription || window.innerWidth >= 768
-                    ? listing.description?.replace(/^Slide \d+ of \d+ /, '').replace(/^[^.!]+[.!]\s*/, '') || ''
-                    : (listing.description?.replace(/^Slide \d+ of \d+ /, '').replace(/^[^.!]+[.!]\s*/, '') || '').slice(0, 200) + '...'}
+                
+                {renderVehicleSpecs(currentListing)}
+                
+                <Typography variant="caption" className="text-gray-300 block">
+                  {currentListing.location}
                 </Typography>
-                {listing.description && listing.description.length > 200 && window.innerWidth < 768 && (
-                  <Button 
-                    size="small"
-                    className="text-blue-400 mt-1 p-0 text-xs"
-                    onClick={() => setShowFullDescription(!showFullDescription)}
+                
+                <div>
+                  <Typography variant="caption" className="text-gray-100">
+                    {showFullDescription || window.innerWidth >= 768
+                      ? currentListing.description?.replace(/^Slide \d+ of \d+ /, '').replace(/^[^.!]+[.!]\s*/, '') || ''
+                      : (currentListing.description?.replace(/^Slide \d+ of \d+ /, '').replace(/^[^.!]+[.!]\s*/, '') || '').slice(0, 200) + '...'}
+                  </Typography>
+                  {currentListing.description && currentListing.description.length > 200 && window.innerWidth < 768 && (
+                    <Button 
+                      size="small"
+                      className="text-blue-400 mt-1 p-0 text-xs"
+                      onClick={() => setShowFullDescription(!showFullDescription)}
+                    >
+                      {showFullDescription ? 'Show Less' : 'Show More'}
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="flex justify-between items-center pt-2">
+                  <IconButton
+                    className="w-12 h-12 shadow-lg bg-red-500/80 hover:bg-red-600 text-white transition-all duration-200 transform hover:scale-105"
+                    onClick={() => handleSwipe('left')}
                   >
-                    {showFullDescription ? 'Show Less' : 'Show More'}
-                  </Button>
-                )}
-              </div>
-              
-              <div className="flex justify-between items-center pt-2">
-                <IconButton
-                  className="w-12 h-12 shadow-lg bg-red-500/80 hover:bg-red-600 text-white transition-all duration-200 transform hover:scale-105"
-                  onClick={() => handleSwipe('left')}
-                >
-                  <ThumbDown />
-                </IconButton>
-                <Button
-                  variant="contained"
-                  className="px-6 py-2 shadow-lg bg-blue-500/80 hover:bg-blue-600 text-white font-medium transition-all duration-200 transform hover:scale-105"
-                  href={listing.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  startIcon={<OpenInNew />}
-                >
-                  View Listing
-                </Button>
-                <IconButton
-                  className="w-12 h-12 shadow-lg bg-green-500/80 hover:bg-green-600 text-white transition-all duration-200 transform hover:scale-105"
-                  onClick={() => handleSwipe('right')}
-                >
-                  <ThumbUp />
-                </IconButton>
+                    <ThumbDown />
+                  </IconButton>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="contained"
+                      className="px-6 py-2 shadow-lg bg-blue-500/80 hover:bg-blue-600 text-white font-medium transition-all duration-200 transform hover:scale-105"
+                      href={currentListing.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      startIcon={<OpenInNew />}
+                    >
+                      View Listing
+                    </Button>
+                    <IconButton
+                      className="w-10 h-10 shadow-lg bg-gray-600/80 hover:bg-gray-700 text-white transition-all duration-200 transform hover:scale-105"
+                      href={currentListing.searches.search_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      size="small"
+                    >
+                      <Search fontSize="small" />
+                    </IconButton>
+                  </div>
+                  <IconButton
+                    className="w-12 h-12 shadow-lg bg-green-500/80 hover:bg-green-600 text-white transition-all duration-200 transform hover:scale-105"
+                    onClick={() => handleSwipe('right')}
+                  >
+                    <ThumbUp />
+                  </IconButton>
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   )
 }
