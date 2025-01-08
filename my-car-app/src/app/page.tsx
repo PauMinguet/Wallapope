@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Container, CircularProgress, Typography, Button, IconButton, Tabs, Tab } from '@mui/material'
 import { ThumbUp, ThumbDown, OpenInNew, Search } from '@mui/icons-material'
 import { Listing } from '../../types/listing'
@@ -23,11 +23,7 @@ export default function Home() {
   const [showFullDescription, setShowFullDescription] = useState(false)
   const [hideText, setHideText] = useState(false)
 
-  useEffect(() => {
-    fetchListings()
-  }, [vehicleType])
-
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/listings?type=${vehicleType}`)
@@ -39,7 +35,11 @@ export default function Home() {
       console.error('Error fetching listings:', error)
       setLoading(false)
     }
-  }
+  }, [vehicleType])
+
+  useEffect(() => {
+    void fetchListings()
+  }, [vehicleType, fetchListings])
 
   const handleSwipe = (direction: 'left' | 'right') => {
     console.log(`Swiped ${direction} on listing:`, listings[currentIndex])
@@ -143,12 +143,23 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-gray-900 text-white relative">
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gray-800 shadow-lg">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gray-800/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
         <Tabs
           value={vehicleType}
           onChange={(_, newValue) => setVehicleType(newValue)}
           className="text-white"
           centered
+          sx={{
+            '& .MuiTab-root': {
+              color: 'rgba(255,255,255,0.7)',
+              '&.Mui-selected': {
+                color: 'white'
+              }
+            },
+            '& .MuiTabs-indicator': {
+              backgroundColor: 'white'
+            }
+          }}
         >
           <Tab value="coches" label="Cars" />
           <Tab value="motos" label="Motorcycles" />
@@ -237,7 +248,7 @@ export default function Home() {
                 
                 <div className="flex justify-between items-center pt-2">
                   <IconButton
-                    className="w-12 h-12 shadow-lg bg-red-500/80 hover:bg-red-600 text-white transition-all duration-200 transform hover:scale-105"
+                    className="!bg-red-500 hover:!bg-red-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                     onClick={() => handleSwipe('left')}
                   >
                     <ThumbDown />
@@ -245,7 +256,7 @@ export default function Home() {
                   <div className="flex gap-2">
                     <Button
                       variant="contained"
-                      className="px-6 py-2 shadow-lg bg-blue-500/80 hover:bg-blue-600 text-white font-medium transition-all duration-200 transform hover:scale-105"
+                      className="!bg-blue-500 hover:!bg-blue-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                       href={currentListing.url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -254,7 +265,7 @@ export default function Home() {
                       View Listing
                     </Button>
                     <IconButton
-                      className="w-10 h-10 shadow-lg bg-gray-600/80 hover:bg-gray-700 text-white transition-all duration-200 transform hover:scale-105"
+                      className="!bg-gray-600 hover:!bg-gray-700 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                       href={currentListing.searches.search_url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -264,7 +275,7 @@ export default function Home() {
                     </IconButton>
                   </div>
                   <IconButton
-                    className="w-12 h-12 shadow-lg bg-green-500/80 hover:bg-green-600 text-white transition-all duration-200 transform hover:scale-105"
+                    className="!bg-green-500 hover:!bg-green-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                     onClick={() => handleSwipe('right')}
                   >
                     <ThumbUp />
