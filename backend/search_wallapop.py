@@ -9,6 +9,7 @@ from supabase import create_client
 from urllib.parse import quote
 from dotenv import load_dotenv
 import re
+from chrome_config import get_chrome_options
 
 # Load environment variables from .env file
 load_dotenv()
@@ -206,18 +207,16 @@ def clean_title(title):
     return title
 
 def search_wallapop(car):
-    """Search Wallapop for car listings using Selenium with specific parameters"""
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--window-size=1920,1080')
-    chrome_options.add_argument('user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36')
-    
-    driver = webdriver.Chrome(options=chrome_options)
-    wait = WebDriverWait(driver, 10)
+    """Search Wallapop for car listings using Selenium"""
+    chrome_options = get_chrome_options()
     
     try:
+        driver = webdriver.Chrome(options=chrome_options)
+        wait = WebDriverWait(driver, 20)  # Increased timeout to 20 seconds
+        
+        # Add error handling and logging
+        logger.info(f"Starting search for {car['marca']} {car['modelo']}")
+        
         # Get parameters from the car data
         model = car['modelo']  # Just the model name
         brand = car['marca']   # Brand is now a separate field
@@ -290,11 +289,13 @@ def search_wallapop(car):
         }
         
     except Exception as e:
-        print(f"\nError searching for {car['modelo']}: {str(e)}")
+        logger.error(f"Error in search_wallapop: {str(e)}")
         return None
-        
     finally:
-        driver.quit()
+        try:
+            driver.quit()
+        except:
+            pass
 
 def process_all_cars():
     """Process each car from Supabase"""
