@@ -94,13 +94,26 @@ export async function GET(request: Request) {
   }
 
   const filteredListings = (listings as VehicleListing[]).filter(listing => {
+    // First check for unwanted keywords
     const lowerTitle = listing.title.toLowerCase()
     const lowerDesc = (listing.description || '').toLowerCase()
     const unwantedKeywords = ['accidentado', 'accidente', 'despiece', 'reparar']
     
-    return !unwantedKeywords.some(keyword => 
+    if (unwantedKeywords.some(keyword => 
       lowerTitle.includes(keyword) || lowerDesc.includes(keyword)
-    )
+    )) {
+      return false
+    }
+
+    // Extract and normalize kilometers
+    const kmMatch = listing.title.match(/(\d+)\s*(?:km|KM)/i)
+    if (kmMatch) {
+      let kms = parseInt(kmMatch[1], 10)
+      kms = kms < 1000 ? kms * 1000 : kms
+      if (kms > 200000) return false
+    }
+
+    return true
   })
 
   const parsePrice = (str: string): number => 
