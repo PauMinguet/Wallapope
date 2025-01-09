@@ -94,6 +94,11 @@ export async function GET(request: Request) {
   }
 
   const filteredListings = (listings as VehicleListing[]).filter(listing => {
+    // Skip reserved listings
+    if (listing.title.toLowerCase().startsWith('reservado')) {
+      return false
+    }
+
     // First check for unwanted keywords
     const lowerTitle = listing.title.toLowerCase()
     const lowerDesc = (listing.description || '').toLowerCase()
