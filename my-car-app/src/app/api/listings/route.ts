@@ -132,9 +132,6 @@ export async function GET(request: Request) {
         })
       )
 
-  const isFurgoListing = (listing: VehicleListing): listing is FurgoListing => 
-    'configuracion' in listing && 'motor' in listing
-
   const listingsWithDiff = filteredListings
     .map(listing => {
       const isReserved = listing.title.toLowerCase().startsWith('reservado')
