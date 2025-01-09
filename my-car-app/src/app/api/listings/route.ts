@@ -102,7 +102,7 @@ export async function GET(request: Request) {
     // First check for unwanted keywords
     const lowerTitle = listing.title.toLowerCase()
     const lowerDesc = (listing.description || '').toLowerCase()
-    const unwantedKeywords = ['accidentado', 'accidente', 'despiece', 'reparar']
+    const unwantedKeywords = ['accidentado', 'inundado', 'accidente', 'despiece', 'reparar']
     
     if (unwantedKeywords.some(keyword => 
       lowerTitle.includes(keyword) || lowerDesc.includes(keyword)
