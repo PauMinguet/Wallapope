@@ -17,7 +17,28 @@ def get_cars_from_supabase():
     """Fetch car data from Supabase"""
     supabase = init_supabase()
     response = supabase.table('coches').select("*").execute()
-    return response.data
+    
+    # Add error checking and logging
+    if not response.data:
+        print("Error: No data returned from Supabase")
+        return []
+        
+    # Log the first car to check structure
+    if response.data:
+        print(f"First car data: {response.data[0]}")
+        
+    # Validate each car has required fields
+    valid_cars = []
+    for car in response.data:
+        if all(car.get(field) for field in ['marca', 'modelo', 'ano_fabricacion', 'precio_compra']):
+            valid_cars.append(car)
+        else:
+            print(f"Skipping invalid car data: {car}")
+            
+    if not valid_cars:
+        print("Error: No valid cars found in data")
+        
+    return valid_cars
 
 def init_supabase():
     """Initialize Supabase client"""
@@ -78,55 +99,79 @@ def store_search_results(supabase, search_params, listings):
     # Insert search parameters
     search_data = {
         'model': search_params['model'],
+        'marca': search_params['brand'],
         'min_price': search_params['min_price'],
         'max_price': search_params['max_price'],
         'min_year': search_params['year'],
         'search_url': search_params['url']
     }
     
-    search_result = supabase.table('searches').insert(search_data).execute()
-    search_id = search_result.data[0]['id']
-    
-    # Insert listings
-    for listing in listings:
-        # Parse listing details
-        details = parse_listing_details(listing['title'])
+    try:
+        search_result = supabase.table('searches').insert(search_data).execute()
+        search_id = search_result.data[0]['id']
         
-        # Prepare listing data
-        listing_data = {
-            'search_id': search_id,
-            'url': listing['url'],
-            'title': listing['title'],
-            'price': details['price'],
-            'price_text': details['price_text'],
-            'location': listing['location'],
-            'year': details['year'],
-            'fuel_type': details['fuel_type'],
-            'transmission': details['transmission'],
-            'power_cv': details['power_cv'],
-            'kilometers': details['kilometers'],
-            'description': details['description']
-        }
-        
-        try:
-            # Insert listing
-            listing_result = supabase.table('listings').insert(listing_data).execute()
-            listing_id = listing_result.data[0]['id']
-            
-            # Insert images
-            for idx, image_url in enumerate(listing['images']):
-                image_data = {
-                    'listing_id': listing_id,
-                    'image_url': image_url,
-                    'image_order': idx
-                }
-                supabase.table('listing_images').insert(image_data).execute()
+        # Insert listings
+        for listing in listings:
+            try:
+                # Check if listing already exists
+                existing = supabase.table('listings_coches').select('id').eq('url', listing['url']).execute()
+                if existing.data:
+                    print(f"Skipping duplicate listing: {listing['url']}")
+                    continue
                 
-        except Exception as e:
-            print(f"Error storing listing {listing['url']}: {str(e)}")
+                # Parse listing details
+                details = parse_listing_details(listing['title'])
+                
+                # Print lengths of all fields for debugging
+                field_lengths = {
+                    'url': len(listing['url']),
+                    'title': len(listing['title']),
+                    'price_text': len(details['price_text']) if details['price_text'] else 0,
+                    'location': len(listing['location']) if listing['location'] else 0,
+                    'description': len(details['description']) if details['description'] else 0
+                }
+                print(f"Field lengths: {field_lengths}")
+                
+                # Prepare listing data
+                listing_data = {
+                    'search_id': search_id,
+                    'url': listing['url'],
+                    'title': listing['title'],
+                    'price': details['price'],
+                    'price_text': details['price_text'],
+                    'location': listing['location'],
+                    'year': details['year'],
+                    'fuel_type': details['fuel_type'],
+                    'transmission': details['transmission'],
+                    'power_cv': details['power_cv'],
+                    'kilometers': details['kilometers'],
+                    'description': details['description']
+                }
+                
+                # Insert listing
+                listing_result = supabase.table('listings_coches').insert(listing_data).execute()
+                listing_id = listing_result.data[0]['id']
+                
+                # Insert images
+                for idx, image_url in enumerate(listing['images']):
+                    image_data = {
+                        'listing_id': listing_id,
+                        'image_url': image_url,
+                        'image_order': idx
+                    }
+                    supabase.table('listing_images_coches').insert(image_data).execute()
+                    
+            except Exception as e:
+                print(f"Error storing listing {listing['url']}")
+                print(f"Error details: {str(e)}")
+                print(f"Listing data: {listing_data}")
+                continue
+                    
+    except Exception as e:
+        print(f"Error storing search results: {str(e)}")
 
 def parse_price_range(price_str):
-    """Parse price range string into min and max values"""
+    """Parse price range string into min price value"""
     # Remove '€' and spaces
     clean_str = price_str.replace('€', '').replace(' ', '')
     
@@ -140,11 +185,25 @@ def parse_price_range(price_str):
     
     # Convert to numbers, handling thousands separator
     def parse_price(price_str):
-        # Remove any remaining spaces and replace comma with nothing (for thousands)
         price_str = price_str.strip().replace(',', '')
         return float(price_str)
     
-    return parse_price(min_str), parse_price(max_str)
+    min_price = parse_price(min_str)
+    max_price = parse_price(max_str)
+    
+    avg_price = (min_price + max_price) / 2
+    calculated_min_price = (avg_price / 2)
+    
+    return max(calculated_min_price, 0)  # Ensure min price is not negative
+
+def clean_title(title):
+    """Clean up car title by removing everything after first parenthesis"""
+    # Get first line of title
+    title = title.split('\n')[0]
+    
+    # Remove everything after first parenthesis (including the parenthesis)
+    title = title.split('(')[0].strip()
+    return title
 
 def search_wallapop(car):
     """Search Wallapop for car listings using Selenium with specific parameters"""
@@ -160,33 +219,30 @@ def search_wallapop(car):
     
     try:
         # Get parameters from the car data
-        model = car['modelo']
-        engine = car['motor_recomendado'] if car['motor_recomendado'] else ''
-        min_price, max_price = parse_price_range(car['precio_compra'])
-        
-        # Parse year range
+        model = car['modelo']  # Just the model name
+        brand = car['marca']   # Brand is now a separate field
+        min_price = parse_price_range(car['precio_compra'])
         start_year = car['ano_fabricacion'].split('/')[0]
         
-        # Format search keywords to include model and engine
-        keywords = f"{model} {engine}".strip()
+        # Use only the model for search keywords
+        encoded_keywords = quote(model)
+        encoded_brand = quote(brand)
         
-        # Construct search URL with all parameters
-        encoded_keywords = quote(keywords)
         url = (
             f"https://es.wallapop.com/app/search?"
             f"keywords={encoded_keywords}"
             f"&latitude=41.224151"
             f"&longitude=1.7255678"
             f"&category_ids=100"
-            f"&max_sale_price={int(max_price)}"
             f"&min_sale_price={int(min_price)}"
             f"&min_year={start_year}"
-            f"&max_km=200000"  # Fixed max kilometers
-            f"&distance=200000"  # 200km in meters
+            f"&max_km=200000"
+            f"&distance=200000"
             f"&order_by=price_low_to_high"
+            f"&brand={encoded_brand}"  # Use the brand from marca field
         )
         
-        print(url)
+        print(f"\nSearching URL: {url}")
         
         # Navigate to search page
         driver.get(url)
@@ -194,8 +250,8 @@ def search_wallapop(car):
         # Wait for listings to load
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="/item/"]')))
         
-        # Get all listing elements
-        listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')
+        # Get all listing elements (limit to first 5)
+        listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:5]
         
         # Extract information from listings
         listings = []
@@ -204,28 +260,37 @@ def search_wallapop(car):
             image_elements = element.find_elements(By.CSS_SELECTOR, 'img[src*="cdn.wallapop.com/images/"]')
             image_urls = [img.get_attribute('src') for img in image_elements if img.get_attribute('src')]
             
+            original_title = element.text
+            cleaned_title = clean_title(original_title.split('\n')[0])  # Clean only the first line which is the title
+            
             listing = {
                 'url': element.get_attribute('href'),
-                'title': element.text,
+                'title': cleaned_title + '\n' + '\n'.join(original_title.split('\n')[1:]),  # Keep the rest of the text
                 'price': element.find_element(By.CSS_SELECTOR, '[class*="price"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="price"]') else None,
                 'location': element.find_element(By.CSS_SELECTOR, '[class*="location"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="location"]') else None,
                 'images': image_urls
             }
             listings.append(listing)
+            print(f"Found: {listing['title']} - {listing['price']} - {listing['location']}")
+        
+        search_params = {
+            'model': model,
+            'brand': brand,
+            'min_price': int(min_price),
+            'max_price': None,  # No max price
+            'year': start_year,
+            'url': url
+        }
+        
+        print(f"\nSearch complete for {model}. Found {len(listings)} listings")
         
         return {
-            'search_parameters': {
-                'model': model,
-                'min_price': int(min_price),
-                'max_price': int(max_price),
-                'year': start_year,
-                'url': url
-            },
+            'search_parameters': search_params,
             'listings': listings
         }
         
     except Exception as e:
-        print(f"Error searching for {car['modelo']}: {str(e)}")
+        print(f"\nError searching for {car['modelo']}: {str(e)}")
         return None
         
     finally:
@@ -239,11 +304,19 @@ def process_all_cars():
     # Load car data from Supabase
     cars = get_cars_from_supabase()
     
+    if not cars:
+        print("No cars found in database. Exiting.")
+        return []
+        
     all_results = []
     
     # Process each car
     for car in cars:
-        print(f"\nSearching for {car['modelo']} ({car['ano_fabricacion']}, {car['precio_compra']}€)...")
+        if not car.get('modelo') or not car.get('marca'):
+            print(f"Skipping car with missing model or brand: {car}")
+            continue
+            
+        print(f"\nSearching for {car['marca']} {car['modelo']} ({car['ano_fabricacion']}, {car['precio_compra']}€)...")
         result = search_wallapop(car)
         
         if result and result['listings']:
@@ -253,10 +326,6 @@ def process_all_cars():
             all_results.append(result)
         else:
             print("No listings found")
-    
-    # Save results to JSON (keeping this for backup)
-    with open('detailed_search_results.json', 'w', encoding='utf-8') as f:
-        json.dump(all_results, f, indent=2, ensure_ascii=False)
     
     return all_results
 
