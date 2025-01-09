@@ -40,30 +40,38 @@ def run_all_searches():
     
     try:
         search_in_progress = True
-        logger.info("Starting all searches...")
+        logger.info("="*50)
+        logger.info("STARTING NEW SEARCH SESSION")
+        logger.info("="*50)
         
         # Run each search script
-        logger.info("Starting car search...")
+        logger.info("\n[1/4] Starting car search...")
         car_results = search_wallapop.process_all_cars()
-        logger.info(f"Car search complete. Found {len(car_results) if car_results else 0} results")
+        logger.info(f"✓ Car search complete. Found {len(car_results) if car_results else 0} results")
         
-        logger.info("Starting motorcycle search...")
+        logger.info("\n[2/4] Starting motorcycle search...")
         moto_results = search_wallapop_motos.process_all_motos()
-        logger.info(f"Motorcycle search complete. Found {len(moto_results) if moto_results else 0} results")
+        logger.info(f"✓ Motorcycle search complete. Found {len(moto_results) if moto_results else 0} results")
         
-        logger.info("Starting van search...")
+        logger.info("\n[3/4] Starting van search...")
         furgo_results = search_wallapop_furgos.process_all_furgos()
-        logger.info(f"Van search complete. Found {len(furgo_results[0]) if furgo_results and furgo_results[0] else 0} results")
+        logger.info(f"✓ Van search complete. Found {len(furgo_results[0]) if furgo_results and furgo_results[0] else 0} results")
         
-        logger.info("Starting scooter search...")
+        logger.info("\n[4/4] Starting scooter search...")
         scooter_results = search_wallapop_scooters.process_all_scooters()
-        logger.info(f"Scooter search complete. Found {len(scooter_results) if scooter_results else 0} results")
+        logger.info(f"✓ Scooter search complete. Found {len(scooter_results) if scooter_results else 0} results")
         
         last_run_time = datetime.now()
-        logger.info("All searches completed successfully")
+        logger.info("\n" + "="*50)
+        logger.info("ALL SEARCHES COMPLETED SUCCESSFULLY")
+        logger.info(f"Total time: {(datetime.now() - last_run_time).total_seconds():.2f} seconds")
+        logger.info("="*50 + "\n")
         
     except Exception as e:
-        logger.error(f"Error during searches: {str(e)}")
+        logger.error("\n" + "!"*50)
+        logger.error("ERROR DURING SEARCHES")
+        logger.error(str(e))
+        logger.error("!"*50 + "\n")
         raise
         
     finally:
@@ -105,9 +113,18 @@ async def get_logs():
     try:
         with open('search_logs.log', 'r') as f:
             logs = f.readlines()
+            # Filter out httpx logs unless there's an error
+            filtered_logs = [
+                log for log in logs[-50:] 
+                if not log.startswith('2025-01-09') or 
+                'ERROR' in log or 
+                'Starting' in log or 
+                'complete' in log or 
+                'COMPLETED' in log
+            ]
             return {
                 "status": "success",
-                "logs": logs[-50:]  # Return last 50 lines
+                "logs": filtered_logs
             }
     except Exception as e:
         return {
