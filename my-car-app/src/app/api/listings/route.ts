@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '../../../../utils/supabase'
 
-type VehicleType = 'coches' | 'motos' | 'furgos'
+type VehicleType = 'coches' | 'motos' | 'furgos' | 'scooters'
 
 // Target data interfaces
 interface BaseVehicle {
@@ -57,12 +57,17 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const vehicleType = (searchParams.get('type') || 'coches') as VehicleType
 
-  const { data: targetData, error: targetError } = await supabase
-    .from(vehicleType)
-    .select('*')
+  // For scooters, we don't need to fetch target data since we use fixed parameters
+  let targetData = []
+  if (vehicleType !== 'scooters') {
+    const { data, error: targetError } = await supabase
+      .from(vehicleType)
+      .select('*')
 
-  if (targetError) {
-    return NextResponse.json({ error: targetError.message }, { status: 500 })
+    if (targetError) {
+      return NextResponse.json({ error: targetError.message }, { status: 500 })
+    }
+    targetData = data
   }
 
   const { data: listings, error: listingsError } = await supabase
@@ -100,28 +105,31 @@ export async function GET(request: Request) {
   const parsePrice = (str: string): number => 
     Number(str.replace('€', '').replace('.', '').replace(',', '.').trim())
 
-  const targetPrices = new Map(
-    (targetData as (Coche | Moto | Furgo)[]).map(item => {
-      if (vehicleType === 'coches') {
-        const car = item as Coche
-        return [car.modelo, parsePrice(car.precio_compra.split('-')[0])] as const
-      } 
-      
-      if (vehicleType === 'motos') {
-        const moto = item as Moto
-        const [min, max] = moto.price_range.split('-').map(parsePrice)
-        return [moto.model, (min + max) / 2] as const
-      } 
-      
-      if (vehicleType === 'furgos') {
-        const van = item as Furgo
-        const [min, max] = van.precio.split('-').map(parsePrice)
-        return [`${van.modelo}-${van.configuracion}-${van.motor}`, (min + max) / 2] as const
-      }
-      
-      return ['', 0] as const
-    })
-  )
+  // For scooters, use a fixed target price
+  const targetPrices = vehicleType === 'scooters' 
+    ? new Map([['scooter', 900]]) // Fixed target price for scooters at 900€
+    : new Map(
+        (targetData as (Coche | Moto | Furgo)[]).map(item => {
+          if (vehicleType === 'coches') {
+            const car = item as Coche
+            return [car.modelo, parsePrice(car.precio_compra.split('-')[0])] as const
+          } 
+          
+          if (vehicleType === 'motos') {
+            const moto = item as Moto
+            const [min, max] = moto.price_range.split('-').map(parsePrice)
+            return [moto.model, (min + max) / 2] as const
+          } 
+          
+          if (vehicleType === 'furgos') {
+            const van = item as Furgo
+            const [min, max] = van.precio.split('-').map(parsePrice)
+            return [`${van.modelo}-${van.configuracion}-${van.motor}`, (min + max) / 2] as const
+          }
+          
+          return ['', 0] as const
+        })
+      )
 
   const isFurgoListing = (listing: VehicleListing): listing is FurgoListing => 
     'configuracion' in listing && 'motor' in listing
@@ -134,7 +142,9 @@ export async function GET(request: Request) {
         : listing.title
 
       let targetPrice = 0
-      if (vehicleType === 'furgos' && isFurgoListing(listing)) {
+      if (vehicleType === 'scooters') {
+        targetPrice = targetPrices.get('scooter') || 0
+      } else if (vehicleType === 'furgos' && isFurgoListing(listing)) {
         const key = `${listing.searches?.model || ''}-${listing.configuracion}-${listing.motor}`
         targetPrice = targetPrices.get(key) || 0
       } else {
@@ -151,17 +161,19 @@ export async function GET(request: Request) {
     })
     .sort((a, b) => b.price_difference - a.price_difference)
 
-  const getListingImages = (listing: VehicleListing, type: VehicleType): Array<{ image_url: string }> => {
+  const getListingImages = (listing: VehicleListing & { listing_images_scooters?: Array<{ image_url: string }> }, type: VehicleType): Array<{ image_url: string }> => {
     switch (type) {
       case 'coches':
-        return 'listing_images_coches' in listing ? listing.listing_images_coches : []
+        return ('listing_images_coches' in listing ? listing.listing_images_coches : []) || []
       case 'motos':
-        return 'listing_images_motos' in listing ? listing.listing_images_motos : []
+        return ('listing_images_motos' in listing ? listing.listing_images_motos : []) || []
       case 'furgos':
-        return 'listing_images_furgos' in listing ? listing.listing_images_furgos : []
+        return ('listing_images_furgos' in listing ? listing.listing_images_furgos : []) || []
+      case 'scooters':
+        return ('listing_images_scooters' in listing ? listing.listing_images_scooters : []) || []
     }
   }
-
+  
   const listingsWithFormattedImages = listingsWithDiff.map(listing => ({
     ...listing,
     listing_images: getListingImages(listing, vehicleType)
