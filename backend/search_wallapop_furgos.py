@@ -288,7 +288,8 @@ def store_search_results(supabase, all_searches, all_listings):
                     
                     # Print detailed price calculation
                     print("\n" + "="*50)
-                    print(f"Listing: {listing['title'].split('\n')[0]}")
+                    title_parts = listing['title'].split('\n')
+                    print(f"Listing: {title_parts[0]}")
                     print(f"Raw price text: {listing['price']}")
                     print("\nCalculation:")
                     print(f"Parsed listing price: {listing_price}€")
