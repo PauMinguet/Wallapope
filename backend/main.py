@@ -45,19 +45,19 @@ def run_all_searches():
         # Run each search script
         logger.info("Starting car search...")
         car_results = search_wallapop.process_all_cars()
-        logger.info(f"Car search complete. Found {len(car_results)} results")
+        logger.info(f"Car search complete. Found {len(car_results) if car_results else 0} results")
         
         logger.info("Starting motorcycle search...")
         moto_results = search_wallapop_motos.process_all_motos()
-        logger.info(f"Motorcycle search complete. Found {len(moto_results)} results")
+        logger.info(f"Motorcycle search complete. Found {len(moto_results) if moto_results else 0} results")
         
         logger.info("Starting van search...")
         furgo_results = search_wallapop_furgos.process_all_furgos()
-        logger.info(f"Van search complete. Found {len(furgo_results)} results")
+        logger.info(f"Van search complete. Found {len(furgo_results[0]) if furgo_results and furgo_results[0] else 0} results")
         
         logger.info("Starting scooter search...")
-        scooter_result = search_wallapop_scooters.main()
-        logger.info("Scooter search complete")
+        scooter_results = search_wallapop_scooters.process_all_scooters()
+        logger.info(f"Scooter search complete. Found {len(scooter_results) if scooter_results else 0} results")
         
         last_run_time = datetime.now()
         logger.info("All searches completed successfully")
@@ -98,6 +98,53 @@ async def get_status():
         "search_in_progress": search_in_progress,
         "last_run": last_run_time.isoformat() if last_run_time else None
     }
+
+@app.get("/logs")
+async def get_logs():
+    """Get the last 50 lines of logs"""
+    try:
+        with open('search_logs.log', 'r') as f:
+            logs = f.readlines()
+            return {
+                "status": "success",
+                "logs": logs[-50:]  # Return last 50 lines
+            }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
+
+@app.get("/stats")
+async def get_stats():
+    """Get statistics about the latest searches"""
+    try:
+        supabase = search_wallapop.init_supabase()
+        
+        # Get counts from each table
+        cars = supabase.table('listings_coches').select('count', count='exact').execute()
+        motos = supabase.table('listings_motos').select('count', count='exact').execute()
+        furgos = supabase.table('listings_furgos').select('count', count='exact').execute()
+        scooters = supabase.table('listings_scooters').select('count', count='exact').execute()
+        
+        # Get latest search times
+        searches = supabase.table('searches').select('created_at', 'vehicle_type').order('created_at', desc=True).limit(4).execute()
+        
+        return {
+            "status": "success",
+            "counts": {
+                "cars": cars.count,
+                "motorcycles": motos.count,
+                "vans": furgos.count,
+                "scooters": scooters.count
+            },
+            "latest_searches": searches.data
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
 
 if __name__ == "__main__":
     import uvicorn
