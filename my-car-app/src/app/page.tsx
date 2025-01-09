@@ -14,13 +14,16 @@ import {
 } from '@mui/icons-material'
 import { Listing } from '../../types/listing'
 
-const formatPriceDifference = (diff: number) => {
+const formatPriceDifference = (diff: number, type: string) => {
   const formatted = Math.abs(diff).toLocaleString('es-ES', {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   })
+  if (type === 'furgos') {
+    return diff < 0 ? `${formatted} under target` : `${formatted} over target`
+  }
   return diff > 0 ? `${formatted} below target` : `${formatted} above target`
 }
 
@@ -371,7 +374,7 @@ export default function Home() {
                         currentListing.price_difference > 0 ? 'text-green-400' : 'text-red-400'
                       }`}
                     >
-                      ({formatPriceDifference(currentListing.price_difference)})
+                      ({formatPriceDifference(currentListing.price_difference, vehicleType)})
                     </Typography>
                   </div>
                 </div>

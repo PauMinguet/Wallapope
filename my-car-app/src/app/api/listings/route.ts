@@ -31,6 +31,7 @@ interface BaseListing {
   description: string
   price: number
   price_text: string
+  price_difference?: number
   location: string
   searches?: {
     model: string
@@ -141,25 +142,31 @@ export async function GET(request: Request) {
         ? listing.title.replace(/^reservado\s+/i, '')
         : listing.title
 
-      let targetPrice = 0
+      let price_difference = 0
       if (vehicleType === 'scooters') {
-        targetPrice = targetPrices.get('scooter') || 0
-      } else if (vehicleType === 'furgos' && isFurgoListing(listing)) {
-        const key = `${listing.searches?.model || ''}-${listing.configuracion}-${listing.motor}`
-        targetPrice = targetPrices.get(key) || 0
+        const targetPrice = targetPrices.get('scooter') || 0
+        price_difference = targetPrice - (listing.price || 0)
+      } else if (vehicleType === 'furgos') {
+        // For furgos, use the price_difference from the database
+        price_difference = listing.price_difference || 0
       } else {
-        targetPrice = targetPrices.get(listing.searches?.model || '') || 0
+        const targetPrice = targetPrices.get(listing.searches?.model || '') || 0
+        price_difference = targetPrice - (listing.price || 0)
       }
 
       return {
         ...listing,
         title: cleanTitle,
         isReserved,
-        price_difference: targetPrice - (listing.price || 0),
+        price_difference,
         vehicle_type: vehicleType
       }
     })
-    .sort((a, b) => b.price_difference - a.price_difference)
+    .sort((a, b) => 
+      vehicleType === 'furgos' 
+        ? a.price_difference - b.price_difference  // For furgos: more negative = better
+        : b.price_difference - a.price_difference  // For others: more positive = better
+    )
 
   const getListingImages = (listing: VehicleListing & { listing_images_scooters?: Array<{ image_url: string }> }, type: VehicleType): Array<{ image_url: string }> => {
     switch (type) {
