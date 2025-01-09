@@ -47,19 +47,39 @@ def run_all_searches():
         # Run each search script
         logger.info("\n[1/4] Starting car search...")
         car_results = search_wallapop.process_all_cars()
-        logger.info(f"✓ Car search complete. Found {len(car_results) if car_results else 0} results")
+        if car_results:
+            last_car = car_results[-1]['search_parameters']
+            logger.info(f"✓ Car search complete. Found {len(car_results)} results")
+            logger.info(f"  Last searched: {last_car['marca']} {last_car['model']}")
+        else:
+            logger.info("✓ Car search complete. No results found")
         
         logger.info("\n[2/4] Starting motorcycle search...")
         moto_results = search_wallapop_motos.process_all_motos()
-        logger.info(f"✓ Motorcycle search complete. Found {len(moto_results) if moto_results else 0} results")
+        if moto_results:
+            last_moto = moto_results[-1]['search_parameters']
+            logger.info(f"✓ Motorcycle search complete. Found {len(moto_results)} results")
+            logger.info(f"  Last searched: {last_moto['marca']} {last_moto['model']}")
+        else:
+            logger.info("✓ Motorcycle search complete. No results found")
         
         logger.info("\n[3/4] Starting van search...")
         furgo_results = search_wallapop_furgos.process_all_furgos()
-        logger.info(f"✓ Van search complete. Found {len(furgo_results[0]) if furgo_results and furgo_results[0] else 0} results")
+        if furgo_results and furgo_results[0]:
+            last_furgo = furgo_results[0][-1]
+            logger.info(f"✓ Van search complete. Found {len(furgo_results[0])} results")
+            logger.info(f"  Last searched: {last_furgo['marca']} {last_furgo['model']}")
+        else:
+            logger.info("✓ Van search complete. No results found")
         
         logger.info("\n[4/4] Starting scooter search...")
         scooter_results = search_wallapop_scooters.process_all_scooters()
-        logger.info(f"✓ Scooter search complete. Found {len(scooter_results) if scooter_results else 0} results")
+        if scooter_results:
+            last_scooter = scooter_results[-1]['search_parameters']
+            logger.info(f"✓ Scooter search complete. Found {len(scooter_results)} results")
+            logger.info(f"  Last searched: {last_scooter['model']}")
+        else:
+            logger.info("✓ Scooter search complete. No results found")
         
         last_run_time = datetime.now()
         logger.info("\n" + "="*50)
@@ -120,7 +140,8 @@ async def get_logs():
                 'ERROR' in log or 
                 'Starting' in log or 
                 'complete' in log or 
-                'COMPLETED' in log
+                'COMPLETED' in log or
+                'Last searched:' in log
             ]
             return {
                 "status": "success",
