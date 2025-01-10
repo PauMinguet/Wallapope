@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: wallapop-scraper
+    env: docker
+    dockerCommand: docker-compose up
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false

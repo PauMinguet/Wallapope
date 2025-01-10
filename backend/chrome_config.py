@@ -1,15 +1,16 @@
+from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import platform
 import logging
-import subprocess
 import os
 import time
 
 logger = logging.getLogger(__name__)
 
 def get_chrome_options():
-    """Get Chrome options configured for local/Render environment"""
+    """Get Chrome options configured for Render environment"""
     chrome_options = Options()
     
     # Basic required options
@@ -24,8 +25,6 @@ def get_chrome_options():
     chrome_options.add_argument('--disable-setuid-sandbox')
     chrome_options.add_argument('--disable-web-security')
     chrome_options.add_argument('--ignore-certificate-errors')
-    chrome_options.add_argument('--remote-debugging-port=9222')  # Add debugging port
-    chrome_options.add_argument('--disable-software-rasterizer')
     
     # Connection stability
     chrome_options.add_argument('--disable-background-networking')
@@ -49,47 +48,29 @@ def get_chrome_options():
     
     return chrome_options
 
-def get_chromedriver_path():
-    """Get the ChromeDriver path based on the platform"""
-    if platform.system() == "Darwin":  # macOS
-        # Check if M1/M2 Mac
-        if platform.machine() == 'arm64':
-            # Try to get ChromeDriver path from Homebrew
-            try:
-                result = subprocess.run(['brew', '--prefix'], capture_output=True, text=True)
-                if result.returncode == 0:
-                    brew_prefix = result.stdout.strip()
-                    return os.path.join(brew_prefix, 'bin', 'chromedriver')
-            except:
-                pass
-        return "/usr/local/bin/chromedriver"
-    else:
-        return "/usr/bin/chromedriver"
-
-def get_chrome_service():
-    """Get ChromeDriver service with retry mechanism"""
+def create_driver():
+    """Create a remote WebDriver instance"""
     max_retries = 3
     retry_delay = 2
     
     for attempt in range(max_retries):
         try:
-            driver_path = get_chromedriver_path()
-            logger.info(f"Using ChromeDriver from: {driver_path}")
+            options = get_chrome_options()
+            capabilities = DesiredCapabilities.CHROME.copy()
+            capabilities['goog:chromeOptions'] = options.to_capabilities()['goog:chromeOptions']
             
-            # Verify ChromeDriver exists and is executable
-            if not os.path.exists(driver_path):
-                raise FileNotFoundError(f"ChromeDriver not found at {driver_path}")
-                
-            if not os.access(driver_path, os.X_OK):
-                logger.warning(f"ChromeDriver at {driver_path} is not executable. Attempting to fix...")
-                os.chmod(driver_path, 0o755)
+            # Use remote WebDriver
+            driver = webdriver.Remote(
+                command_executor='http://chrome:4444/wd/hub',
+                options=options
+            )
             
-            service = Service(driver_path)
-            return service
+            driver.set_page_load_timeout(30)
+            return driver
             
         except Exception as e:
-            logger.error(f"Attempt {attempt + 1} failed: {str(e)}")
+            logger.error(f"Attempt {attempt + 1} to create driver failed: {str(e)}")
             if attempt < max_retries - 1:
-                time.sleep(retry_delay * (2 ** attempt))  # Exponential backoff
+                time.sleep(retry_delay * (2 ** attempt))
             else:
                 raise 

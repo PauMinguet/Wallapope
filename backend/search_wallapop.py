@@ -9,7 +9,7 @@ from supabase_py import create_client
 from urllib.parse import quote
 from dotenv import load_dotenv
 import re
-from chrome_config import get_chrome_options, get_chrome_service
+from chrome_config import get_chrome_options, get_chrome_service, create_driver
 import logging
 from selenium.common.exceptions import WebDriverException
 import time
@@ -279,12 +279,9 @@ def search_wallapop(car):
         
         for attempt in range(max_retries):
             try:
-                chrome_options = get_chrome_options()
-                chrome_service = get_chrome_service()
-                
-                driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
-                driver.set_page_load_timeout(30)  # Set page load timeout
-                wait = WebDriverWait(driver, 20)  # Increase wait time
+                # Create remote driver
+                driver = create_driver()
+                wait = WebDriverWait(driver, 20)
                 
                 # Navigate to search page
                 driver.get(url)
