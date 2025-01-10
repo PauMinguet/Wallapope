@@ -9,7 +9,7 @@ from supabase_py import create_client
 from urllib.parse import quote
 from dotenv import load_dotenv
 import re
-from chrome_config import get_chrome_options, get_chrome_service, create_driver
+from chrome_config import get_chrome_options, create_driver
 import logging
 from selenium.common.exceptions import WebDriverException
 import time

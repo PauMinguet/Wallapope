@@ -5,6 +5,7 @@ import search_wallapop_motos
 import search_wallapop_furgos
 import search_wallapop_scooters
 import logging
+import os
 from datetime import datetime
 
 # Configure logging
