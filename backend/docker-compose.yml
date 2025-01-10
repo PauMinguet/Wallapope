@@ -6,8 +6,11 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
     volumes:
       - .:/app
+      - /data:/data
     depends_on:
       - chrome
     networks:
@@ -25,6 +28,7 @@ services:
       - /dev/shm:/dev/shm
     networks:
       - scraping_network
+    shm_size: '2gb'
 
 networks:
   scraping_network:

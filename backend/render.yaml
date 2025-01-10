@@ -8,3 +8,7 @@ services:
         sync: false
       - key: SUPABASE_KEY
         sync: false
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1

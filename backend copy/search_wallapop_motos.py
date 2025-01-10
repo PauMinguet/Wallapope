@@ -9,7 +9,6 @@ from urllib.parse import quote
 from dotenv import load_dotenv
 import re
 import logging
-from chrome_config import get_chrome_options, create_driver
 
 # Load environment variables from .env file
 load_dotenv()

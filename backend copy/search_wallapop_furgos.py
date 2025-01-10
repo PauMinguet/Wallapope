@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 import re
 import json
 from datetime import datetime
-from chrome_config import get_chrome_options, create_driver  # Remove get_chrome_service
 
 # Load environment variables from .env file
 load_dotenv()
