@@ -330,11 +330,11 @@ export default function Home() {
         />
         
         <div 
-          className="absolute inset-y-0 left-0 w-1/3 cursor-pointer z-10"
+          className="absolute left-0 w-1/3 cursor-pointer z-10 h-[80%] top-0"
           onClick={() => currentIndex > 0 && handleNavigation('prev')}
         />
         <div 
-          className="absolute inset-y-0 right-0 w-1/3 cursor-pointer z-10"
+          className="absolute right-0 w-1/3 cursor-pointer z-10 h-[80%] top-0"
           onClick={() => currentIndex < listings.length - 1 && handleNavigation('next')}
         />
         
