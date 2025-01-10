@@ -242,102 +242,137 @@ def clean_title(title):
     return title
 
 def search_wallapop(car):
-    """Search Wallapop for car listings using Selenium"""
-    chrome_options = get_chrome_options()
-    service = get_chrome_service()
-    
+    """Search Wallapop for a specific car model"""
+    driver = None
     try:
-        driver = webdriver.Chrome(
-            service=service,
-            options=chrome_options
-        )
+        # Get model and price range
+        model = car['modelo']
+        brand = car['marca']
+        price_range = car['precio_compra']
+        start_year = car['ano_fabricacion'].split('/')[0] if '/' in car['ano_fabricacion'] else car['ano_fabricacion']
         
-        # Increase timeouts
-        driver.set_page_load_timeout(30)
-        wait = WebDriverWait(driver, 30)  # Increased timeout to 30 seconds
+        # Parse price range
+        min_price = parse_price_range(price_range)[0] * 0.7  # Set minimum price to 70% of target
+        min_price = int(min_price)
         
-        # Add error handling and logging
-        logger.info(f"Starting search for {car['marca']} {car['modelo']}")
-        
-        # Get parameters from the car data
-        model = car['modelo']  # Just the model name
-        brand = car['marca']   # Brand is now a separate field
-        min_price = parse_price_range(car['precio_compra'])
-        start_year = car['ano_fabricacion'].split('/')[0]
-        
-        # Use only the model for search keywords
-        encoded_keywords = quote(model)
-        encoded_brand = quote(brand)
-        
-        url = (
-            f"https://es.wallapop.com/app/search?"
-            f"keywords={encoded_keywords}"
-            f"&latitude=41.224151"
-            f"&longitude=1.7255678"
-            f"&category_ids=100"
-            f"&min_sale_price={int(min_price)}"
-            f"&min_year={start_year}"
-            f"&max_km=200000"
-            f"&distance=200000"
-            f"&order_by=price_low_to_high"
-            f"&brand={encoded_brand}"  # Use the brand from marca field
-        )
-        
-        print(f"\nSearching URL: {url}")
-        
-        # Navigate to search page
-        driver.get(url)
-        
-        # Wait for listings to load
-        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="/item/"]')))
-        
-        # Get all listing elements (limit to first 5)
-        listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:5]
-        
-        # Extract information from listings
-        listings = []
-        for element in listing_elements:
-            # Get image URLs from the listing card
-            image_elements = element.find_elements(By.CSS_SELECTOR, 'img[src*="cdn.wallapop.com/images/"]')
-            image_urls = [img.get_attribute('src') for img in image_elements if img.get_attribute('src')]
-            
-            original_title = element.text
-            cleaned_title = clean_title(original_title.split('\n')[0])  # Clean only the first line which is the title
-            
-            listing = {
-                'url': element.get_attribute('href'),
-                'title': cleaned_title + '\n' + '\n'.join(original_title.split('\n')[1:]),  # Keep the rest of the text
-                'price': element.find_element(By.CSS_SELECTOR, '[class*="price"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="price"]') else None,
-                'location': element.find_element(By.CSS_SELECTOR, '[class*="location"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="location"]') else None,
-                'images': image_urls
-            }
-            listings.append(listing)
-            print(f"Found: {listing['title']} - {listing['price']} - {listing['location']}")
-        
+        # Build search URL
+        base_url = "https://es.wallapop.com/app/search"
         search_params = {
-            'model': model,
-            'brand': brand,
-            'min_price': int(min_price),
-            'max_price': None,  # No max price
-            'year': start_year,
-            'url': url
+            'keywords': model,
+            'latitude': '41.224151',
+            'longitude': '1.7255678',
+            'category_ids': '100',
+            'min_sale_price': min_price,
+            'min_year': start_year,
+            'max_km': '200000',
+            'distance': '200000',
+            'order_by': 'price_low_to_high',
+            'brand': brand
         }
         
-        print(f"\nSearch complete for {model}. Found {len(listings)} listings")
+        url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
+        logger.info(f"\nSearching URL: {url}")
         
-        return {
-            'search_parameters': search_params,
-            'listings': listings
-        }
+        # Initialize WebDriver with retry mechanism
+        max_retries = 3
+        retry_delay = 2
+        
+        for attempt in range(max_retries):
+            try:
+                chrome_options = get_chrome_options()
+                chrome_service = get_chrome_service()
+                
+                driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+                driver.set_page_load_timeout(30)  # Set page load timeout
+                wait = WebDriverWait(driver, 20)  # Increase wait time
+                
+                # Navigate to search page
+                driver.get(url)
+                
+                # Wait for listings to load with retry
+                for _ in range(3):
+                    try:
+                        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="/item/"]')))
+                        break
+                    except Exception as wait_error:
+                        logger.warning(f"Wait attempt failed: {str(wait_error)}")
+                        driver.refresh()
+                        time.sleep(2)
+                
+                # Get all listing elements (limit to first 5)
+                listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:5]
+                
+                if not listing_elements:
+                    logger.warning("No listings found, retrying...")
+                    if attempt < max_retries - 1:
+                        time.sleep(retry_delay * (2 ** attempt))
+                        continue
+                    return None
+                
+                # Extract information from listings
+                listings = []
+                for element in listing_elements:
+                    try:
+                        # Get image URLs from the listing card
+                        image_elements = element.find_elements(By.CSS_SELECTOR, 'img[src*="cdn.wallapop.com/images/"]')
+                        image_urls = [img.get_attribute('src') for img in image_elements if img.get_attribute('src')]
+                        
+                        original_title = element.text
+                        cleaned_title = clean_title(original_title.split('\n')[0])
+                        
+                        listing = {
+                            'url': element.get_attribute('href'),
+                            'title': cleaned_title + '\n' + '\n'.join(original_title.split('\n')[1:]),
+                            'price': element.find_element(By.CSS_SELECTOR, '[class*="price"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="price"]') else None,
+                            'location': element.find_element(By.CSS_SELECTOR, '[class*="location"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="location"]') else None,
+                            'images': image_urls
+                        }
+                        listings.append(listing)
+                        logger.info(f"Found: {listing['title']} - {listing['price']} - {listing['location']}")
+                    except Exception as element_error:
+                        logger.error(f"Error processing listing element: {str(element_error)}")
+                        continue
+                
+                if listings:
+                    search_params = {
+                        'model': model,
+                        'brand': brand,
+                        'min_price': min_price,
+                        'max_price': None,
+                        'year': start_year,
+                        'url': url
+                    }
+                    
+                    logger.info(f"\nSearch complete for {model}. Found {len(listings)} listings")
+                    return {
+                        'search_parameters': search_params,
+                        'listings': listings
+                    }
+                
+            except Exception as e:
+                logger.error(f"Search attempt {attempt + 1} failed: {str(e)}")
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay * (2 ** attempt))
+                else:
+                    raise
+            finally:
+                if driver:
+                    try:
+                        driver.quit()
+                    except Exception as quit_error:
+                        logger.error(f"Error closing driver: {str(quit_error)}")
+                        
+        return None
         
     except Exception as e:
         logger.error(f"Error in search_wallapop: {str(e)}")
         return None
     finally:
-        try:
-            driver.quit()
-        except Exception as e:
-            logger.error(f"Error closing driver: {str(e)}")
+        if driver:
+            try:
+                driver.quit()
+            except Exception as e:
+                logger.error(f"Error closing driver: {str(e)}")
 
 def search_with_retry(car, max_retries=3, delay=5):
     """Retry search with exponential backoff"""
