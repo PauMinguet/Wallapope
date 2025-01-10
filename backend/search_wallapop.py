@@ -5,11 +5,16 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import json
 import os
-from supabase import create_client
+from supabase_py import create_client
 from urllib.parse import quote
 from dotenv import load_dotenv
 import re
-from chrome_config import get_chrome_options
+from chrome_config import get_chrome_options, get_chrome_service
+import logging
+from selenium.common.exceptions import WebDriverException
+import time
+
+logger = logging.getLogger(__name__)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,24 +25,31 @@ def get_cars_from_supabase():
     response = supabase.table('coches').select("*").execute()
     
     # Add error checking and logging
-    if not response.data:
-        print("Error: No data returned from Supabase")
+    if not response or not isinstance(response, dict):
+        logger.error("Invalid response from Supabase")
+        return []
+    
+    # Extract data from response
+    data = response.get('data', [])
+    
+    if not data:
+        logger.warning("No data returned from Supabase")
         return []
         
     # Log the first car to check structure
-    if response.data:
-        print(f"First car data: {response.data[0]}")
+    if data:
+        logger.info(f"First car data: {data[0]}")
         
     # Validate each car has required fields
     valid_cars = []
-    for car in response.data:
+    for car in data:
         if all(car.get(field) for field in ['marca', 'modelo', 'ano_fabricacion', 'precio_compra']):
             valid_cars.append(car)
         else:
-            print(f"Skipping invalid car data: {car}")
+            logger.warning(f"Skipping invalid car data: {car}")
             
     if not valid_cars:
-        print("Error: No valid cars found in data")
+        logger.warning("No valid cars found in data")
         
     return valid_cars
 
@@ -48,8 +60,16 @@ def init_supabase():
     
     if not supabase_url or not supabase_key:
         raise Exception("Missing Supabase credentials in .env file")
-        
-    return create_client(supabase_url, supabase_key)
+    
+    try:
+        # Create client without proxy argument
+        return create_client(
+            supabase_url=supabase_url,
+            supabase_key=supabase_key
+        )
+    except Exception as e:
+        logger.error(f"Error initializing Supabase client: {str(e)}")
+        raise
 
 def parse_listing_details(title_text):
     """Parse listing title text into structured data"""
@@ -97,79 +117,94 @@ def parse_listing_details(title_text):
 
 def store_search_results(supabase, search_params, listings):
     """Store search results in Supabase"""
-    # Insert search parameters
-    search_data = {
-        'model': search_params['model'],
-        'marca': search_params['brand'],
-        'min_price': search_params['min_price'],
-        'max_price': search_params['max_price'],
-        'min_year': search_params['year'],
-        'search_url': search_params['url']
-    }
-    
     try:
-        search_result = supabase.table('searches').insert(search_data).execute()
-        search_id = search_result.data[0]['id']
+        # Insert search parameters
+        search_data = {
+            'model': search_params['model'],
+            'marca': search_params['brand'],
+            'min_price': search_params['min_price'],
+            'max_price': search_params['max_price'],
+            'min_year': search_params['year'],
+            'search_url': search_params['url'],
+            'vehicle_type': 'car'
+        }
+        
+        logger.info(f"Storing search: {search_data}")
+        search_response = supabase.table('searches').insert(search_data).execute()
+        
+        if not isinstance(search_response, dict):
+            search_response = search_response.dict()
+            
+        search_id = search_response['data'][0]['id']
+        logger.info(f"Created search with ID: {search_id}")
+        
+        # Track statistics
+        new_listings = 0
+        duplicate_listings = 0
         
         # Insert listings
         for listing in listings:
             try:
                 # Check if listing already exists
-                existing = supabase.table('listings_coches').select('id').eq('url', listing['url']).execute()
-                if existing.data:
-                    print(f"Skipping duplicate listing: {listing['url']}")
+                existing_response = supabase.table('listings_coches').select('id').eq('url', listing['url']).execute()
+                
+                if not isinstance(existing_response, dict):
+                    existing_response = existing_response.dict()
+                
+                if existing_response.get('data'):
+                    logger.info(f"Skipping duplicate listing: {listing['url']}")
+                    duplicate_listings += 1
                     continue
                 
-                # Parse listing details
+                # Parse and insert new listing
                 details = parse_listing_details(listing['title'])
-                
-                # Print lengths of all fields for debugging
-                field_lengths = {
-                    'url': len(listing['url']),
-                    'title': len(listing['title']),
-                    'price_text': len(details['price_text']) if details['price_text'] else 0,
-                    'location': len(listing['location']) if listing['location'] else 0,
-                    'description': len(details['description']) if details['description'] else 0
-                }
-                print(f"Field lengths: {field_lengths}")
-                
-                # Prepare listing data
                 listing_data = {
                     'search_id': search_id,
                     'url': listing['url'],
                     'title': listing['title'],
-                    'price': details['price'],
+                    'price': float(details['price']) if details['price'] else None,
                     'price_text': details['price_text'],
                     'location': listing['location'],
-                    'year': details['year'],
+                    'year': int(details['year']) if details['year'] else None,
                     'fuel_type': details['fuel_type'],
                     'transmission': details['transmission'],
-                    'power_cv': details['power_cv'],
-                    'kilometers': details['kilometers'],
+                    'power_cv': int(details['power_cv']) if details['power_cv'] else None,
+                    'kilometers': int(details['kilometers']) if details['kilometers'] else None,
                     'description': details['description']
                 }
                 
-                # Insert listing
-                listing_result = supabase.table('listings_coches').insert(listing_data).execute()
-                listing_id = listing_result.data[0]['id']
-                
-                # Insert images
-                for idx, image_url in enumerate(listing['images']):
-                    image_data = {
-                        'listing_id': listing_id,
-                        'image_url': image_url,
-                        'image_order': idx
-                    }
-                    supabase.table('listing_images_coches').insert(image_data).execute()
+                try:
+                    listing_response = supabase.table('listings_coches').insert(listing_data).execute()
+                    if listing_response.get('data'):
+                        listing_id = listing_response['data'][0]['id']
+                        logger.info(f"Created new listing: {listing_data['title']} (ID: {listing_id})")
+                        new_listings += 1
+                        
+                        # Insert images
+                        for idx, image_url in enumerate(listing['images']):
+                            image_data = {
+                                'listing_id': listing_id,
+                                'image_url': image_url,
+                                'image_order': idx
+                            }
+                            supabase.table('listing_images_coches').insert(image_data).execute()
+                            
+                except Exception as insert_error:
+                    if 'unique constraint' in str(insert_error).lower():
+                        logger.info(f"Duplicate listing detected during insert: {listing['url']}")
+                        duplicate_listings += 1
+                    else:
+                        logger.error(f"Error inserting listing: {str(insert_error)}")
+                    continue
                     
             except Exception as e:
-                print(f"Error storing listing {listing['url']}")
-                print(f"Error details: {str(e)}")
-                print(f"Listing data: {listing_data}")
+                logger.error(f"Error processing listing {listing['url']}: {str(e)}")
                 continue
+                
+        logger.info(f"Search complete. New listings: {new_listings}, Duplicates skipped: {duplicate_listings}")
                     
     except Exception as e:
-        print(f"Error storing search results: {str(e)}")
+        logger.error(f"Error in search process: {str(e)}")
 
 def parse_price_range(price_str):
     """Parse price range string into min price value"""
@@ -209,10 +244,17 @@ def clean_title(title):
 def search_wallapop(car):
     """Search Wallapop for car listings using Selenium"""
     chrome_options = get_chrome_options()
+    service = get_chrome_service()
     
     try:
-        driver = webdriver.Chrome(options=chrome_options)
-        wait = WebDriverWait(driver, 20)  # Increased timeout to 20 seconds
+        driver = webdriver.Chrome(
+            service=service,
+            options=chrome_options
+        )
+        
+        # Increase timeouts
+        driver.set_page_load_timeout(30)
+        wait = WebDriverWait(driver, 30)  # Increased timeout to 30 seconds
         
         # Add error handling and logging
         logger.info(f"Starting search for {car['marca']} {car['modelo']}")
@@ -294,8 +336,21 @@ def search_wallapop(car):
     finally:
         try:
             driver.quit()
-        except:
-            pass
+        except Exception as e:
+            logger.error(f"Error closing driver: {str(e)}")
+
+def search_with_retry(car, max_retries=3, delay=5):
+    """Retry search with exponential backoff"""
+    for attempt in range(max_retries):
+        try:
+            result = search_wallapop(car)
+            if result:
+                return result
+        except WebDriverException as e:
+            logger.warning(f"Attempt {attempt + 1} failed: {str(e)}")
+            if attempt < max_retries - 1:  # Don't sleep on the last attempt
+                time.sleep(delay * (2 ** attempt))  # Exponential backoff
+    return None
 
 def process_all_cars():
     """Process each car from Supabase"""
@@ -306,7 +361,7 @@ def process_all_cars():
     cars = get_cars_from_supabase()
     
     if not cars:
-        print("No cars found in database. Exiting.")
+        logger.warning("No cars found in database. Exiting.")
         return []
         
     all_results = []
@@ -314,19 +369,18 @@ def process_all_cars():
     # Process each car
     for car in cars:
         if not car.get('modelo') or not car.get('marca'):
-            print(f"Skipping car with missing model or brand: {car}")
+            logger.warning(f"Skipping car with missing model or brand: {car}")
             continue
             
-        print(f"\nSearching for {car['marca']} {car['modelo']} ({car['ano_fabricacion']}, {car['precio_compra']}€)...")
-        result = search_wallapop(car)
+        logger.info(f"\nSearching for {car['marca']} {car['modelo']} ({car['ano_fabricacion']}, {car['precio_compra']}€)...")
+        result = search_with_retry(car)
         
         if result and result['listings']:
-            print(f"Found {len(result['listings'])} listings")
-            # Store results in Supabase
+            logger.info(f"Found {len(result['listings'])} listings")
             store_search_results(supabase, result['search_parameters'], result['listings'])
             all_results.append(result)
         else:
-            print("No listings found")
+            logger.warning("No listings found")
     
     return all_results
 

@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
-from supabase import create_client
+from supabase_py import create_client
 from urllib.parse import quote
 from dotenv import load_dotenv
 import re
@@ -19,23 +19,29 @@ def get_furgos_from_supabase():
     supabase = init_supabase()
     response = supabase.table('furgos').select("*").execute()
     
-    if not response.data:
-        print("Error: No data returned from Supabase")
+    if not response or not isinstance(response, dict):
+        logger.error("Invalid response from Supabase")
+        return []
+    
+    data = response.get('data', [])
+    
+    if not data:
+        logger.warning("No data returned from Supabase")
         return []
         
-    if response.data:
-        print(f"First van data: {response.data[0]}")
+    if data:
+        logger.info(f"First van data: {data[0]}")
         
     # Validate each van has required fields
     valid_furgos = []
-    for furgo in response.data:
+    for furgo in data:
         if all(furgo.get(field) for field in ['marca', 'modelo', 'motor', 'configuracion', 'precio', 'año_fabricacion']):
             valid_furgos.append(furgo)
         else:
-            print(f"Skipping invalid van data: {furgo}")
+            logger.warning(f"Skipping invalid van data: {furgo}")
             
     if not valid_furgos:
-        print("Error: No valid vans found in data")
+        logger.warning("No valid vans found in data")
         
     return valid_furgos
 

@@ -345,3 +345,1809 @@
 2025-01-09 15:24:10,478 - httpx - INFO - HTTP Request: GET https://xiqbuolkrzuqmndwhudd.supabase.co/rest/v1/listings_coches?select=id&url=eq.https%3A%2F%2Fes.wallapop.com%2Fitem%2Fhyundai-i30-0-1057711652 "HTTP/2 200 OK"
 2025-01-09 15:24:17,662 - httpx - INFO - HTTP Request: POST https://xiqbuolkrzuqmndwhudd.supabase.co/rest/v1/searches "HTTP/2 201 Created"
 2025-01-09 15:24:17,891 - httpx - INFO - HTTP Request: GET https://xiqbuolkrzuqmndwhudd.supabase.co/rest/v1/listings_coches?select=id&url=eq.https%3A%2F%2Fes.wallapop.com%2Fitem%2Ftoyota-aygo-2014-1039239470 "HTTP/2 200 OK"
+2025-01-09 16:44:51,546 - main - INFO - ==================================================
+2025-01-09 16:44:51,546 - main - INFO - STARTING NEW SEARCH SESSION
+2025-01-09 16:44:51,546 - main - INFO - ==================================================
+2025-01-09 16:44:51,546 - main - INFO - 
+[1/4] Starting car search...
+2025-01-09 16:44:52,569 - httpx - INFO - HTTP Request: GET https://xiqbuolkrzuqmndwhudd.supabase.co/rest/v1/coches?select=%2A "HTTP/2 200 OK"
+2025-01-09 16:44:59,604 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102b9bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102b94314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001025fc4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001025e77e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001025e7550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x00000001025e52dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x00000001025e5e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001025ec2b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x00000001025e49e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x00000001025e7254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x00000001025e52dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x00000001025e5e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x00000001025dca10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x00000001025e49e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x00000001025e43a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x00000001025e3f6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x00000001025fe41c cxxbridge1$string$len + 97264
+17  chromedriver                        0x00000001025d7134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x00000001025d6d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x0000000102669e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001026695b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x00000001026350b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x0000000102635d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000102b66e08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x0000000102b6a120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x0000000102b4e17c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x0000000102b6a9e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000102b3f988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x0000000102b850f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000102b85270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000102b93f88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:00,397 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100d3bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100d34314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x000000010079c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001007877e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001007852dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000100785f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x000000010079ca3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000100776c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000100809e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001008095b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001007d50b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001007d5d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000100d06e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000100d0a120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000100cee17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000100d0a9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000100cdf988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000100d250f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000100d25270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000100d33f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:01,212 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102c17ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102c10314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001026784b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001026637e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102663550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x00000001026612dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000102661e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001026682b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x00000001026609e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000102663254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x00000001026612dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000102661e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000102658a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x00000001026609e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x00000001026603a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x000000010265ff6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x000000010267a41c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000102653134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000102652d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x00000001026e5e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001026e55b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x00000001026b10b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x00000001026b1d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000102be2e08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x0000000102be6120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x0000000102bca17c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x0000000102be69e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000102bbb988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x0000000102c010f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000102c01270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000102c0ff88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:02,008 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100d93ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100d8c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001007f44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001007df7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001007dd2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x00000001007ddf48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001007f4a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x00000001007cec04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000100861e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001008615b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x000000010082d0b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x000000010082dd00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000100d5ee08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000100d62120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000100d4617c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000100d629e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000100d37988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000100d7d0f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000100d7d270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000100d8bf88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:02,707 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000104d23ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104d1c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001047844b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001047b997c cxxbridge1$string$len + 307536
+4   chromedriver                        0x00000001047b519c cxxbridge1$string$len + 289136
+5   chromedriver                        0x00000001047b1374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x00000001047f1c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x00000001047f15b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x00000001047bd0b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x00000001047bdd00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000104ceee08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000104cf2120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000104cd617c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000104cf29e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000104cc7988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000104d0d0f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000104d0d270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000104d1bf88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:03,466 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000103237ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000103230314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102c984b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102c837e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102c812dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102c81f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102c98f54 cxxbridge1$string$len + 91944
+7   chromedriver                        0x0000000102c73204 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1844
+8   chromedriver                        0x0000000102c72d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+9   chromedriver                        0x0000000102d05e04 cxxbridge1$string$len + 538072
+10  chromedriver                        0x0000000102d055b8 cxxbridge1$string$len + 535948
+11  chromedriver                        0x0000000102cd10b0 cxxbridge1$string$len + 321668
+12  chromedriver                        0x0000000102cd1d00 cxxbridge1$string$len + 324820
+13  chromedriver                        0x0000000103202e08 cxxbridge1$str$ptr + 3435328
+14  chromedriver                        0x0000000103206120 cxxbridge1$str$ptr + 3448408
+15  chromedriver                        0x00000001031ea17c cxxbridge1$str$ptr + 3333812
+16  chromedriver                        0x00000001032069e0 cxxbridge1$str$ptr + 3450648
+17  chromedriver                        0x00000001031db988 cxxbridge1$str$ptr + 3274432
+18  chromedriver                        0x00000001032210f4 cxxbridge1$str$ptr + 3558956
+19  chromedriver                        0x0000000103221270 cxxbridge1$str$ptr + 3559336
+20  chromedriver                        0x000000010322ff88 cxxbridge1$str$ptr + 3620032
+21  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+22  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:04,190 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x000000010474fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104748314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001041b04b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001041e09fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x00000001041dd374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x000000010421dc70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x000000010421d5b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x00000001041e90b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x00000001041e9d00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x000000010471ae08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x000000010471e120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x000000010470217c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x000000010471e9e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x00000001046f3988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x00000001047390f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x0000000104739270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x0000000104747f88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:04,925 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100a27ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100a20314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001004884b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001004737e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001004712dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000100471f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000100488a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000100462c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001004f5e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001004f55b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001004c10b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001004c1d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x00000001009f2e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x00000001009f6120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x00000001009da17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001009f69e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001009cb988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000100a110f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000100a11270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000100a1ff88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:05,713 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010356fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000103568314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102fd04b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102fbb7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102fbb550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x0000000102fb92dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000102fb9e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x0000000102fc02b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x0000000102fb89e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000102fbb254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x0000000102fb92dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000102fb9e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000102fb0a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x0000000102fb89e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x0000000102fb83a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x0000000102fb7f6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x0000000102fd241c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000102fab134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000102faad3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x000000010303de04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x000000010303d5b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x00000001030090b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x0000000103009d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x000000010353ae08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x000000010353e120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x000000010352217c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x000000010353e9e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000103513988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x00000001035590f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000103559270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000103567f88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:06,622 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100fcbac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100fc4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100a2c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100a177e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000100a152dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000100a15f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000100a2ca3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000100a06c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000100a99e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x0000000100a995b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x0000000100a650b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000100a65d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000100f96e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000100f9a120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000100f7e17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000100f9a9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000100f6f988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000100fb50f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000100fb5270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000100fc3f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:07,390 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x000000010530bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000105304314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000104d6c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000104d9c9fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x0000000104d99374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x0000000104dd9c70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x0000000104dd95b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x0000000104da50b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x0000000104da5d00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x00000001052d6e08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x00000001052da120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x00000001052be17c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x00000001052da9e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x00000001052af988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x00000001052f50f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x00000001052f5270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x0000000105303f88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:08,133 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x00000001013bfac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001013b8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100e204b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100e5597c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000100e5119c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000100e4d374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000100e8dc70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000100e8d5b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000100e590b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000100e59d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x000000010138ae08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x000000010138e120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x000000010137217c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x000000010138e9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000101363988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x00000001013a90f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x00000001013a9270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x00000001013b7f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:08,940 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102dcfac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102dc8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001028304b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010281b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001028192dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102819f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102830a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010280ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x000000010289de04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x000000010289d5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001028690b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000102869d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102d9ae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102d9e120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102d8217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102d9e9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102d73988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102db90f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102db9270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102dc7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:09,698 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100f5fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100f58314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001009c04b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001009ab7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001009ab550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x00000001009a92dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x00000001009a9e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001009a0a80 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24496
+8   chromedriver                        0x00000001009a89e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x00000001009a83a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+10  chromedriver                        0x00000001009a7f6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+11  chromedriver                        0x00000001009c241c cxxbridge1$string$len + 97264
+12  chromedriver                        0x000000010099b134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+13  chromedriver                        0x000000010099ad3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+14  chromedriver                        0x0000000100a2de04 cxxbridge1$string$len + 538072
+15  chromedriver                        0x0000000100a2d5b8 cxxbridge1$string$len + 535948
+16  chromedriver                        0x00000001009f90b0 cxxbridge1$string$len + 321668
+17  chromedriver                        0x00000001009f9d00 cxxbridge1$string$len + 324820
+18  chromedriver                        0x0000000100f2ae08 cxxbridge1$str$ptr + 3435328
+19  chromedriver                        0x0000000100f2e120 cxxbridge1$str$ptr + 3448408
+20  chromedriver                        0x0000000100f1217c cxxbridge1$str$ptr + 3333812
+21  chromedriver                        0x0000000100f2e9e0 cxxbridge1$str$ptr + 3450648
+22  chromedriver                        0x0000000100f03988 cxxbridge1$str$ptr + 3274432
+23  chromedriver                        0x0000000100f490f4 cxxbridge1$str$ptr + 3558956
+24  chromedriver                        0x0000000100f49270 cxxbridge1$str$ptr + 3559336
+25  chromedriver                        0x0000000100f57f88 cxxbridge1$str$ptr + 3620032
+26  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+27  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:10,200 - search_wallapop - INFO - Starting search for Seat Ibiza (Gasolina)
+2025-01-09 16:45:10,432 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: unable to send message to renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100e8bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100e84314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001008ec4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001008d6960 cxxbridge1$string$len + 308
+4   chromedriver                        0x00000001008d50f8 core::str::slice_error_fail::ha0e52dbcb60e6bae + 58920
+5   chromedriver                        0x00000001008d5e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+6   chromedriver                        0x00000001008ee9b8 cxxbridge1$string$len + 98700
+7   chromedriver                        0x000000010096a6a0 cxxbridge1$string$len + 605812
+8   chromedriver                        0x000000010096a0fc cxxbridge1$string$len + 604368
+9   chromedriver                        0x00000001009250b0 cxxbridge1$string$len + 321668
+10  chromedriver                        0x0000000100925d00 cxxbridge1$string$len + 324820
+11  chromedriver                        0x0000000100e56e08 cxxbridge1$str$ptr + 3435328
+12  chromedriver                        0x0000000100e5a120 cxxbridge1$str$ptr + 3448408
+13  chromedriver                        0x0000000100e3e17c cxxbridge1$str$ptr + 3333812
+14  chromedriver                        0x0000000100e5a9e0 cxxbridge1$str$ptr + 3450648
+15  chromedriver                        0x0000000100e2f988 cxxbridge1$str$ptr + 3274432
+16  chromedriver                        0x0000000100e750f4 cxxbridge1$str$ptr + 3558956
+17  chromedriver                        0x0000000100e75270 cxxbridge1$str$ptr + 3559336
+18  chromedriver                        0x0000000100e83f88 cxxbridge1$str$ptr + 3620032
+19  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:11,257 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x00000001035abac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001035a4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x000000010300c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010304197c cxxbridge1$string$len + 307536
+4   chromedriver                        0x000000010303d19c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000103039374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000103079c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x00000001030795b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x00000001030450b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000103045d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000103576e08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x000000010357a120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x000000010355e17c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x000000010357a9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x000000010354f988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x00000001035950f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000103595270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x00000001035a3f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:12,043 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010510bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000105104314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000104b6c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000104b577e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000104b552dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000104b55f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000104b6ca3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000104b46c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000104bd9e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x0000000104bd95b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x0000000104ba50b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000104ba5d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x00000001050d6e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x00000001050da120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x00000001050be17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001050da9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001050af988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001050f50f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x00000001050f5270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000105103f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:12,842 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010092fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100928314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001003904b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010037b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001003792dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000100379f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000100390a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010036ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001003fde04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001003fd5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001003c90b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001003c9d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x00000001008fae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x00000001008fe120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x00000001008e217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001008fe9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001008d3988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001009190f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000100919270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000100927f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:13,542 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x0000000102f7bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102f74314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001029dc4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102a0c9fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x0000000102a09374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x0000000102a49c70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x0000000102a495b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x0000000102a150b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x0000000102a15d00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x0000000102f46e08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x0000000102f4a120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x0000000102f2e17c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x0000000102f4a9e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x0000000102f1f988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x0000000102f650f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x0000000102f65270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x0000000102f73f88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:14,312 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000105153ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x000000010514c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000104bb44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000104b9f7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000104b9d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000104b9df48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000104bb4a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000104b8ec04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000104c21e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x0000000104c215b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x0000000104bed0b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000104bedd00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x000000010511ee08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000105122120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x000000010510617c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001051229e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001050f7988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x000000010513d0f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x000000010513d270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x000000010514bf88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:15,090 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000104e23ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104e1c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001048844b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010486f7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x000000010486f550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x000000010486d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x000000010486de14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001048742b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x000000010486c9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x000000010486f254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x000000010486d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x000000010486de14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000104864a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x000000010486c9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x000000010486c3a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x000000010486bf6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x000000010488641c cxxbridge1$string$len + 97264
+17  chromedriver                        0x000000010485f134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x000000010485ed3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x00000001048f1e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001048f15b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x00000001048bd0b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x00000001048bdd00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000104deee08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x0000000104df2120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x0000000104dd617c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x0000000104df29e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000104dc7988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x0000000104e0d0f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000104e0d270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000104e1bf88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:15,864 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x000000010324fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000103248314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102cb04b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102ce597c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000102ce119c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000102cdd374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000102d1dc70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000102d1d5b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000102ce90b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000102ce9d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x000000010321ae08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x000000010321e120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x000000010320217c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x000000010321e9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x00000001031f3988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x00000001032390f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000103239270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000103247f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:16,636 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000100ffbac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100ff4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100a5c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100a9197c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000100a8d19c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000100a89374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000100ac9c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000100ac95b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000100a950b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000100a95d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000100fc6e08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000100fca120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000100fae17c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000100fca9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000100f9f988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000100fe50f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000100fe5270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000100ff3f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:17,533 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001054d3ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001054cc314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000104f344b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000104f1f7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000104f1f550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x0000000104f1d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000104f1de14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x0000000104f242b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x0000000104f1c9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000104f1f254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x0000000104f1d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000104f1de14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000104f14a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x0000000104f1c9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x0000000104f1c3a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x0000000104f1bf6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x0000000104f3641c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000104f0f134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000104f0ed3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x0000000104fa1e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x0000000104fa15b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x0000000104f6d0b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x0000000104f6dd00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x000000010549ee08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x00000001054a2120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x000000010548617c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x00000001054a29e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000105477988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x00000001054bd0f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x00000001054bd270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x00000001054cbf88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:18,333 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102943ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x000000010293c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001023a44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010238f7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x000000010238d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x000000010238df48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001023a4a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010237ec04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000102411e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001024115b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001023dd0b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001023ddd00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x000000010290ee08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102912120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x00000001028f617c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001029129e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001028e7988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x000000010292d0f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x000000010292d270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x000000010293bf88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:19,162 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x0000000101063ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x000000010105c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100ac44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100af49fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x0000000100af1374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x0000000100b31c70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x0000000100b315b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x0000000100afd0b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x0000000100afdd00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x000000010102ee08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x0000000101032120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x000000010101617c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x00000001010329e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x0000000101007988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x000000010104d0f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x000000010104d270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x000000010105bf88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:19,976 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010464fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104648314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001040b04b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010409b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001040992dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000104099f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001040b0f54 cxxbridge1$string$len + 91944
+7   chromedriver                        0x000000010408b204 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1844
+8   chromedriver                        0x000000010408ad3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+9   chromedriver                        0x000000010411de04 cxxbridge1$string$len + 538072
+10  chromedriver                        0x000000010411d5b8 cxxbridge1$string$len + 535948
+11  chromedriver                        0x00000001040e90b0 cxxbridge1$string$len + 321668
+12  chromedriver                        0x00000001040e9d00 cxxbridge1$string$len + 324820
+13  chromedriver                        0x000000010461ae08 cxxbridge1$str$ptr + 3435328
+14  chromedriver                        0x000000010461e120 cxxbridge1$str$ptr + 3448408
+15  chromedriver                        0x000000010460217c cxxbridge1$str$ptr + 3333812
+16  chromedriver                        0x000000010461e9e0 cxxbridge1$str$ptr + 3450648
+17  chromedriver                        0x00000001045f3988 cxxbridge1$str$ptr + 3274432
+18  chromedriver                        0x00000001046390f4 cxxbridge1$str$ptr + 3558956
+19  chromedriver                        0x0000000104639270 cxxbridge1$str$ptr + 3559336
+20  chromedriver                        0x0000000104647f88 cxxbridge1$str$ptr + 3620032
+21  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+22  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:20,772 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001047bfac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001047b8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001042204b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010420b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001042092dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000104209f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000104220a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x00000001041fac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x000000010428de04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x000000010428d5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001042590b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000104259d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x000000010478ae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x000000010478e120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x000000010477217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x000000010478e9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000104763988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001047a90f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x00000001047a9270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x00000001047b7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:21,563 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102647ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102640314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001020a84b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001020937e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001020912dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102091f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001020a8a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000102082c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000102115e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001021155b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001020e10b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001020e1d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102612e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102616120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x00000001025fa17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001026169e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001025eb988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001026310f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102631270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x000000010263ff88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:22,329 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x00000001013dbac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001013d4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100e3c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100e7197c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000100e6d19c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000100e69374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000100ea9c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000100ea95b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000100e750b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000100e75d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x00000001013a6e08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x00000001013aa120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x000000010138e17c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x00000001013aa9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x000000010137f988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x00000001013c50f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x00000001013c5270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x00000001013d3f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:23,113 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010080bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100804314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x000000010026c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001002577e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000100257550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x00000001002552dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000100255e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x000000010025c2b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x00000001002549e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000100257254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x00000001002552dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000100255e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x000000010024ca10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x00000001002549e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x00000001002543a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x0000000100253f6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x000000010026e41c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000100247134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000100246d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x00000001002d9e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001002d95b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x00000001002a50b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x00000001002a5d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x00000001007d6e08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x00000001007da120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x00000001007be17c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x00000001007da9e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x00000001007af988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x00000001007f50f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x00000001007f5270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000100803f88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:23,912 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010261fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102618314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001020804b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010206b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001020692dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102069f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102080a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010205ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001020ede04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001020ed5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001020b90b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001020b9d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x00000001025eae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x00000001025ee120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x00000001025d217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001025ee9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x00000001025c3988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001026090f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102609270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102617f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:24,687 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102c97ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102c90314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001026f84b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001026e37e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001026e12dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x00000001026e1f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001026f8a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x00000001026d2c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000102765e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001027655b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001027310b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000102731d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102c62e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102c66120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102c4a17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102c669e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102c3b988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102c810f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102c81270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102c8ff88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:25,500 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100ee7ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100ee0314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001009484b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001009337e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000100933550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x00000001009312dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000100931e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001009382b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x00000001009309e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000100933254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x00000001009312dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000100931e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000100928a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x00000001009309e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x00000001009303a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x000000010092ff6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x000000010094a41c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000100923134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000100922d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x00000001009b5e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001009b55b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x00000001009810b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x0000000100981d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000100eb2e08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x0000000100eb6120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x0000000100e9a17c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x0000000100eb69e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000100e8b988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x0000000100ed10f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000100ed1270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000100edff88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:26,260 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x0000000104807ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104800314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001042684b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001042989fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x0000000104295374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x00000001042d5c70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x00000001042d55b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x00000001042a10b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x00000001042a1d00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x00000001047d2e08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x00000001047d6120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x00000001047ba17c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x00000001047d69e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x00000001047ab988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x00000001047f10f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x00000001047f1270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x00000001047fff88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:27,045 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000104d9bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104d94314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001047fc4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010483197c cxxbridge1$string$len + 307536
+4   chromedriver                        0x000000010482d19c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000104829374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000104869c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x00000001048695b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x00000001048350b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000104835d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000104d66e08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000104d6a120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000104d4e17c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000104d6a9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000104d3f988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000104d850f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000104d85270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000104d93f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:27,887 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001031afac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001031a8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102c104b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102bfb7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102bf92dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102bf9f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102c10a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000102beac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000102c7de04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x0000000102c7d5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x0000000102c490b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000102c49d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x000000010317ae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x000000010317e120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x000000010316217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x000000010317e9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000103153988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001031990f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000103199270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x00000001031a7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:28,642 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102c47ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102c40314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001026a84b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001026937e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001026912dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102691f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001026a8a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000102682c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000102715e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001027155b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001026e10b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001026e1d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102c12e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102c16120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102bfa17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102c169e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102beb988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102c310f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102c31270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102c3ff88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:29,429 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102e37ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102e30314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001028984b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001028837e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001028812dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102881f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102898a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000102872c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000102905e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001029055b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001028d10b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x00000001028d1d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102e02e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102e06120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102dea17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102e069e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102ddb988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102e210f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102e21270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102e2ff88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:30,242 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000102e1fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102e18314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001028804b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001028b597c cxxbridge1$string$len + 307536
+4   chromedriver                        0x00000001028b119c cxxbridge1$string$len + 289136
+5   chromedriver                        0x00000001028ad374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x00000001028edc70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x00000001028ed5b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x00000001028b90b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x00000001028b9d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000102deae08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000102dee120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000102dd217c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000102dee9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000102dc3988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000102e090f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000102e09270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000102e17f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:30,978 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000104efbac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104ef4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x000000010495c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010499197c cxxbridge1$string$len + 307536
+4   chromedriver                        0x000000010498d19c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000104989374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x00000001049c9c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x00000001049c95b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x00000001049950b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000104995d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000104ec6e08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000104eca120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000104eae17c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000104eca9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000104e9f988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000104ee50f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000104ee5270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000104ef3f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:31,708 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102dffac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102df8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001028604b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010284b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001028492dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102849f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102860a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010283ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001028cde04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001028cd5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001028990b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000102899d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102dcae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102dce120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102db217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102dce9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102da3988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102de90f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102de9270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102df7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:32,530 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001006a3ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x000000010069c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001001044b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001000ef7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001000ef550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x00000001000ed2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x00000001000ede14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001000f42b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x00000001000ec9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x00000001000ef254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x00000001000ed2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x00000001000ede14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x00000001000e4a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x00000001000ec9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x00000001000ec3a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x00000001000ebf6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x000000010010641c cxxbridge1$string$len + 97264
+17  chromedriver                        0x00000001000df134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x00000001000ded3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x0000000100171e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001001715b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x000000010013d0b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x000000010013dd00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x000000010066ee08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x0000000100672120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x000000010065617c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x00000001006729e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000100647988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x000000010068d0f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x000000010068d270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x000000010069bf88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:33,395 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000100ddfac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100dd8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001008404b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010082b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001008292dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000100829f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000100840a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010081ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001008ade04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001008ad5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001008790b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000100879d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000100daae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000100dae120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000100d9217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000100dae9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000100d83988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000100dc90f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000100dc9270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000100dd7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:34,145 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001026dfac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001026d8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001021404b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010212b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001021292dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102129f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102140a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010211ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001021ade04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001021ad5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001021790b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000102179d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x00000001026aae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x00000001026ae120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x000000010269217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x00000001026ae9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102683988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001026c90f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x00000001026c9270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x00000001026d7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:35,011 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001012abac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001012a4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100d0c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100cf77e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000100cf7550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x0000000100cf52dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000100cf5e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x0000000100cfc2b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x0000000100cf49e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000100cf7254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x0000000100cf52dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000100cf5e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000100ceca10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x0000000100cf49e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x0000000100cf43a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x0000000100cf3f6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x0000000100d0e41c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000100ce7134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000100ce6d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x0000000100d79e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x0000000100d795b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x0000000100d450b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x0000000100d45d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000101276e08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x000000010127a120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x000000010125e17c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x000000010127a9e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x000000010124f988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x00000001012950f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000101295270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x00000001012a3f88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:35,863 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000104d93ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104d8c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001047f44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001047df7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001047dd2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x00000001047ddf48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001047f4a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x00000001047cec04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000104861e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001048615b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x000000010482d0b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x000000010482dd00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000104d5ee08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000104d62120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000104d4617c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000104d629e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000104d37988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000104d7d0f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000104d7d270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000104d8bf88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:36,695 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001031b7ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001031b0314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102c184b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102c037e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102c012dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102c01f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102c18f54 cxxbridge1$string$len + 91944
+7   chromedriver                        0x0000000102bf3204 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1844
+8   chromedriver                        0x0000000102bf2d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+9   chromedriver                        0x0000000102c85e04 cxxbridge1$string$len + 538072
+10  chromedriver                        0x0000000102c855b8 cxxbridge1$string$len + 535948
+11  chromedriver                        0x0000000102c510b0 cxxbridge1$string$len + 321668
+12  chromedriver                        0x0000000102c51d00 cxxbridge1$string$len + 324820
+13  chromedriver                        0x0000000103182e08 cxxbridge1$str$ptr + 3435328
+14  chromedriver                        0x0000000103186120 cxxbridge1$str$ptr + 3448408
+15  chromedriver                        0x000000010316a17c cxxbridge1$str$ptr + 3333812
+16  chromedriver                        0x00000001031869e0 cxxbridge1$str$ptr + 3450648
+17  chromedriver                        0x000000010315b988 cxxbridge1$str$ptr + 3274432
+18  chromedriver                        0x00000001031a10f4 cxxbridge1$str$ptr + 3558956
+19  chromedriver                        0x00000001031a1270 cxxbridge1$str$ptr + 3559336
+20  chromedriver                        0x00000001031aff88 cxxbridge1$str$ptr + 3620032
+21  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+22  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:37,541 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001032bbac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001032b4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102d1c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102d077e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102d07550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x0000000102d052dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x0000000102d05e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x0000000102d0c2b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x0000000102d049e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x0000000102d07254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x0000000102d052dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x0000000102d05e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000102cfca10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x0000000102d049e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x0000000102d043a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x0000000102d03f6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x0000000102d1e41c cxxbridge1$string$len + 97264
+17  chromedriver                        0x0000000102cf7134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x0000000102cf6d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x0000000102d89e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x0000000102d895b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x0000000102d550b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x0000000102d55d00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000103286e08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x000000010328a120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x000000010326e17c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x000000010328a9e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x000000010325f988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x00000001032a50f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x00000001032a5270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x00000001032b3f88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:38,321 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x0000000102aafac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102aa8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001025104b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001025409fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x000000010253d374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x000000010257dc70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x000000010257d5b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x00000001025490b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x0000000102549d00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x0000000102a7ae08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x0000000102a7e120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x0000000102a6217c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x0000000102a7e9e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x0000000102a53988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x0000000102a990f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x0000000102a99270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x0000000102aa7f88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:39,084 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000104663ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x000000010465c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001040c44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001040af7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001040ad2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x00000001040adf48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x00000001040c4f54 cxxbridge1$string$len + 91944
+7   chromedriver                        0x000000010409f204 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1844
+8   chromedriver                        0x000000010409ed3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+9   chromedriver                        0x0000000104131e04 cxxbridge1$string$len + 538072
+10  chromedriver                        0x00000001041315b8 cxxbridge1$string$len + 535948
+11  chromedriver                        0x00000001040fd0b0 cxxbridge1$string$len + 321668
+12  chromedriver                        0x00000001040fdd00 cxxbridge1$string$len + 324820
+13  chromedriver                        0x000000010462ee08 cxxbridge1$str$ptr + 3435328
+14  chromedriver                        0x0000000104632120 cxxbridge1$str$ptr + 3448408
+15  chromedriver                        0x000000010461617c cxxbridge1$str$ptr + 3333812
+16  chromedriver                        0x00000001046329e0 cxxbridge1$str$ptr + 3450648
+17  chromedriver                        0x0000000104607988 cxxbridge1$str$ptr + 3274432
+18  chromedriver                        0x000000010464d0f4 cxxbridge1$str$ptr + 3558956
+19  chromedriver                        0x000000010464d270 cxxbridge1$str$ptr + 3559336
+20  chromedriver                        0x000000010465bf88 cxxbridge1$str$ptr + 3620032
+21  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+22  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:39,900 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102ae7ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102ae0314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001025484b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x00000001025337e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001025312dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102531f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102548f54 cxxbridge1$string$len + 91944
+7   chromedriver                        0x0000000102523204 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1844
+8   chromedriver                        0x0000000102522d3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+9   chromedriver                        0x00000001025b5e04 cxxbridge1$string$len + 538072
+10  chromedriver                        0x00000001025b55b8 cxxbridge1$string$len + 535948
+11  chromedriver                        0x00000001025810b0 cxxbridge1$string$len + 321668
+12  chromedriver                        0x0000000102581d00 cxxbridge1$string$len + 324820
+13  chromedriver                        0x0000000102ab2e08 cxxbridge1$str$ptr + 3435328
+14  chromedriver                        0x0000000102ab6120 cxxbridge1$str$ptr + 3448408
+15  chromedriver                        0x0000000102a9a17c cxxbridge1$str$ptr + 3333812
+16  chromedriver                        0x0000000102ab69e0 cxxbridge1$str$ptr + 3450648
+17  chromedriver                        0x0000000102a8b988 cxxbridge1$str$ptr + 3274432
+18  chromedriver                        0x0000000102ad10f4 cxxbridge1$str$ptr + 3558956
+19  chromedriver                        0x0000000102ad1270 cxxbridge1$str$ptr + 3559336
+20  chromedriver                        0x0000000102adff88 cxxbridge1$str$ptr + 3620032
+21  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+22  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:40,608 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x000000010498fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104988314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001043f04b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010442597c cxxbridge1$string$len + 307536
+4   chromedriver                        0x000000010442119c cxxbridge1$string$len + 289136
+5   chromedriver                        0x000000010441d374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x000000010445dc70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x000000010445d5b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x00000001044290b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000104429d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x000000010495ae08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x000000010495e120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x000000010494217c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x000000010495e9e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000104933988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x00000001049790f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000104979270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000104987f88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:41,341 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created: Chrome failed to start: crashed.
+  (disconnected: unable to connect to renderer)
+  (The process started from chrome location /Applications/Google Chrome.app/Contents/MacOS/Google Chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+0   chromedriver                        0x00000001047abac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001047a4314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x000000010420c4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010423c9fc cxxbridge1$string$len + 287184
+4   chromedriver                        0x0000000104239374 cxxbridge1$string$len + 273224
+5   chromedriver                        0x0000000104279c70 cxxbridge1$string$len + 537668
+6   chromedriver                        0x00000001042795b8 cxxbridge1$string$len + 535948
+7   chromedriver                        0x00000001042450b0 cxxbridge1$string$len + 321668
+8   chromedriver                        0x0000000104245d00 cxxbridge1$string$len + 324820
+9   chromedriver                        0x0000000104776e08 cxxbridge1$str$ptr + 3435328
+10  chromedriver                        0x000000010477a120 cxxbridge1$str$ptr + 3448408
+11  chromedriver                        0x000000010475e17c cxxbridge1$str$ptr + 3333812
+12  chromedriver                        0x000000010477a9e0 cxxbridge1$str$ptr + 3450648
+13  chromedriver                        0x000000010474f988 cxxbridge1$str$ptr + 3274432
+14  chromedriver                        0x00000001047950f4 cxxbridge1$str$ptr + 3558956
+15  chromedriver                        0x0000000104795270 cxxbridge1$str$ptr + 3559336
+16  chromedriver                        0x00000001047a3f88 cxxbridge1$str$ptr + 3620032
+17  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+18  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:42,184 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102de3ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102ddc314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001028444b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010282f7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x000000010282f550 cxxbridge1$string$len + 3364
+5   chromedriver                        0x000000010282d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+6   chromedriver                        0x000000010282de14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+7   chromedriver                        0x00000001028342b0 cxxbridge1$string$len + 23172
+8   chromedriver                        0x000000010282c9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+9   chromedriver                        0x000000010282f254 cxxbridge1$string$len + 2600
+10  chromedriver                        0x000000010282d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+11  chromedriver                        0x000000010282de14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+12  chromedriver                        0x0000000102824a10 core::str::slice_error_fail::ha0e52dbcb60e6bae + 24384
+13  chromedriver                        0x000000010282c9e4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 57108
+14  chromedriver                        0x000000010282c3a4 core::str::slice_error_fail::ha0e52dbcb60e6bae + 55508
+15  chromedriver                        0x000000010282bf6c core::str::slice_error_fail::ha0e52dbcb60e6bae + 54428
+16  chromedriver                        0x000000010284641c cxxbridge1$string$len + 97264
+17  chromedriver                        0x000000010281f134 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1636
+18  chromedriver                        0x000000010281ed3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+19  chromedriver                        0x00000001028b1e04 cxxbridge1$string$len + 538072
+20  chromedriver                        0x00000001028b15b8 cxxbridge1$string$len + 535948
+21  chromedriver                        0x000000010287d0b0 cxxbridge1$string$len + 321668
+22  chromedriver                        0x000000010287dd00 cxxbridge1$string$len + 324820
+23  chromedriver                        0x0000000102daee08 cxxbridge1$str$ptr + 3435328
+24  chromedriver                        0x0000000102db2120 cxxbridge1$str$ptr + 3448408
+25  chromedriver                        0x0000000102d9617c cxxbridge1$str$ptr + 3333812
+26  chromedriver                        0x0000000102db29e0 cxxbridge1$str$ptr + 3450648
+27  chromedriver                        0x0000000102d87988 cxxbridge1$str$ptr + 3274432
+28  chromedriver                        0x0000000102dcd0f4 cxxbridge1$str$ptr + 3558956
+29  chromedriver                        0x0000000102dcd270 cxxbridge1$str$ptr + 3559336
+30  chromedriver                        0x0000000102ddbf88 cxxbridge1$str$ptr + 3620032
+31  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+32  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:42,903 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000104ff7ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104ff0314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000104a584b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000104a8d97c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000104a8919c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000104a85374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000104ac5c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000104ac55b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000104a910b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000104a91d00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000104fc2e08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000104fc6120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000104faa17c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000104fc69e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000104f9b988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000104fe10f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000104fe1270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000104feff88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:43,629 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000104df3ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000104dec314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001048544b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010488997c cxxbridge1$string$len + 307536
+4   chromedriver                        0x000000010488519c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000104881374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x00000001048c1c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x00000001048c15b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x000000010488d0b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x000000010488dd00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000104dbee08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000104dc2120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000104da617c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000104dc29e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000104d97988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000104ddd0f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000104ddd270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000104debf88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:44,418 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000101293ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x000000010128c314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100cf44b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100d2997c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000100d2519c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000100d21374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000100d61c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000100d615b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000100d2d0b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000100d2dd00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x000000010125ee08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000101262120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x000000010124617c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x00000001012629e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000101237988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x000000010127d0f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x000000010127d270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x000000010128bf88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:45,200 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102affac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102af8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001025604b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010254b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x00000001025492dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102549f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102560a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010253ac04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001025cde04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001025cd5b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001025990b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000102599d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102acae08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102ace120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102ab217c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102ace9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102aa3988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102ae90f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102ae9270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102af7f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:45,974 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010157bac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000101574314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100fdc4b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100fc77e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000100fc52dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000100fc5f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000100fdca3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x0000000100fb6c04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x0000000101049e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001010495b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x00000001010150b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x0000000101015d00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000101546e08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x000000010154a120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x000000010152e17c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x000000010154a9e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x000000010151f988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x00000001015650f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000101565270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000101573f88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:46,804 - search_wallapop - ERROR - Error in search_wallapop: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+0   chromedriver                        0x0000000100fe3ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000100fdc314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000100a444b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000100a7997c cxxbridge1$string$len + 307536
+4   chromedriver                        0x0000000100a7519c cxxbridge1$string$len + 289136
+5   chromedriver                        0x0000000100a71374 cxxbridge1$string$len + 273224
+6   chromedriver                        0x0000000100ab1c70 cxxbridge1$string$len + 537668
+7   chromedriver                        0x0000000100ab15b8 cxxbridge1$string$len + 535948
+8   chromedriver                        0x0000000100a7d0b0 cxxbridge1$string$len + 321668
+9   chromedriver                        0x0000000100a7dd00 cxxbridge1$string$len + 324820
+10  chromedriver                        0x0000000100faee08 cxxbridge1$str$ptr + 3435328
+11  chromedriver                        0x0000000100fb2120 cxxbridge1$str$ptr + 3448408
+12  chromedriver                        0x0000000100f9617c cxxbridge1$str$ptr + 3333812
+13  chromedriver                        0x0000000100fb29e0 cxxbridge1$str$ptr + 3450648
+14  chromedriver                        0x0000000100f87988 cxxbridge1$str$ptr + 3274432
+15  chromedriver                        0x0000000100fcd0f4 cxxbridge1$str$ptr + 3558956
+16  chromedriver                        0x0000000100fcd270 cxxbridge1$str$ptr + 3559336
+17  chromedriver                        0x0000000100fdbf88 cxxbridge1$str$ptr + 3620032
+18  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+19  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:47,011 - search_wallapop - ERROR - Error in search_wallapop: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2025-01-09 16:45:47,732 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x0000000102ce3ac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000102cdc314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x00000001027444b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x000000010272f7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x000000010272d2dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x000000010272df48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102744a3c cxxbridge1$string$len + 90640
+7   chromedriver                        0x000000010271ec04 core::str::slice_error_fail::ha0e52dbcb60e6bae + 308
+8   chromedriver                        0x00000001027b1e04 cxxbridge1$string$len + 538072
+9   chromedriver                        0x00000001027b15b8 cxxbridge1$string$len + 535948
+10  chromedriver                        0x000000010277d0b0 cxxbridge1$string$len + 321668
+11  chromedriver                        0x000000010277dd00 cxxbridge1$string$len + 324820
+12  chromedriver                        0x0000000102caee08 cxxbridge1$str$ptr + 3435328
+13  chromedriver                        0x0000000102cb2120 cxxbridge1$str$ptr + 3448408
+14  chromedriver                        0x0000000102c9617c cxxbridge1$str$ptr + 3333812
+15  chromedriver                        0x0000000102cb29e0 cxxbridge1$str$ptr + 3450648
+16  chromedriver                        0x0000000102c87988 cxxbridge1$str$ptr + 3274432
+17  chromedriver                        0x0000000102ccd0f4 cxxbridge1$str$ptr + 3558956
+18  chromedriver                        0x0000000102ccd270 cxxbridge1$str$ptr + 3559336
+19  chromedriver                        0x0000000102cdbf88 cxxbridge1$str$ptr + 3620032
+20  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+21  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:48,228 - search_wallapop - INFO - Starting search for Renault Scénic
+2025-01-09 16:45:48,455 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: unable to send message to renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x000000010342fac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x0000000103428314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102e904b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102e7a960 cxxbridge1$string$len + 308
+4   chromedriver                        0x0000000102e790f8 core::str::slice_error_fail::ha0e52dbcb60e6bae + 58920
+5   chromedriver                        0x0000000102e79e14 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62276
+6   chromedriver                        0x0000000102e929b8 cxxbridge1$string$len + 98700
+7   chromedriver                        0x0000000102f0e6a0 cxxbridge1$string$len + 605812
+8   chromedriver                        0x0000000102f0e0fc cxxbridge1$string$len + 604368
+9   chromedriver                        0x0000000102ec90b0 cxxbridge1$string$len + 321668
+10  chromedriver                        0x0000000102ec9d00 cxxbridge1$string$len + 324820
+11  chromedriver                        0x00000001033fae08 cxxbridge1$str$ptr + 3435328
+12  chromedriver                        0x00000001033fe120 cxxbridge1$str$ptr + 3448408
+13  chromedriver                        0x00000001033e217c cxxbridge1$str$ptr + 3333812
+14  chromedriver                        0x00000001033fe9e0 cxxbridge1$str$ptr + 3450648
+15  chromedriver                        0x00000001033d3988 cxxbridge1$str$ptr + 3274432
+16  chromedriver                        0x00000001034190f4 cxxbridge1$str$ptr + 3558956
+17  chromedriver                        0x0000000103419270 cxxbridge1$str$ptr + 3559336
+18  chromedriver                        0x0000000103427f88 cxxbridge1$str$ptr + 3620032
+19  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:49,295 - search_wallapop - ERROR - Error in search_wallapop: Message: disconnected: Unable to receive message from renderer
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+0   chromedriver                        0x00000001031efac4 cxxbridge1$str$ptr + 3651580
+1   chromedriver                        0x00000001031e8314 cxxbridge1$str$ptr + 3620940
+2   chromedriver                        0x0000000102c504b4 cxxbridge1$string$len + 89224
+3   chromedriver                        0x0000000102c3b7e0 cxxbridge1$string$len + 4020
+4   chromedriver                        0x0000000102c392dc core::str::slice_error_fail::ha0e52dbcb60e6bae + 59404
+5   chromedriver                        0x0000000102c39f48 core::str::slice_error_fail::ha0e52dbcb60e6bae + 62584
+6   chromedriver                        0x0000000102c50f54 cxxbridge1$string$len + 91944
+7   chromedriver                        0x0000000102c2b204 core::str::slice_error_fail::ha0e52dbcb60e6bae + 1844
+8   chromedriver                        0x0000000102c2ad3c core::str::slice_error_fail::ha0e52dbcb60e6bae + 620
+9   chromedriver                        0x0000000102cbde04 cxxbridge1$string$len + 538072
+10  chromedriver                        0x0000000102cbd5b8 cxxbridge1$string$len + 535948
+11  chromedriver                        0x0000000102c890b0 cxxbridge1$string$len + 321668
+12  chromedriver                        0x0000000102c89d00 cxxbridge1$string$len + 324820
+13  chromedriver                        0x00000001031bae08 cxxbridge1$str$ptr + 3435328
+14  chromedriver                        0x00000001031be120 cxxbridge1$str$ptr + 3448408
+15  chromedriver                        0x00000001031a217c cxxbridge1$str$ptr + 3333812
+16  chromedriver                        0x00000001031be9e0 cxxbridge1$str$ptr + 3450648
+17  chromedriver                        0x0000000103193988 cxxbridge1$str$ptr + 3274432
+18  chromedriver                        0x00000001031d90f4 cxxbridge1$str$ptr + 3558956
+19  chromedriver                        0x00000001031d9270 cxxbridge1$str$ptr + 3559336
+20  chromedriver                        0x00000001031e7f88 cxxbridge1$str$ptr + 3620032
+21  libsystem_pthread.dylib             0x000000019c40b2e4 _pthread_start + 136
+22  libsystem_pthread.dylib             0x000000019c4060fc thread_start + 8
+
+2025-01-09 16:45:50,001 - search_wallapop - ERROR - Error in search_wallapop: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))

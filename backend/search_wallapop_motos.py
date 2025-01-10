@@ -4,36 +4,45 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
-from supabase import create_client
+from supabase_py import create_client
 from urllib.parse import quote
 from dotenv import load_dotenv
 import re
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 def get_motos_from_supabase():
     """Fetch motorcycle data from Supabase"""
     supabase = init_supabase()
     response = supabase.table('motos').select("*").execute()
     
-    if not response.data:
-        print("Error: No data returned from Supabase")
+    if not response or not isinstance(response, dict):
+        logger.error("Invalid response from Supabase")
+        return []
+    
+    data = response.get('data', [])
+    
+    if not data:
+        logger.warning("No data returned from Supabase")
         return []
         
-    if response.data:
-        print(f"First moto data: {response.data[0]}")
+    if data:
+        logger.info(f"First moto data: {data[0]}")
         
     # Validate each motorcycle has required fields
     valid_motos = []
-    for moto in response.data:
+    for moto in data:
         if all(moto.get(field) for field in ['brand', 'model', 'price_range']):
             valid_motos.append(moto)
         else:
-            print(f"Skipping invalid moto data: {moto}")
+            logger.warning(f"Skipping invalid moto data: {moto}")
             
     if not valid_motos:
-        print("Error: No valid motorcycles found in data")
+        logger.warning("No valid motorcycles found in data")
         
     return valid_motos
 
@@ -168,71 +177,94 @@ def parse_listing_price(price_text):
 
 def store_search_results(supabase, search_params, listings):
     """Store search results in Supabase"""
-    search_data = {
-        'model': search_params['model'],
-        'marca': search_params['marca'],
-        'min_price': search_params['min_price'],
-        'max_price': search_params['max_price'],
-        'vehicle_type': search_params['vehicle_type'],
-        'search_url': search_params['url']
-    }
-    
     try:
-        search_result = supabase.table('searches').insert(search_data).execute()
-        search_id = search_result.data[0]['id']
+        # Insert search parameters
+        search_data = {
+            'model': search_params['model'],
+            'marca': search_params['brand'],
+            'min_price': search_params['min_price'],
+            'max_price': search_params['max_price'],
+            'min_year': search_params['year'],
+            'search_url': search_params['url'],
+            'vehicle_type': 'moto'  # Changed to 'moto'
+        }
         
+        logger.info(f"Storing search: {search_data}")
+        search_response = supabase.table('searches').insert(search_data).execute()
+        
+        if not isinstance(search_response, dict):
+            search_response = search_response.dict()
+            
+        search_id = search_response['data'][0]['id']
+        logger.info(f"Created search with ID: {search_id}")
+        
+        # Track statistics
+        new_listings = 0
+        duplicate_listings = 0
+        
+        # Insert listings
         for listing in listings:
             try:
                 # Check if listing already exists
-                existing = supabase.table('listings_motos').select('id').eq('url', listing['url']).execute()
-                if existing.data:
-                    print(f"Skipping duplicate listing: {listing['url']}")
+                existing_response = supabase.table('listings_motos').select('id').eq('url', listing['url']).execute()
+                
+                if not isinstance(existing_response, dict):
+                    existing_response = existing_response.dict()
+                
+                if existing_response.get('data'):
+                    logger.info(f"Skipping duplicate listing: {listing['url']}")
+                    duplicate_listings += 1
                     continue
                 
-                # Parse price from price_text
-                listing_price = parse_listing_price(listing['price'])
-                
-                if listing_price:
-                    # Calculate price difference using the average of min and max target prices
-                    target_min_price, target_max_price = search_params['target_price_range']
-                    target_avg_price = (target_min_price + target_max_price) / 2
-                    # Round to nearest integer for storage
-                    price_difference = int(round(listing_price - target_avg_price))
-                else:
-                    price_difference = None
-                
-                # Prepare listing data
+                # Parse and insert new listing
+                details = parse_listing_details(listing['title'])
                 listing_data = {
                     'search_id': search_id,
                     'url': listing['url'],
                     'title': listing['title'],
-                    'price': listing_price,
-                    'price_text': listing['price'],
-                    'price_difference': price_difference,
+                    'price': float(details['price']) if details['price'] else None,
+                    'price_text': details['price_text'],
                     'location': listing['location'],
-                    'description': listing['title']
+                    'year': int(details['year']) if details['year'] else None,
+                    'fuel_type': details['fuel_type'],
+                    'transmission': details['transmission'],
+                    'power_cv': int(details['power_cv']) if details['power_cv'] else None,
+                    'kilometers': int(details['kilometers']) if details['kilometers'] else None,
+                    'description': details['description']
                 }
                 
-                # Insert listing
-                listing_result = supabase.table('listings_motos').insert(listing_data).execute()
-                listing_id = listing_result.data[0]['id']
-                
-                # Insert images
-                for idx, image_url in enumerate(listing['images']):
-                    image_data = {
-                        'listing_id': listing_id,
-                        'image_url': image_url,
-                        'image_order': idx
-                    }
-                    supabase.table('listing_images_motos').insert(image_data).execute()
+                try:
+                    listing_response = supabase.table('listings_motos').insert(listing_data).execute()
+                    if listing_response.get('data'):
+                        listing_id = listing_response['data'][0]['id']
+                        logger.info(f"Created new listing: {listing_data['title']} (ID: {listing_id})")
+                        new_listings += 1
+                        
+                        # Insert images
+                        for idx, image_url in enumerate(listing['images']):
+                            image_data = {
+                                'listing_id': listing_id,
+                                'image_url': image_url,
+                                'image_order': idx
+                            }
+                            supabase.table('listing_images_motos').insert(image_data).execute()
+                            
+                except Exception as insert_error:
+                    if 'unique constraint' in str(insert_error).lower():
+                        logger.info(f"Duplicate listing detected during insert: {listing['url']}")
+                        duplicate_listings += 1
+                    else:
+                        logger.error(f"Error inserting listing: {str(insert_error)}")
+                    continue
                     
             except Exception as e:
-                print(f"Error storing listing {listing['url']}")
-                print(f"Error details: {str(e)}")
+                logger.error(f"Error processing listing {listing['url']}: {str(e)}")
                 continue
+                
+        logger.info(f"Search complete. New listings: {new_listings}, Duplicates skipped: {duplicate_listings}")
                     
     except Exception as e:
-        print(f"Error storing search results: {str(e)}")
+        logger.error(f"Error in search process: {str(e)}")
 
 def process_all_motos():
     """Process each motorcycle from Supabase"""

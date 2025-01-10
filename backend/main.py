@@ -184,6 +184,16 @@ async def get_stats():
             "message": str(e)
         }
 
+@app.post("/reset")
+async def reset_search():
+    """Reset search state if it's stuck"""
+    global search_in_progress, last_run_time
+    search_in_progress = False
+    return {
+        "status": "success",
+        "message": "Search state reset"
+    }
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000) 
