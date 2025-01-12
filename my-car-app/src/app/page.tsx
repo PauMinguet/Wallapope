@@ -10,7 +10,8 @@ import {
   OpenInNew, 
   Search,
   ArrowBackIos,
-  ArrowForwardIos 
+  ArrowForwardIos,
+  BarChart
 } from '@mui/icons-material'
 import { Listing } from '../../types/listing'
 
@@ -66,7 +67,7 @@ const ListingSkeleton = () => (
 )
 
 export default function Home() {
-  const [vehicleType, setVehicleType] = useState<'coches' | 'motos' | 'furgos' | 'scooters'>('coches')
+  const [vehicleType, setVehicleType] = useState<'coches' | 'motos' | 'furgos' | 'scooters' | 'stats'>('coches')
   const [listings, setListings] = useState<Listing[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -237,6 +238,11 @@ export default function Home() {
               icon={<ElectricScooter />} 
               aria-label="Scooters" 
             />
+            <Tab 
+              value="stats" 
+              icon={<BarChart />} 
+              aria-label="Stats" 
+            />
           </Tabs>
         </div>
 
@@ -273,12 +279,23 @@ export default function Home() {
     return null
   }
 
+  const imageUrl = vehicleType !== 'stats' 
+    ? currentListing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
+      currentListing.listing_images?.[0]?.image_url
+    : '/placeholder.svg'
+
   return (
     <div className="h-screen bg-gray-900 text-white relative">
       <div className="fixed top-0 left-0 right-0 z-50 bg-gray-800/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
         <Tabs
           value={vehicleType}
-          onChange={(_, newValue) => setVehicleType(newValue)}
+          onChange={(_, newValue) => {
+            if (newValue === 'stats') {
+              window.location.href = '/stats'
+              return
+            }
+            setVehicleType(newValue)
+          }}
           className="text-white"
           centered
           sx={{
@@ -314,6 +331,11 @@ export default function Home() {
             icon={<ElectricScooter />} 
             aria-label="Scooters" 
           />
+          <Tab 
+            value="stats" 
+            icon={<BarChart />} 
+            aria-label="Stats" 
+          />
         </Tabs>
       </div>
 
@@ -321,11 +343,7 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-center bg-cover bg-no-repeat"
           style={{
-            backgroundImage: `url(${
-              currentListing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
-              currentListing.listing_images?.[0]?.image_url || 
-              '/placeholder.svg'
-            })`,
+            backgroundImage: `url(${imageUrl})`
           }}
         />
         
