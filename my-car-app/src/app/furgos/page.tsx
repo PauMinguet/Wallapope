@@ -1,6 +1,11 @@
 'use client'
+import { Suspense } from 'react'
 import ListingView from '../components/ListingView'
 
 export default function FurgosPage() {
-  return <ListingView defaultType="furgos" />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ListingView defaultType="furgos" />
+    </Suspense>
+  )
 } 

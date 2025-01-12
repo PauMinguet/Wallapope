@@ -17,7 +17,6 @@ import {
 } from '@mui/icons-material'
 import { Listing, LikedListing } from '../../../types/listing'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 
 type VehicleType = 'coches' | 'motos' | 'furgos' | 'scooters' | 'stats'
 
@@ -79,7 +78,7 @@ const ListingSkeleton = () => (
 export default function ListingView({ defaultType }: ListingViewProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [vehicleType, setVehicleType] = useState<VehicleType>(defaultType)
+  const [vehicleType] = useState<VehicleType>(defaultType)
   const [listings, setListings] = useState<Listing[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
