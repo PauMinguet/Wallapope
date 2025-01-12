@@ -13,11 +13,6 @@ interface Coche extends BaseVehicle {
   precio_compra: string
 }
 
-interface Moto extends BaseVehicle {
-  model: string
-  price_range: string
-}
-
 interface Furgo extends BaseVehicle {
   configuracion: string
   motor: string
@@ -33,6 +28,7 @@ interface BaseListing {
   price_text: string
   price_difference?: number
   location: string
+  listing_images?: Array<{ image_url: string }>
   searches?: {
     model: string
     marca?: string
@@ -43,28 +39,21 @@ interface BaseListing {
 }
 
 interface CocheListing extends BaseListing {
-  listing_images_coches: Array<{ image_url: string }>
+  listing_images_coches?: Array<{ image_url: string }>
 }
 
 interface MotoListing extends BaseListing {
-  listing_images_motos: Array<{ image_url: string }>
+  listing_images_motos?: Array<{ image_url: string }>
 }
 
 interface FurgoListing extends BaseListing {
   configuracion: string
   motor: string
-  listing_images_furgos: Array<{ image_url: string }>
+  listing_images_furgos?: Array<{ image_url: string }>
 }
 
 type VehicleListing = CocheListing | MotoListing | FurgoListing
 
-interface SearchParameters {
-  model: string
-  marca?: string
-  vehicle_type: string
-  search_url: string
-  max_price?: number
-}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)

@@ -13,7 +13,7 @@ const CarCard: React.FC<CarCardProps> = ({ listing, onSwipe }) => {
       <CardMedia
         component="img"
         height="200"
-        image={listing.listing_images[0]?.image_url || '/placeholder.svg'}
+        image={listing.listing_images?.[0]?.image_url || '/placeholder.svg'}
         alt={listing.title}
         className="h-48 object-cover"
       />
