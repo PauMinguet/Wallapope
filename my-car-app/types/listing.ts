@@ -57,5 +57,6 @@ export interface LikedListing {
   location: string
   year?: string
   kilometers?: number
+  search_url?: string
 }
 

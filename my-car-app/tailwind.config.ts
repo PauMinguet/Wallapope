@@ -63,4 +63,22 @@ export default {
     addDynamicIconSelectors(),
     require("tailwindcss-animate")
   ],
+  important: true,
+  safelist: [
+    'bg-gray-800',
+    'text-white',
+    'text-green-400',
+    'text-gray-400',
+    'text-gray-500',
+    'bg-gray-800/50',
+    'bg-red-500/20',
+    'hover:bg-red-500/30',
+    'text-red-400',
+    'bg-purple-500/20',
+    'hover:bg-purple-500/30',
+    'text-purple-400',
+    'bg-blue-500/20',
+    'hover:bg-blue-500/30',
+    'text-blue-400',
+  ]
 } satisfies Config;

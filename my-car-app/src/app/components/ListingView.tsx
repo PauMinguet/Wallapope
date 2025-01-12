@@ -264,7 +264,8 @@ export default function ListingView({ defaultType }: ListingViewProps) {
         vehicle_type: vehicleType === 'stats' ? 'coches' : vehicleType,
         location: listing.location || '',
         year: listing.year?.toString(),
-        kilometers: listing.kilometers
+        kilometers: listing.kilometers,
+        search_url: listing.searches?.search_url
       }
     }
     
