@@ -11,10 +11,13 @@ import {
   Search,
   ArrowBackIos,
   ArrowForwardIos,
-  BarChart
+  BarChart,
+  Favorite,
+  FavoriteBorder
 } from '@mui/icons-material'
-import { Listing } from '../../../types/listing'
+import { Listing, LikedListing } from '../../../types/listing'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 type VehicleType = 'coches' | 'motos' | 'furgos' | 'scooters' | 'stats'
 
@@ -81,6 +84,7 @@ export default function ListingView({ defaultType }: ListingViewProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [showFullDescription, setShowFullDescription] = useState(false)
+  const [likedListings, setLikedListings] = useState<{[key: string]: LikedListing}>({})
 
   const fetchListings = useCallback(async () => {
     try {
@@ -116,9 +120,13 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     })
   }
 
-  const handleTabChange = (newValue: VehicleType) => {
+  const handleTabChange = (newValue: VehicleType | 'liked') => {
     if (newValue === 'stats') {
       router.push('/stats')
+      return
+    }
+    if (newValue === 'liked') {
+      router.push('/liked')
       return
     }
     const params = new URLSearchParams(searchParams)
@@ -232,6 +240,39 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     }
   }, [listings, searchParams])
 
+  useEffect(() => {
+    const saved = localStorage.getItem('likedListings')
+    if (saved) {
+      setLikedListings(JSON.parse(saved))
+    }
+  }, [])
+
+  const toggleLike = (listing: Listing) => {
+    const newLikedListings = { ...likedListings }
+    
+    if (newLikedListings[listing.id]) {
+      delete newLikedListings[listing.id]
+    } else {
+      newLikedListings[listing.id] = {
+        id: listing.id.toString(),
+        url: listing.url,
+        title: listing.title,
+        price_text: listing.price_text,
+        image_url: vehicleType === 'stats' 
+          ? '/placeholder.svg'
+          : listing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
+            listing.listing_images?.[0]?.image_url || '/placeholder.svg',
+        vehicle_type: vehicleType === 'stats' ? 'coches' : vehicleType,
+        location: listing.location || '',
+        year: listing.year?.toString(),
+        kilometers: listing.kilometers
+      }
+    }
+    
+    setLikedListings(newLikedListings)
+    localStorage.setItem('likedListings', JSON.stringify(newLikedListings))
+  }
+
   if (loading) {
     return (
       <div className="h-screen bg-gray-900 text-white relative">
@@ -279,6 +320,11 @@ export default function ListingView({ defaultType }: ListingViewProps) {
               icon={<BarChart />} 
               aria-label="Stats" 
             />
+            <Tab 
+              value="liked"
+              icon={<Favorite />} 
+              aria-label="Liked" 
+            />
           </Tabs>
         </div>
 
@@ -315,10 +361,10 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     return null
   }
 
-  const imageUrl = vehicleType !== 'stats' 
-    ? currentListing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
-      currentListing.listing_images?.[0]?.image_url
-    : '/placeholder.svg'
+  const imageUrl = vehicleType === 'stats' 
+    ? '/placeholder.svg'
+    : currentListing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
+      currentListing.listing_images?.[0]?.image_url || '/placeholder.svg'
 
   return (
     <div className="h-screen bg-gray-900 text-white relative">
@@ -365,6 +411,11 @@ export default function ListingView({ defaultType }: ListingViewProps) {
             value="stats" 
             icon={<BarChart />} 
             aria-label="Stats" 
+          />
+          <Tab 
+            value="liked"
+            icon={<Favorite />} 
+            aria-label="Liked" 
           />
         </Tabs>
       </div>
@@ -460,54 +511,55 @@ export default function ListingView({ defaultType }: ListingViewProps) {
               
               <div className="flex justify-between items-center pt-2 opacity-50">
                 <IconButton
-                  className="!bg-gray-600 text-white"
+                  className="!bg-gray-600 hover:!bg-gray-700 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                   disabled={currentIndex === 0}
-                  sx={{
-                    opacity: currentIndex === 0 ? 0.5 : 1,
-                    cursor: 'default',
-                    '&:hover': {
-                      backgroundColor: 'rgba(75, 85, 99, 0.6)'
-                    }
-                  }}
+                  onClick={() => currentIndex > 0 && handleNavigation('prev')}
                 >
                   <ArrowBackIos />
                 </IconButton>
                 <div className="flex gap-2">
-                  <Button
-                    variant="contained"
-                    className="!bg-blue-500 hover:!bg-blue-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
+                  <a 
                     href={currentListing.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    startIcon={<OpenInNew />}
-                    onClick={(e) => e.stopPropagation()}
                   >
-                    View Listing
-                  </Button>
+                    <IconButton
+                      className="!bg-blue-500 hover:!bg-blue-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <OpenInNew />
+                    </IconButton>
+                  </a>
                   <a 
                     href={currentListing.searches?.search_url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <IconButton
-                      className="!bg-gray-600 hover:!bg-gray-700 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
-                      size="small"
+                      className="!bg-purple-500 hover:!bg-purple-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Search fontSize="small" />
+                      <Search />
                     </IconButton>
                   </a>
+                  <IconButton
+                    className="!bg-pink-500 hover:!bg-pink-600 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      toggleLike(currentListing)
+                    }}
+                  >
+                    {likedListings[currentListing.id] ? (
+                      <Favorite className="text-white" />
+                    ) : (
+                      <FavoriteBorder />
+                    )}
+                  </IconButton>
                 </div>
                 <IconButton
-                  className="!bg-gray-600 text-white"
+                  className="!bg-gray-600 hover:!bg-gray-700 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
                   disabled={currentIndex >= listings.length - 1}
-                  sx={{
-                    opacity: currentIndex >= listings.length - 1 ? 0.5 : 1,
-                    cursor: 'default',
-                    '&:hover': {
-                      backgroundColor: 'rgba(75, 85, 99, 0.6)'
-                    }
-                  }}
+                  onClick={() => currentIndex < listings.length - 1 && handleNavigation('next')}
                 >
                   <ArrowForwardIos />
                 </IconButton>

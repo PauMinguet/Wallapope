@@ -47,3 +47,15 @@ export interface Listing {
   }
 }
 
+export interface LikedListing {
+  id: string
+  url: string
+  title: string
+  price_text: string
+  image_url: string
+  vehicle_type: 'coches' | 'motos' | 'furgos' | 'scooters'
+  location: string
+  year?: string
+  kilometers?: number
+}
+
