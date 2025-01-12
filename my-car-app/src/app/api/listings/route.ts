@@ -35,6 +35,10 @@ interface BaseListing {
   location: string
   searches?: {
     model: string
+    marca?: string
+    vehicle_type: string
+    search_url: string
+    max_price?: number
   }
 }
 
@@ -54,13 +58,21 @@ interface FurgoListing extends BaseListing {
 
 type VehicleListing = CocheListing | MotoListing | FurgoListing
 
+interface SearchParameters {
+  model: string
+  marca?: string
+  vehicle_type: string
+  search_url: string
+  max_price?: number
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const vehicleType = (searchParams.get('type') || 'coches') as VehicleType
 
   // For scooters, we don't need to fetch target data since we use fixed parameters
   let targetData = []
-  if (vehicleType !== 'scooters') {
+  if (vehicleType !== 'scooters' && vehicleType !== 'motos') {  // Don't fetch target data for motos
     const { data, error: targetError } = await supabase
       .from(vehicleType)
       .select('*')
@@ -83,7 +95,8 @@ export async function GET(request: Request) {
         model,
         marca,
         vehicle_type,
-        search_url
+        search_url,
+        max_price
       )
     `)
     .order('created_at', { ascending: false })
@@ -93,34 +106,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: listingsError.message }, { status: 500 })
   }
 
-  const filteredListings = (listings as VehicleListing[]).filter(listing => {
-    // Skip reserved listings
-    if (listing.title.toLowerCase().startsWith('reservado')) {
-      return false
-    }
-
-    // First check for unwanted keywords
-    const lowerTitle = listing.title.toLowerCase()
-    const lowerDesc = (listing.description || '').toLowerCase()
-    const unwantedKeywords = ['accidentado', 'inundado', 'accidente', 'despiece', 'reparar', 'no arranca']
-    
-    if (unwantedKeywords.some(keyword => 
-      lowerTitle.includes(keyword) || lowerDesc.includes(keyword)
-    )) {
-      return false
-    }
-
-    // Extract and normalize kilometers
-    const kmMatch = listing.title.match(/(\d+)\s*(?:km|KM)/i)
-    if (kmMatch) {
-      let kms = parseInt(kmMatch[1], 10)
-      kms = kms < 1000 ? kms * 1000 : kms
-      if (kms > 200000) return false
-    }
-
-    return true
-  })
-
   const parsePrice = (str: string): number => 
     Number(str.replace('€', '').replace('.', '').replace(',', '.').trim())
 
@@ -128,16 +113,10 @@ export async function GET(request: Request) {
   const targetPrices = vehicleType === 'scooters' 
     ? new Map([['scooter', 900]]) // Fixed target price for scooters at 900€
     : new Map(
-        (targetData as (Coche | Moto | Furgo)[]).map(item => {
+        (targetData as (Coche | Furgo)[]).map(item => {
           if (vehicleType === 'coches') {
             const car = item as Coche
             return [car.modelo, parsePrice(car.precio_compra.split('-')[0])] as const
-          } 
-          
-          if (vehicleType === 'motos') {
-            const moto = item as Moto
-            const [min, max] = moto.price_range.split('-').map(parsePrice)
-            return [moto.model, (min + max) / 2] as const
           } 
           
           if (vehicleType === 'furgos') {
@@ -150,7 +129,34 @@ export async function GET(request: Request) {
         })
       )
 
-  const listingsWithDiff = filteredListings
+  const filteredListings = (listings as VehicleListing[])
+    .filter(listing => {
+      // Skip reserved listings
+      if (listing.title.toLowerCase().startsWith('reservado')) {
+        return false
+      }
+
+      // First check for unwanted keywords
+      const lowerTitle = listing.title.toLowerCase()
+      const lowerDesc = (listing.description || '').toLowerCase()
+      const unwantedKeywords = ['accidentado', 'accidentada', 'inundado', 'accidente', 'despiece', 'reparar', 'no arranca']
+      
+      if (unwantedKeywords.some(keyword => 
+        lowerTitle.includes(keyword) || lowerDesc.includes(keyword)
+      )) {
+        return false
+      }
+
+      // Extract and normalize kilometers
+      const kmMatch = listing.title.match(/(\d+)\s*(?:km|KM)/i)
+      if (kmMatch) {
+        let kms = parseInt(kmMatch[1], 10)
+        kms = kms < 1000 ? kms * 1000 : kms
+        if (kms > 200000) return false
+      }
+
+      return true
+    })
     .map(listing => {
       const isReserved = listing.title.toLowerCase().startsWith('reservado')
       const cleanTitle = isReserved 
@@ -158,15 +164,22 @@ export async function GET(request: Request) {
         : listing.title
 
       let price_difference = 0
-      if (vehicleType === 'scooters') {
+      if (vehicleType === 'motos') {
+        // For motos, use the search's max_price
+        const targetPrice = listing.searches?.max_price || 0
+        price_difference = targetPrice - (listing.price || 0)
+      } else if (vehicleType === 'scooters') {
         const targetPrice = targetPrices.get('scooter') || 0
         price_difference = targetPrice - (listing.price || 0)
-      } else if (vehicleType === 'furgos') {
-        // For furgos, use the price_difference from the database
-        price_difference = listing.price_difference || 0
       } else {
-        const targetPrice = targetPrices.get(listing.searches?.model || '') || 0
-        price_difference = targetPrice - (listing.price || 0)
+        // For other vehicle types, use the existing logic
+        const key = vehicleType === 'furgos' 
+          ? `${listing.searches?.model}-${(listing as FurgoListing).configuracion}-${(listing as FurgoListing).motor}`
+          : listing.searches?.model || ''
+        const targetPrice = targetPrices.get(key) || 0
+        price_difference = vehicleType === 'furgos'
+          ? (listing.price || 0) - targetPrice  // For furgos: listing price - target
+          : targetPrice - (listing.price || 0)  // For others: target - listing price
       }
 
       return {
@@ -178,7 +191,7 @@ export async function GET(request: Request) {
       }
     })
     .sort((a, b) => 
-      vehicleType === 'furgos' 
+      vehicleType === 'furgos'
         ? a.price_difference - b.price_difference  // For furgos: more negative = better
         : b.price_difference - a.price_difference  // For others: more positive = better
     )
@@ -196,7 +209,7 @@ export async function GET(request: Request) {
     }
   }
   
-  const listingsWithFormattedImages = listingsWithDiff.map(listing => ({
+  const listingsWithFormattedImages = filteredListings.map(listing => ({
     ...listing,
     listing_images: getListingImages(listing, vehicleType)
   }))

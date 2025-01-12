@@ -360,6 +360,11 @@ export default function Home() {
                       .replace(/\s+\d{4}\s*$/, '')
                       .trim()}
                   </Typography>
+                  {currentListing.searches?.model && (
+                    <Typography variant="subtitle2" className="text-gray-400 mt-1">
+                      Model: {currentListing.searches.model}
+                    </Typography>
+                  )}
                   <div className="flex items-baseline gap-2">
                     <Typography variant="h6" className="text-green-400">
                       {currentListing.price_text
@@ -368,14 +373,16 @@ export default function Home() {
                         .replace(/€.*$/, '€')
                         .trim()}
                     </Typography>
-                    <Typography 
-                      variant="body2" 
-                      className={`${
-                        currentListing.price_difference > 0 ? 'text-green-400' : 'text-red-400'
-                      }`}
-                    >
-                      ({formatPriceDifference(currentListing.price_difference, vehicleType)})
-                    </Typography>
+                    {currentListing.price_difference !== undefined && (
+                      <Typography 
+                        variant="body2" 
+                        className={`${
+                          currentListing.price_difference > 0 ? 'text-green-400' : 'text-red-400'
+                        }`}
+                      >
+                        ({formatPriceDifference(currentListing.price_difference, vehicleType)})
+                      </Typography>
+                    )}
                   </div>
                 </div>
               </div>
@@ -429,16 +436,19 @@ export default function Home() {
                   >
                     View Listing
                   </Button>
-                  <IconButton
-                    className="!bg-gray-600 hover:!bg-gray-700 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
-                    href={currentListing.searches.search_url}
+                  <a 
+                    href={currentListing.searches?.search_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    size="small"
-                    onClick={(e) => e.stopPropagation()}
                   >
-                    <Search fontSize="small" />
-                  </IconButton>
+                    <IconButton
+                      className="!bg-gray-600 hover:!bg-gray-700 text-white shadow-lg transition-all duration-200 transform hover:scale-105"
+                      size="small"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Search fontSize="small" />
+                    </IconButton>
+                  </a>
                 </div>
                 <IconButton
                   className="!bg-gray-600 text-white"

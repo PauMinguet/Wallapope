@@ -15,30 +15,35 @@ export interface ScooterListing extends BaseListing {
   listing_images_scooters: Array<{ image_url: string }>
 }
 
-export interface Listing extends BaseListing {
-  search_id: number
-  url: string
-  price_difference: number
+export interface Listing {
+  id: number
+  title: string
+  description?: string
+  price?: number
+  price_text: string
+  price_difference?: number
+  location?: string
   year?: number
-  kilometers?: number
   fuel_type?: string
   transmission?: string
   power_cv?: number
+  kilometers?: number
+  engine_cc?: number
   motor?: string
   configuracion?: string
-  engine_cc?: number
-  isReserved: boolean
-  vehicle_type: 'coches' | 'motos' | 'furgos' | 'scooters'
-  listing_images: Array<{ image_url: string }>
+  url: string
+  isReserved?: boolean
+  listing_images?: Array<{ image_url: string }>
   listing_images_coches?: Array<{ image_url: string }>
   listing_images_motos?: Array<{ image_url: string }>
   listing_images_furgos?: Array<{ image_url: string }>
   listing_images_scooters?: Array<{ image_url: string }>
-  searches: {
+  searches?: {
     model: string
     marca: string
     vehicle_type: string
     search_url: string
+    max_price: number
   }
 }
 
