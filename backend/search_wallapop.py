@@ -129,14 +129,8 @@ def store_search_results(supabase, search_params, listings):
             'vehicle_type': 'car'
         }
         
-        logger.info(f"Storing search: {search_data}")
         search_response = supabase.table('searches').insert(search_data).execute()
-        
-        if not isinstance(search_response, dict):
-            search_response = search_response.dict()
-            
         search_id = search_response['data'][0]['id']
-        logger.info(f"Created search with ID: {search_id}")
         
         # Track statistics
         new_listings = 0
@@ -148,11 +142,7 @@ def store_search_results(supabase, search_params, listings):
                 # Check if listing already exists
                 existing_response = supabase.table('listings_coches').select('id').eq('url', listing['url']).execute()
                 
-                if not isinstance(existing_response, dict):
-                    existing_response = existing_response.dict()
-                
                 if existing_response.get('data'):
-                    logger.info(f"Skipping duplicate listing: {listing['url']}")
                     duplicate_listings += 1
                     continue
                 
@@ -173,64 +163,56 @@ def store_search_results(supabase, search_params, listings):
                     'description': details['description']
                 }
                 
-                try:
-                    listing_response = supabase.table('listings_coches').insert(listing_data).execute()
-                    if listing_response.get('data'):
-                        listing_id = listing_response['data'][0]['id']
-                        logger.info(f"Created new listing: {listing_data['title']} (ID: {listing_id})")
-                        new_listings += 1
-                        
-                        # Insert images
-                        for idx, image_url in enumerate(listing['images']):
-                            image_data = {
-                                'listing_id': listing_id,
-                                'image_url': image_url,
-                                'image_order': idx
-                            }
-                            supabase.table('listing_images_coches').insert(image_data).execute()
-                            
-                except Exception as insert_error:
-                    if 'unique constraint' in str(insert_error).lower():
-                        logger.info(f"Duplicate listing detected during insert: {listing['url']}")
-                        duplicate_listings += 1
-                    else:
-                        logger.error(f"Error inserting listing: {str(insert_error)}")
-                    continue
+                listing_response = supabase.table('listings_coches').insert(listing_data).execute()
+                if listing_response.get('data'):
+                    listing_id = listing_response['data'][0]['id']
+                    new_listings += 1
+                    
+                    # Insert images
+                    for idx, image_url in enumerate(listing['images']):
+                        image_data = {
+                            'listing_id': listing_id,
+                            'image_url': image_url,
+                            'image_order': idx
+                        }
+                        supabase.table('listing_images_coches').insert(image_data).execute()
                     
             except Exception as e:
-                logger.error(f"Error processing listing {listing['url']}: {str(e)}")
+                logger.error(f"Error processing listing: {str(e)}")
                 continue
                 
-        logger.info(f"Search complete. New listings: {new_listings}, Duplicates skipped: {duplicate_listings}")
+        logger.info(f"Stored {new_listings} new listings ({duplicate_listings} duplicates skipped)")
                     
     except Exception as e:
-        logger.error(f"Error in search process: {str(e)}")
+        logger.error(f"Error storing search results: {str(e)}")
 
 def parse_price_range(price_str):
     """Parse price range string into min price value"""
-    # Remove '€' and spaces
-    clean_str = price_str.replace('€', '').replace(' ', '')
-    
-    # Handle different formats
-    if '-' in clean_str:
-        min_str, max_str = clean_str.split('-')
-    elif '/' in clean_str:
-        min_str, max_str = clean_str.split('/')
-    else:
-        raise ValueError(f"Unexpected price format: {price_str}")
-    
-    # Convert to numbers, handling thousands separator
-    def parse_price(price_str):
-        price_str = price_str.strip().replace(',', '')
-        return float(price_str)
-    
-    min_price = parse_price(min_str)
-    max_price = parse_price(max_str)
-    
-    avg_price = (min_price + max_price) / 2
-    calculated_min_price = (avg_price / 2)
-    
-    return max(calculated_min_price, 0)  # Ensure min price is not negative
+    try:
+        # Remove '€' and spaces
+        clean_str = price_str.replace('€', '').replace(' ', '')
+        
+        # Handle different formats
+        if '-' in clean_str:
+            min_str, max_str = clean_str.split('-')
+        elif '/' in clean_str:
+            min_str, max_str = clean_str.split('/')
+        else:
+            # Handle single price value
+            return float(clean_str.replace(',', '')) * 0.7  # 70% of target price
+        
+        # Convert to numbers, handling thousands separator
+        min_price = float(min_str.replace(',', ''))
+        max_price = float(max_str.replace(',', ''))
+        
+        avg_price = (min_price + max_price) / 2
+        calculated_min_price = (avg_price * 0.7)  # 70% of average price
+        
+        return max(calculated_min_price, 0)  # Ensure min price is not negative
+        
+    except Exception as e:
+        logger.error(f"Error parsing price range '{price_str}': {str(e)}")
+        return None
 
 def clean_title(title):
     """Clean up car title by removing everything after first parenthesis"""
@@ -243,7 +225,16 @@ def clean_title(title):
 
 def search_wallapop(car):
     """Search Wallapop for a specific car model"""
-    driver = None
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--window-size=1920,1080')
+    chrome_options.add_argument('user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36')
+    
+    driver = webdriver.Chrome(options=chrome_options)
+    wait = WebDriverWait(driver, 10)
+    
     try:
         # Get model and price range
         model = car['modelo']
@@ -252,9 +243,11 @@ def search_wallapop(car):
         start_year = car['ano_fabricacion'].split('/')[0] if '/' in car['ano_fabricacion'] else car['ano_fabricacion']
         
         # Parse price range
-        min_price = parse_price_range(price_range)[0] * 0.7  # Set minimum price to 70% of target
-        min_price = int(min_price)
-        
+        min_price = parse_price_range(price_range)
+        if min_price is None:  # Handle error case
+            logger.error(f"Could not parse price range: {price_range}")
+            return None
+            
         # Build search URL
         base_url = "https://es.wallapop.com/app/search"
         search_params = {
@@ -262,7 +255,7 @@ def search_wallapop(car):
             'latitude': '41.224151',
             'longitude': '1.7255678',
             'category_ids': '100',
-            'min_sale_price': min_price,
+            'min_sale_price': str(int(min_price)),
             'min_year': start_year,
             'max_km': '200000',
             'distance': '200000',
@@ -271,105 +264,62 @@ def search_wallapop(car):
         }
         
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
-        logger.info(f"\nSearching URL: {url}")
+        logger.debug(f"Searching URL: {url}")  # Changed to debug level
         
-        # Initialize WebDriver with retry mechanism
-        max_retries = 3
-        retry_delay = 2
+        driver.get(url)
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="/item/"]')))
         
-        for attempt in range(max_retries):
+        listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:5]
+        
+        if not listing_elements:
+            logger.warning("No listings found")
+            return None
+            
+        listings = []
+        for element in listing_elements:
             try:
-                # Create remote driver
-                driver = create_driver()
-                wait = WebDriverWait(driver, 20)
+                image_elements = element.find_elements(By.CSS_SELECTOR, 'img[src*="cdn.wallapop.com/images/"]')
+                image_urls = [img.get_attribute('src') for img in image_elements if img.get_attribute('src')]
                 
-                # Navigate to search page
-                driver.get(url)
+                original_title = element.text
+                cleaned_title = clean_title(original_title)
                 
-                # Wait for listings to load with retry
-                for _ in range(3):
-                    try:
-                        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="/item/"]')))
-                        break
-                    except Exception as wait_error:
-                        logger.warning(f"Wait attempt failed: {str(wait_error)}")
-                        driver.refresh()
-                        time.sleep(2)
-                
-                # Get all listing elements (limit to first 5)
-                listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:5]
-                
-                if not listing_elements:
-                    logger.warning("No listings found, retrying...")
-                    if attempt < max_retries - 1:
-                        time.sleep(retry_delay * (2 ** attempt))
-                        continue
-                    return None
-                
-                # Extract information from listings
-                listings = []
-                for element in listing_elements:
-                    try:
-                        # Get image URLs from the listing card
-                        image_elements = element.find_elements(By.CSS_SELECTOR, 'img[src*="cdn.wallapop.com/images/"]')
-                        image_urls = [img.get_attribute('src') for img in image_elements if img.get_attribute('src')]
-                        
-                        original_title = element.text
-                        cleaned_title = clean_title(original_title.split('\n')[0])
-                        
-                        listing = {
-                            'url': element.get_attribute('href'),
-                            'title': cleaned_title + '\n' + '\n'.join(original_title.split('\n')[1:]),
-                            'price': element.find_element(By.CSS_SELECTOR, '[class*="price"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="price"]') else None,
-                            'location': element.find_element(By.CSS_SELECTOR, '[class*="location"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="location"]') else None,
-                            'images': image_urls
-                        }
-                        listings.append(listing)
-                        logger.info(f"Found: {listing['title']} - {listing['price']} - {listing['location']}")
-                    except Exception as element_error:
-                        logger.error(f"Error processing listing element: {str(element_error)}")
-                        continue
-                
-                if listings:
-                    search_params = {
-                        'model': model,
-                        'brand': brand,
-                        'min_price': min_price,
-                        'max_price': None,
-                        'year': start_year,
-                        'url': url
-                    }
-                    
-                    logger.info(f"\nSearch complete for {model}. Found {len(listings)} listings")
-                    return {
-                        'search_parameters': search_params,
-                        'listings': listings
-                    }
-                
+                listing = {
+                    'url': element.get_attribute('href'),
+                    'title': cleaned_title + '\n' + '\n'.join(original_title.split('\n')[1:]),
+                    'price': element.find_element(By.CSS_SELECTOR, '[class*="price"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="price"]') else None,
+                    'location': element.find_element(By.CSS_SELECTOR, '[class*="location"]').text if element.find_elements(By.CSS_SELECTOR, '[class*="location"]') else None,
+                    'images': image_urls
+                }
+                listings.append(listing)
             except Exception as e:
-                logger.error(f"Search attempt {attempt + 1} failed: {str(e)}")
-                if attempt < max_retries - 1:
-                    time.sleep(retry_delay * (2 ** attempt))
-                else:
-                    raise
-            finally:
-                if driver:
-                    try:
-                        driver.quit()
-                    except Exception as quit_error:
-                        logger.error(f"Error closing driver: {str(quit_error)}")
-                        
-        return None
+                logger.error(f"Error processing listing element: {str(e)}")
+                continue
+        
+        search_params = {
+            'model': model,
+            'brand': brand,
+            'min_price': min_price,
+            'max_price': None,
+            'year': start_year,
+            'vehicle_type': 'car',
+            'url': url
+        }
+        
+        logger.info(f"Found {len(listings)} listings for {brand} {model}")  # Simplified log message
+        
+        return {
+            'search_parameters': search_params,
+            'listings': listings
+        }
         
     except Exception as e:
-        logger.error(f"Error in search_wallapop: {str(e)}")
+        logger.error(f"Error searching for {car['modelo']}: {str(e)}")
         return None
+        
     finally:
         if driver:
-            try:
-                driver.quit()
-            except Exception as e:
-                logger.error(f"Error closing driver: {str(e)}")
+            driver.quit()
 
 def search_with_retry(car, max_retries=3, delay=5):
     """Retry search with exponential backoff"""

@@ -1,0 +1,81 @@
+Model,Year Range,Engine Type,Buy Price (€),Market Price (€),Potential Profit (€),ROI %,Regular Listings,Market Listings
+Peugeot 308,2014/2019,Gasolina/Diésel,"2,700","11,798","9,098",337.0,10,20
+BMW Serie 1 (Gasolina),2012/2017,Gasolina,"8,200","27,054","18,854",229.9,10,20
+Mercedes-Benz Clase A,2013/2018,Gasolina/Diésel,"7,799","22,282","14,483",185.7,10,10
+Volkswagen Golf 6,2008/2013,Gasolina,"4,000","11,039","7,039",176.0,10,10
+Renault Mégane,2014/2018,Gasolina/Diésel,"5,400","14,811","9,411",174.3,10,20
+Volkswagen Golf 5,2006/2008,Diésel,"2,500","6,380","3,880",155.2,10,10
+Citroën Berlingo,2012/2019,Diésel,"5,300","13,274","7,974",150.5,10,20
+Seat Ibiza (Diésel),2010/2013,Diésel,"3,000","7,411","4,411",147.0,10,10
+Opel Corsa,2006/2014,Gasolina/Diésel,"2,300","5,571","3,271",142.2,10,11
+Fiat 500,2012/2019,Gasolina,"4,200","10,035","5,835",138.9,10,20
+Renault Scénic,2012/2018,Gasolina/Diésel,"5,600","13,350","7,750",138.4,10,20
+Audi A3 (Gasolina),2012/2016,Gasolina,"8,500","19,781","11,281",132.7,10,17
+Volkswagen Golf 7,2012/2016,Gasolina,"8,000","17,818","9,818",122.7,10,10
+Citroën C3 (Diésel),2010/2017,Diésel,"3,500","7,686","4,186",119.6,10,13
+Opel Astra (Gasolina),2012/2018,Gasolina,"5,000","10,882","5,882",117.6,10,16
+Nissan Juke,2011/2019,Gasolina/Diésel,"6,000","13,044","7,044",117.4,10,20
+BMW Serie 1 (Diésel),2012/2017,Diésel,"7,500","16,290","8,790",117.2,10,20
+Renault Clio (Diésel),2012/2018,Diésel,"4,800","10,425","5,625",117.2,10,14
+Skoda Superb,2012/2019,Gasolina/Diésel,"8,000","17,314","9,314",116.4,10,17
+Suzuki Swift,2012/2018,Gasolina,"5,500","11,729","6,229",113.3,10,11
+Opel Astra (Diésel),2012/2018,Diésel,"4,800","10,235","5,435",113.2,10,19
+Volkswagen Polo (Gasolina),2010/2017,Gasolina,"4,900","10,391","5,491",112.1,10,20
+Ford Fiesta (Gasolina),2013/2018,Gasolina,"4,500","9,461","4,961",110.2,10,20
+Seat Ibiza (Gasolina),2010/2013,Gasolina,"4,000","8,395","4,395",109.9,10,10
+Renault Clio (Gasolina),2012/2018,Gasolina,"4,800","10,054","5,254",109.5,10,20
+Mazda 3 (Gasolina),2013/2019,Gasolina,"7,790","15,954","8,164",104.8,10,20
+Hyundai i30,2012/2018,Gasolina/Diésel,"6,200","12,574","6,374",102.8,10,20
+Ford Kuga,2012/2019,Gasolina/Diésel,"7,499","15,176","7,677",102.4,10,20
+Citroën C3 (Gasolina),2010/2017,Gasolina,"3,700","7,428","3,728",100.8,10,20
+Peugeot 208 (Gasolina),2012/2019,Gasolina,"4,150","8,311","4,161",100.3,10,20
+Kia Ceed (Diésel),2012/2018,Diésel,"6,000","11,827","5,827",97.1,10,18
+Fiat Panda,2012/2018,Gasolina,"4,000","7,852","3,852",96.3,10,18
+Renault Captur,2013/2018,Gasolina/Diésel,"6,000","11,729","5,729",95.5,10,20
+Kia Ceed (Gasolina),2012/2018,Gasolina,"5,600","10,940","5,340",95.4,10,20
+Volkswagen Golf 7,2012/2016,Diésel,"7,470","14,509","7,039",94.2,10,11
+Mini Countryman,2010/2017,Gasolina/Diésel,"7,500","14,266","6,766",90.2,10,18
+Peugeot 3008,2012/2019,Gasolina/Diésel,"7,490","13,980","6,490",86.7,10,20
+Volkswagen Golf 6,2008/2013,Diésel,"5,000","9,304","4,304",86.1,10,11
+Peugeot 5008,2010/2017,Gasolina/Diésel,"7,000","12,984","5,984",85.5,10,19
+Nissan Micra,2011/2018,Gasolina,"4,500","8,290","3,790",84.2,10,20
+Audi A1,2012/2018,Gasolina,"7,290","13,424","6,134",84.1,10,20
+Volkswagen Tiguan,2010/2017,Gasolina/Diésel,"9,000","16,438","7,438",82.6,10,20
+Dacia Duster,2013/2018,Gasolina/Diésel,"6,300","11,472","5,172",82.1,10,20
+Citroën C4 Cactus,2014/2018,Gasolina/Diésel,"5,500","9,711","4,211",76.6,10,20
+Volkswagen Polo (Diésel),2010/2017,Diésel,"4,590","8,018","3,428",74.7,10,13
+Toyota Aygo,2014/2018,Gasolina,"5,500","9,509","4,009",72.9,10,20
+Peugeot 208 (Diésel),2012/2019,Diésel,"4,800","8,270","3,470",72.3,10,20
+Skoda Octavia (Diésel),2013/2018,Diésel,"8,400","14,441","6,041",71.9,10,15
+Ford Fiesta (Diésel),2013/2018,Diésel,"4,999","8,551","3,552",71.1,10,11
+Seat León,2012/2017,Diésel,"8,199","13,942","5,743",70.0,10,20
+BMW X1,2012/2019,Gasolina/Diésel,"11,300","19,095","7,795",69.0,10,20
+Mazda CX-5,2012/2017,Gasolina/Diésel,"8,995","15,098","6,103",67.8,10,20
+Hyundai i20 (Gasolina),2015/2018,Gasolina,"6,300","10,527","4,227",67.1,10,20
+Kia Sportage,2012/2018,Gasolina/Diésel,"7,990","13,271","5,281",66.1,10,20
+Opel Mokka,2012/2018,Gasolina/Diésel,"7,000","11,592","4,592",65.6,10,20
+Audi A3 (Diésel),2012/2016,Diésel,"9,000","14,794","5,794",64.4,10,15
+Volvo V40,2012/2019,Gasolina/Diésel,"8,400","13,710","5,310",63.2,10,15
+Fiat 500X,2014/2019,Gasolina/Diésel,"7,600","12,400","4,800",63.2,10,20
+Honda Civic (Gasolina),2012/2017,Gasolina,"9,990","16,145","6,155",61.6,10,18
+Volkswagen Passat,2011/2018,Gasolina/Diésel,"8,700","14,024","5,324",61.2,10,15
+Skoda Octavia (Gasolina),2013/2018,Gasolina,"10,990","17,602","6,612",60.2,10,13
+Toyota Corolla (Gasolina),2006/2013,Gasolina,"3,900","6,168","2,268",58.2,10,10
+Mercedes-Benz GLA,2013/2018,Gasolina/Diésel,"13,500","21,234","7,734",57.3,10,10
+Skoda Yeti,2012/2017,Gasolina/Diésel,"7,200","11,192","3,992",55.4,10,10
+Toyota Corolla (Diésel),2006/2013,Diésel,"4,500","6,913","2,413",53.6,10,10
+Ford Mondeo,2011/2018,Gasolina/Diésel,"7,495","11,316","3,821",51.0,10,13
+Mazda 3 (Diésel),2013/2019,Diésel,"8,800","13,130","4,330",49.2,10,20
+Honda Civic (Diésel),2012/2017,Diésel,"8,700","12,714","4,014",46.1,7,7
+Hyundai Tucson,2015/2020,Gasolina/Diésel,"11,900","17,103","5,203",43.7,10,20
+Audi Q3,2011/2018,Gasolina/Diésel,"12,800","18,387","5,587",43.6,10,20
+Nissan X-Trail,2011/2018,Gasolina/Diésel,"10,950","15,187","4,237",38.7,10,20
+Honda HR-V,2015/2020,Gasolina,"12,490","16,154","3,664",29.3,10,15
+BMW 3 Series,2012/2018,Gasolina/Diésel,"19,900","23,034","3,134",15.7,5,5
+Mitsubishi ASX,2015/2019,Diésel,"12,000","13,789","1,789",14.9,10,10
+Audi A4 Allroad,2012/2016,Gasolina/Diésel,"17,900","19,843","1,943",10.9,10,10
+Hyundai i20 (Diésel),2015/2018,Diésel,"8,990","9,504",514,5.7,8,11
+Jaguar XE,2015/2019,Gasolina/Diésel,"13,890","14,154",264,1.9,10,13
+Ford Focus Mk3 (Gasolina),2011/2018,Gasolina,"5,400","5,400",0,0.0,1,1
+Chevrolet Spark,2012/2018,Gasolina,"4,850","4,850",0,0.0,1,1
+Opel Astra J,2010/2015,Gasolina/Diésel,"5,900","5,579",-321,-5.4,3,5
