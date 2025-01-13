@@ -45,6 +45,7 @@ export interface Listing {
     search_url: string
     max_price: number
   }
+  [key: string]: any
 }
 
 export interface LikedListing {

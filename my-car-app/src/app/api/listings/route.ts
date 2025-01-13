@@ -95,6 +95,14 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: listingsError.message }, { status: 500 })
   }
 
+  // Add logging for titles and models
+  console.log('\n=== Listings for', vehicleType, '===')
+  listings.forEach((listing: any) => {
+    console.log('\nTitle:', listing.title)
+    console.log('Model:', listing.searches?.model || 'No model specified')
+    console.log('---')
+  })
+
   const parsePrice = (str: string): number => 
     Number(str.replace('€', '').replace('.', '').replace(',', '.').trim())
 

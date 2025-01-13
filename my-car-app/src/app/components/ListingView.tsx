@@ -88,8 +88,13 @@ export default function ListingView({ defaultType }: ListingViewProps) {
   const fetchListings = useCallback(async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/listings?type=${vehicleType}`)
+      const response = await fetch(
+        vehicleType === 'coches' 
+          ? '/api/car-listings'
+          : `/api/listings?type=${vehicleType}`
+      )
       const data = await response.json()
+      console.log('Fetched listings:', data)
       setListings(data)
       setCurrentIndex(0)
       setLoading(false)
@@ -103,18 +108,19 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     void fetchListings()
   }, [vehicleType, fetchListings])
 
-  const updateUrl = useCallback((index: number) => {
-    const params = new URLSearchParams(searchParams)
-    params.set('index', index.toString())
-    router.replace(`/${vehicleType}?${params.toString()}`, { scroll: false })
-  }, [vehicleType, router, searchParams])
+  useEffect(() => {
+    if (currentIndex >= 0 && listings.length > 0) {
+      const params = new URLSearchParams(searchParams)
+      params.set('index', currentIndex.toString())
+      router.replace(`/${vehicleType}?${params.toString()}`, { scroll: false })
+    }
+  }, [currentIndex, vehicleType, router, searchParams, listings.length])
 
   const handleNavigation = (direction: 'prev' | 'next') => {
     setCurrentIndex((prevIndex) => {
       const newIndex = direction === 'prev' 
         ? Math.max(0, prevIndex - 1)
         : Math.min(listings.length - 1, prevIndex + 1)
-      updateUrl(newIndex)
       return newIndex
     })
   }
@@ -273,6 +279,13 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     localStorage.setItem('likedListings', JSON.stringify(newLikedListings))
   }
 
+  useEffect(() => {
+    if (listings.length > 0) {
+      console.log('First listing:', listings[0])
+      console.log('Image URL being used:', listings[0]?.listing_images?.[0]?.image_url)
+    }
+  }, [listings])
+
   if (loading) {
     return (
       <div className="h-screen bg-gray-900 text-white relative">
@@ -361,10 +374,11 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     return null
   }
 
-  const imageUrl = vehicleType === 'stats' 
-    ? '/placeholder.svg'
+  const imageUrl = vehicleType === 'coches'
+    ? currentListing.listing_images?.[0]?.image_url
     : currentListing[`listing_images_${vehicleType}`]?.[0]?.image_url || 
-      currentListing.listing_images?.[0]?.image_url || '/placeholder.svg'
+      currentListing.listing_images?.[0]?.image_url || 
+      '/placeholder.svg'
 
   return (
     <div className="h-screen bg-gray-900 text-white relative">
@@ -424,7 +438,7 @@ export default function ListingView({ defaultType }: ListingViewProps) {
         <div
           className="absolute inset-0 bg-center bg-cover bg-no-repeat"
           style={{
-            backgroundImage: `url(${imageUrl})`
+            backgroundImage: `url(${imageUrl})`,
           }}
         />
         
