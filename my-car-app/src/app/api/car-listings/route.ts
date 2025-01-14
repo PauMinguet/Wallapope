@@ -29,7 +29,14 @@ interface CarListing {
     online: boolean
     kind: string
   }
-  flags: any
+  flags: {
+    pending: boolean
+    sold: boolean
+    reserved: boolean
+    banned: boolean
+    expired: boolean
+    onhold: boolean
+  }
   search_id: string
   external_id: string
   car_images: Array<{
@@ -74,6 +81,11 @@ export async function GET() {
     // Filter and transform listings
     const filteredListings = listings
       .filter((listing: CarListing) => {
+        // Skip if any flag is true (reserved, sold, banned, etc)
+        if (listing.flags && Object.values(listing.flags).some(flag => flag === true)) {
+          return false
+        }
+
         // Skip listings with unwanted keywords
         const unwantedKeywords = [
           'accidentado', 'accidentada', 'inundado', 'accidente', 

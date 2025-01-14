@@ -36,6 +36,7 @@ interface BaseListing {
     search_url: string
     max_price?: number
   }
+  flags: WallapopListing['flags']
 }
 
 interface CocheListing extends BaseListing {
@@ -54,6 +55,16 @@ interface FurgoListing extends BaseListing {
 
 type VehicleListing = CocheListing | MotoListing | FurgoListing
 
+interface WallapopListing {
+  flags: {
+    pending: boolean
+    sold: boolean
+    reserved: boolean
+    banned: boolean
+    expired: boolean
+    onhold: boolean
+  }
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -97,7 +108,7 @@ export async function GET(request: Request) {
 
   // Add logging for titles and models
   console.log('\n=== Listings for', vehicleType, '===')
-  listings.forEach((listing: any) => {
+  listings.forEach((listing: VehicleListing) => {
     console.log('\nTitle:', listing.title)
     console.log('Model:', listing.searches?.model || 'No model specified')
     console.log('---')
