@@ -35,7 +35,7 @@ def run_car_search():
     except Exception as e:
         logger.error(f"Error in car search: {str(e)}", exc_info=True)
 
-@app.post("/api/search-cars")
+@app.get("/api/search-cars")
 async def search_cars(background_tasks: BackgroundTasks):
     """Endpoint to trigger car search"""
     background_tasks.add_task(run_car_search)
