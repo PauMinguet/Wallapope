@@ -1,7 +1,7 @@
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 import search_wallapop
-import search_wallapop_motos
+import backend_copy.search_wallapop_motos as search_wallapop_motos
 import search_wallapop_furgos
 import search_wallapop_scooters
 import logging

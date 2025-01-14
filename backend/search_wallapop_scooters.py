@@ -152,14 +152,18 @@ def store_search_results(supabase, search_params, listings):
     }
     
     try:
-        search_result = supabase.table('searches').insert(search_data).execute()
-        search_id = search_result.data[0]['id']
+        # Update how we handle the Supabase response
+        search_response = supabase.table('searches').insert(search_data).execute()
+        if not search_response or not search_response.get('data') or len(search_response['data']) == 0:
+            raise Exception("Failed to insert search record")
+            
+        search_id = search_response['data'][0]['id']
         
         for listing in listings:
             try:
                 # Check if listing already exists
-                existing = supabase.table('listings_scooters').select('id').eq('url', listing['url']).execute()
-                if existing.data:
+                existing_response = supabase.table('listings_scooters').select('id').eq('url', listing['url']).execute()
+                if existing_response and existing_response.get('data') and len(existing_response['data']) > 0:
                     print(f"Skipping duplicate listing: {listing['url']}")
                     continue
                 
@@ -180,9 +184,12 @@ def store_search_results(supabase, search_params, listings):
                     'description': details['description']
                 }
                 
-                # Insert listing
-                listing_result = supabase.table('listings_scooters').insert(listing_data).execute()
-                listing_id = listing_result.data[0]['id']
+                # Insert listing and handle response properly
+                listing_response = supabase.table('listings_scooters').insert(listing_data).execute()
+                if not listing_response or not listing_response.get('data') or len(listing_response['data']) == 0:
+                    raise Exception("Failed to insert listing record")
+                    
+                listing_id = listing_response['data'][0]['id']
                 
                 # Insert images
                 for idx, image_url in enumerate(listing['images']):

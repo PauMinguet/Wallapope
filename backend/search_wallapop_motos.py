@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 import re
 import logging
 import time
+from clean_listings import filter_listings
 
 # Configure logging
 logging.basicConfig(
@@ -152,7 +153,7 @@ def search_wallapop(moto, specific_year=None):
             driver.get(url)
             wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="/item/"]')))
             
-            listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:15]
+            listing_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/item/"]')[:7]
             
             listings = []
             for element in listing_elements:
@@ -268,6 +269,9 @@ def has_wrong_engine_size(title, model):
 def store_search_results(supabase, search_params, listings):
     """Store search results in Supabase"""
     try:
+        # Filter listings before processing
+        filtered_listings = filter_listings(listings, search_params['model'])
+        
         # Insert search parameters
         search_data = {
             'model': search_params['model'],
@@ -301,7 +305,7 @@ def store_search_results(supabase, search_params, listings):
         duplicate_listings = 0
         
         # Insert listings
-        for listing in listings:
+        for listing in filtered_listings:
             try:
                 # Check for wrong engine sizes before processing
                 if has_wrong_engine_size(listing['title'], search_params['model']):

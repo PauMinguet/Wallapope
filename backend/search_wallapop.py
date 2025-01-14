@@ -13,6 +13,7 @@ from chrome_config import get_chrome_options, create_driver
 import logging
 from selenium.common.exceptions import WebDriverException
 import time
+import asyncio
 
 logger = logging.getLogger(__name__)
 
@@ -118,41 +119,95 @@ def parse_listing_details(title_text):
 def store_search_results(supabase, search_params, listings):
     """Store search results in Supabase"""
     try:
-        # Insert search parameters
+        # Convert min_price to integer before inserting
         search_data = {
             'model': search_params['model'],
             'marca': search_params['brand'],
-            'min_price': search_params['min_price'],
-            'max_price': search_params['max_price'],
+            'min_price': int(search_params['min_price']) if search_params['min_price'] else None,
+            'max_price': int(search_params['max_price']) if search_params['max_price'] else None,
             'min_year': search_params['year'],
             'search_url': search_params['url'],
             'vehicle_type': 'car'
         }
         
+        logger.debug(f"Inserting search data: {search_data}")
         search_response = supabase.table('searches').insert(search_data).execute()
-        search_id = search_response['data'][0]['id']
+        
+        # More detailed response checking
+        if not search_response:
+            logger.error("Search response is None")
+            return
+            
+        logger.debug(f"Raw search response: {search_response}")
+        
+        # Check if response has the expected structure
+        if not isinstance(search_response, dict):
+            logger.error(f"Unexpected response type: {type(search_response)}")
+            return
+            
+        data = search_response.get('data')
+        if not data or not isinstance(data, list) or len(data) == 0:
+            logger.error(f"Invalid data in response: {data}")
+            return
+            
+        try:
+            search_id = data[0].get('id')
+            if not search_id:
+                logger.error("No ID found in response data")
+                return
+        except (IndexError, AttributeError) as e:
+            logger.error(f"Error extracting ID from response: {str(e)}")
+            return
+            
+        logger.debug(f"Created search record with ID: {search_id}")
         
         # Track statistics
         new_listings = 0
         duplicate_listings = 0
+        error_listings = 0
         
         # Insert listings
         for listing in listings:
             try:
-                # Check if listing already exists
-                existing_response = supabase.table('listings_coches').select('id').eq('url', listing['url']).execute()
-                
-                if existing_response.get('data'):
-                    duplicate_listings += 1
+                # Check if listing already exists - Fix the duplicate check
+                try:
+                    existing_response = supabase.table('listings_coches').select('id').eq('url', listing['url']).execute()
+                    
+                    # Debug log for existing check
+                    logger.debug(f"Checking existing listing with URL {listing['url']}")
+                    logger.debug(f"Existing response: {existing_response}")
+                    
+                    # Check if there are any results in the data array
+                    if (existing_response 
+                        and isinstance(existing_response, dict) 
+                        and existing_response.get('data') 
+                        and len(existing_response['data']) > 0):
+                        logger.info(f"Skipping duplicate listing: {listing['url']}")
+                        duplicate_listings += 1
+                        continue
+                        
+                except Exception as e:
+                    logger.error(f"Error checking for existing listing: {str(e)}")
+                    error_listings += 1
                     continue
                 
                 # Parse and insert new listing
                 details = parse_listing_details(listing['title'])
+                
+                # Convert price to integer before inserting
+                price = details['price']
+                if price is not None:
+                    try:
+                        price = int(price)  # Round down to nearest integer
+                    except (ValueError, TypeError):
+                        logger.warning(f"Could not convert price to integer: {price}")
+                        price = None
+                
                 listing_data = {
                     'search_id': search_id,
                     'url': listing['url'],
                     'title': listing['title'],
-                    'price': float(details['price']) if details['price'] else None,
+                    'price': price,
                     'price_text': details['price_text'],
                     'location': listing['location'],
                     'year': int(details['year']) if details['year'] else None,
@@ -163,28 +218,66 @@ def store_search_results(supabase, search_params, listings):
                     'description': details['description']
                 }
                 
+                logger.debug(f"Inserting listing data: {listing_data}")
                 listing_response = supabase.table('listings_coches').insert(listing_data).execute()
-                if listing_response.get('data'):
-                    listing_id = listing_response['data'][0]['id']
-                    new_listings += 1
+                
+                if not listing_response:
+                    logger.error("Listing response is None")
+                    error_listings += 1
+                    continue
                     
-                    # Insert images
-                    for idx, image_url in enumerate(listing['images']):
+                logger.debug(f"Raw listing response: {listing_response}")
+                
+                if not isinstance(listing_response, dict):
+                    logger.error(f"Unexpected listing response type: {type(listing_response)}")
+                    error_listings += 1
+                    continue
+                
+                data = listing_response.get('data')
+                if not data or not isinstance(data, list) or len(data) == 0:
+                    logger.error(f"Invalid data in listing response: {data}")
+                    error_listings += 1
+                    continue
+                
+                try:
+                    listing_id = data[0].get('id')
+                    if not listing_id:
+                        logger.error("No listing ID found in response data")
+                        error_listings += 1
+                        continue
+                except (KeyError, IndexError) as e:
+                    logger.error(f"Error extracting listing ID. Response data: {data}")
+                    error_listings += 1
+                    continue
+                
+                logger.debug(f"Created listing record with ID: {listing_id}")
+                new_listings += 1
+                
+                # Insert images
+                for idx, image_url in enumerate(listing['images']):
+                    try:
                         image_data = {
                             'listing_id': listing_id,
                             'image_url': image_url,
                             'image_order': idx
                         }
-                        supabase.table('listing_images_coches').insert(image_data).execute()
+                        image_response = supabase.table('listing_images_coches').insert(image_data).execute()
+                        if not image_response or not image_response.get('data'):
+                            logger.warning(f"Failed to insert image {idx} for listing {listing_id}")
+                    except Exception as e:
+                        logger.error(f"Error inserting image {idx}: {str(e)}")
                     
             except Exception as e:
-                logger.error(f"Error processing listing: {str(e)}")
+                error_listings += 1
+                logger.error(f"Error processing listing: {str(e)}", exc_info=True)
                 continue
                 
-        logger.info(f"Stored {new_listings} new listings ({duplicate_listings} duplicates skipped)")
+        logger.info(f"Storage summary: {new_listings} new, {duplicate_listings} duplicates, {error_listings} errors")
                     
     except Exception as e:
-        logger.error(f"Error storing search results: {str(e)}")
+        logger.error(f"Error storing search results: {str(e)}", exc_info=True)
+        logger.error(f"Failed search parameters: {search_params}")
+        raise
 
 def parse_price_range(price_str):
     """Parse price range string into min price value"""
@@ -366,8 +459,90 @@ def process_all_cars():
     
     return all_results
 
+def clean_car_database(supabase):
+    """Clean all car-related data from the database using direct table operations"""
+    try:
+        logger.info("Starting car database cleanup...")
+        
+        # Delete in reverse order of dependencies
+        try:
+            logger.info("1. Deleting car images...")
+            # First, get all listing IDs
+            listing_ids_response = supabase.table('listings_coches').select('id').execute()
+            if hasattr(listing_ids_response, 'dict'):
+                listing_ids_response = listing_ids_response.dict()
+            
+            if listing_ids_response.get('data'):
+                for listing in listing_ids_response['data']:
+                    # Delete images for each listing
+                    supabase.table('listing_images_coches').delete().eq('listing_id', str(listing['id'])).execute()
+                    time.sleep(0.1)  # Small delay between operations
+            
+            # Delete any remaining images
+            supabase.table('listing_images_coches').delete().gt('id', '0').execute()
+            logger.debug("Images deleted")
+            time.sleep(1)
+        except Exception as e:
+            logger.error(f"Error deleting car images: {str(e)}", exc_info=True)
+        
+        try:
+            logger.info("2. Deleting car listings...")
+            # Delete all listings
+            supabase.table('listings_coches').delete().gt('id', '0').execute()
+            logger.debug("Listings deleted")
+            time.sleep(1)
+        except Exception as e:
+            logger.error(f"Error deleting car listings: {str(e)}", exc_info=True)
+        
+        try:
+            logger.info("3. Deleting car searches...")
+            # Delete car searches
+            supabase.table('searches').delete().eq('vehicle_type', 'car').execute()
+            logger.debug("Car searches deleted")
+            time.sleep(1)
+        except Exception as e:
+            logger.error(f"Error deleting car searches: {str(e)}", exc_info=True)
+        
+        # Verify cleanup
+        try:
+            # Check remaining records
+            image_count = len(supabase.table('listing_images_coches').select('id').execute().get('data', []))
+            listing_count = len(supabase.table('listings_coches').select('id').execute().get('data', []))
+            search_count = len(supabase.table('searches').select('id').eq('vehicle_type', 'car').execute().get('data', []))
+            
+            logger.info("Cleanup verification:")
+            logger.info(f"- Remaining car images: {image_count}")
+            logger.info(f"- Remaining car listings: {listing_count}")
+            logger.info(f"- Remaining car searches: {search_count}")
+            
+            if image_count == 0 and listing_count == 0 and search_count == 0:
+                logger.info("Database cleanup successful!")
+            else:
+                logger.error("Some records remain after cleanup")
+                logger.info("Attempting final cleanup...")
+                
+                # Final cleanup attempt using gt instead of neq
+                supabase.table('listing_images_coches').delete().gt('id', '0').execute()
+                supabase.table('listings_coches').delete().gt('id', '0').execute()
+                supabase.table('searches').delete().eq('vehicle_type', 'car').execute()
+                
+        except Exception as e:
+            logger.error(f"Error verifying cleanup: {str(e)}", exc_info=True)
+            
+    except Exception as e:
+        logger.error(f"Error in cleanup process: {str(e)}", exc_info=True)
+        raise
+
 def main():
     print("Starting Wallapop car search...")
+    
+    # Initialize Supabase
+    supabase = init_supabase()
+    
+    # Clean database before starting
+    clean_car_database(supabase)
+    
+    # Continue with search
     results = process_all_cars()
     
     # Print summary

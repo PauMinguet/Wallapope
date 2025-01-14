@@ -3,15 +3,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-import csv
-from datetime import datetime
-from urllib.parse import quote
-import statistics
-from supabase_py import create_client
-from dotenv import load_dotenv
+import json
 import os
+from supabase_py import create_client
+from urllib.parse import quote
+from dotenv import load_dotenv
+import re
+from datetime import datetime
+from chrome_config import create_driver, get_chrome_options
+import logging
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -57,21 +60,10 @@ def parse_price_range(price_str):
     except:
         return None, None
 
-def search_wallapop(car, include_flexicar=False, use_relevance=False):
-    """Search Wallapop with specific parameters"""
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--window-size=1920,1080')
-    chrome_options.add_argument('user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36')
-    
+def search_wallapop(driver, car, include_flexicar=False, use_relevance=False):
+    """Search Wallapop for a car (now accepts driver as parameter)"""
     try:
-        # Setup ChromeDriver using webdriver_manager
-        service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=chrome_options)
         wait = WebDriverWait(driver, 10)
-        
         # Prepare search parameters
         model = car['modelo']
         brand = car['marca']
@@ -146,103 +138,118 @@ def search_wallapop(car, include_flexicar=False, use_relevance=False):
         return prices, url
         
     except Exception as e:
-        print(f"Error initializing Chrome driver: {str(e)}")
+        print(f"Error searching: {str(e)}")
         return [], ""
-        
+
+def insert_analysis_result(supabase, result_data):
+    """Insert a single analysis result into the database"""
+    try:
+        supabase.table("car_price_analysis").insert({
+            "brand": result_data['marca'],
+            "model": result_data['modelo'],
+            "year_range": result_data['ano_fabricacion'],
+            "engine_type": result_data.get('combustible', ''),
+            "regular_search_prices": result_data['regular_prices'],
+            "regular_search_url": result_data['regular_url'],
+            "relevance_search_prices": result_data['relevance_prices'],
+            "relevance_search_url": result_data['relevance_url'],
+            "flexicar_search_prices": result_data['flexicar_prices'],
+            "flexicar_search_url": result_data['flexicar_url'],
+            "timestamp": datetime.now().isoformat()
+        }).execute()
+        print(f"Inserted analysis for {result_data['marca']} {result_data['modelo']}")
+    except Exception as e:
+        print(f"Error inserting data: {str(e)}")
+
+def analyze_car_prices():
+    """Main analysis function"""
+    supabase = init_supabase()
+    
+    # Reset and setup the analysis table
+    setup_analysis_table(supabase)
+    
+    # Get cars from Supabase
+    cars = get_cars_from_supabase()
+    
+    # Create Chrome driver once
+    driver = create_driver()
+    
+    try:
+        for car in cars:
+            try:
+                print(f"\nProcessing {car['marca']} {car['modelo']}...")
+                
+                # Pass the driver instance to search functions
+                regular_prices, regular_url = search_wallapop(driver, car)
+                relevance_prices, relevance_url = search_wallapop(driver, car, use_relevance=True)
+                flexicar_prices, flexicar_url = search_wallapop(driver, car, include_flexicar=True)
+                
+                result_data = {
+                    'marca': car['marca'],
+                    'modelo': car['modelo'],
+                    'ano_fabricacion': car['ano_fabricacion'],
+                    'combustible': car.get('combustible', ''),
+                    'regular_prices': regular_prices,
+                    'regular_url': regular_url,
+                    'relevance_prices': relevance_prices,
+                    'relevance_url': relevance_url,
+                    'flexicar_prices': flexicar_prices,
+                    'flexicar_url': flexicar_url
+                }
+                
+                insert_analysis_result(supabase, result_data)
+                print(f"Completed analysis for {car['marca']} {car['modelo']}")
+                
+            except Exception as e:
+                print(f"Error processing {car['marca']} {car['modelo']}: {str(e)}")
+                continue
+                
     finally:
-        if 'driver' in locals() and driver:
+        if driver:
             try:
                 driver.quit()
             except Exception as e:
                 print(f"Error closing driver: {str(e)}")
 
-def analyze_car_prices():
-    """Analyze prices for each car"""
-    cars = get_cars_from_supabase()
-    
-    # Prepare CSV file
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    filename = f'car_price_analysis_{timestamp}.csv'
-    
-    # Create and write headers
-    with open(filename, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([
-            'Brand', 
-            'Model',
-            'Year Range',
-            'Engine Type',
-            'Target Min Price',
-            'Target Max Price',
-            'Regular Search Prices (Low to High)',
-            'Regular Search URL',
-            'Relevance Search Prices',
-            'Relevance Search URL',
-            'Flexicar Search Prices',
-            'Flexicar Search URL',
-            'Timestamp'
-        ])
-    
-    # Process each car and write results immediately
-    for car in cars:
-        print(f"\nAnalyzing {car['marca']} {car['modelo']}...")
-        
+def setup_analysis_table(supabase):
+    """Clear existing data and ensure table exists"""
+    try:
+        # First try to delete all rows - convert 0 to string '0'
+        supabase.table("car_price_analysis").delete().neq('id', '0').execute()
+        print("Cleared existing analysis data")
+    except Exception as e:
+        print(f"Error clearing analysis data: {str(e)}")
         try:
-            # Parse target price range
-            target_min, target_max = parse_price_range(car['precio_compra'])
-            
-            # Perform searches one at a time and write results immediately
-            regular_prices, regular_url = search_wallapop(car)
-            print(f"Regular search complete: {len(regular_prices)} listings")
-            
-            relevance_prices, relevance_url = search_wallapop(car, use_relevance=True)
-            print(f"Relevance search complete: {len(relevance_prices)} listings")
-            
-            flexicar_prices, flexicar_url = search_wallapop(car, include_flexicar=True)
-            print(f"Flexicar search complete: {len(flexicar_prices)} listings")
-            
-            # Write results to CSV immediately after searches complete
-            with open(filename, 'a', newline='') as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow([
-                    car['marca'],
-                    car['modelo'],
-                    car['ano_fabricacion'],
-                    car.get('combustible', ''),  # Use get() to handle missing combustible
-                    target_min,
-                    target_max,
-                    regular_prices if regular_prices else '',
-                    regular_url,
-                    relevance_prices if relevance_prices else '',
-                    relevance_url,
-                    flexicar_prices if flexicar_prices else '',
-                    flexicar_url,
-                    datetime.now().isoformat()
-                ])
-            
-            print(f"Target price range: {target_min}€ - {target_max}€")
-            print(f"Results saved for {car['marca']} {car['modelo']}")
-            
-        except Exception as e:
-            print(f"Error processing {car['marca']} {car['modelo']}: {str(e)}")
-            # Write error entry to CSV
-            with open(filename, 'a', newline='') as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow([
-                    car['marca'],
-                    car['modelo'],
-                    car['ano_fabricacion'],
-                    car.get('combustible', ''),
-                    target_min,
-                    target_max,
-                    f"ERROR: {str(e)}",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    datetime.now().isoformat()
-                ])
+            # Alternative approach: delete all rows without filter
+            supabase.table("car_price_analysis").delete().execute()
+            print("Cleared existing analysis data (alternative method)")
+        except Exception as e2:
+            print(f"Error with alternative clear method: {str(e2)}")
+            print("Will try to create table if it doesn't exist...")
+            try:
+                # Create table structure directly instead of using RPC
+                supabase.table("car_price_analysis").insert({
+                    "brand": "test",
+                    "model": "test",
+                    "year_range": "test",
+                    "engine_type": "test",
+                    "target_min_price": 0,
+                    "target_max_price": 0,
+                    "regular_search_prices": [],
+                    "regular_search_url": "",
+                    "relevance_search_prices": [],
+                    "relevance_search_url": "",
+                    "flexicar_search_prices": [],
+                    "flexicar_search_url": "",
+                    "timestamp": datetime.now().isoformat()
+                }).execute()
+                
+                # Then delete the test row
+                supabase.table("car_price_analysis").delete().execute()
+                print("Created new analysis table")
+            except Exception as e3:
+                print(f"Error creating table: {str(e3)}")
+                print("Please ensure the table exists in the database")
 
 if __name__ == '__main__':
     print("Starting car price analysis...")
