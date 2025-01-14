@@ -427,9 +427,26 @@ def insert_market_price(supabase: Client, search_id: str, market_data: dict):
     except Exception as e:
         logger.error(f"Error inserting market price: {str(e)}", exc_info=True)
 
+def clear_tables(supabase: Client):
+    """Clear all data from tables we're writing to"""
+    try:
+        # Delete in correct order to respect foreign key constraints
+        tables = ['car_images', 'car_market_price', 'car_listings', 'car_searches']
+        for table in tables:
+            logger.info(f"Clearing table: {table}")
+            # Use RPC call to truncate table
+            supabase.rpc('truncate_table', {'table_name': table}).execute()
+        logger.info("Successfully cleared all tables")
+    except Exception as e:
+        logger.error(f"Error clearing tables: {str(e)}")
+
 def main():
     logger.info("Starting Wallapop car searches...")
     supabase = init_supabase()
+    
+    # Clear all tables before starting
+    clear_tables(supabase)
+    
     cars = get_cars_from_supabase()
     
     if not cars:
