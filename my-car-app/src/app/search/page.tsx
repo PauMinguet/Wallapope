@@ -21,12 +21,11 @@ import {
   Box,
   Autocomplete,
   Slider,
-  IconButton,
   Menu,
   Paper,
   Chip
 } from '@mui/material'
-import { DirectionsCar, MyLocation, Notifications, Star } from '@mui/icons-material'
+import { DirectionsCar, MyLocation, Notifications } from '@mui/icons-material'
 import 'leaflet/dist/leaflet.css'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
@@ -286,7 +285,7 @@ export default function SearchPage() {
     }
   }
 
-  const handleBrandChange = (_: React.SyntheticEvent, newValue: Brand | null) => {
+  const handleBrandChange = (event: React.SyntheticEvent | null, newValue: Brand | null) => {
     setSelectedBrand(newValue)
     setSelectedModel(null)
     setFormData(prev => ({
@@ -296,7 +295,7 @@ export default function SearchPage() {
     }))
   }
 
-  const handleModelChange = (_: React.SyntheticEvent, newValue: Model | null) => {
+  const handleModelChange = (event: React.SyntheticEvent | null, newValue: Model | null) => {
     setSelectedModel(newValue)
     setFormData(prev => ({
       ...prev,
@@ -322,7 +321,7 @@ export default function SearchPage() {
 
       // Remove empty fields from the request
       const cleanParams = Object.fromEntries(
-        Object.entries(searchParams).filter(([_, value]) => 
+        Object.entries(searchParams).filter(([, value]) => 
           value !== '' && 
           value !== undefined && 
           value !== null
@@ -444,20 +443,10 @@ export default function SearchPage() {
     )
   }
 
-  const handleDistanceChange = (_: Event, newValue: number | number[]) => {
+  const handleDistanceChange = (event: Event | null, newValue: number | number[]) => {
     setFormData(prev => ({
       ...prev,
       distance: newValue as number
-    }))
-  }
-
-  const handleLocationTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      location_text: e.target.value,
-      // Reset coordinates when manually entering location
-      latitude: null,
-      longitude: null
     }))
   }
 
@@ -783,7 +772,7 @@ export default function SearchPage() {
                     </Typography>
                     <Slider
                       value={formData.max_kilometers}
-                      onChange={(_, newValue) => {
+                      onChange={(event: Event | null, newValue: number | number[]) => {
                         setFormData(prev => ({
                           ...prev,
                           max_kilometers: newValue as number
