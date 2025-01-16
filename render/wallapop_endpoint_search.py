@@ -5,6 +5,12 @@ from urllib.parse import quote
 
 logger = logging.getLogger(__name__)
 
+# Spain's center coordinates (Madrid)
+SPAIN_CENTER = {
+    'lat': 40.4637,
+    'lng': -3.7492
+}
+
 # Define unwanted keywords as a global constant
 UNWANTED_KEYWORDS = [
     'accidentado', 'accidentada', 'inundado', 'accidente', 'inundó', 'dana', 'averias', 'golpe', 'averia', 'gripado', 
@@ -20,21 +26,22 @@ def has_unwanted_keywords(text: str, unwanted_keywords: list) -> bool:
     return any(keyword in text for keyword in unwanted_keywords)
 
 def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """Get market price using relevance-based search"""
+    """Get market price for the given parameters"""
     try:
         # Build search URL for market analysis
-        base_url = "https://api.wallapop.com/api/v3/cars/search"
+        base_url = "https://es.wallapop.com/api/v3/cars/search"
         
-        # Create base search parameters
+        # Create base search parameters for market analysis
         search_params = {
             'keywords': params.get('keywords', ''),
             'brand': params.get('brand', ''),
             'model': params.get('model', ''),
-            'latitude': '41.224151',
-            'longitude': '1.7255678',
+            'latitude': format(float(params.get('latitude', SPAIN_CENTER['lat'])), '.4f'),
+            'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
-            'distance': '200000',
-            'min_sale_price': '3000',  # Set minimum price to 3000
+            'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
+            'max_km': str(params.get('max_kilometers', 240000)),  # Add max kilometers
+            'min_sale_price': '3000',  # Base minimum price for market analysis
             'order_by': 'price_low_to_high'
         }
 
@@ -128,19 +135,20 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
         logger.info(f"Market price analysis: {market_data}")
         
         # Build search URL with price limits from market analysis
-        base_url = "https://api.wallapop.com/api/v3/cars/search"
+        base_url = "https://es.wallapop.com/api/v3/cars/search"
         
         # Create base search parameters
         search_params = {
             'keywords': params.get('keywords', ''),
             'brand': params.get('brand', ''),
             'model': params.get('model', ''),
-            'latitude': '41.224151',
-            'longitude': '1.7255678',
+            'latitude': format(float(params.get('latitude', SPAIN_CENTER['lat'])), '.4f'),
+            'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
-            'distance': '200000',
+            'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
             'min_sale_price': str(int(market_data['min_price'])),
             'max_sale_price': str(int(market_data['max_price'])),
+            'max_km': str(params.get('max_kilometers', 240000)),  # Add max kilometers
             'order_by': 'price_low_to_high'
         }
 

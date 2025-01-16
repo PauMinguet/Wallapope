@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { 
   Container, 
   Typography, 
@@ -18,11 +19,32 @@ import {
   CircularProgress,
   Alert,
   Box,
-  Autocomplete
+  Autocomplete,
+  Slider,
+  IconButton,
+  Menu,
+  Paper,
+  Chip
 } from '@mui/material'
-import { DirectionsCar } from '@mui/icons-material'
+import { DirectionsCar, MyLocation, Notifications, Star } from '@mui/icons-material'
+import 'leaflet/dist/leaflet.css'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
+
+// Move MapComponent dynamic import to the top
+const MapComponent = dynamic(
+  () => import('../components/MapComponent'),
+  { 
+    ssr: false,
+    loading: () => null
+  }
+)
+
+// Spain's center coordinates
+const SPAIN_CENTER = {
+  lat: 40.4637,
+  lng: -3.7492
+}
 
 interface Brand {
   id: number
@@ -82,6 +104,11 @@ interface SearchFormData {
   min_horse_power: string
   gearbox: string
   order_by: string
+  latitude: number | null
+  longitude: number | null
+  distance: number
+  location_text: string
+  max_kilometers: number
 }
 
 interface SearchResult {
@@ -131,8 +158,46 @@ const initialFormData: SearchFormData = {
   engine: '',
   min_horse_power: '',
   gearbox: '',
-  order_by: 'price_low_to_high'
+  order_by: 'price_low_to_high',
+  latitude: null,
+  longitude: null,
+  distance: 100,
+  location_text: '',
+  max_kilometers: 100000
 }
+
+const distanceMarks = [
+  { value: 0, label: '0' },
+  { value: 20, label: '20' },
+  { value: 40, label: '40' },
+  { value: 60, label: '60' },
+  { value: 80, label: '80' },
+  { value: 100, label: '100' },
+  { value: 120, label: '120' },
+  { value: 140, label: '140' },
+  { value: 160, label: '160' },
+  { value: 180, label: '180' },
+  { value: 200, label: '200' },
+  { value: 300, label: '300' },
+  { value: 400, label: '400' },
+  { value: 500, label: 'No limit' }
+]
+
+const kilometerMarks = [
+  { value: 0, label: '0' },
+  { value: 20000, label: '20k' },
+  { value: 40000, label: '40k' },
+  { value: 60000, label: '60k' },
+  { value: 80000, label: '80k' },
+  { value: 100000, label: '100k' },
+  { value: 120000, label: '120k' },
+  { value: 140000, label: '140k' },
+  { value: 160000, label: '160k' },
+  { value: 180000, label: '180k' },
+  { value: 200000, label: '200k' },
+  { value: 220000, label: '220k' },
+  { value: 240000, label: 'No limit' }
+]
 
 export default function SearchPage() {
   const [formData, setFormData] = useState<SearchFormData>(initialFormData)
@@ -146,6 +211,17 @@ export default function SearchPage() {
   const yearOptions = Array.from({ length: 36 }, (_, i) => (2025 - i).toString())
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
+  const [locationError, setLocationError] = useState<string | null>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  
+  const handleSubscriptionClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  
+  const handleSubscriptionClose = () => {
+    setAnchorEl(null)
+  }
 
   useEffect(() => {
     fetchBrands()
@@ -340,184 +416,447 @@ export default function SearchPage() {
     }).format(price)
   }
 
+  const handleLocationRequest = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Geolocation is not supported by your browser')
+      return
+    }
+
+    setLocationError(null)
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setFormData(prev => ({
+          ...prev,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          location_text: 'Current Location'
+        }))
+      },
+      (error) => {
+        setLocationError('Unable to retrieve your location')
+        console.error('Geolocation error:', error)
+      }
+    )
+  }
+
+  const handleDistanceChange = (_: Event, newValue: number | number[]) => {
+    setFormData(prev => ({
+      ...prev,
+      distance: newValue as number
+    }))
+  }
+
+  const handleLocationTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      location_text: e.target.value,
+      // Reset coordinates when manually entering location
+      latitude: null,
+      longitude: null
+    }))
+  }
+
+  const handleMapClick = (lat: number, lng: number) => {
+    setFormData(prev => ({
+      ...prev,
+      latitude: lat,
+      longitude: lng,
+      location_text: `${lat.toFixed(4)}, ${lng.toFixed(4)}`
+    }))
+  }
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ 
         display: 'flex', 
-        flexDirection: 'column', 
         alignItems: 'center',
-        mb: 4,
-        textAlign: 'center'
+        justifyContent: 'space-between',
+        mb: 3,
+        position: 'relative'
       }}>
-        <DirectionsCar sx={{ 
-          fontSize: 80, 
-          color: 'primary.main', 
-          mb: 2 
-        }} />
-        <Typography variant="h3" component="h1" sx={{ 
-          mb: 2,
-          fontWeight: 'bold' 
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          gap: 3,
         }}>
-          Buscador de Coches
-        </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ 
-          maxWidth: 600,
-          mx: 'auto'
-        }}>
-          Busca coches con análisis de precios de mercado
-        </Typography>
+          <DirectionsCar sx={{ 
+            fontSize: 40, 
+            color: 'primary.main'
+          }} />
+          <Box>
+            <Typography variant="h5" component="h1" sx={{ 
+              fontWeight: 'bold',
+              lineHeight: 1.2
+            }}>
+              Buscador de Coches
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Busca coches con análisis de precios de mercado
+            </Typography>
+          </Box>
+        </Box>
+
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={handleSubscriptionClick}
+          startIcon={<Notifications />}
+          sx={{ 
+            position: 'absolute',
+            right: 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Alertas Premium
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleSubscriptionClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <Paper sx={{ p: 2, maxWidth: 400 }}>
+            <Typography variant="h6" gutterBottom>
+              Planes de Suscripción
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              Recibe alertas cuando aparezcan chollos que coincidan con tus criterios
+            </Typography>
+            
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Card variant="outlined">
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                    <Typography variant="h6" color="primary">
+                      Básico
+                    </Typography>
+                    <Chip label="4,99€/mes" color="primary" size="small" />
+                  </Box>
+                  <Typography variant="body2" paragraph>
+                    • 1 búsqueda personalizada
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    • Alertas diarias por email
+                  </Typography>
+                  <Button variant="outlined" fullWidth>
+                    Empezar
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card variant="outlined" sx={{ bgcolor: 'primary.50' }}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="h6" color="primary">
+                        Pro
+                      </Typography>
+                      <Chip label="Popular" size="small" color="warning" />
+                    </Box>
+                    <Chip label="9,99€/mes" color="primary" size="small" />
+                  </Box>
+                  <Typography variant="body2" paragraph>
+                    • 5 búsquedas personalizadas
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    • Alertas instantáneas por email y SMS
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    • Análisis detallado de precios
+                  </Typography>
+                  <Button variant="contained" fullWidth>
+                    Empezar
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card variant="outlined">
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                    <Typography variant="h6" color="primary">
+                      Empresas
+                    </Typography>
+                    <Chip label="24,99€/mes" color="primary" size="small" />
+                  </Box>
+                  <Typography variant="body2" paragraph>
+                    • Búsquedas ilimitadas
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    • API de acceso
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    • Soporte prioritario
+                  </Typography>
+                  <Button variant="outlined" fullWidth>
+                    Contactar
+                  </Button>
+                </CardContent>
+              </Card>
+            </Box>
+          </Paper>
+        </Menu>
+
       </Box>
 
-      <Card sx={{ mb: 4, bgcolor: 'background.paper' }}>
+      <Card sx={{ mb: 2, bgcolor: 'background.paper' }}>
         <form onSubmit={handleSubmit}>
-          <CardContent sx={{ p: 3 }}>
+          <CardContent>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={3}>
-                <Autocomplete
-                  fullWidth
-                  options={brands}
-                  getOptionLabel={(option) => option.name}
-                  loading={loadingBrands}
-                  value={selectedBrand}
-                  onChange={handleBrandChange}
-                  renderInput={(params) => (
+              <Grid item xs={12} md={8}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Autocomplete
+                      options={brands}
+                      getOptionLabel={(option) => option.name}
+                      loading={loadingBrands}
+                      value={selectedBrand}
+                      onChange={handleBrandChange}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Marca"
+                          variant="outlined"
+                          size="small"
+                          InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                              <>
+                                {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
+                                {params.InputProps.endAdornment}
+                              </>
+                            ),
+                          }}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Autocomplete
+                      options={models}
+                      getOptionLabel={(option) => option.nome}
+                      loading={loadingModels}
+                      value={selectedModel}
+                      onChange={handleModelChange}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Modelo"
+                          variant="outlined"
+                          size="small"
+                          InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                              <>
+                                {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
+                                {params.InputProps.endAdornment}
+                              </>
+                            ),
+                          }}
+                        />
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <Autocomplete
+                      options={yearOptions}
+                      value={formData.min_year || null}
+                      onChange={(event, newValue) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          min_year: newValue || ''
+                        }))
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Año mínimo"
+                          variant="outlined"
+                          size="small"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Autocomplete
+                      options={yearOptions}
+                      value={formData.max_year || null}
+                      onChange={(event, newValue) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          max_year: newValue || ''
+                        }))
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Año máximo"
+                          variant="outlined"
+                          size="small"
+                        />
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth variant="outlined" size="small">
+                      <InputLabel>Tipo de motor</InputLabel>
+                      <Select
+                        name="engine"
+                        value={formData.engine}
+                        label="Tipo de motor"
+                        onChange={handleSelectChange}
+                      >
+                        <MenuItem value="">Cualquiera</MenuItem>
+                        <MenuItem value="gasoline">Gasolina</MenuItem>
+                        <MenuItem value="gasoil">Diésel</MenuItem>
+                        <MenuItem value="electric">Eléctrico</MenuItem>
+                        <MenuItem value="hybrid">Híbrido</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
                     <TextField
-                      {...params}
-                      label="Marca"
+                      fullWidth
+                      label="Potencia mínima (CV)"
+                      name="min_horse_power"
+                      type="number"
+                      value={formData.min_horse_power}
+                      onChange={handleInputChange}
                       variant="outlined"
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
+                      size="small"
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth variant="outlined" size="small">
+                      <InputLabel>Cambio</InputLabel>
+                      <Select
+                        name="gearbox"
+                        value={formData.gearbox}
+                        label="Cambio"
+                        onChange={handleSelectChange}
+                      >
+                        <MenuItem value="">Cualquiera</MenuItem>
+                        <MenuItem value="manual">Manual</MenuItem>
+                        <MenuItem value="automatic">Automático</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      Distancia de búsqueda: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
+                    </Typography>
+                    <Slider
+                      value={formData.distance}
+                      onChange={handleDistanceChange}
+                      step={null}
+                      marks={distanceMarks}
+                      min={0}
+                      max={500}
+                      sx={{ 
+                        '& .MuiSlider-markLabel': {
+                          display: 'none'
+                        }
                       }}
                     />
-                  )}
-                />
-              </Grid>
-              {selectedBrand && (
-                <Grid item xs={12} md={3}>
-                  <Autocomplete
-                    fullWidth
-                    options={models}
-                    getOptionLabel={(option) => option.nome}
-                    loading={loadingModels}
-                    value={selectedModel}
-                    onChange={handleModelChange}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Modelo"
-                        variant="outlined"
-                        InputProps={{
-                          ...params.InputProps,
-                          endAdornment: (
-                            <>
-                              {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
-                              {params.InputProps.endAdornment}
-                            </>
-                          ),
-                        }}
-                      />
-                    )}
-                  />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${(formData.max_kilometers / 1000).toFixed(0)}k`}
+                    </Typography>
+                    <Slider
+                      value={formData.max_kilometers}
+                      onChange={(_, newValue) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          max_kilometers: newValue as number
+                        }))
+                      }}
+                      step={null}
+                      marks={kilometerMarks}
+                      min={0}
+                      max={240000}
+                      sx={{ 
+                        '& .MuiSlider-markLabel': {
+                          display: 'none'
+                        }
+                      }}
+                    />
+                  </Grid>
                 </Grid>
-              )}
-              <Grid item xs={12} md={3}>
-                <Autocomplete
-                  fullWidth
-                  options={yearOptions}
-                  value={formData.min_year || null}
-                  onChange={(event, newValue) => {
-                    setFormData(prev => ({
-                      ...prev,
-                      min_year: newValue || ''
-                    }))
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Año mínimo"
-                      variant="outlined"
-                    />
-                  )}
-                  ListboxProps={{
-                    style: { maxHeight: '400px' }
-                  }}
-                />
               </Grid>
-              <Grid item xs={12} md={3}>
-                <Autocomplete
-                  fullWidth
-                  options={yearOptions}
-                  value={formData.max_year || null}
-                  onChange={(event, newValue) => {
-                    setFormData(prev => ({
-                      ...prev,
-                      max_year: newValue || ''
-                    }))
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Año máximo"
-                      variant="outlined"
-                    />
-                  )}
-                  ListboxProps={{
-                    style: { maxHeight: '400px' }
-                  }}
-                />
-              </Grid>
+
               <Grid item xs={12} md={4}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel>Tipo de motor</InputLabel>
-                  <Select
-                    name="engine"
-                    value={formData.engine}
-                    label="Tipo de motor"
-                    onChange={handleSelectChange}
+                <Box sx={{ 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 2
+                }}>
+                  <Box sx={{ 
+                    width: '300px',
+                    height: '150px',
+                    border: 1,
+                    borderColor: 'grey.300',
+                    borderRadius: 1,
+                    overflow: 'hidden',
+                    position: 'relative'
+                  }}>
+                    <Suspense fallback={
+                      <Box sx={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        bgcolor: 'grey.200',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <CircularProgress />
+                      </Box>
+                    }>
+                      <MapComponent
+                        center={[
+                          formData.latitude ?? SPAIN_CENTER.lat,
+                          formData.longitude ?? SPAIN_CENTER.lng
+                        ]}
+                        onLocationSelect={handleMapClick}
+                        distance={formData.distance}
+                      />
+                    </Suspense>
+                  </Box>
+
+                  <Button
+                    variant="contained"
+                    onClick={handleLocationRequest}
+                    startIcon={<MyLocation />}
+                    fullWidth
+                    sx={{ height: 36 }}
                   >
-                    <MenuItem value="">Cualquiera</MenuItem>
-                    <MenuItem value="gasoline">Gasolina</MenuItem>
-                    <MenuItem value="gasoil">Diésel</MenuItem>
-                    <MenuItem value="electric">Eléctrico</MenuItem>
-                    <MenuItem value="hybrid">Híbrido</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <TextField
-                  fullWidth
-                  label="Potencia mínima (CV)"
-                  name="min_horse_power"
-                  type="number"
-                  value={formData.min_horse_power}
-                  onChange={handleInputChange}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel>Cambio</InputLabel>
-                  <Select
-                    name="gearbox"
-                    value={formData.gearbox}
-                    label="Cambio"
-                    onChange={handleSelectChange}
-                  >
-                    <MenuItem value="">Cualquiera</MenuItem>
-                    <MenuItem value="manual">Manual</MenuItem>
-                    <MenuItem value="automatic">Automático</MenuItem>
-                  </Select>
-                </FormControl>
+                    Encuentrame
+                  </Button>
+
+                  {locationError && (
+                    <Typography color="error" variant="caption" textAlign="center">
+                      {locationError}
+                    </Typography>
+                  )}
+                </Box>
               </Grid>
             </Grid>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center'}}>
               <Button 
                 variant="contained" 
                 size="large"

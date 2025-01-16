@@ -771,3 +771,594 @@ Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model
 2025-01-15 18:12:21,521 - INFO - Final response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
 2025-01-15 18:12:21,522 - INFO - API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
 2025-01-15 18:12:21,522 - INFO - Final API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:29:13,943 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline
+2025-01-16 10:29:13,966 - ERROR - Error getting market price: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302a180>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 976, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x10302a180>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/retry.py", line 594, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302a180>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 63, in get_market_price
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302a180>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+2025-01-16 10:29:13,972 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:29:14,772 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline
+2025-01-16 10:29:14,777 - ERROR - Error getting market price: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302a270>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 976, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x10302a270>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/retry.py", line 594, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302a270>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 63, in get_market_price
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302a270>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+2025-01-16 10:29:14,779 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:29:15,478 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline
+2025-01-16 10:29:15,482 - ERROR - Error getting market price: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302aa50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 976, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x10302aa50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/retry.py", line 594, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302aa50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 63, in get_market_price
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10302aa50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+2025-01-16 10:29:15,484 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:29:40,118 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline
+2025-01-16 10:29:40,122 - ERROR - Error getting market price: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x102402390>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 976, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x102402390>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/retry.py", line 594, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x102402390>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 63, in get_market_price
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x102402390>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+2025-01-16 10:29:40,125 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:29:52,958 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline
+2025-01-16 10:29:52,967 - ERROR - Error getting market price: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10533e930>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 976, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x10533e930>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/urllib3/util/retry.py", line 594, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10533e930>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 63, in get_market_price
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.wallapop.com', port=443): Max retries exceeded with url: /api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10533e930>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+2025-01-16 10:29:52,973 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:31:23,147 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&engine=gasoline
+2025-01-16 10:31:24,293 - INFO - Calculated market data: {'market_price': 4250.0, 'median_price': 4250.0, 'average_price': 4131.724137931034, 'min_price': 3100.0, 'max_price': 5200.0, 'total_listings': 40, 'valid_listings': 29, 'sample_size': 29}
+2025-01-16 10:31:24,296 - INFO - Market price analysis: {'market_price': 4250.0, 'median_price': 4250.0, 'average_price': 4131.724137931034, 'min_price': 3100.0, 'max_price': 5200.0, 'total_listings': 40, 'valid_listings': 29, 'sample_size': 29}
+2025-01-16 10:31:24,296 - ERROR - Error searching Wallapop: 'dict' object has no attribute 'lat'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 144, in search_wallapop_endpoint
+    'latitude': str(params.get('latitude', SPAIN_CENTER.lat)),
+                                           ^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'lat'
+2025-01-16 10:31:24,297 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:32:14,031 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:32:15,993 - INFO - Calculated market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:32:15,995 - INFO - Market price analysis: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:32:15,995 - ERROR - Error searching Wallapop: 'dict' object has no attribute 'lat'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 144, in search_wallapop_endpoint
+    'latitude': str(params.get('latitude', SPAIN_CENTER.lat)),
+                                           ^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'lat'
+2025-01-16 10:32:15,996 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:33:35,614 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.175553034223434&longitude=1.6846847534179688&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:33:36,789 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.175553034223434&longitude=1.6846847534179688&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 64, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.175553034223434&longitude=1.6846847534179688&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:33:36,796 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:34:27,670 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.175553034223434&longitude=1.6846847534179688&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:34:28,410 - ERROR - Error getting market price: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.175553034223434&longitude=1.6846847534179688&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 64, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.175553034223434&longitude=1.6846847534179688&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:34:28,418 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:37:07,262 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.1756&longitude=1.6847&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:37:08,151 - ERROR - Error getting market price: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.1756&longitude=1.6847&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 64, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.1756&longitude=1.6847&category_ids=100&distance=180&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:37:08,157 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 10:39:45,982 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.1756&longitude=1.6847&category_ids=100&distance=180000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:39:46,680 - INFO - Calculated market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:39:46,682 - INFO - Market price analysis: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:39:46,682 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.1756&longitude=1.6847&category_ids=100&distance=180000&min_sale_price=7900&max_sale_price=13990&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:39:47,237 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-16 10:39:47,237 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-16 10:39:47,237 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-16 10:39:47,238 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-16 10:39:47,238 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-16 10:39:47,238 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-16 10:39:47,239 - INFO - Filtering out listing wzv4eyk87dzl due to unwanted keywords
+2025-01-16 10:39:47,239 - INFO - Filtering out listing 8z8kn1rm21z3 due to unwanted keywords
+2025-01-16 10:39:47,239 - INFO - Final response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:39:47,240 - INFO - API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:39:47,240 - INFO - Final API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12294.666666666666, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:40:35,497 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:40:36,770 - INFO - Calculated market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:40:36,774 - INFO - Market price analysis: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:40:36,774 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=9000&max_sale_price=13490&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:40:38,863 - INFO - Filtering out listing 0j24d3ogqrzy - too many kilometers: 202000
+2025-01-16 10:40:38,863 - INFO - Filtering out listing pzp2oxqlvmj3 - too many kilometers: 202408
+2025-01-16 10:40:38,863 - INFO - Filtering out listing 8j34drqgd269 due to unwanted keywords
+2025-01-16 10:40:38,863 - INFO - Filtering out listing xzo2wrpel769 due to unwanted keywords
+2025-01-16 10:40:38,863 - INFO - Filtering out listing pzp2x9y8w4j3 due to unwanted keywords
+2025-01-16 10:40:38,863 - INFO - Filtering out listing nz042d3ypejo - likely new car with 125km
+2025-01-16 10:40:38,863 - INFO - Filtering out listing ejk8r22me9jx due to unwanted keywords
+2025-01-16 10:40:38,863 - INFO - Filtering out listing w674rqqqm76x due to unwanted keywords
+2025-01-16 10:40:38,863 - INFO - Filtering out listing x6qmowervejy due to unwanted keywords
+2025-01-16 10:40:38,863 - INFO - Filtering out listing 4z4e2gp0qljy due to unwanted keywords
+2025-01-16 10:40:38,864 - INFO - Filtering out listing 0j24d9oeqnzy due to unwanted keywords
+2025-01-16 10:40:38,864 - INFO - Filtering out listing pzp2molk7lj3 due to unwanted keywords
+2025-01-16 10:40:38,864 - INFO - Filtering out listing 3zl8w70dkq6x due to unwanted keywords
+2025-01-16 10:40:38,864 - INFO - Final response market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:40:38,865 - INFO - API Response market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:40:38,865 - INFO - Final API Response market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:42:25,563 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=180000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:42:26,217 - INFO - Calculated market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:42:26,219 - INFO - Market price analysis: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:42:26,219 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=180000&min_sale_price=9000&max_sale_price=13490&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:42:26,770 - INFO - Filtering out listing 0j24d3ogqrzy - too many kilometers: 202000
+2025-01-16 10:42:26,771 - INFO - Filtering out listing pzp2oxqlvmj3 - too many kilometers: 202408
+2025-01-16 10:42:26,772 - INFO - Filtering out listing 8j34drqgd269 due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing xzo2wrpel769 due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing pzp2x9y8w4j3 due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing nz042d3ypejo - likely new car with 125km
+2025-01-16 10:42:26,772 - INFO - Filtering out listing ejk8r22me9jx due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing w674rqqqm76x due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing x6qmowervejy due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing 4z4e2gp0qljy due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing 0j24d9oeqnzy due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing pzp2molk7lj3 due to unwanted keywords
+2025-01-16 10:42:26,772 - INFO - Filtering out listing 3zl8w70dkq6x due to unwanted keywords
+2025-01-16 10:42:26,773 - INFO - Final response market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:42:26,774 - INFO - API Response market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:42:26,774 - INFO - Final API Response market data: {'market_price': 10999.0, 'median_price': 10999.0, 'average_price': 11422.666666666666, 'min_price': 9000.0, 'max_price': 13490.0, 'total_listings': 39, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 10:58:48,018 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.2382&longitude=1.7349&category_ids=100&distance=140000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:58:48,293 - INFO - Calculated market data: {'market_price': 12900.0, 'median_price': 12900.0, 'average_price': 12414.333333333334, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:58:48,295 - INFO - Market price analysis: {'market_price': 12900.0, 'median_price': 12900.0, 'average_price': 12414.333333333334, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:58:48,295 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.2382&longitude=1.7349&category_ids=100&distance=140000&min_sale_price=7900&max_sale_price=13990&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-16 10:58:48,657 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-16 10:58:48,657 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-16 10:58:48,657 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-16 10:58:48,658 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-16 10:58:48,658 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-16 10:58:48,658 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-16 10:58:48,658 - INFO - Filtering out listing wzv4eyk87dzl due to unwanted keywords
+2025-01-16 10:58:48,658 - INFO - Filtering out listing 8z8kn1rm21z3 due to unwanted keywords
+2025-01-16 10:58:48,658 - INFO - Final response market data: {'market_price': 12900.0, 'median_price': 12900.0, 'average_price': 12414.333333333334, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:58:48,660 - INFO - API Response market data: {'market_price': 12900.0, 'median_price': 12900.0, 'average_price': 12414.333333333334, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:58:48,660 - INFO - Final API Response market data: {'market_price': 12900.0, 'median_price': 12900.0, 'average_price': 12414.333333333334, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 10:59:00,710 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.2382&longitude=1.7349&category_ids=100&distance=140000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2019&engine=gasoline
+2025-01-16 10:59:00,950 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12483.793103448275, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 30, 'sample_size': 29}
+2025-01-16 10:59:00,952 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12483.793103448275, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 30, 'sample_size': 29}
+2025-01-16 10:59:00,952 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.2382&longitude=1.7349&category_ids=100&distance=140000&min_sale_price=7900&max_sale_price=13990&order_by=price_low_to_high&min_year=2018&max_year=2019&engine=gasoline
+2025-01-16 10:59:01,176 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-16 10:59:01,177 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-16 10:59:01,177 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-16 10:59:01,178 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-16 10:59:01,178 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-16 10:59:01,178 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-16 10:59:01,178 - INFO - Filtering out listing wzv4eyk87dzl due to unwanted keywords
+2025-01-16 10:59:01,178 - INFO - Filtering out listing 8z8kn1rm21z3 due to unwanted keywords
+2025-01-16 10:59:01,179 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12483.793103448275, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 30, 'sample_size': 29}
+2025-01-16 10:59:01,181 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12483.793103448275, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 30, 'sample_size': 29}
+2025-01-16 10:59:01,181 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12483.793103448275, 'min_price': 7900.0, 'max_price': 13990.0, 'total_listings': 39, 'valid_listings': 30, 'sample_size': 29}
+2025-01-16 11:02:19,885 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A4&latitude=41.2423&longitude=1.7180&category_ids=100&distance=140000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:02:20,160 - INFO - Calculated market data: {'market_price': 20490.0, 'median_price': 20490.0, 'average_price': 20185.6, 'min_price': 15400.0, 'max_price': 21990.0, 'total_listings': 40, 'valid_listings': 26, 'sample_size': 25}
+2025-01-16 11:02:20,163 - INFO - Market price analysis: {'market_price': 20490.0, 'median_price': 20490.0, 'average_price': 20185.6, 'min_price': 15400.0, 'max_price': 21990.0, 'total_listings': 40, 'valid_listings': 26, 'sample_size': 25}
+2025-01-16 11:02:20,163 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A4&latitude=41.2423&longitude=1.7180&category_ids=100&distance=140000&min_sale_price=15400&max_sale_price=21990&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:02:20,413 - INFO - Filtering out listing qzmevdl0n1jv - too many kilometers: 216000
+2025-01-16 11:02:20,413 - INFO - Filtering out listing xzo2m7pxl569 due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing nzx4nw2q41j2 due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing mzn27kgn4yzn due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing pzp2xeye99j3 due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing 8z8kp3q7nrz3 due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing nz04lroel3jo due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing v6ggro5yr26e - too many kilometers: 215777
+2025-01-16 11:02:20,413 - INFO - Filtering out listing p614mygrqg65 due to unwanted keywords
+2025-01-16 11:02:20,413 - INFO - Filtering out listing 9jdk17dyn26k due to unwanted keywords
+2025-01-16 11:02:20,414 - INFO - Filtering out listing pzp2oe7oq9j3 - too many kilometers: 220000
+2025-01-16 11:02:20,415 - INFO - Filtering out listing 36e14eyr9yjd due to unwanted keywords
+2025-01-16 11:02:20,415 - INFO - Filtering out listing 4z4e215m5rjy due to unwanted keywords
+2025-01-16 11:02:20,416 - INFO - Filtering out listing pzp2x980glj3 due to unwanted keywords
+2025-01-16 11:02:20,416 - INFO - Final response market data: {'market_price': 20490.0, 'median_price': 20490.0, 'average_price': 20185.6, 'min_price': 15400.0, 'max_price': 21990.0, 'total_listings': 40, 'valid_listings': 26, 'sample_size': 25}
+2025-01-16 11:02:20,417 - INFO - API Response market data: {'market_price': 20490.0, 'median_price': 20490.0, 'average_price': 20185.6, 'min_price': 15400.0, 'max_price': 21990.0, 'total_listings': 40, 'valid_listings': 26, 'sample_size': 25}
+2025-01-16 11:02:20,417 - INFO - Final API Response market data: {'market_price': 20490.0, 'median_price': 20490.0, 'average_price': 20185.6, 'min_price': 15400.0, 'max_price': 21990.0, 'total_listings': 40, 'valid_listings': 26, 'sample_size': 25}
+2025-01-16 11:04:31,586 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.2423&longitude=1.7180&category_ids=100&distance=140000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:04:31,832 - INFO - Calculated market data: {'market_price': 20001.0, 'median_price': 20001.0, 'average_price': 20086.5, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 11:04:31,833 - INFO - Market price analysis: {'market_price': 20001.0, 'median_price': 20001.0, 'average_price': 20086.5, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 11:04:31,834 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.2423&longitude=1.7180&category_ids=100&distance=140000&min_sale_price=18000&max_sale_price=22500&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:04:32,209 - INFO - Filtering out listing qjw4g5l3wwzo due to unwanted keywords
+2025-01-16 11:04:32,209 - INFO - Filtering out listing 0j24k5r2yezy due to unwanted keywords
+2025-01-16 11:04:32,210 - INFO - Filtering out listing e6585wk9o26o due to unwanted keywords
+2025-01-16 11:04:32,210 - INFO - Filtering out listing 36e14lq7xkjd - too many kilometers: 260000
+2025-01-16 11:04:32,210 - INFO - Filtering out listing v6ggr753d56e - too many kilometers: 215635
+2025-01-16 11:04:32,210 - INFO - Filtering out listing wzy4pep4xez5 due to unwanted keywords
+2025-01-16 11:04:32,210 - INFO - Filtering out listing 3zl8wew9lp6x due to unwanted keywords
+2025-01-16 11:04:32,210 - INFO - Filtering out listing 8z8ke12941z3 due to unwanted keywords
+2025-01-16 11:04:32,210 - INFO - Filtering out listing pj9meg2wy06e due to unwanted keywords
+2025-01-16 11:04:32,210 - INFO - Final response market data: {'market_price': 20001.0, 'median_price': 20001.0, 'average_price': 20086.5, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 11:04:32,211 - INFO - API Response market data: {'market_price': 20001.0, 'median_price': 20001.0, 'average_price': 20086.5, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 11:04:32,211 - INFO - Final API Response market data: {'market_price': 20001.0, 'median_price': 20001.0, 'average_price': 20086.5, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 11:04:35,571 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.2423&longitude=1.7180&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:04:35,789 - INFO - Calculated market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:04:35,791 - INFO - Market price analysis: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:04:35,791 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.2423&longitude=1.7180&category_ids=100&distance=200000&min_sale_price=18000&max_sale_price=22500&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:04:36,140 - INFO - Filtering out listing qjw4g5l3wwzo due to unwanted keywords
+2025-01-16 11:04:36,140 - INFO - Filtering out listing 0j24k5r2yezy due to unwanted keywords
+2025-01-16 11:04:36,141 - INFO - Filtering out listing e6585wk9o26o due to unwanted keywords
+2025-01-16 11:04:36,141 - INFO - Filtering out listing 36e14lq7xkjd - too many kilometers: 260000
+2025-01-16 11:04:36,141 - INFO - Filtering out listing v6ggr753d56e - too many kilometers: 215635
+2025-01-16 11:04:36,141 - INFO - Filtering out listing wzy4pep4xez5 due to unwanted keywords
+2025-01-16 11:04:36,141 - INFO - Filtering out listing 3zl8wew9lp6x due to unwanted keywords
+2025-01-16 11:04:36,141 - INFO - Filtering out listing 8z8ke12941z3 due to unwanted keywords
+2025-01-16 11:04:36,141 - INFO - Filtering out listing pj9meg2wy06e due to unwanted keywords
+2025-01-16 11:04:36,141 - INFO - Final response market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:04:36,143 - INFO - API Response market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:04:36,143 - INFO - Final API Response market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
