@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 # Define unwanted keywords as a global constant
 UNWANTED_KEYWORDS = [
-    'accidentado', 'accidentada', 'inundado', 'accidente', 'inundó', 'averias', 'golpe',
-    'despiece', 'reparar', 'no arranca', 'averiado', 'averiada', '647 358 133'
+    'accidentado', 'accidentada', 'inundado', 'motor roto', 'siniestro', 'accidente', 'inundó', 'averias', 'golpe', 'averia', 'gripado', 
+    'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', 'averiada', '647 358 133', 'mallorca', 'palma'
 ]
 
 def init_supabase() -> Client:
@@ -372,7 +372,7 @@ def get_market_price(car):
         
         # Filter and process listings
         valid_prices = []
-        for listing in data.get('search_objects', [])[:30]:  # Only use first 20 listings
+        for listing in data.get('search_objects', [])[:15]:  # Only use first 20 listings
             content = listing['content']
             
             # Apply same filtering as main search

@@ -13,7 +13,8 @@ import {
   ArrowForwardIos,
   BarChart,
   Favorite,
-  FavoriteBorder
+  FavoriteBorder,
+  ManageSearch
 } from '@mui/icons-material'
 import { Listing, LikedListing } from '../../../types/listing'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -125,13 +126,17 @@ export default function ListingView({ defaultType }: ListingViewProps) {
     })
   }
 
-  const handleTabChange = (newValue: VehicleType | 'liked') => {
+  const handleTabChange = (newValue: VehicleType | 'liked' | 'search') => {
     if (newValue === 'stats') {
       router.push('/stats')
       return
     }
     if (newValue === 'liked') {
       router.push('/liked')
+      return
+    }
+    if (newValue === 'search') {
+      router.push('/search')
       return
     }
     const params = new URLSearchParams(searchParams)
@@ -338,6 +343,11 @@ export default function ListingView({ defaultType }: ListingViewProps) {
               icon={<Favorite />} 
               aria-label="Liked" 
             />
+            <Tab 
+              value="search"
+              icon={<ManageSearch />} 
+              aria-label="Search" 
+            />
           </Tabs>
         </div>
 
@@ -430,6 +440,11 @@ export default function ListingView({ defaultType }: ListingViewProps) {
             value="liked"
             icon={<Favorite />} 
             aria-label="Liked" 
+          />
+          <Tab 
+            value="search"
+            icon={<ManageSearch />} 
+            aria-label="Search" 
           />
         </Tabs>
       </div>

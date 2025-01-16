@@ -1,0 +1,773 @@
+2025-01-15 12:13:28,708 - ERROR - Error searching Wallapop: 'ano_fabricacion'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_api_cars.py", line 223, in search_wallapop_cars
+    year_range = car['ano_fabricacion']
+                 ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'ano_fabricacion'
+2025-01-15 12:19:15,099 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=EngineType.GASOLINE&min_horse_power=125&gearbox=GearboxType.MANUAL&order_by=OrderBy.PRICE_LOW_TO_HIGH
+2025-01-15 12:19:15,786 - ERROR - Error searching Wallapop: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=EngineType.GASOLINE&min_horse_power=125&gearbox=GearboxType.MANUAL&order_by=OrderBy.PRICE_LOW_TO_HIGH
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 46, in search_wallapop_endpoint
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=EngineType.GASOLINE&min_horse_power=125&gearbox=GearboxType.MANUAL&order_by=OrderBy.PRICE_LOW_TO_HIGH
+2025-01-15 12:20:32,111 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=EngineType.GASOLINE&min_horse_power=125&gearbox=GearboxType.MANUAL&order_by=OrderBy.PRICE_LOW_TO_HIGH
+2025-01-15 12:20:32,548 - ERROR - Error searching Wallapop: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=EngineType.GASOLINE&min_horse_power=125&gearbox=GearboxType.MANUAL&order_by=OrderBy.PRICE_LOW_TO_HIGH
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 46, in search_wallapop_endpoint
+    if 'category_ids' not in search_params:
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=EngineType.GASOLINE&min_horse_power=125&gearbox=GearboxType.MANUAL&order_by=OrderBy.PRICE_LOW_TO_HIGH
+2025-01-15 12:21:21,393 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high
+2025-01-15 12:21:21,940 - INFO - Filtering out listing nzx48k4o87j2 due to unwanted keywords
+2025-01-15 12:21:21,941 - INFO - Filtering out listing nzx4nq2mnej2 due to unwanted keywords
+2025-01-15 12:21:21,942 - INFO - Filtering out listing ejk8709onqjx due to unwanted keywords
+2025-01-15 12:21:21,942 - INFO - Filtering out listing 9jdk9rxg3n6k due to unwanted keywords
+2025-01-15 12:21:21,942 - INFO - Filtering out listing wzv48ekkk1zl due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing x6qm83ngxojy due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing pj9mpx9vmm6e due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing e658lnn25p6o due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing wzy401340pz5 due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing 3zl8w5del46x - likely new car with 60km
+2025-01-15 12:21:21,943 - INFO - Filtering out listing xzo2w49r4269 - likely new car with 60km
+2025-01-15 12:21:21,943 - INFO - Filtering out listing 4z4e3k505ljy due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing 8z8k0x818oz3 due to unwanted keywords
+2025-01-15 12:21:21,943 - INFO - Filtering out listing 8j34218q2169 due to unwanted keywords
+2025-01-15 12:21:21,946 - ERROR - Error inserting search results: 'url'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_api_cars.py", line 57, in insert_search_results
+    frontend_url = api_url_to_frontend_url(search_params['url'])
+                                           ~~~~~~~~~~~~~^^^^^^^
+KeyError: 'url'
+2025-01-15 12:22:32,573 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&distance=150000&category_ids=100&min_year=2018&max_year=2022&max_km=100000&min_sale_price=15000&max_sale_price=22000&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high
+2025-01-15 12:22:33,184 - INFO - Filtering out listing nzx48k4o87j2 due to unwanted keywords
+2025-01-15 12:22:33,185 - INFO - Filtering out listing nzx4nq2mnej2 due to unwanted keywords
+2025-01-15 12:22:33,185 - INFO - Filtering out listing ejk8709onqjx due to unwanted keywords
+2025-01-15 12:22:33,185 - INFO - Filtering out listing 9jdk9rxg3n6k due to unwanted keywords
+2025-01-15 12:22:33,185 - INFO - Filtering out listing wzv48ekkk1zl due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing x6qm83ngxojy due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing pj9mpx9vmm6e due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing e658lnn25p6o due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing wzy401340pz5 due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing 3zl8w5del46x - likely new car with 60km
+2025-01-15 12:22:33,186 - INFO - Filtering out listing xzo2w49r4269 - likely new car with 60km
+2025-01-15 12:22:33,186 - INFO - Filtering out listing 4z4e3k505ljy due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing 8z8k0x818oz3 due to unwanted keywords
+2025-01-15 12:22:33,186 - INFO - Filtering out listing 8j34218q2169 due to unwanted keywords
+2025-01-15 12:24:38,725 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&min_year=2018&max_year=2022&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high&latitude=41.224151&longitude=1.7255678&category_ids=100
+2025-01-15 12:24:39,356 - ERROR - Error getting market price: 'km'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 59, in get_market_price
+    kilometers = int(content['km'])
+                     ~~~~~~~^^^^^^
+KeyError: 'km'
+2025-01-15 12:24:39,361 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&min_year=2018&max_year=2022&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high&latitude=41.224151&longitude=1.7255678&category_ids=100
+2025-01-15 12:24:39,886 - ERROR - Error searching Wallapop: 'km'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 141, in search_wallapop_endpoint
+    kilometers = int(content['km'])
+                     ~~~~~~~^^^^^^
+KeyError: 'km'
+2025-01-15 12:25:24,503 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&min_year=2018&max_year=2022&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high&latitude=41.224151&longitude=1.7255678&category_ids=100
+2025-01-15 12:25:25,094 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&min_year=2018&max_year=2022&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high&latitude=41.224151&longitude=1.7255678&category_ids=100
+2025-01-15 12:25:25,606 - INFO - Filtering out listing wzy4yxq222z5 - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing 0j24o0ok4rzy - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing nz04o2wd97jo - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing qzme8dlmlojv - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing 3zl8ry5m0q6x - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing pj9m7rwd8m6e - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing 8j34d2ogp169 - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing pzp2m2v03lj3 - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing 9jdkrwlvl96k - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing v6ggqd4g776e - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing ejk8qwrr1yjx - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing v6ggngx3gm6e - likely new car with 0km
+2025-01-15 12:25:25,606 - INFO - Filtering out listing v6g4mw9q8m6e - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing p6142pppyx65 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 8z8knk0g38z3 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing qjw45kekowzo - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing qjw45p9nk4zo - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing wzv48p04wqzl - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 9jdkdv2kdl6k - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 4z41258ggrzy - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing xzo2md77e269 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing wzy4p4e4wvz5 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 0j242r1mdvzy - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing mzn2p3ly20zn - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing e658rgr3gp6o - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing p6142xrwwd65 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 8z8k0g1gddz3 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 4z4elwd0wljy - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing p614m792r265 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 36exykqnrqzd - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing nz04ynggw3jo - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 8z8kl9nvwdz3 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing 3zl8xnx5586x - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing pzp2xv5dl5j3 - likely new car with 0km
+2025-01-15 12:25:25,607 - INFO - Filtering out listing v6ggpw11qn6e - likely new car with 0km
+2025-01-15 12:25:25,608 - INFO - Filtering out listing 0j242wq4kezy - likely new car with 0km
+2025-01-15 12:25:25,608 - INFO - Filtering out listing mzn2ql875kzn - likely new car with 0km
+2025-01-15 12:25:25,608 - INFO - Filtering out listing 4z4ek8l93wjy - likely new car with 0km
+2025-01-15 12:25:25,608 - INFO - Filtering out listing wzy48k4q7xz5 - likely new car with 0km
+2025-01-15 12:25:25,608 - INFO - Filtering out listing pj9m7wn0nm6e - likely new car with 0km
+2025-01-15 12:27:22,394 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&min_year=2018&max_year=2022&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high&latitude=41.224151&longitude=1.7255678&category_ids=100
+2025-01-15 12:27:22,974 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&model=Focus&min_year=2018&max_year=2022&engine=gasoline&min_horse_power=125&gearbox=manual&order_by=price_low_to_high&latitude=41.224151&longitude=1.7255678&category_ids=100
+2025-01-15 12:27:23,613 - INFO - Filtering out listing wzy4yxq222z5 - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing 0j24o0ok4rzy - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing nz04o2wd97jo - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing qzme8dlmlojv - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing 3zl8ry5m0q6x - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing pj9m7rwd8m6e - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing 8j34d2ogp169 - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing pzp2m2v03lj3 - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing 9jdkrwlvl96k - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing v6ggqd4g776e - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing ejk8qwrr1yjx - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing v6ggngx3gm6e - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing v6g4mw9q8m6e - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing p6142pppyx65 - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing 8z8knk0g38z3 - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing qjw45kekowzo - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing qjw45p9nk4zo - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing wzv48p04wqzl - likely new car with 0km
+2025-01-15 12:27:23,613 - INFO - Filtering out listing 9jdkdv2kdl6k - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 4z41258ggrzy - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing xzo2md77e269 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing wzy4p4e4wvz5 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 0j242r1mdvzy - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing mzn2p3ly20zn - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing e658rgr3gp6o - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing p6142xrwwd65 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 8z8k0g1gddz3 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 4z4elwd0wljy - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing p614m792r265 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 36exykqnrqzd - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing nz04ynggw3jo - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 8z8kl9nvwdz3 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 3zl8xnx5586x - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing pzp2xv5dl5j3 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing v6ggpw11qn6e - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 0j242wq4kezy - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing mzn2ql875kzn - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing 4z4ek8l93wjy - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing wzy48k4q7xz5 - likely new car with 0km
+2025-01-15 12:27:23,614 - INFO - Filtering out listing pj9m7wn0nm6e - likely new car with 0km
+2025-01-15 14:25:35,317 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:25:36,037 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 14:27:11,913 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:27:12,462 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 14:27:18,072 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:27:18,598 - INFO - Market price analysis: {'market_price': 9286.2, 'sample_size': 15, 'min_price': 4643.1, 'max_price': 8357.580000000002, 'raw_average': 10318.0, 'valid_prices': [5500.0, 7900.0, 9490.0, 9800.0, 9950.0, 10400.0, 10490.0, 10990.0, 11290.0, 11490.0, 11490.0, 11490.0, 11490.0, 11500.0, 11500.0]}
+2025-01-15 14:27:18,599 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=4643&max_sale_price=8357&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:38:50,879 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:38:51,481 - INFO - Market price analysis: {'market_price': 9286.2, 'sample_size': 15, 'min_price': 4643.1, 'max_price': 8357.580000000002, 'raw_average': 10318.0, 'valid_prices': [5500.0, 7900.0, 9490.0, 9800.0, 9950.0, 10400.0, 10490.0, 10990.0, 11290.0, 11490.0, 11490.0, 11490.0, 11490.0, 11500.0, 11500.0]}
+2025-01-15 14:38:51,481 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=4643&max_sale_price=8357&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:39:06,520 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Puma&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:39:07,012 - INFO - Market price analysis: {'market_price': 12595.5, 'sample_size': 2, 'min_price': 6297.75, 'max_price': 11335.95, 'raw_average': 13995.0, 'valid_prices': [12990.0, 15000.0]}
+2025-01-15 14:39:07,012 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Puma&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6297&max_sale_price=11335&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:39:17,923 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Kona&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:39:18,392 - WARNING - No valid prices found for market analysis
+2025-01-15 14:39:18,396 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 14:39:28,177 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 14:39:28,702 - INFO - Market price analysis: {'market_price': 9286.2, 'sample_size': 15, 'min_price': 4643.1, 'max_price': 8357.580000000002, 'raw_average': 10318.0, 'valid_prices': [5500.0, 7900.0, 9490.0, 9800.0, 9950.0, 10400.0, 10490.0, 10990.0, 11290.0, 11490.0, 11490.0, 11490.0, 11490.0, 11500.0, 11500.0]}
+2025-01-15 14:39:28,702 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=Focus&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=4643&max_sale_price=8357&order_by=price_low_to_high&min_year=2018&max_year=2022&engine=gasoline
+2025-01-15 15:00:09,026 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2015&max_year=2020&engine=gasoline
+2025-01-15 15:00:09,643 - INFO - Market price analysis: {'market_price': 4811.25, 'sample_size': 12, 'min_price': 2405.625, 'max_price': 4330.125, 'raw_average': 5345.833333333333, 'valid_prices': [4000.0, 4950.0, 5000.0, 5000.0, 5000.0, 5400.0, 5400.0, 5600.0, 5800.0, 6000.0, 6000.0, 6000.0]}
+2025-01-15 15:00:09,644 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2405&max_sale_price=4330&order_by=price_low_to_high&min_year=2015&max_year=2020&engine=gasoline
+2025-01-15 15:00:10,099 - INFO - Filtering out listing wzv4e5ngldzl - too many kilometers: 235000
+2025-01-15 15:01:34,308 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:01:35,045 - INFO - Market price analysis: {'market_price': 3463.2818181818184, 'sample_size': 11, 'min_price': 1731.6409090909092, 'max_price': 3116.9536363636366, 'raw_average': 3848.090909090909, 'valid_prices': [2500.0, 3200.0, 3400.0, 3700.0, 3830.0, 3999.0, 4000.0, 4300.0, 4400.0, 4500.0, 4500.0]}
+2025-01-15 15:01:35,046 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=1731&max_sale_price=3116&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:01:35,515 - INFO - Filtering out listing 4z4el4y948jy due to unwanted keywords
+2025-01-15 15:01:35,516 - INFO - Filtering out listing wzv4e5ngldzl - too many kilometers: 235000
+2025-01-15 15:02:08,640 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:02:09,150 - INFO - Market price analysis: {'market_price': 3463.2818181818184, 'sample_size': 11, 'min_price': 1731.6409090909092, 'max_price': 3116.9536363636366, 'raw_average': 3848.090909090909, 'valid_prices': [2500.0, 3200.0, 3400.0, 3700.0, 3830.0, 3999.0, 4000.0, 4300.0, 4400.0, 4500.0, 4500.0]}
+2025-01-15 15:02:09,150 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=1731&max_sale_price=3116&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:02:09,605 - INFO - Filtering out listing 4z4el4y948jy due to unwanted keywords
+2025-01-15 15:02:09,606 - INFO - Filtering out listing wzv4e5ngldzl - too many kilometers: 235000
+2025-01-15 15:05:54,380 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:05:54,964 - INFO - Market price analysis: {'market_price': 3463.2818181818184, 'sample_size': 11, 'min_price': 1731.6409090909092, 'max_price': 3116.9536363636366, 'raw_average': 3848.090909090909, 'valid_prices': [2500.0, 3200.0, 3400.0, 3700.0, 3830.0, 3999.0, 4000.0, 4300.0, 4400.0, 4500.0, 4500.0]}
+2025-01-15 15:05:54,964 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=1731&max_sale_price=3116&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:05:55,502 - INFO - Filtering out listing 4z4el4y948jy due to unwanted keywords
+2025-01-15 15:05:55,502 - INFO - Filtering out listing wzv4e5ngldzl - too many kilometers: 235000
+2025-01-15 15:07:01,177 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:07:01,692 - INFO - Market price analysis: {'market_price': 3463.2818181818184, 'sample_size': 11, 'min_price': 1731.6409090909092, 'max_price': 3116.9536363636366, 'raw_average': 3848.090909090909, 'valid_prices': [2500.0, 3200.0, 3400.0, 3700.0, 3830.0, 3999.0, 4000.0, 4300.0, 4400.0, 4500.0, 4500.0]}
+2025-01-15 15:07:01,692 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=1731&max_sale_price=3116&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:07:02,119 - INFO - Filtering out listing 4z4el4y948jy due to unwanted keywords
+2025-01-15 15:07:02,121 - INFO - Filtering out listing wzv4e5ngldzl - too many kilometers: 235000
+2025-01-15 15:07:43,134 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:07:43,884 - INFO - Market price analysis: {'market_price': 3463.2818181818184, 'sample_size': 11, 'min_price': 1731.6409090909092, 'max_price': 3116.9536363636366, 'raw_average': 3848.090909090909, 'valid_prices': [2500.0, 3200.0, 3400.0, 3700.0, 3830.0, 3999.0, 4000.0, 4300.0, 4400.0, 4500.0, 4500.0]}
+2025-01-15 15:07:43,885 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=1731&max_sale_price=3116&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:07:44,332 - INFO - Filtering out listing 4z4el4y948jy due to unwanted keywords
+2025-01-15 15:07:44,332 - INFO - Filtering out listing wzv4e5ngldzl - too many kilometers: 235000
+2025-01-15 15:08:02,458 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:08:03,001 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:08:03,001 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:08:05,252 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:08:05,752 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:08:05,752 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:09:26,279 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:09:27,131 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:09:27,131 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:09:59,681 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:10:00,413 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:10:00,414 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:10:29,333 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:10:29,889 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:10:29,889 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:13:12,032 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:13:12,639 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:13:12,639 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:13:32,425 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:13:32,932 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:13:32,932 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:21:30,133 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:21:30,697 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:21:30,698 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:23:42,519 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:23:43,293 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:23:43,293 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:25:13,937 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:25:14,688 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:25:14,688 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:25:47,226 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:25:47,715 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:25:47,715 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:25:58,245 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:25:58,770 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:25:58,770 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:28:24,916 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:28:25,475 - INFO - Market price analysis: {'market_price': 4463.871428571429, 'sample_size': 7, 'min_price': 2231.9357142857143, 'max_price': 4017.4842857142858, 'raw_average': 4959.857142857143, 'valid_prices': [2000.0, 4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:28:25,475 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2231&max_sale_price=4017&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:30:45,384 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:30:46,076 - INFO - Market price analysis: {'market_price': 4907.85, 'sample_size': 6, 'min_price': 2453.925, 'max_price': 4417.0650000000005, 'raw_average': 5453.166666666667, 'valid_prices': [4900.0, 4900.0, 5370.0, 5750.0, 5800.0, 5999.0]}
+2025-01-15 15:30:46,078 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=2453&max_sale_price=4417&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:42:35,378 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:42:36,068 - INFO - Market price analysis: {'market_price': 6500.0, 'sample_size': 24, 'min_price': 4900.0, 'max_price': 6990.0, 'average_price': 6416.272727272727, 'median_price': 6500.0, 'total_listings': 40, 'valid_listings': 24}
+2025-01-15 15:42:36,068 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=4900&max_sale_price=6990&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:42:36,589 - INFO - Filtering out listing qzme8rele1jv - too many kilometers: 315000
+2025-01-15 15:42:36,589 - INFO - Filtering out listing x6qm1gqwnojy - too many kilometers: 220000
+2025-01-15 15:42:36,589 - INFO - Filtering out listing 9jdkeplx346k - too many kilometers: 225000
+2025-01-15 15:42:36,589 - INFO - Filtering out listing v6ggql9l176e - too many kilometers: 250000
+2025-01-15 15:42:36,589 - INFO - Filtering out listing vjrqvvkpl9zk - likely new car with 185km
+2025-01-15 15:42:36,589 - INFO - Filtering out listing 8z8k0n5g98z3 - too many kilometers: 215000
+2025-01-15 15:42:36,590 - INFO - Filtering out listing vjrq2rqe58zk - too many kilometers: 238500
+2025-01-15 15:42:36,590 - INFO - Filtering out listing e6585mo23k6o - too many kilometers: 208000
+2025-01-15 15:42:36,590 - INFO - Filtering out listing xzo20n0r9469 due to unwanted keywords
+2025-01-15 15:42:36,590 - INFO - Filtering out listing e658dmdp1g6o due to unwanted keywords
+2025-01-15 15:42:36,590 - INFO - Filtering out listing 8z8kn98821z3 due to unwanted keywords
+2025-01-15 15:42:36,590 - INFO - Filtering out listing e658k9n4l26o due to unwanted keywords
+2025-01-15 15:42:36,590 - INFO - Filtering out listing 4z4e4yn2omjy due to unwanted keywords
+2025-01-15 15:42:36,590 - INFO - Filtering out listing nz04l1gdkvjo - too many kilometers: 225000
+2025-01-15 15:42:36,590 - INFO - Filtering out listing nz04oqdepvjo - too many kilometers: 230000
+2025-01-15 15:42:36,590 - INFO - Filtering out listing 3zl85lnok46x - too many kilometers: 228000
+2025-01-15 15:43:23,961 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:43:24,520 - INFO - Market price analysis: {'market_price': 6500.0, 'sample_size': 24, 'min_price': 4900.0, 'max_price': 6990.0, 'average_price': 6416.272727272727, 'median_price': 6500.0, 'total_listings': 40, 'valid_listings': 24}
+2025-01-15 15:43:24,520 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Volkswagen&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=4900&max_sale_price=6990&order_by=price_low_to_high&min_year=2010&max_year=2020&engine=gasoline
+2025-01-15 15:43:25,005 - INFO - Filtering out listing qzme8rele1jv - too many kilometers: 315000
+2025-01-15 15:43:25,005 - INFO - Filtering out listing x6qm1gqwnojy - too many kilometers: 220000
+2025-01-15 15:43:25,005 - INFO - Filtering out listing 9jdkeplx346k - too many kilometers: 225000
+2025-01-15 15:43:25,005 - INFO - Filtering out listing v6ggql9l176e - too many kilometers: 250000
+2025-01-15 15:43:25,005 - INFO - Filtering out listing vjrqvvkpl9zk - likely new car with 185km
+2025-01-15 15:43:25,005 - INFO - Filtering out listing 8z8k0n5g98z3 - too many kilometers: 215000
+2025-01-15 15:43:25,005 - INFO - Filtering out listing vjrq2rqe58zk - too many kilometers: 238500
+2025-01-15 15:43:25,005 - INFO - Filtering out listing e6585mo23k6o - too many kilometers: 208000
+2025-01-15 15:43:25,005 - INFO - Filtering out listing xzo20n0r9469 due to unwanted keywords
+2025-01-15 15:43:25,005 - INFO - Filtering out listing e658dmdp1g6o due to unwanted keywords
+2025-01-15 15:43:25,005 - INFO - Filtering out listing 8z8kn98821z3 due to unwanted keywords
+2025-01-15 15:43:25,006 - INFO - Filtering out listing e658k9n4l26o due to unwanted keywords
+2025-01-15 15:43:25,006 - INFO - Filtering out listing 4z4e4yn2omjy due to unwanted keywords
+2025-01-15 15:43:25,006 - INFO - Filtering out listing nz04l1gdkvjo - too many kilometers: 225000
+2025-01-15 15:43:25,006 - INFO - Filtering out listing nz04oqdepvjo - too many kilometers: 230000
+2025-01-15 15:43:25,006 - INFO - Filtering out listing 3zl85lnok46x - too many kilometers: 228000
+2025-01-15 15:44:00,052 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:44:00,786 - INFO - Market price analysis: {'market_price': 9690.0, 'sample_size': 34, 'min_price': 5500.0, 'max_price': 9990.0, 'average_price': 9364.757575757576, 'median_price': 9690.0, 'total_listings': 40, 'valid_listings': 34}
+2025-01-15 15:44:00,786 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=5500&max_sale_price=9990&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:44:01,273 - INFO - Filtering out listing qjw4599orezo due to unwanted keywords
+2025-01-15 15:44:01,273 - INFO - Filtering out listing nzx4n42v95j2 due to unwanted keywords
+2025-01-15 15:44:01,273 - INFO - Filtering out listing 4z4e9er17wjy due to unwanted keywords
+2025-01-15 15:44:01,274 - INFO - Filtering out listing nzx4nq2p7ej2 due to unwanted keywords
+2025-01-15 15:44:01,274 - INFO - Filtering out listing qjw4gvx08wzo due to unwanted keywords
+2025-01-15 15:44:01,274 - INFO - Filtering out listing qjw4gneg04zo due to unwanted keywords
+2025-01-15 15:47:13,531 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:47:14,154 - INFO - Market price analysis: {'market_price': 12500.0, 'sample_size': 32, 'min_price': 5500.0, 'max_price': 13890.0, 'average_price': 12285.0, 'median_price': 12500.0, 'total_listings': 39, 'valid_listings': 32}
+2025-01-15 15:47:14,155 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=5500&max_sale_price=13890&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:47:14,672 - INFO - Filtering out listing qjw4599orezo due to unwanted keywords
+2025-01-15 15:47:14,672 - INFO - Filtering out listing nzx4n42v95j2 due to unwanted keywords
+2025-01-15 15:47:14,672 - INFO - Filtering out listing 4z4e9er17wjy due to unwanted keywords
+2025-01-15 15:47:14,672 - INFO - Filtering out listing nzx4nq2p7ej2 due to unwanted keywords
+2025-01-15 15:47:14,673 - INFO - Filtering out listing qjw4gvx08wzo due to unwanted keywords
+2025-01-15 15:47:14,673 - INFO - Filtering out listing qjw4gneg04zo due to unwanted keywords
+2025-01-15 15:47:16,336 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:47:16,828 - INFO - Market price analysis: {'market_price': 12500.0, 'sample_size': 32, 'min_price': 5500.0, 'max_price': 13890.0, 'average_price': 12285.0, 'median_price': 12500.0, 'total_listings': 39, 'valid_listings': 32}
+2025-01-15 15:47:16,828 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?keywords=&brand=Ford&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=5500&max_sale_price=13890&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:47:17,361 - INFO - Filtering out listing qjw4599orezo due to unwanted keywords
+2025-01-15 15:47:17,361 - INFO - Filtering out listing nzx4n42v95j2 due to unwanted keywords
+2025-01-15 15:47:17,361 - INFO - Filtering out listing 4z4e9er17wjy due to unwanted keywords
+2025-01-15 15:47:17,361 - INFO - Filtering out listing nzx4nq2p7ej2 due to unwanted keywords
+2025-01-15 15:47:17,361 - INFO - Filtering out listing qjw4gvx08wzo due to unwanted keywords
+2025-01-15 15:47:17,362 - INFO - Filtering out listing qjw4gneg04zo due to unwanted keywords
+2025-01-15 15:49:48,013 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:49:48,779 - INFO - Market price analysis: {'market_price': 12500.0, 'sample_size': 32, 'min_price': 5500.0, 'max_price': 13890.0, 'average_price': 12285.0, 'median_price': 12500.0, 'total_listings': 39, 'valid_listings': 32}
+2025-01-15 15:49:48,779 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=5500&max_sale_price=13890&order_by=price_low_to_high&min_year=2018&max_year=2025&engine=gasoline
+2025-01-15 15:49:49,303 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-15 15:49:49,303 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-15 15:49:49,303 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-15 15:49:49,303 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-15 15:49:49,304 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-15 15:49:49,304 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-15 15:51:32,094 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2022&engine=gasoline
+2025-01-15 15:51:32,790 - INFO - Market price analysis: {'market_price': 9490.0, 'sample_size': 25, 'min_price': 5500.0, 'max_price': 10000.0, 'average_price': 9282.565217391304, 'median_price': 9490.0, 'total_listings': 40, 'valid_listings': 25}
+2025-01-15 15:51:32,790 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=5500&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2022&engine=gasoline
+2025-01-15 15:51:33,287 - INFO - Filtering out listing 4z4e9el338jy - too many kilometers: 260000
+2025-01-15 15:51:33,287 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 15:51:33,287 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 15:51:33,287 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 15:51:33,287 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 15:51:33,288 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 15:51:33,288 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 15:51:33,288 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 15:51:33,288 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 15:51:33,288 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 15:51:33,288 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 15:51:54,147 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2016&engine=gasoline
+2025-01-15 15:51:54,646 - INFO - Market price analysis: {'market_price': 11000.0, 'sample_size': 25, 'min_price': 6000.0, 'max_price': 35950.0, 'average_price': 11367.700833333334, 'median_price': 11000.0, 'total_listings': 40, 'valid_listings': 25}
+2025-01-15 15:51:54,646 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=35950&order_by=price_low_to_high&min_year=2015&max_year=2016&engine=gasoline
+2025-01-15 15:51:55,144 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 15:51:55,144 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 15:51:55,144 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 15:51:55,144 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing nzx4nddxeej2 due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing 3zl8rlmgnq6x due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing 8z8k0kq9p1z3 due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing nzx49l0ny5j2 due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing 4z4e9n78lmjy due to unwanted keywords
+2025-01-15 15:51:55,145 - INFO - Filtering out listing 3zl8w9dwoq6x due to unwanted keywords
+2025-01-15 15:55:33,474 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus%20RS&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 15:55:34,174 - WARNING - No valid prices found for market analysis
+2025-01-15 15:55:34,176 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 15:55:36,668 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus%20RS&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 15:55:37,119 - WARNING - No valid prices found for market analysis
+2025-01-15 15:55:37,122 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 15:55:58,653 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus%20RS&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2008&max_year=2018&engine=gasoline
+2025-01-15 15:55:59,095 - WARNING - No valid prices found for market analysis
+2025-01-15 15:55:59,098 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 15:56:05,001 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2008&max_year=2018&engine=gasoline
+2025-01-15 15:56:05,486 - INFO - Market price analysis: {'market_price': 5680.0, 'sample_size': 30, 'min_price': 3300.0, 'max_price': 7499.0, 'average_price': 5820.9655172413795, 'median_price': 5680.0, 'total_listings': 40, 'valid_listings': 30}
+2025-01-15 15:56:05,487 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3300&max_sale_price=7499&order_by=price_low_to_high&min_year=2008&max_year=2018&engine=gasoline
+2025-01-15 15:56:05,977 - INFO - Filtering out listing 9jdkq73e496k due to unwanted keywords
+2025-01-15 15:56:05,977 - INFO - Filtering out listing mzn2x7pnr0zn - too many kilometers: 250000
+2025-01-15 15:56:05,977 - INFO - Filtering out listing nz04o4rm27jo due to unwanted keywords
+2025-01-15 15:56:05,977 - INFO - Filtering out listing v6ggne2po56e - too many kilometers: 213000
+2025-01-15 15:56:05,977 - INFO - Filtering out listing nz043xg557jo - likely new car with 0km
+2025-01-15 15:56:05,978 - INFO - Filtering out listing 4z4e9el338jy - too many kilometers: 260000
+2025-01-15 15:56:05,978 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 15:56:05,978 - INFO - Filtering out listing 3zl1lx8o2qjx - likely new car with 133km
+2025-01-15 15:56:05,978 - INFO - Filtering out listing vjrq8mvn5lzk - likely new car with 0km
+2025-01-15 15:56:05,978 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 15:57:30,559 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2008&max_year=2018&engine=gasoline
+2025-01-15 15:57:31,258 - INFO - Market price analysis: {'market_price': 5680.0, 'sample_size': 30, 'min_price': 3300.0, 'max_price': 7499.0, 'average_price': 5820.9655172413795, 'median_price': 5680.0, 'total_listings': 40, 'valid_listings': 30}
+2025-01-15 15:57:31,258 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3300&max_sale_price=7499&order_by=price_low_to_high&min_year=2008&max_year=2018&engine=gasoline
+2025-01-15 15:57:31,726 - INFO - Filtering out listing 9jdkq73e496k due to unwanted keywords
+2025-01-15 15:57:31,726 - INFO - Filtering out listing mzn2x7pnr0zn - too many kilometers: 250000
+2025-01-15 15:57:31,726 - INFO - Filtering out listing nz04o4rm27jo due to unwanted keywords
+2025-01-15 15:57:31,726 - INFO - Filtering out listing v6ggne2po56e - too many kilometers: 213000
+2025-01-15 15:57:31,726 - INFO - Filtering out listing nz043xg557jo - likely new car with 0km
+2025-01-15 15:57:31,726 - INFO - Filtering out listing 4z4e9el338jy - too many kilometers: 260000
+2025-01-15 15:57:31,726 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 15:57:31,726 - INFO - Filtering out listing 3zl1lx8o2qjx - likely new car with 133km
+2025-01-15 15:57:31,726 - INFO - Filtering out listing vjrq8mvn5lzk - likely new car with 0km
+2025-01-15 15:57:31,726 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 15:58:47,902 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 15:58:48,560 - INFO - Market price analysis: {'market_price': 9500.0, 'sample_size': 24, 'min_price': 6000.0, 'max_price': 10000.0, 'average_price': 9282.565217391304, 'median_price': 9500.0, 'total_listings': 40, 'valid_listings': 24}
+2025-01-15 15:58:48,560 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 15:58:49,164 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 15:58:49,164 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 15:58:49,164 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 15:58:49,164 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 15:58:49,164 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 15:58:49,164 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 15:58:49,165 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 15:58:49,165 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 15:58:49,165 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 15:58:49,165 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 15:58:59,621 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 15:59:00,247 - INFO - Market price analysis: {'market_price': 9500.0, 'sample_size': 24, 'min_price': 6000.0, 'max_price': 10000.0, 'average_price': 9282.565217391304, 'median_price': 9500.0, 'total_listings': 40, 'valid_listings': 24}
+2025-01-15 15:59:00,247 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 15:59:00,845 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 15:59:00,845 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 15:59:00,845 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 15:59:00,845 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 15:59:00,845 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 15:59:00,845 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 15:59:00,846 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 15:59:00,846 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 15:59:00,846 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 15:59:00,846 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:00:35,507 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:00:36,226 - INFO - Market price analysis: {'market_price': 9500.0, 'sample_size': 24, 'min_price': 6000.0, 'max_price': 10000.0, 'average_price': 9282.565217391304, 'median_price': 9500.0, 'total_listings': 40, 'valid_listings': 24}
+2025-01-15 16:00:36,227 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:00:36,711 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:00:36,711 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:00:36,711 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:00:36,712 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:00:36,712 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:00:36,712 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:00:36,712 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:00:36,712 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:00:36,712 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:00:36,713 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:01:48,890 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:01:49,404 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:01:49,416 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:01:49,417 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:01:49,919 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:01:49,919 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:01:49,919 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:01:49,919 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:01:49,919 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:01:49,919 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:01:49,920 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:01:49,920 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:01:49,920 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:01:49,920 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:01:49,920 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:03:15,746 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:03:16,331 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:03:16,332 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:03:16,333 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:03:16,800 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:03:16,800 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:03:16,800 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:03:16,800 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:03:16,800 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:03:16,801 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:03:16,801 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:03:16,801 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:03:16,801 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:03:16,801 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:03:16,801 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:04:33,058 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:04:33,790 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:04:33,792 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:04:33,792 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:04:34,278 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:04:34,278 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:04:34,279 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:04:34,279 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:04:34,279 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:04:34,279 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:04:34,280 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:04:34,280 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:04:34,280 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:04:34,280 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:04:34,280 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:05:31,278 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:05:31,772 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:05:31,774 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:05:31,775 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:05:32,258 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:05:32,258 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:05:32,258 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:05:32,258 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:05:32,258 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:05:32,258 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:05:32,259 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:05:32,259 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:05:32,259 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:05:32,259 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:05:32,259 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:06:40,056 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:06:40,759 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:06:40,760 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:06:40,760 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:06:41,226 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:06:41,226 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:06:41,227 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:06:41,227 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:06:41,227 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:06:41,227 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:06:41,227 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:06:41,227 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:06:41,227 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:06:41,227 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:06:41,228 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:07:15,802 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:07:16,291 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:07:16,293 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:07:16,293 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:07:16,754 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:07:16,755 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:07:16,755 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:07:16,755 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:07:16,755 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:07:16,755 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:07:16,756 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:07:16,756 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:07:16,756 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:07:16,756 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:07:16,756 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:07:47,789 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:07:48,275 - INFO - Calculated market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:07:48,277 - INFO - Market price analysis: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:07:48,277 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=6000&max_sale_price=10000&order_by=price_low_to_high&min_year=2015&max_year=2018&engine=gasoline
+2025-01-15 16:07:48,765 - INFO - Filtering out listing qjw4nonvdkzo due to unwanted keywords
+2025-01-15 16:07:48,766 - INFO - Filtering out listing 8z8kprm9elz3 - likely new car with 0km
+2025-01-15 16:07:48,766 - INFO - Filtering out listing v6ggnednl56e - too many kilometers: 235000
+2025-01-15 16:07:48,766 - INFO - Filtering out listing vjrqxrl7o4zk due to unwanted keywords
+2025-01-15 16:07:48,766 - INFO - Filtering out listing mzn2mxg9lyzn due to unwanted keywords
+2025-01-15 16:07:48,766 - INFO - Filtering out listing p6141m7d7g65 due to unwanted keywords
+2025-01-15 16:07:48,766 - INFO - Filtering out listing 0j24lr875mzy due to unwanted keywords
+2025-01-15 16:07:48,767 - INFO - Filtering out listing qjw4npqlewzo due to unwanted keywords
+2025-01-15 16:07:48,767 - INFO - Filtering out listing wzy4pr2me2z5 due to unwanted keywords
+2025-01-15 16:07:48,767 - INFO - Filtering out listing wzy48odr15z5 due to unwanted keywords
+2025-01-15 16:07:48,767 - INFO - Final response market data: {'market_price': 9500.0, 'median_price': 9500.0, 'average_price': 9282.565217391304, 'min_price': 6000.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 24, 'sample_size': 23}
+2025-01-15 16:09:03,320 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2024&engine=gasoline
+2025-01-15 16:09:04,080 - INFO - Calculated market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 5500.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 32, 'sample_size': 30}
+2025-01-15 16:09:04,082 - INFO - Market price analysis: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 5500.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 32, 'sample_size': 30}
+2025-01-15 16:09:04,082 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=5500&max_sale_price=13890&order_by=price_low_to_high&min_year=2018&max_year=2024&engine=gasoline
+2025-01-15 16:09:04,593 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-15 16:09:04,594 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-15 16:09:04,594 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-15 16:09:04,595 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-15 16:09:04,595 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-15 16:09:04,595 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-15 16:09:04,595 - INFO - Final response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 5500.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 32, 'sample_size': 30}
+2025-01-15 16:09:04,597 - INFO - API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 5500.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 32, 'sample_size': 30}
+2025-01-15 16:09:04,597 - INFO - Final API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 5500.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 32, 'sample_size': 30}
+2025-01-15 16:10:28,476 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 16:10:29,018 - INFO - Calculated market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 16:10:29,019 - INFO - Market price analysis: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 16:10:29,019 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=7900&max_sale_price=13890&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 16:10:29,496 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-15 16:10:29,496 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-15 16:10:29,496 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-15 16:10:29,497 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-15 16:10:29,497 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-15 16:10:29,497 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-15 16:10:29,497 - INFO - Final response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 16:10:29,498 - INFO - API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 16:10:29,498 - INFO - Final API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 18:09:40,467 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=230&model=Fiesta&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:09:40,993 - WARNING - No valid prices found for market analysis
+2025-01-15 18:09:40,995 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 18:09:47,940 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=230&model=Fiesta&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:09:48,398 - WARNING - No valid prices found for market analysis
+2025-01-15 18:09:48,405 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 18:09:53,819 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=230&model=Fiesta&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:09:54,493 - WARNING - No valid prices found for market analysis
+2025-01-15 18:09:54,494 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 18:10:01,879 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=230&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:10:02,325 - WARNING - No valid prices found for market analysis
+2025-01-15 18:10:02,330 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 18:11:11,498 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=230&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:11:12,033 - WARNING - No valid prices found for market analysis
+2025-01-15 18:11:12,035 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-15 18:12:05,219 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Fiesta&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:12:05,724 - INFO - Calculated market data: {'market_price': 10900.0, 'median_price': 10900.0, 'average_price': 10814.892857142857, 'min_price': 9390.0, 'max_price': 11999.0, 'total_listings': 40, 'valid_listings': 28, 'sample_size': 28}
+2025-01-15 18:12:05,726 - INFO - Market price analysis: {'market_price': 10900.0, 'median_price': 10900.0, 'average_price': 10814.892857142857, 'min_price': 9390.0, 'max_price': 11999.0, 'total_listings': 40, 'valid_listings': 28, 'sample_size': 28}
+2025-01-15 18:12:05,727 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Fiesta&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=9390&max_sale_price=11999&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:12:06,206 - INFO - Filtering out listing pzp2og4r39j3 due to unwanted keywords
+2025-01-15 18:12:06,206 - INFO - Filtering out listing nzx4pq44emj2 due to unwanted keywords
+2025-01-15 18:12:06,207 - INFO - Filtering out listing 9jdkr881o26k due to unwanted keywords
+2025-01-15 18:12:06,207 - INFO - Filtering out listing 8z8k9359pdz3 due to unwanted keywords
+2025-01-15 18:12:06,207 - INFO - Filtering out listing 3zl8x284w86x due to unwanted keywords
+2025-01-15 18:12:06,208 - INFO - Filtering out listing pzp2qeelwlj3 due to unwanted keywords
+2025-01-15 18:12:06,208 - INFO - Filtering out listing x6qm4mxvxyjy - likely new car with 0km
+2025-01-15 18:12:06,208 - INFO - Filtering out listing p6143l9qq765 due to unwanted keywords
+2025-01-15 18:12:06,208 - INFO - Filtering out listing 36e1gmnoevjd due to unwanted keywords
+2025-01-15 18:12:06,209 - INFO - Final response market data: {'market_price': 10900.0, 'median_price': 10900.0, 'average_price': 10814.892857142857, 'min_price': 9390.0, 'max_price': 11999.0, 'total_listings': 40, 'valid_listings': 28, 'sample_size': 28}
+2025-01-15 18:12:06,211 - INFO - API Response market data: {'market_price': 10900.0, 'median_price': 10900.0, 'average_price': 10814.892857142857, 'min_price': 9390.0, 'max_price': 11999.0, 'total_listings': 40, 'valid_listings': 28, 'sample_size': 28}
+2025-01-15 18:12:06,211 - INFO - Final API Response market data: {'market_price': 10900.0, 'median_price': 10900.0, 'average_price': 10814.892857142857, 'min_price': 9390.0, 'max_price': 11999.0, 'total_listings': 40, 'valid_listings': 28, 'sample_size': 28}
+2025-01-15 18:12:20,333 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:12:21,022 - INFO - Calculated market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 18:12:21,024 - INFO - Market price analysis: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 18:12:21,024 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Ford&model=Focus&latitude=41.224151&longitude=1.7255678&category_ids=100&distance=200000&min_sale_price=7900&max_sale_price=13890&order_by=price_low_to_high&min_year=2018&max_year=2020&engine=gasoline
+2025-01-15 18:12:21,519 - INFO - Filtering out listing qjw48ll88gzo due to unwanted keywords
+2025-01-15 18:12:21,520 - INFO - Filtering out listing wzv4kxyeyqzl due to unwanted keywords
+2025-01-15 18:12:21,520 - INFO - Filtering out listing 8z8kry10vlz3 due to unwanted keywords
+2025-01-15 18:12:21,520 - INFO - Filtering out listing ejk875yylyjx due to unwanted keywords
+2025-01-15 18:12:21,520 - INFO - Filtering out listing qjw48yglvgzo due to unwanted keywords
+2025-01-15 18:12:21,520 - INFO - Filtering out listing nzx4p34m85j2 due to unwanted keywords
+2025-01-15 18:12:21,521 - INFO - Final response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 18:12:21,522 - INFO - API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
+2025-01-15 18:12:21,522 - INFO - Final API Response market data: {'market_price': 12500.0, 'median_price': 12500.0, 'average_price': 12285.0, 'min_price': 7900.0, 'max_price': 13890.0, 'total_listings': 39, 'valid_listings': 31, 'sample_size': 30}
