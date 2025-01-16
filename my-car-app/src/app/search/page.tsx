@@ -22,7 +22,7 @@ import {
 } from '@mui/material'
 import { DirectionsCar } from '@mui/icons-material'
 
-const BACKEND_URL = 'http://localhost:10000'
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
 interface Brand {
   id: number
