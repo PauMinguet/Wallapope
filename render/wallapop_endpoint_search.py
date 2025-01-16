@@ -30,15 +30,23 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
         # Debug log the incoming parameters
         logger.info(f"Received params: {params}")
-        logger.info(f"max_kilometers value: {params.get('max_kilometers')}")
         
         # Build search URL for market analysis
         base_url = "https://api.wallapop.com/api/v3/cars/search"
         
         # Create base search parameters for market analysis
         max_km = params.get('max_kilometers')
-        logger.info(f"Using max_km value: {max_km}")
         
+        # Calculate kilometer range for market analysis (80-110% of max_km)
+        if max_km is not None:
+            market_max_km = int(float(max_km) * 1.10)  # 110% of max_km
+            market_min_km = int(float(max_km) * 0.80)  # 80% of max_km
+            logger.info(f"Market analysis km range: {market_min_km} - {market_max_km}")
+        else:
+            market_max_km = 240000
+            market_min_km = None
+
+        # First create the base search params
         search_params = {
             'brand': params.get('brand', ''),
             'model': params.get('model', ''),
@@ -46,10 +54,24 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
-            'max_km': str(max_km) if max_km is not None else '240000',  # Use exact value from frontend
+            'max_km': str(market_max_km),
             'min_sale_price': '3000',
             'order_by': 'price_low_to_high'
         }
+        
+        # Calculate horsepower range for market analysis (80-130% of min_horse_power)
+        min_hp = params.get('min_horse_power')
+        if min_hp is not None:
+            min_hp = int(float(min_hp))
+            market_min_hp = int(min_hp * 0.8)  # 80% of min horsepower
+            market_max_hp = int(min_hp * 1.30)  # 130% of min horsepower
+            logger.info(f"Market analysis horsepower range: {market_min_hp} - {market_max_hp}")
+            search_params['min_horse_power'] = str(market_min_hp)
+            search_params['max_horse_power'] = str(market_max_hp)
+
+        # Add minimum kilometers for market analysis
+        if market_min_km is not None:
+            search_params['min_km'] = str(market_min_km)
 
         # Add year parameters if provided
         if 'min_year' in params:
@@ -142,10 +164,15 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
                 "search_params": params
             }
             
-        logger.info(f"Market price analysis: {market_data}")
         
         # Build search URL with price limits from market analysis
         base_url = "https://api.wallapop.com/api/v3/cars/search"
+        
+        # Calculate price range based on market analysis (50-90% of average price)
+        market_avg_price = market_data['average_price']
+        min_price = int(market_avg_price * 0.50)  # 50% of market price
+        max_price = int(market_avg_price * 0.90)  # 90% of market price
+        logger.info(f"Price range for bargain search: {min_price} - {max_price} (based on average price {market_avg_price})")
         
         # Create base search parameters
         search_params = {
@@ -155,10 +182,10 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
             'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
-            'min_sale_price': str(int(market_data['min_price'])),
-            'max_sale_price': str(int(market_data['max_price'])),
+            'min_sale_price': str(min_price),
+            'max_sale_price': str(max_price),
             'max_km': str(params.get('max_kilometers', 240000)),  # Use get() with default
-            'order_by': 'price_low_to_high'
+            'order_by': params.get('order_by', 'price_low_to_high')
         }
 
         # Add year parameters if provided
@@ -170,6 +197,13 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
         # Add engine type if specified
         if 'engine' in params:
             search_params['engine'] = str(params['engine'])
+
+        # Add horsepower if specified (use the same range as in market analysis)
+        min_hp = params.get('min_horse_power')
+        if min_hp is not None:
+            min_hp = int(float(min_hp))
+            search_params['min_horse_power'] = str(min_hp)
+            search_params['max_horse_power'] = str(int(min_hp * 1.30))
 
         # Remove empty parameters
         search_params = {k: v for k, v in search_params.items() if v and v != ''}
@@ -214,17 +248,71 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
             content['km'] = kilometers
             filtered_results.append(listing)
 
+        # Do a second search with expanded parameters
+        logger.info("Performing expanded search for suggestions...")
+        expanded_params = search_params.copy()
+        
+        # Increase max_km and distance by 10%
+        if 'max_km' in expanded_params:
+            expanded_params['max_km'] = str(int(int(expanded_params['max_km']) * 1.1))
+        if 'distance' in expanded_params:
+            expanded_params['distance'] = str(int(int(expanded_params['distance']) * 1.1))
+        
+        # Decrease min_year by 1 if present
+        if 'min_year' in expanded_params:
+            expanded_params['min_year'] = str(int(expanded_params['min_year']) - 1)
+        
+        expanded_url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in expanded_params.items())}"
+        logger.info(f"\nExpanded search URL: {expanded_url}")
+        
+        expanded_response = requests.get(expanded_url)
+        expanded_response.raise_for_status()
+        expanded_data = expanded_response.json()
+        
+        expanded_results = expanded_data.get('search_objects', [])
+        suggested_filtered = []
+        
+        # Keep track of seen listing IDs
+        seen_ids = {listing['id'] for listing in filtered_results}
+        
+        # Filter expanded results
+        for listing in expanded_results:
+            # Skip if we've already seen this listing
+            if listing['id'] in seen_ids:
+                continue
+                
+            content = listing['content']
+            
+            # Apply same filtering logic as before
+            kilometers = int(content.get('km', 0))
+            if kilometers < 1000 and kilometers >= 200:
+                kilometers *= 1000
+            elif kilometers <= 200 or kilometers > 200000:
+                continue
+
+            if has_unwanted_keywords(content['title'], UNWANTED_KEYWORDS) or \
+               has_unwanted_keywords(content.get('storytelling', ''), UNWANTED_KEYWORDS):
+                continue
+            
+            content['km'] = kilometers
+            suggested_filtered.append(listing)
+        
+        logger.info(f"Found {len(suggested_filtered)} suggested listings")
+        
+        # Create the final result after both searches are complete
         result = {
             'success': True,
             'search_parameters': search_params,
             'listings': filtered_results,
             'total_results': len(search_results),
             'filtered_results': len(filtered_results),
-            'url': url,
-            'market_data': market_data  # Include the complete market_data
+            'search_url': url,
+            'market_data': market_data,  # Include the complete market_data
+            'suggested_listings': suggested_filtered  # Add suggested listings to the response
         }
         
-        logger.info(f"Final response market data: {result['market_data']}")
+        logger.info(f"Final response includes {len(result['suggested_listings'])} suggested listings")
+        logger.info(f"Final response structure: {list(result.keys())}")  # Log the keys to verify structure
         return result
         
     except Exception as e:

@@ -124,7 +124,7 @@ async def search_single_car(params: CarSearchParams):
             "total_results": result['total_results'],
             "filtered_results": result['filtered_results'],
             "search_parameters": result['search_parameters'],
-            "search_url": result['url'],
+            "search_url": result['search_url'],
             "market_data": {
                 "market_price": market_data.get('market_price', 0),
                 "median_price": market_data.get('median_price', 0),
@@ -134,7 +134,8 @@ async def search_single_car(params: CarSearchParams):
                 "total_listings": market_data.get('total_listings', 0),
                 "valid_listings": market_data.get('valid_listings', 0),
                 "sample_size": market_data.get('sample_size', 0)
-            }
+            },
+            "suggested_listings": result['suggested_listings']
         }
         
         logger.info(f"Final API Response market data: {response['market_data']}")

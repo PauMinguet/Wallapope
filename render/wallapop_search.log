@@ -1687,3 +1687,775 @@ Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model
 2025-01-16 11:35:49,917 - INFO - Final response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
 2025-01-16 11:35:49,920 - INFO - API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
 2025-01-16 11:35:49,920 - INFO - Final API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
+2025-01-16 11:38:04,739 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 300, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:38:04,739 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:38:04,739 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 300, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:38:04,740 - INFO - max_kilometers value: 160000
+2025-01-16 11:38:04,740 - INFO - Using max_km value: 160000
+2025-01-16 11:38:04,740 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=300000&max_km=160000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:38:05,735 - INFO - Calculated market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15188.28947368421, 'min_price': 9800.0, 'max_price': 20400.0, 'total_listings': 40, 'valid_listings': 38, 'sample_size': 38}
+2025-01-16 11:38:05,738 - INFO - Market price analysis: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15188.28947368421, 'min_price': 9800.0, 'max_price': 20400.0, 'total_listings': 40, 'valid_listings': 38, 'sample_size': 38}
+2025-01-16 11:38:05,739 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=300000&min_sale_price=9800&max_sale_price=20400&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:38:06,008 - INFO - Filtering out listing 36e145ypkyjd - too many kilometers: 318000
+2025-01-16 11:38:06,008 - INFO - Filtering out listing pj9m5wpx006e - too many kilometers: 270000
+2025-01-16 11:38:06,008 - INFO - Filtering out listing xzormoedl5z9 - likely new car with 0km
+2025-01-16 11:38:06,008 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:38:06,008 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:38:06,008 - INFO - Filtering out listing 4z4e2vgl1rjy - too many kilometers: 206000
+2025-01-16 11:38:06,008 - INFO - Filtering out listing 9jdkrxordd6k - too many kilometers: 210000
+2025-01-16 11:38:06,008 - INFO - Filtering out listing 8z8ke7gx08z3 - too many kilometers: 290000
+2025-01-16 11:38:06,008 - INFO - Final response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15188.28947368421, 'min_price': 9800.0, 'max_price': 20400.0, 'total_listings': 40, 'valid_listings': 38, 'sample_size': 38}
+2025-01-16 11:38:06,010 - INFO - API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15188.28947368421, 'min_price': 9800.0, 'max_price': 20400.0, 'total_listings': 40, 'valid_listings': 38, 'sample_size': 38}
+2025-01-16 11:38:06,010 - INFO - Final API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15188.28947368421, 'min_price': 9800.0, 'max_price': 20400.0, 'total_listings': 40, 'valid_listings': 38, 'sample_size': 38}
+2025-01-16 11:38:17,581 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 500, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:38:17,581 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:38:17,581 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 500, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:38:17,581 - INFO - max_kilometers value: 160000
+2025-01-16 11:38:17,581 - INFO - Using max_km value: 160000
+2025-01-16 11:38:17,581 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=500000&max_km=160000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:38:17,812 - INFO - Calculated market data: {'market_price': 12999.0, 'median_price': 12999.0, 'average_price': 13064.09090909091, 'min_price': 9800.0, 'max_price': 14999.0, 'total_listings': 40, 'valid_listings': 35, 'sample_size': 33}
+2025-01-16 11:38:17,813 - INFO - Market price analysis: {'market_price': 12999.0, 'median_price': 12999.0, 'average_price': 13064.09090909091, 'min_price': 9800.0, 'max_price': 14999.0, 'total_listings': 40, 'valid_listings': 35, 'sample_size': 33}
+2025-01-16 11:38:17,813 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=500000&min_sale_price=9800&max_sale_price=14999&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:38:18,042 - INFO - Filtering out listing 36e145ypkyjd - too many kilometers: 318000
+2025-01-16 11:38:18,043 - INFO - Filtering out listing pj9m5wpx006e - too many kilometers: 270000
+2025-01-16 11:38:18,043 - INFO - Filtering out listing v6gg5xxndn6e - too many kilometers: 283000
+2025-01-16 11:38:18,043 - INFO - Filtering out listing xzormoedl5z9 - likely new car with 0km
+2025-01-16 11:38:18,043 - INFO - Filtering out listing x6qmvyn3mojy - likely new car with 0km
+2025-01-16 11:38:18,043 - INFO - Filtering out listing w674989qyy6x - too many kilometers: 260000
+2025-01-16 11:38:18,043 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:38:18,044 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:38:18,044 - INFO - Filtering out listing pj9mnr7lym6e due to unwanted keywords
+2025-01-16 11:38:18,044 - INFO - Filtering out listing 4z4e2vgl1rjy - too many kilometers: 206000
+2025-01-16 11:38:18,044 - INFO - Filtering out listing nz041d0mkejo due to unwanted keywords
+2025-01-16 11:38:18,044 - INFO - Final response market data: {'market_price': 12999.0, 'median_price': 12999.0, 'average_price': 13064.09090909091, 'min_price': 9800.0, 'max_price': 14999.0, 'total_listings': 40, 'valid_listings': 35, 'sample_size': 33}
+2025-01-16 11:38:18,046 - INFO - API Response market data: {'market_price': 12999.0, 'median_price': 12999.0, 'average_price': 13064.09090909091, 'min_price': 9800.0, 'max_price': 14999.0, 'total_listings': 40, 'valid_listings': 35, 'sample_size': 33}
+2025-01-16 11:38:18,046 - INFO - Final API Response market data: {'market_price': 12999.0, 'median_price': 12999.0, 'average_price': 13064.09090909091, 'min_price': 9800.0, 'max_price': 14999.0, 'total_listings': 40, 'valid_listings': 35, 'sample_size': 33}
+2025-01-16 11:41:08,801 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 100, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:41:08,801 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:41:08,801 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 100, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:41:08,802 - INFO - max_kilometers value: 160000
+2025-01-16 11:41:08,802 - INFO - Using max_km value: 160000
+2025-01-16 11:41:08,802 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=100000&max_km=160000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:41:09,026 - INFO - Calculated market data: {'market_price': 14999.0, 'median_price': 14999.0, 'average_price': 15008.47619047619, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 23, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:41:09,028 - INFO - Market price analysis: {'market_price': 14999.0, 'median_price': 14999.0, 'average_price': 15008.47619047619, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 23, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:41:09,028 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=100000&min_sale_price=9800&max_sale_price=23000&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:41:09,254 - INFO - Filtering out listing 36e145ypkyjd - too many kilometers: 318000
+2025-01-16 11:41:09,254 - INFO - Filtering out listing pj9m5wpx006e - too many kilometers: 270000
+2025-01-16 11:41:09,255 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:41:09,255 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:41:09,255 - INFO - Filtering out listing 9jdkrxordd6k - too many kilometers: 210000
+2025-01-16 11:41:09,255 - INFO - Final response market data: {'market_price': 14999.0, 'median_price': 14999.0, 'average_price': 15008.47619047619, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 23, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:41:09,257 - INFO - API Response market data: {'market_price': 14999.0, 'median_price': 14999.0, 'average_price': 15008.47619047619, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 23, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:41:09,257 - INFO - Final API Response market data: {'market_price': 14999.0, 'median_price': 14999.0, 'average_price': 15008.47619047619, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 23, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:41:16,775 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 60, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:41:16,775 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:41:16,776 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 60, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:41:16,776 - INFO - max_kilometers value: 160000
+2025-01-16 11:41:16,776 - INFO - Using max_km value: 160000
+2025-01-16 11:41:16,776 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=60000&max_km=160000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:41:17,011 - INFO - Calculated market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15639.941176470587, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 18, 'valid_listings': 17, 'sample_size': 17}
+2025-01-16 11:41:17,015 - INFO - Market price analysis: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15639.941176470587, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 18, 'valid_listings': 17, 'sample_size': 17}
+2025-01-16 11:41:17,015 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=60000&min_sale_price=9800&max_sale_price=23000&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:41:17,229 - INFO - Filtering out listing 36e145ypkyjd - too many kilometers: 318000
+2025-01-16 11:41:17,229 - INFO - Filtering out listing pj9m5wpx006e - too many kilometers: 270000
+2025-01-16 11:41:17,230 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:41:17,230 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:41:17,230 - INFO - Filtering out listing 9jdkrxordd6k - too many kilometers: 210000
+2025-01-16 11:41:17,230 - INFO - Final response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15639.941176470587, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 18, 'valid_listings': 17, 'sample_size': 17}
+2025-01-16 11:41:17,232 - INFO - API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15639.941176470587, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 18, 'valid_listings': 17, 'sample_size': 17}
+2025-01-16 11:41:17,233 - INFO - Final API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15639.941176470587, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 18, 'valid_listings': 17, 'sample_size': 17}
+2025-01-16 11:45:14,232 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 60, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:45:14,232 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:45:14,232 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 60, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:45:14,232 - INFO - max_kilometers value: 160000
+2025-01-16 11:45:14,233 - INFO - Using max_km value: 160000
+2025-01-16 11:45:14,233 - INFO - Market analysis km range: 128000 - 176000
+2025-01-16 11:45:14,233 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=60000&max_km=176000&min_sale_price=3000&order_by=price_low_to_high&min_km=128000&min_year=2010&max_year=2013
+2025-01-16 11:45:15,086 - INFO - Calculated market data: {'market_price': 18500.0, 'median_price': 18500.0, 'average_price': 18365.555555555555, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 10, 'valid_listings': 9, 'sample_size': 9}
+2025-01-16 11:45:15,087 - INFO - Market price analysis: {'market_price': 18500.0, 'median_price': 18500.0, 'average_price': 18365.555555555555, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 10, 'valid_listings': 9, 'sample_size': 9}
+2025-01-16 11:45:15,087 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=60000&min_sale_price=11990&max_sale_price=23000&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:45:15,331 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:45:15,332 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:45:15,332 - INFO - Filtering out listing 9jdkrxordd6k - too many kilometers: 210000
+2025-01-16 11:45:15,332 - INFO - Final response market data: {'market_price': 18500.0, 'median_price': 18500.0, 'average_price': 18365.555555555555, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 10, 'valid_listings': 9, 'sample_size': 9}
+2025-01-16 11:45:15,334 - INFO - API Response market data: {'market_price': 18500.0, 'median_price': 18500.0, 'average_price': 18365.555555555555, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 10, 'valid_listings': 9, 'sample_size': 9}
+2025-01-16 11:45:15,335 - INFO - Final API Response market data: {'market_price': 18500.0, 'median_price': 18500.0, 'average_price': 18365.555555555555, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 10, 'valid_listings': 9, 'sample_size': 9}
+2025-01-16 11:45:22,756 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:45:22,756 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:45:22,756 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:45:22,756 - INFO - max_kilometers value: 160000
+2025-01-16 11:45:22,757 - INFO - Using max_km value: 160000
+2025-01-16 11:45:22,757 - INFO - Market analysis km range: 128000 - 176000
+2025-01-16 11:45:22,757 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=200000&max_km=176000&min_sale_price=3000&order_by=price_low_to_high&min_km=128000&min_year=2010&max_year=2013
+2025-01-16 11:45:22,985 - INFO - Calculated market data: {'market_price': 15500.0, 'median_price': 15500.0, 'average_price': 16852.6, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 16, 'valid_listings': 15, 'sample_size': 15}
+2025-01-16 11:45:22,990 - INFO - Market price analysis: {'market_price': 15500.0, 'median_price': 15500.0, 'average_price': 16852.6, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 16, 'valid_listings': 15, 'sample_size': 15}
+2025-01-16 11:45:22,990 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=200000&min_sale_price=11990&max_sale_price=23000&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:45:23,214 - INFO - Filtering out listing xzormoedl5z9 - likely new car with 0km
+2025-01-16 11:45:23,214 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:45:23,215 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:45:23,215 - INFO - Filtering out listing 9jdkrxordd6k - too many kilometers: 210000
+2025-01-16 11:45:23,215 - INFO - Filtering out listing 8z8ke7gx08z3 - too many kilometers: 290000
+2025-01-16 11:45:23,215 - INFO - Final response market data: {'market_price': 15500.0, 'median_price': 15500.0, 'average_price': 16852.6, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 16, 'valid_listings': 15, 'sample_size': 15}
+2025-01-16 11:45:23,218 - INFO - API Response market data: {'market_price': 15500.0, 'median_price': 15500.0, 'average_price': 16852.6, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 16, 'valid_listings': 15, 'sample_size': 15}
+2025-01-16 11:45:23,218 - INFO - Final API Response market data: {'market_price': 15500.0, 'median_price': 15500.0, 'average_price': 16852.6, 'min_price': 11990.0, 'max_price': 23000.0, 'total_listings': 16, 'valid_listings': 15, 'sample_size': 15}
+2025-01-16 14:31:55,621 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:31:55,622 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:31:55,622 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:31:55,622 - INFO - max_kilometers value: 200000
+2025-01-16 14:31:55,622 - INFO - Using max_km value: 200000
+2025-01-16 14:31:55,622 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:31:55,622 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:31:56,214 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:31:56,216 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:31:56,216 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=10000&max_sale_price=16500&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:31:56,777 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:31:56,777 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 14:31:56,778 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:31:56,779 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:31:56,779 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:34:48,077 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:34:48,078 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:34:48,078 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:34:48,078 - INFO - max_kilometers value: 200000
+2025-01-16 14:34:48,079 - INFO - Using max_km value: 200000
+2025-01-16 14:34:48,079 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:34:48,079 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:34:48,632 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:34:48,633 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:34:48,633 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=10000&max_sale_price=16500&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:34:49,184 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:34:49,184 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 14:34:49,185 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:34:49,186 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:34:49,186 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:37:26,649 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:37:26,650 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:37:26,650 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:37:26,650 - INFO - max_kilometers value: 200000
+2025-01-16 14:37:26,650 - INFO - Using max_km value: 200000
+2025-01-16 14:37:26,650 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:37:26,651 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:37:27,383 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:37:27,386 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:37:27,386 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=10000&max_sale_price=16500&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:37:27,924 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:37:27,924 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 14:37:27,925 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:37:27,927 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:37:27,927 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:38:44,130 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:38:44,131 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:38:44,131 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:38:44,131 - INFO - max_kilometers value: 200000
+2025-01-16 14:38:44,131 - INFO - Using max_km value: 200000
+2025-01-16 14:38:44,131 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:38:44,131 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:38:44,723 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:38:44,724 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:38:44,724 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=10000&max_sale_price=16500&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:38:45,217 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:38:45,217 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 14:38:45,217 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:38:45,218 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:38:45,218 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:06,537 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:40:06,538 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:40:06,538 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:40:06,538 - INFO - max_kilometers value: 200000
+2025-01-16 14:40:06,538 - INFO - Using max_km value: 200000
+2025-01-16 14:40:06,539 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:40:06,539 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:40:07,276 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:07,278 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:07,278 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=10000&max_sale_price=16500&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:40:07,785 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:40:07,785 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 14:40:07,786 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:07,788 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:07,788 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:40,970 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:40:40,970 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:40:40,970 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:40:40,971 - INFO - max_kilometers value: 200000
+2025-01-16 14:40:40,971 - INFO - Using max_km value: 200000
+2025-01-16 14:40:40,971 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:40:40,971 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:40:41,474 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:41,475 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:41,475 - INFO - Price range for bargain search: 6423 - 11561 (based on average price 12846.266666666666)
+2025-01-16 14:40:41,475 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=6423&max_sale_price=11561&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:40:41,974 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:40:41,975 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:40:41,975 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:41,977 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:40:41,977 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:43:34,739 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:43:34,739 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:43:34,739 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:43:34,739 - INFO - max_kilometers value: 200000
+2025-01-16 14:43:34,739 - INFO - Using max_km value: 200000
+2025-01-16 14:43:34,739 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:43:34,739 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:43:35,425 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:43:35,426 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:43:35,426 - INFO - Price range for bargain search: 6423 - 11561 (based on average price 12846.266666666666)
+2025-01-16 14:43:35,426 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=6423&max_sale_price=11561&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:43:35,911 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:43:35,912 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:43:35,912 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:43:35,912 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:43:35,912 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:47:45,373 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:47:45,416 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:47:45,416 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:47:45,416 - INFO - max_kilometers value: 200000
+2025-01-16 14:47:45,416 - INFO - Using max_km value: 200000
+2025-01-16 14:47:45,416 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:47:45,416 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:47:46,035 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:47:46,037 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:47:46,037 - INFO - Price range for bargain search: 6423 - 11561 (based on average price 12846.266666666666)
+2025-01-16 14:47:46,037 - INFO - 
+Main search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=6423&max_sale_price=11561&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:47:46,512 - INFO - 
+Extended search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=176000&min_sale_price=6423&max_sale_price=11561&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:47:47,002 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:47:47,003 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:47:47,003 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:47:47,003 - INFO - Found 11 main results and 8 suggested results
+2025-01-16 14:47:47,006 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:47:47,007 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:49:09,880 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:49:09,881 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:49:09,881 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 160, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:49:09,881 - INFO - max_kilometers value: 200000
+2025-01-16 14:49:09,881 - INFO - Using max_km value: 200000
+2025-01-16 14:49:09,881 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:49:09,881 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:49:10,720 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:49:10,722 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:49:10,722 - INFO - Price range for bargain search: 6423 - 11561 (based on average price 12846.266666666666)
+2025-01-16 14:49:10,722 - INFO - 
+Main search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=160000&min_sale_price=6423&max_sale_price=11561&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:49:11,212 - INFO - 
+Extended search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=176000&min_sale_price=6423&max_sale_price=11561&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:49:11,686 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:49:11,686 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:49:11,687 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:49:11,687 - INFO - Found 11 main results and 8 suggested results
+2025-01-16 14:49:11,690 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:49:11,690 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:49:21,765 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 300, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:49:21,766 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:49:21,766 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 300, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:49:21,767 - INFO - max_kilometers value: 200000
+2025-01-16 14:49:21,767 - INFO - Using max_km value: 200000
+2025-01-16 14:49:21,767 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:49:21,767 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=300000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:49:22,262 - INFO - Calculated market data: {'market_price': 12000.0, 'median_price': 12000.0, 'average_price': 12120.36, 'min_price': 10000.0, 'max_price': 13699.0, 'total_listings': 40, 'valid_listings': 25, 'sample_size': 25}
+2025-01-16 14:49:22,264 - INFO - Market price analysis: {'market_price': 12000.0, 'median_price': 12000.0, 'average_price': 12120.36, 'min_price': 10000.0, 'max_price': 13699.0, 'total_listings': 40, 'valid_listings': 25, 'sample_size': 25}
+2025-01-16 14:49:22,265 - INFO - Price range for bargain search: 6060 - 10908 (based on average price 12120.36)
+2025-01-16 14:49:22,265 - INFO - 
+Main search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=300000&min_sale_price=6060&max_sale_price=10908&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:49:22,740 - INFO - 
+Extended search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=330000&min_sale_price=6060&max_sale_price=10908&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:49:23,224 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:49:23,225 - INFO - Filtering out listing 8j3491yon269 due to unwanted keywords
+2025-01-16 14:49:23,225 - INFO - Final response market data: {'market_price': 12000.0, 'median_price': 12000.0, 'average_price': 12120.36, 'min_price': 10000.0, 'max_price': 13699.0, 'total_listings': 40, 'valid_listings': 25, 'sample_size': 25}
+2025-01-16 14:49:23,225 - INFO - Found 4 main results and 12 suggested results
+2025-01-16 14:49:23,227 - INFO - API Response market data: {'market_price': 12000.0, 'median_price': 12000.0, 'average_price': 12120.36, 'min_price': 10000.0, 'max_price': 13699.0, 'total_listings': 40, 'valid_listings': 25, 'sample_size': 25}
+2025-01-16 14:49:23,228 - INFO - Final API Response market data: {'market_price': 12000.0, 'median_price': 12000.0, 'average_price': 12120.36, 'min_price': 10000.0, 'max_price': 13699.0, 'total_listings': 40, 'valid_listings': 25, 'sample_size': 25}
+2025-01-16 14:50:30,956 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:50:30,957 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:50:30,957 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:50:30,958 - INFO - max_kilometers value: 200000
+2025-01-16 14:50:30,958 - INFO - Using max_km value: 200000
+2025-01-16 14:50:30,958 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:50:30,958 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:50:31,526 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:31,527 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:31,527 - INFO - Price range for bargain search: 6423 - 11561 (based on average price 12846.266666666666)
+2025-01-16 14:50:31,527 - INFO - 
+Main search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=200000&min_sale_price=6423&max_sale_price=11561&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:50:32,009 - INFO - 
+Extended search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=220000&min_sale_price=6423&max_sale_price=11561&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:50:32,512 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:50:32,512 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:50:32,512 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:32,513 - INFO - Found 11 main results and 10 suggested results
+2025-01-16 14:50:32,514 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:32,515 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:50,239 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:50:50,240 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 14:50:50,241 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.2361239346011, 'longitude': 1.718459129333496, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:50:50,241 - INFO - max_kilometers value: 200000
+2025-01-16 14:50:50,241 - INFO - Using max_km value: 200000
+2025-01-16 14:50:50,241 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 14:50:50,241 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 14:50:50,763 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:50,765 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:50,766 - INFO - Price range for bargain search: 6423 - 11561 (based on average price 12846.266666666666)
+2025-01-16 14:50:50,766 - INFO - 
+Main search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=200000&min_sale_price=6423&max_sale_price=11561&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:50:51,245 - INFO - 
+Extended search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2361&longitude=1.7185&category_ids=100&distance=220000&min_sale_price=6423&max_sale_price=11561&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:50:51,746 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:50:51,746 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:50:51,747 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:51,747 - INFO - Found 11 main results and 10 suggested results
+2025-01-16 14:50:51,750 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:50:51,750 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12846.266666666666, 'min_price': 10000.0, 'max_price': 16500.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 30}
+2025-01-16 14:51:23,761 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:51:23,761 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:51:23,761 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:51:23,761 - INFO - max_kilometers value: 180000
+2025-01-16 14:51:23,761 - INFO - Using max_km value: 180000
+2025-01-16 14:51:23,761 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:51:23,761 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 14:51:23,761 - ERROR - Error getting market price: cannot access local variable 'search_params' where it is not associated with a value
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 58, in get_market_price
+    search_params['min_horse_power'] = str(market_min_hp)
+    ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'search_params' where it is not associated with a value
+2025-01-16 14:51:23,764 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 14:51:42,910 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:51:42,910 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:51:42,910 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:51:42,910 - INFO - max_kilometers value: 180000
+2025-01-16 14:51:42,910 - INFO - Using max_km value: 180000
+2025-01-16 14:51:42,911 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:51:42,911 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 14:51:42,911 - ERROR - Error getting market price: cannot access local variable 'search_params' where it is not associated with a value
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 58, in get_market_price
+    search_params['min_horse_power'] = str(market_min_hp)
+    ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'search_params' where it is not associated with a value
+2025-01-16 14:51:42,912 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 14:52:34,276 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:52:34,276 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:52:34,276 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:52:34,276 - INFO - max_kilometers value: 180000
+2025-01-16 14:52:34,276 - INFO - Using max_km value: 180000
+2025-01-16 14:52:34,276 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:52:34,276 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 14:52:34,276 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.1756&longitude=1.6371&category_ids=100&distance=180000&min_sale_price=3000&order_by=price_low_to_high&max_km=198000&min_km=144000&min_horse_power=80&max_horse_power=130&min_year=2014&max_year=2016
+2025-01-16 14:52:34,836 - INFO - Calculated market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 12747.636363636364, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 25, 'valid_listings': 24, 'sample_size': 22}
+2025-01-16 14:52:34,837 - INFO - Market price analysis: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 12747.636363636364, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 25, 'valid_listings': 24, 'sample_size': 22}
+2025-01-16 14:52:34,837 - INFO - Price range for bargain search: 6373 - 11472 (based on average price 12747.636363636364)
+2025-01-16 14:52:34,837 - INFO - 
+Main search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.1756&longitude=1.6371&category_ids=100&distance=180000&min_sale_price=6373&max_sale_price=11472&max_km=180000&order_by=price_low_to_high&min_year=2014&max_year=2016&min_horse_power=100&max_horse_power=130
+2025-01-16 14:52:35,302 - INFO - 
+Extended search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.1756&longitude=1.6371&category_ids=100&distance=198000&min_sale_price=6373&max_sale_price=11472&max_km=198000&order_by=price_low_to_high&min_year=2013&max_year=2016&min_horse_power=100&max_horse_power=130
+2025-01-16 14:52:35,786 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:52:35,787 - INFO - Final response market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 12747.636363636364, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 25, 'valid_listings': 24, 'sample_size': 22}
+2025-01-16 14:52:35,788 - INFO - Found 2 main results and 7 suggested results
+2025-01-16 14:52:35,792 - INFO - API Response market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 12747.636363636364, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 25, 'valid_listings': 24, 'sample_size': 22}
+2025-01-16 14:52:35,793 - INFO - Final API Response market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 12747.636363636364, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 25, 'valid_listings': 24, 'sample_size': 22}
+2025-01-16 14:55:53,983 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:55:53,983 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:55:53,984 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:55:53,984 - INFO - max_kilometers value: 180000
+2025-01-16 14:55:53,984 - INFO - Using max_km value: 180000
+2025-01-16 14:55:53,985 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:55:53,985 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 14:55:53,985 - ERROR - Error getting market price: cannot access local variable 'search_params' where it is not associated with a value
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 58, in get_market_price
+    search_params['min_horse_power'] = str(market_min_hp)
+    ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'search_params' where it is not associated with a value
+2025-01-16 14:55:53,987 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 14:55:57,105 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:55:57,105 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:55:57,105 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.175553034223434, 'longitude': 1.6371345520019533, 'distance': 180, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 14:55:57,105 - INFO - max_kilometers value: 180000
+2025-01-16 14:55:57,105 - INFO - Using max_km value: 180000
+2025-01-16 14:55:57,105 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:55:57,105 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 14:55:57,105 - ERROR - Error getting market price: cannot access local variable 'search_params' where it is not associated with a value
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 58, in get_market_price
+    search_params['min_horse_power'] = str(market_min_hp)
+    ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'search_params' where it is not associated with a value
+2025-01-16 14:55:57,109 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 14:56:30,810 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.20862213846561, 'longitude': 1.4393806457519531, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:56:30,811 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:56:30,811 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.20862213846561, 'longitude': 1.4393806457519531, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:56:30,811 - INFO - max_kilometers value: 180000
+2025-01-16 14:56:30,811 - INFO - Using max_km value: 180000
+2025-01-16 14:56:30,811 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:56:30,811 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2086&longitude=1.4394&category_ids=100&distance=200000&max_km=198000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2014&max_year=2016
+2025-01-16 14:56:31,451 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:31,453 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:31,453 - INFO - Price range for bargain search: 6523 - 11742 (based on average price 13047.589743589744)
+2025-01-16 14:56:31,453 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2086&longitude=1.4394&category_ids=100&distance=200000&min_sale_price=6523&max_sale_price=11742&max_km=180000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:56:31,920 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:56:31,920 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:56:31,921 - INFO - Performing expanded search for suggestions...
+2025-01-16 14:56:31,921 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2086&longitude=1.4394&category_ids=100&distance=220000&min_sale_price=6523&max_sale_price=11742&max_km=198000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:56:32,544 - INFO - Found 13 suggested listings
+2025-01-16 14:56:32,545 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:32,549 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:32,549 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:43,901 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.20862213846561, 'longitude': 1.4393806457519531, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:56:43,901 - INFO - Search endpoint max_kilometers value: 180000
+2025-01-16 14:56:43,901 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.20862213846561, 'longitude': 1.4393806457519531, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 180000, 'order_by': 'price_low_to_high'}
+2025-01-16 14:56:43,901 - INFO - max_kilometers value: 180000
+2025-01-16 14:56:43,901 - INFO - Using max_km value: 180000
+2025-01-16 14:56:43,901 - INFO - Market analysis km range: 144000 - 198000
+2025-01-16 14:56:43,901 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2086&longitude=1.4394&category_ids=100&distance=200000&max_km=198000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2014&max_year=2016
+2025-01-16 14:56:44,426 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:44,428 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:44,428 - INFO - Price range for bargain search: 6523 - 11742 (based on average price 13047.589743589744)
+2025-01-16 14:56:44,428 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2086&longitude=1.4394&category_ids=100&distance=200000&min_sale_price=6523&max_sale_price=11742&max_km=180000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 14:56:44,929 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 14:56:44,930 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 14:56:44,930 - INFO - Performing expanded search for suggestions...
+2025-01-16 14:56:44,930 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2086&longitude=1.4394&category_ids=100&distance=220000&min_sale_price=6523&max_sale_price=11742&max_km=198000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 14:56:45,422 - INFO - Found 13 suggested listings
+2025-01-16 14:56:45,423 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:45,426 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 14:56:45,426 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 13047.589743589744, 'min_price': 10000.0, 'max_price': 15500.0, 'total_listings': 40, 'valid_listings': 40, 'sample_size': 39}
+2025-01-16 15:03:18,172 - INFO - Search endpoint received params: {'brand': 'Mercedes-Benz', 'model': 'Clase B', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:18,174 - INFO - Search endpoint max_kilometers value: 100000
+2025-01-16 15:03:18,174 - INFO - Received params: {'brand': 'Mercedes-Benz', 'model': 'Clase B', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:18,174 - INFO - max_kilometers value: 100000
+2025-01-16 15:03:18,174 - INFO - Using max_km value: 100000
+2025-01-16 15:03:18,174 - INFO - Market analysis km range: 80000 - 110000
+2025-01-16 15:03:18,174 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20B&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=110000&min_sale_price=3000&order_by=price_low_to_high&min_km=80000&min_year=2017&max_year=2019
+2025-01-16 15:03:18,758 - INFO - Calculated market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:18,761 - INFO - Market price analysis: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:18,761 - INFO - Price range for bargain search: 10239 - 18430 (based on average price 20478.0)
+2025-01-16 15:03:18,761 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20B&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=10239&max_sale_price=18430&max_km=100000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-16 15:03:19,243 - INFO - Filtering out listing qjw45v8dywzo due to unwanted keywords
+2025-01-16 15:03:19,243 - INFO - Filtering out listing w6745k0vo76x due to unwanted keywords
+2025-01-16 15:03:19,244 - INFO - Filtering out listing mzn2v3lvmgzn due to unwanted keywords
+2025-01-16 15:03:19,244 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:03:19,244 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20B&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=10239&max_sale_price=18430&max_km=110000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-16 15:03:19,728 - INFO - Found 2 suggested listings
+2025-01-16 15:03:19,729 - INFO - Final response market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:19,733 - INFO - API Response market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:19,734 - INFO - Final API Response market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:33,876 - INFO - Search endpoint received params: {'brand': 'Mercedes-Benz', 'model': 'Clase B', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:33,876 - INFO - Search endpoint max_kilometers value: 100000
+2025-01-16 15:03:33,876 - INFO - Received params: {'brand': 'Mercedes-Benz', 'model': 'Clase B', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:33,876 - INFO - max_kilometers value: 100000
+2025-01-16 15:03:33,876 - INFO - Using max_km value: 100000
+2025-01-16 15:03:33,876 - INFO - Market analysis km range: 80000 - 110000
+2025-01-16 15:03:33,876 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20B&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=110000&min_sale_price=3000&order_by=price_low_to_high&min_km=80000&min_year=2017&max_year=2019
+2025-01-16 15:03:34,322 - INFO - Calculated market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:34,323 - INFO - Market price analysis: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:34,323 - INFO - Price range for bargain search: 10239 - 18430 (based on average price 20478.0)
+2025-01-16 15:03:34,323 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20B&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=10239&max_sale_price=18430&max_km=100000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-16 15:03:34,785 - INFO - Filtering out listing qjw45v8dywzo due to unwanted keywords
+2025-01-16 15:03:34,785 - INFO - Filtering out listing w6745k0vo76x due to unwanted keywords
+2025-01-16 15:03:34,785 - INFO - Filtering out listing mzn2v3lvmgzn due to unwanted keywords
+2025-01-16 15:03:34,785 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:03:34,785 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20B&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=10239&max_sale_price=18430&max_km=110000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-16 15:03:35,271 - INFO - Found 2 suggested listings
+2025-01-16 15:03:35,271 - INFO - Final response market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:35,274 - INFO - API Response market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:35,274 - INFO - Final API Response market data: {'market_price': 20000.0, 'median_price': 20000.0, 'average_price': 20478.0, 'min_price': 16990.0, 'max_price': 23900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:03:39,866 - INFO - Search endpoint received params: {'brand': 'Mercedes-Benz', 'model': 'Clase C', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:39,866 - INFO - Search endpoint max_kilometers value: 100000
+2025-01-16 15:03:39,867 - INFO - Received params: {'brand': 'Mercedes-Benz', 'model': 'Clase C', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:39,867 - INFO - max_kilometers value: 100000
+2025-01-16 15:03:39,867 - INFO - Using max_km value: 100000
+2025-01-16 15:03:39,867 - INFO - Market analysis km range: 80000 - 110000
+2025-01-16 15:03:39,867 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20C&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=110000&min_sale_price=3000&order_by=price_low_to_high&min_km=80000&min_year=2017&max_year=2019
+2025-01-16 15:03:40,420 - INFO - Calculated market data: {'market_price': 29990.0, 'median_price': 29990.0, 'average_price': 27328.533333333333, 'min_price': 18000.0, 'max_price': 49900.0, 'total_listings': 36, 'valid_listings': 17, 'sample_size': 15}
+2025-01-16 15:03:40,424 - INFO - Market price analysis: {'market_price': 29990.0, 'median_price': 29990.0, 'average_price': 27328.533333333333, 'min_price': 18000.0, 'max_price': 49900.0, 'total_listings': 36, 'valid_listings': 17, 'sample_size': 15}
+2025-01-16 15:03:40,424 - INFO - Price range for bargain search: 13664 - 24595 (based on average price 27328.533333333333)
+2025-01-16 15:03:40,424 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20C&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=13664&max_sale_price=24595&max_km=100000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-16 15:03:40,906 - INFO - Filtering out listing pzp2oop8lmj3 due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Filtering out listing 4z4e99pv9mjy due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Filtering out listing p61432qood65 due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Filtering out listing xzo2mq3e8469 due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Filtering out listing pzp2onmgg9j3 due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Filtering out listing v6gg59rew26e due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Filtering out listing nzx4noldgmj2 due to unwanted keywords
+2025-01-16 15:03:40,907 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:03:40,907 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20C&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=13664&max_sale_price=24595&max_km=110000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-16 15:03:41,401 - INFO - Found 6 suggested listings
+2025-01-16 15:03:41,401 - INFO - Final response market data: {'market_price': 29990.0, 'median_price': 29990.0, 'average_price': 27328.533333333333, 'min_price': 18000.0, 'max_price': 49900.0, 'total_listings': 36, 'valid_listings': 17, 'sample_size': 15}
+2025-01-16 15:03:41,406 - INFO - API Response market data: {'market_price': 29990.0, 'median_price': 29990.0, 'average_price': 27328.533333333333, 'min_price': 18000.0, 'max_price': 49900.0, 'total_listings': 36, 'valid_listings': 17, 'sample_size': 15}
+2025-01-16 15:03:41,407 - INFO - Final API Response market data: {'market_price': 29990.0, 'median_price': 29990.0, 'average_price': 27328.533333333333, 'min_price': 18000.0, 'max_price': 49900.0, 'total_listings': 36, 'valid_listings': 17, 'sample_size': 15}
+2025-01-16 15:03:56,014 - INFO - Search endpoint received params: {'brand': 'Mercedes-Benz', 'model': 'Clase A', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:56,015 - INFO - Search endpoint max_kilometers value: 100000
+2025-01-16 15:03:56,016 - INFO - Received params: {'brand': 'Mercedes-Benz', 'model': 'Clase A', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 100000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:03:56,017 - INFO - max_kilometers value: 100000
+2025-01-16 15:03:56,017 - INFO - Using max_km value: 100000
+2025-01-16 15:03:56,017 - INFO - Market analysis km range: 80000 - 110000
+2025-01-16 15:03:56,017 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=110000&min_sale_price=3000&order_by=price_low_to_high&min_km=80000&min_year=2017&max_year=2019
+2025-01-16 15:03:56,548 - INFO - Calculated market data: {'market_price': 21700.0, 'median_price': 21700.0, 'average_price': 21156.703703703704, 'min_price': 18000.0, 'max_price': 23900.0, 'total_listings': 40, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 15:03:56,551 - INFO - Market price analysis: {'market_price': 21700.0, 'median_price': 21700.0, 'average_price': 21156.703703703704, 'min_price': 18000.0, 'max_price': 23900.0, 'total_listings': 40, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 15:03:56,551 - INFO - Price range for bargain search: 10578 - 19041 (based on average price 21156.703703703704)
+2025-01-16 15:03:56,551 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=10578&max_sale_price=19041&max_km=100000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-16 15:03:57,044 - INFO - Filtering out listing qjw4g5l3wwzo due to unwanted keywords
+2025-01-16 15:03:57,044 - INFO - Filtering out listing 0j24k5r2yezy due to unwanted keywords
+2025-01-16 15:03:57,044 - INFO - Filtering out listing pj9mqokxvk6e due to unwanted keywords
+2025-01-16 15:03:57,044 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:03:57,044 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-Benz&model=Clase%20A&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=10578&max_sale_price=19041&max_km=110000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-16 15:03:57,533 - INFO - Found 5 suggested listings
+2025-01-16 15:03:57,534 - INFO - Final response market data: {'market_price': 21700.0, 'median_price': 21700.0, 'average_price': 21156.703703703704, 'min_price': 18000.0, 'max_price': 23900.0, 'total_listings': 40, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 15:03:57,537 - INFO - API Response market data: {'market_price': 21700.0, 'median_price': 21700.0, 'average_price': 21156.703703703704, 'min_price': 18000.0, 'max_price': 23900.0, 'total_listings': 40, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 15:03:57,537 - INFO - Final API Response market data: {'market_price': 21700.0, 'median_price': 21700.0, 'average_price': 21156.703703703704, 'min_price': 18000.0, 'max_price': 23900.0, 'total_listings': 40, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 15:04:46,245 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:04:46,249 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:04:46,249 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:04:46,249 - INFO - max_kilometers value: 200000
+2025-01-16 15:04:46,249 - INFO - Using max_km value: 200000
+2025-01-16 15:04:46,249 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:04:46,249 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2016
+2025-01-16 15:04:46,984 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12931.838709677419, 'min_price': 10000.0, 'max_price': 16000.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 31}
+2025-01-16 15:04:46,986 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12931.838709677419, 'min_price': 10000.0, 'max_price': 16000.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 31}
+2025-01-16 15:04:46,986 - INFO - Price range for bargain search: 6465 - 11638 (based on average price 12931.838709677419)
+2025-01-16 15:04:46,986 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=6465&max_sale_price=11638&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-16 15:04:47,442 - INFO - Filtering out listing nz04lwee13jo - likely new car with 168km
+2025-01-16 15:04:47,442 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 15:04:47,442 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:04:47,442 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=6465&max_sale_price=11638&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-16 15:04:47,983 - INFO - Found 10 suggested listings
+2025-01-16 15:04:47,983 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12931.838709677419, 'min_price': 10000.0, 'max_price': 16000.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 31}
+2025-01-16 15:04:47,986 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12931.838709677419, 'min_price': 10000.0, 'max_price': 16000.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 31}
+2025-01-16 15:04:47,987 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12931.838709677419, 'min_price': 10000.0, 'max_price': 16000.0, 'total_listings': 40, 'valid_listings': 31, 'sample_size': 31}
+2025-01-16 15:07:09,002 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:07:09,004 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:07:09,004 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:07:09,004 - INFO - max_kilometers value: 200000
+2025-01-16 15:07:09,004 - INFO - Using max_km value: 200000
+2025-01-16 15:07:09,004 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:07:09,004 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2014
+2025-01-16 15:07:09,720 - INFO - Calculated market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:07:09,722 - INFO - Market price analysis: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:07:09,722 - INFO - Price range for bargain search: 6874 - 12373 (based on average price 13748.125)
+2025-01-16 15:07:09,722 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=6874&max_sale_price=12373&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2014
+2025-01-16 15:07:10,180 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 15:07:10,180 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 15:07:10,181 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:07:10,181 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=6874&max_sale_price=12373&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2014
+2025-01-16 15:07:10,661 - INFO - Found 14 suggested listings
+2025-01-16 15:07:10,661 - INFO - Final response market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:07:10,665 - INFO - API Response market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:07:10,665 - INFO - Final API Response market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:10:12,397 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:10:12,397 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:10:12,397 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'order_by': 'price_low_to_high'}
+2025-01-16 15:10:12,397 - INFO - max_kilometers value: 200000
+2025-01-16 15:10:12,397 - INFO - Using max_km value: 200000
+2025-01-16 15:10:12,397 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:10:12,397 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_km=160000&min_year=2014&max_year=2014
+2025-01-16 15:10:13,014 - INFO - Calculated market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:10:13,016 - INFO - Market price analysis: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:10:13,017 - INFO - Price range for bargain search: 6874 - 12373 (based on average price 13748.125)
+2025-01-16 15:10:13,017 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=6874&max_sale_price=12373&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2014
+2025-01-16 15:10:13,465 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 15:10:13,465 - INFO - Filtering out listing xzo2223gel69 - too many kilometers: 263000
+2025-01-16 15:10:13,465 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:10:13,466 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=6874&max_sale_price=12373&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2014
+2025-01-16 15:10:13,970 - INFO - Found 14 suggested listings
+2025-01-16 15:10:13,970 - INFO - Final response market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:10:13,970 - INFO - Final response includes 14 suggested listings
+2025-01-16 15:10:13,973 - INFO - API Response market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:10:13,973 - INFO - Final API Response market data: {'market_price': 13900.0, 'median_price': 13900.0, 'average_price': 13748.125, 'min_price': 10000.0, 'max_price': 20000.0, 'total_listings': 23, 'valid_listings': 17, 'sample_size': 16}
+2025-01-16 15:11:47,189 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:11:47,189 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:11:47,189 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:11:47,189 - INFO - max_kilometers value: 200000
+2025-01-16 15:11:47,189 - INFO - Using max_km value: 200000
+2025-01-16 15:11:47,190 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:11:47,190 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 15:11:47,190 - ERROR - Error getting market price: cannot access local variable 'search_params' where it is not associated with a value
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 58, in get_market_price
+UnboundLocalError: cannot access local variable 'search_params' where it is not associated with a value
+2025-01-16 15:11:47,190 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 15:14:35,710 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:14:35,710 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:14:35,710 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:14:35,710 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:14:35,710 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 15:14:35,711 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_horse_power=80&max_horse_power=130&min_km=160000&min_year=2014&max_year=2014
+2025-01-16 15:14:36,305 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:14:36,306 - INFO - Market price analysis: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:14:36,306 - INFO - Price range for bargain search: 6040 - 10872 (based on average price 12080.0)
+2025-01-16 15:14:36,306 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=6040&max_sale_price=10872&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2014&min_horse_power=100&max_horse_power=130
+2025-01-16 15:14:36,806 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:14:36,806 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=6040&max_sale_price=10872&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2014&min_horse_power=100&max_horse_power=130
+2025-01-16 15:14:37,324 - INFO - Found 7 suggested listings
+2025-01-16 15:14:37,324 - INFO - Final response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:14:37,324 - INFO - Final response includes 7 suggested listings
+2025-01-16 15:14:37,328 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:14:37,328 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:16:35,175 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:16:35,175 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:16:35,176 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:16:35,176 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:16:35,176 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 15:16:35,176 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_horse_power=80&max_horse_power=130&min_km=160000&min_year=2014&max_year=2014
+2025-01-16 15:16:35,783 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:16:35,785 - INFO - Price range for bargain search: 6040 - 10872 (based on average price 12080.0)
+2025-01-16 15:16:35,786 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=6040&max_sale_price=10872&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2014&min_horse_power=100&max_horse_power=130
+2025-01-16 15:16:36,278 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:16:36,278 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=6040&max_sale_price=10872&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2014&min_horse_power=100&max_horse_power=130
+2025-01-16 15:16:36,785 - INFO - Found 7 suggested listings
+2025-01-16 15:16:36,785 - INFO - Final response includes 7 suggested listings
+2025-01-16 15:16:36,785 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-16 15:16:36,788 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:16:36,788 - ERROR - Error in single car search: 'url'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 127, in search_single_car
+    "search_url": result['url'],
+                  ~~~~~~^^^^^^^
+KeyError: 'url'
+2025-01-16 15:17:25,377 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:17:25,377 - INFO - Search endpoint max_kilometers value: 200000
+2025-01-16 15:17:25,377 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.62776153144345, 'longitude': 1.4666748046875002, 'distance': 200, 'min_year': 2014, 'max_year': 2014, 'max_kilometers': 200000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:17:25,377 - INFO - Market analysis km range: 160000 - 220000
+2025-01-16 15:17:25,377 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 15:17:25,378 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&max_km=220000&min_sale_price=3000&order_by=price_low_to_high&min_horse_power=80&max_horse_power=130&min_km=160000&min_year=2014&max_year=2014
+2025-01-16 15:17:25,951 - INFO - Calculated market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:17:25,955 - INFO - Price range for bargain search: 6040 - 10872 (based on average price 12080.0)
+2025-01-16 15:17:25,956 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=200000&min_sale_price=6040&max_sale_price=10872&max_km=200000&order_by=price_low_to_high&min_year=2014&max_year=2014&min_horse_power=100&max_horse_power=130
+2025-01-16 15:17:26,437 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:17:26,437 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.6278&longitude=1.4667&category_ids=100&distance=220000&min_sale_price=6040&max_sale_price=10872&max_km=220000&order_by=price_low_to_high&min_year=2013&max_year=2014&min_horse_power=100&max_horse_power=130
+2025-01-16 15:17:26,923 - INFO - Found 7 suggested listings
+2025-01-16 15:17:26,923 - INFO - Final response includes 7 suggested listings
+2025-01-16 15:17:26,924 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-16 15:17:26,928 - INFO - API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:17:26,928 - INFO - Final API Response market data: {'market_price': 13000.0, 'median_price': 13000.0, 'average_price': 12080.0, 'min_price': 10000.0, 'max_price': 13900.0, 'total_listings': 9, 'valid_listings': 5, 'sample_size': 5}
+2025-01-16 15:25:15,583 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 160000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:25:15,584 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 15:25:15,584 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 160000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:25:15,584 - INFO - Market analysis km range: 128000 - 176000
+2025-01-16 15:25:15,584 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 15:25:15,584 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=176000&min_sale_price=3000&order_by=price_low_to_high&min_horse_power=80&max_horse_power=130&min_km=128000&min_year=2014&max_year=2016
+2025-01-16 15:25:16,308 - INFO - Calculated market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 13131.538461538461, 'min_price': 11500.0, 'max_price': 15999.0, 'total_listings': 15, 'valid_listings': 14, 'sample_size': 13}
+2025-01-16 15:25:16,309 - INFO - Price range for bargain search: 6565 - 11818 (based on average price 13131.538461538461)
+2025-01-16 15:25:16,309 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=6565&max_sale_price=11818&max_km=160000&order_by=price_low_to_high&min_year=2014&max_year=2016&min_horse_power=100&max_horse_power=130
+2025-01-16 15:25:16,779 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:25:16,780 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=220000&min_sale_price=6565&max_sale_price=11818&max_km=176000&order_by=price_low_to_high&min_year=2013&max_year=2016&min_horse_power=100&max_horse_power=130
+2025-01-16 15:25:17,283 - INFO - Found 1 suggested listings
+2025-01-16 15:25:17,283 - INFO - Final response includes 1 suggested listings
+2025-01-16 15:25:17,284 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-16 15:25:17,287 - INFO - API Response market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 13131.538461538461, 'min_price': 11500.0, 'max_price': 15999.0, 'total_listings': 15, 'valid_listings': 14, 'sample_size': 13}
+2025-01-16 15:25:17,288 - INFO - Final API Response market data: {'market_price': 12990.0, 'median_price': 12990.0, 'average_price': 13131.538461538461, 'min_price': 11500.0, 'max_price': 15999.0, 'total_listings': 15, 'valid_listings': 14, 'sample_size': 13}
+2025-01-16 15:26:40,434 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.24645025991759, 'longitude': 1.7088890075683596, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 160000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:26:40,436 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 15:26:40,436 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 41.24645025991759, 'longitude': 1.7088890075683596, 'distance': 200, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 160000, 'min_horse_power': 100, 'order_by': 'price_low_to_high'}
+2025-01-16 15:26:40,436 - INFO - Market analysis km range: 128000 - 176000
+2025-01-16 15:26:40,436 - INFO - Market analysis horsepower range: 80 - 130
+2025-01-16 15:26:40,436 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2465&longitude=1.7089&category_ids=100&distance=200000&max_km=176000&min_sale_price=3000&order_by=price_low_to_high&min_horse_power=80&max_horse_power=130&min_km=128000&min_year=2014&max_year=2016
+2025-01-16 15:26:41,041 - INFO - Calculated market data: {'market_price': 13500.0, 'median_price': 13500.0, 'average_price': 13390.4, 'min_price': 11000.0, 'max_price': 15800.0, 'total_listings': 21, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 15:26:41,043 - INFO - Price range for bargain search: 6695 - 12051 (based on average price 13390.4)
+2025-01-16 15:26:41,043 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2465&longitude=1.7089&category_ids=100&distance=200000&min_sale_price=6695&max_sale_price=12051&max_km=160000&order_by=price_low_to_high&min_year=2014&max_year=2016&min_horse_power=100&max_horse_power=130
+2025-01-16 15:26:41,523 - INFO - Filtering out listing 8j34dep5x169 - likely new car with 168km
+2025-01-16 15:26:41,523 - INFO - Performing expanded search for suggestions...
+2025-01-16 15:26:41,523 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=41.2465&longitude=1.7089&category_ids=100&distance=220000&min_sale_price=6695&max_sale_price=12051&max_km=176000&order_by=price_low_to_high&min_year=2013&max_year=2016&min_horse_power=100&max_horse_power=130
+2025-01-16 15:26:42,003 - INFO - Found 9 suggested listings
+2025-01-16 15:26:42,003 - INFO - Final response includes 9 suggested listings
+2025-01-16 15:26:42,003 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-16 15:26:42,007 - INFO - API Response market data: {'market_price': 13500.0, 'median_price': 13500.0, 'average_price': 13390.4, 'min_price': 11000.0, 'max_price': 15800.0, 'total_listings': 21, 'valid_listings': 20, 'sample_size': 20}
+2025-01-16 15:26:42,007 - INFO - Final API Response market data: {'market_price': 13500.0, 'median_price': 13500.0, 'average_price': 13390.4, 'min_price': 11000.0, 'max_price': 15800.0, 'total_listings': 21, 'valid_listings': 20, 'sample_size': 20}
