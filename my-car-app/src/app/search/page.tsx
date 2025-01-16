@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { 
   Container, 
   Typography, 
@@ -70,25 +71,6 @@ interface ApiListing {
   id: string
   type: string
   content: ApiListingContent
-}
-
-interface ApiResponse {
-  success: boolean
-  listings: ApiListing[]
-  total_results: number
-  filtered_results: number
-  search_parameters: Record<string, string>
-  search_url: string
-  market_data: {
-    market_price: number
-    median_price: number
-    average_price: number
-    min_price: number
-    max_price: number
-    total_listings: number
-    valid_listings: number
-    sample_size: number
-  }
 }
 
 interface SearchFormData {
@@ -228,7 +210,7 @@ export default function SearchPage() {
     }
   }
 
-  const handleBrandChange = (event: any, newValue: Brand | null) => {
+  const handleBrandChange = (_: React.SyntheticEvent, newValue: Brand | null) => {
     setSelectedBrand(newValue)
     setSelectedModel(null)
     setFormData(prev => ({
@@ -238,7 +220,7 @@ export default function SearchPage() {
     }))
   }
 
-  const handleModelChange = (event: any, newValue: Model | null) => {
+  const handleModelChange = (_: React.SyntheticEvent, newValue: Model | null) => {
     setSelectedModel(newValue)
     setFormData(prev => ({
       ...prev,
@@ -263,7 +245,7 @@ export default function SearchPage() {
 
       // Remove empty fields from the request
       const cleanParams = Object.fromEntries(
-        Object.entries(searchParams).filter(([_, value]) => value !== '' && value !== undefined)
+        Object.entries(searchParams).filter(([, value]) => value !== '' && value !== undefined)
       )
 
       console.log('Sending request with params:', cleanParams)
@@ -449,7 +431,7 @@ export default function SearchPage() {
                   fullWidth
                   options={yearOptions}
                   value={formData.min_year || null}
-                  onChange={(_, newValue) => {
+                  onChange={(event, newValue) => {
                     setFormData(prev => ({
                       ...prev,
                       min_year: newValue || ''
@@ -472,7 +454,7 @@ export default function SearchPage() {
                   fullWidth
                   options={yearOptions}
                   value={formData.max_year || null}
-                  onChange={(_, newValue) => {
+                  onChange={(event, newValue) => {
                     setFormData(prev => ({
                       ...prev,
                       max_year: newValue || ''
@@ -667,15 +649,11 @@ export default function SearchPage() {
                       <CardContent sx={{ flex: 1, p: 2 }}>
                         {listing.listing_images?.[0]?.image_url && (
                           <Box sx={{ position: 'relative', paddingTop: '56.25%', mb: 2 }}>
-                            <img 
+                            <Image 
                               src={listing.listing_images[0].image_url} 
                               alt={listing.title}
+                              fill
                               style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
                                 objectFit: 'cover',
                                 borderRadius: 8
                               }}

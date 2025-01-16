@@ -1,5 +1,15 @@
+import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
-import { supabase } from '../../../../utils/supabase'
+
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_KEY) {
+  console.error('Missing Supabase environment variables')
+  throw new Error('Missing required environment variables')
+}
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_KEY
+)
 
 interface PriceAnalysis {
   brand: string
