@@ -316,12 +316,17 @@ export default function SearchPage() {
         ...formData,
         min_year: formData.min_year ? parseInt(formData.min_year) : undefined,
         max_year: formData.max_year ? parseInt(formData.max_year) : undefined,
-        min_horse_power: formData.min_horse_power ? parseInt(formData.min_horse_power) : undefined
+        min_horse_power: formData.min_horse_power ? parseInt(formData.min_horse_power) : undefined,
+        max_kilometers: formData.max_kilometers
       }
 
       // Remove empty fields from the request
       const cleanParams = Object.fromEntries(
-        Object.entries(searchParams).filter(([, value]) => value !== '' && value !== undefined)
+        Object.entries(searchParams).filter(([_, value]) => 
+          value !== '' && 
+          value !== undefined && 
+          value !== null
+        )
       )
 
       console.log('Sending request with params:', cleanParams)

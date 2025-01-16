@@ -65,7 +65,7 @@ class CarSearchParams(BaseModel):
     # Year and mileage
     min_year: Optional[int] = None
     max_year: Optional[int] = None
-    max_km: Optional[int] = None
+    max_kilometers: Optional[int] = None
     
     # Price
     min_sale_price: Optional[int] = None

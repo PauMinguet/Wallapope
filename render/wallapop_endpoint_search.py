@@ -28,25 +28,28 @@ def has_unwanted_keywords(text: str, unwanted_keywords: list) -> bool:
 def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """Get market price for the given parameters"""
     try:
+        # Debug log the incoming parameters
+        logger.info(f"Received params: {params}")
+        logger.info(f"max_kilometers value: {params.get('max_kilometers')}")
+        
         # Build search URL for market analysis
-        base_url = "https://es.wallapop.com/api/v3/cars/search"
+        base_url = "https://api.wallapop.com/api/v3/cars/search"
         
         # Create base search parameters for market analysis
+        max_km = params.get('max_kilometers')
+        logger.info(f"Using max_km value: {max_km}")
+        
         search_params = {
-            'keywords': params.get('keywords', ''),
             'brand': params.get('brand', ''),
             'model': params.get('model', ''),
             'latitude': format(float(params.get('latitude', SPAIN_CENTER['lat'])), '.4f'),
             'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
-            'max_km': str(params.get('max_kilometers', 240000)),  # Add max kilometers
-            'min_sale_price': '3000',  # Base minimum price for market analysis
+            'max_km': str(max_km) if max_km is not None else '240000',  # Use exact value from frontend
+            'min_sale_price': '3000',
             'order_by': 'price_low_to_high'
         }
-
-        # Remove empty parameters
-        search_params = {k: v for k, v in search_params.items() if v}
 
         # Add year parameters if provided
         if 'min_year' in params:
@@ -57,6 +60,9 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         # Add engine type if specified
         if 'engine' in params:
             search_params['engine'] = str(params['engine'])
+
+        # Remove empty parameters
+        search_params = {k: v for k, v in search_params.items() if v and v != ''}
 
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
         logger.info(f"\nMarket price search URL: {url}")
@@ -124,6 +130,10 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
     Applies the same filtering logic as the original script.
     """
     try:
+        # Debug log the incoming parameters
+        logger.info(f"Search endpoint received params: {params}")
+        logger.info(f"Search endpoint max_kilometers value: {params.get('max_kilometers')}")
+        
         # First get market price
         market_data = get_market_price(params)
         if not market_data:
@@ -135,11 +145,10 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
         logger.info(f"Market price analysis: {market_data}")
         
         # Build search URL with price limits from market analysis
-        base_url = "https://es.wallapop.com/api/v3/cars/search"
+        base_url = "https://api.wallapop.com/api/v3/cars/search"
         
         # Create base search parameters
         search_params = {
-            'keywords': params.get('keywords', ''),
             'brand': params.get('brand', ''),
             'model': params.get('model', ''),
             'latitude': format(float(params.get('latitude', SPAIN_CENTER['lat'])), '.4f'),
@@ -148,12 +157,9 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
             'min_sale_price': str(int(market_data['min_price'])),
             'max_sale_price': str(int(market_data['max_price'])),
-            'max_km': str(params.get('max_kilometers', 240000)),  # Add max kilometers
+            'max_km': str(params.get('max_kilometers', 240000)),  # Use get() with default
             'order_by': 'price_low_to_high'
         }
-
-        # Remove empty parameters
-        search_params = {k: v for k, v in search_params.items() if v}
 
         # Add year parameters if provided
         if 'min_year' in params:
@@ -164,6 +170,9 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
         # Add engine type if specified
         if 'engine' in params:
             search_params['engine'] = str(params['engine'])
+
+        # Remove empty parameters
+        search_params = {k: v for k, v in search_params.items() if v and v != ''}
 
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
         logger.info(f"\nListing search URL: {url}")

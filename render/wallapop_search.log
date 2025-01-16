@@ -1362,3 +1362,328 @@ Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes-B
 2025-01-16 11:04:36,141 - INFO - Final response market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
 2025-01-16 11:04:36,143 - INFO - API Response market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
 2025-01-16 11:04:36,143 - INFO - Final API Response market data: {'market_price': 20900.0, 'median_price': 20900.0, 'average_price': 20259.545454545456, 'min_price': 18000.0, 'max_price': 22500.0, 'total_listings': 40, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:13:54,282 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Nissan&model=350Z&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2003&max_year=2006
+2025-01-16 11:13:54,649 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Nissan&model=350Z&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2003&max_year=2006
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Nissan&model=350Z&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2003&max_year=2006
+2025-01-16 11:13:54,657 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:14:38,242 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:14:38,605 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:14:38,608 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:14:57,223 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:14:58,124 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:14:58,131 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:15:06,350 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:15:07,744 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:15:07,748 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:15:55,012 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:15:56,368 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:15:56,373 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:16:25,353 - INFO - 
+Market price search URL: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:16:27,102 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://es.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:16:27,108 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:16:47,809 - INFO - 
+Market price search URL: https://wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:16:54,746 - ERROR - Error getting market price: 404 Client Error: Not Found for url: https://www.wallapop.com/api/v3/cars/search?category_ids=100&latitude=40.4637&longitude=-3.7492&distance=200000&max_km=240000&min_sale_price=3000&model=3&engine=gasoline&brand=Mazda&order_by=price_low_to_high&min_year=2016
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/wallapop_endpoint_search.py", line 65, in get_market_price
+    response.raise_for_status()
+  File "/Users/pauminguet/Desktop/WALLAPOP/backend/venv/lib/python3.12/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.wallapop.com/api/v3/cars/search?category_ids=100&latitude=40.4637&longitude=-3.7492&distance=200000&max_km=240000&min_sale_price=3000&model=3&engine=gasoline&brand=Mazda&order_by=price_low_to_high&min_year=2016
+2025-01-16 11:16:54,753 - ERROR - Error in single car search: 'listings'
+Traceback (most recent call last):
+  File "/Users/pauminguet/Desktop/WALLAPOP/render/api.py", line 115, in search_single_car
+    if not result['listings']:
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'listings'
+2025-01-16 11:20:38,776 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:20:39,090 - INFO - Calculated market data: {'market_price': 16690.0, 'median_price': 16690.0, 'average_price': 17780.37037037037, 'min_price': 11400.0, 'max_price': 25000.0, 'total_listings': 32, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 11:20:39,092 - INFO - Market price analysis: {'market_price': 16690.0, 'median_price': 16690.0, 'average_price': 17780.37037037037, 'min_price': 11400.0, 'max_price': 25000.0, 'total_listings': 32, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 11:20:39,092 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=11400&max_sale_price=25000&max_km=240000&order_by=price_low_to_high&min_year=2016&engine=gasoline
+2025-01-16 11:20:39,333 - INFO - Final response market data: {'market_price': 16690.0, 'median_price': 16690.0, 'average_price': 17780.37037037037, 'min_price': 11400.0, 'max_price': 25000.0, 'total_listings': 32, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 11:20:39,334 - INFO - API Response market data: {'market_price': 16690.0, 'median_price': 16690.0, 'average_price': 17780.37037037037, 'min_price': 11400.0, 'max_price': 25000.0, 'total_listings': 32, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 11:20:39,334 - INFO - Final API Response market data: {'market_price': 16690.0, 'median_price': 16690.0, 'average_price': 17780.37037037037, 'min_price': 11400.0, 'max_price': 25000.0, 'total_listings': 32, 'valid_listings': 27, 'sample_size': 27}
+2025-01-16 11:20:53,159 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoline
+2025-01-16 11:20:53,409 - INFO - Calculated market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:53,410 - INFO - Market price analysis: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:53,410 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=11400&max_sale_price=19900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoline
+2025-01-16 11:20:53,637 - INFO - Final response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:53,640 - INFO - API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:53,640 - INFO - Final API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:59,390 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoline
+2025-01-16 11:20:59,639 - INFO - Calculated market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:59,642 - INFO - Market price analysis: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:59,643 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=11400&max_sale_price=19900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoline
+2025-01-16 11:20:59,884 - INFO - Final response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:59,886 - INFO - API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:20:59,887 - INFO - Final API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:22:16,538 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoline
+2025-01-16 11:22:16,809 - INFO - Calculated market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:22:16,811 - INFO - Market price analysis: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:22:16,811 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=11400&max_sale_price=19900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoline
+2025-01-16 11:22:17,036 - INFO - Final response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:22:17,038 - INFO - API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:22:17,038 - INFO - Final API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 14319.166666666666, 'min_price': 11400.0, 'max_price': 19900.0, 'total_listings': 13, 'valid_listings': 13, 'sample_size': 12}
+2025-01-16 11:22:57,302 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:22:57,510 - INFO - Calculated market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:22:57,514 - INFO - Market price analysis: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:22:57,514 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=5000&max_sale_price=15900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:22:57,718 - INFO - Filtering out listing nzx4n8lrmej2 - too many kilometers: 232000
+2025-01-16 11:22:57,719 - INFO - Final response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:22:57,721 - INFO - API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:22:57,721 - INFO - Final API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:24:27,061 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:24:27,501 - INFO - Calculated market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:24:27,502 - INFO - Market price analysis: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:24:27,502 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=5000&max_sale_price=15900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:24:27,857 - INFO - Filtering out listing nzx4n8lrmej2 - too many kilometers: 232000
+2025-01-16 11:24:27,858 - INFO - Final response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:24:27,860 - INFO - API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:24:27,860 - INFO - Final API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:07,569 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:26:07,784 - INFO - Calculated market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:07,786 - INFO - Market price analysis: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:07,786 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=5000&max_sale_price=15900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:26:08,028 - INFO - Filtering out listing nzx4n8lrmej2 - too many kilometers: 232000
+2025-01-16 11:26:08,029 - INFO - Final response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:08,033 - INFO - API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:08,033 - INFO - Final API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:46,919 - INFO - Search endpoint received params: {'brand': 'Mazda', 'model': '3', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:26:46,919 - INFO - Search endpoint max_kilometers value: None
+2025-01-16 11:26:46,919 - INFO - Received params: {'brand': 'Mazda', 'model': '3', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:26:46,919 - INFO - max_kilometers value: None
+2025-01-16 11:26:46,919 - INFO - Using max_km value: None
+2025-01-16 11:26:46,919 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:26:47,215 - INFO - Calculated market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:47,217 - INFO - Market price analysis: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:47,218 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=3&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=5000&max_sale_price=15900&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:26:47,452 - INFO - Filtering out listing nzx4n8lrmej2 - too many kilometers: 232000
+2025-01-16 11:26:47,453 - INFO - Final response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:47,455 - INFO - API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:26:47,455 - INFO - Final API Response market data: {'market_price': 11490.0, 'median_price': 11490.0, 'average_price': 12313.333333333334, 'min_price': 5000.0, 'max_price': 15900.0, 'total_listings': 8, 'valid_listings': 7, 'sample_size': 6}
+2025-01-16 11:27:46,022 - INFO - Search endpoint received params: {'brand': 'Mazda', 'model': '6', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:27:46,023 - INFO - Search endpoint max_kilometers value: None
+2025-01-16 11:27:46,023 - INFO - Received params: {'brand': 'Mazda', 'model': '6', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:27:46,023 - INFO - max_kilometers value: None
+2025-01-16 11:27:46,023 - INFO - Using max_km value: None
+2025-01-16 11:27:46,023 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=6&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:27:46,252 - INFO - Calculated market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:27:46,255 - INFO - Market price analysis: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:27:46,255 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=6&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=9995&max_sale_price=15340&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:27:46,515 - INFO - Filtering out listing qzmevqr9xgjv - too many kilometers: 215000
+2025-01-16 11:27:46,515 - INFO - Filtering out listing nz04ov9llrjo due to unwanted keywords
+2025-01-16 11:27:46,515 - INFO - Filtering out listing vjrq2od39xzk - too many kilometers: 240000
+2025-01-16 11:27:46,515 - INFO - Final response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:27:46,517 - INFO - API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:27:46,517 - INFO - Final API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:28:53,487 - INFO - Search endpoint received params: {'brand': 'Mazda', 'model': '6', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:28:53,488 - INFO - Search endpoint max_kilometers value: None
+2025-01-16 11:28:53,488 - INFO - Received params: {'brand': 'Mazda', 'model': '6', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:28:53,488 - INFO - max_kilometers value: None
+2025-01-16 11:28:53,488 - INFO - Using max_km value: None
+2025-01-16 11:28:53,488 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=6&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:28:53,767 - INFO - Calculated market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:28:53,770 - INFO - Market price analysis: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:28:53,771 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=6&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=9995&max_sale_price=15340&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:28:53,969 - INFO - Filtering out listing qzmevqr9xgjv - too many kilometers: 215000
+2025-01-16 11:28:53,969 - INFO - Filtering out listing nz04ov9llrjo due to unwanted keywords
+2025-01-16 11:28:53,970 - INFO - Filtering out listing vjrq2od39xzk - too many kilometers: 240000
+2025-01-16 11:28:53,970 - INFO - Final response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:28:53,972 - INFO - API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:28:53,972 - INFO - Final API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:31:44,763 - INFO - Search endpoint received params: {'brand': 'Mazda', 'model': '6', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:31:44,764 - INFO - Search endpoint max_kilometers value: None
+2025-01-16 11:31:44,764 - INFO - Received params: {'brand': 'Mazda', 'model': '6', 'latitude': 40.41035916448923, 'longitude': -3.6802482604980473, 'distance': 200, 'min_year': 2016, 'max_year': 2017, 'engine': 'gasoil', 'order_by': 'price_low_to_high'}
+2025-01-16 11:31:44,764 - INFO - max_kilometers value: None
+2025-01-16 11:31:44,764 - INFO - Using max_km value: None
+2025-01-16 11:31:44,764 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=6&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:31:45,010 - INFO - Calculated market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:31:45,016 - INFO - Market price analysis: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:31:45,016 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mazda&model=6&latitude=40.4104&longitude=-3.6802&category_ids=100&distance=200000&min_sale_price=9995&max_sale_price=15340&max_km=240000&order_by=price_low_to_high&min_year=2016&max_year=2017&engine=gasoil
+2025-01-16 11:31:45,232 - INFO - Filtering out listing qzmevqr9xgjv - too many kilometers: 215000
+2025-01-16 11:31:45,233 - INFO - Filtering out listing nz04ov9llrjo due to unwanted keywords
+2025-01-16 11:31:45,233 - INFO - Filtering out listing vjrq2od39xzk - too many kilometers: 240000
+2025-01-16 11:31:45,234 - INFO - Final response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:31:45,237 - INFO - API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:31:45,237 - INFO - Final API Response market data: {'market_price': 14990.0, 'median_price': 14990.0, 'average_price': 13120.666666666666, 'min_price': 9995.0, 'max_price': 15340.0, 'total_listings': 11, 'valid_listings': 6, 'sample_size': 6}
+2025-01-16 11:32:28,484 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'distance': 200, 'min_year': 2018, 'max_year': 2020, 'order_by': 'price_low_to_high'}
+2025-01-16 11:32:28,484 - INFO - Search endpoint max_kilometers value: None
+2025-01-16 11:32:28,484 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'distance': 200, 'min_year': 2018, 'max_year': 2020, 'order_by': 'price_low_to_high'}
+2025-01-16 11:32:28,484 - INFO - max_kilometers value: None
+2025-01-16 11:32:28,484 - INFO - Using max_km value: None
+2025-01-16 11:32:28,484 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:32:28,747 - INFO - Calculated market data: {'market_price': 23000.0, 'median_price': 23000.0, 'average_price': 23127.878787878788, 'min_price': 20490.0, 'max_price': 24500.0, 'total_listings': 39, 'valid_listings': 34, 'sample_size': 33}
+2025-01-16 11:32:28,749 - INFO - Market price analysis: {'market_price': 23000.0, 'median_price': 23000.0, 'average_price': 23127.878787878788, 'min_price': 20490.0, 'max_price': 24500.0, 'total_listings': 39, 'valid_listings': 34, 'sample_size': 33}
+2025-01-16 11:32:28,750 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=20490&max_sale_price=24500&max_km=240000&order_by=price_low_to_high&min_year=2018&max_year=2020
+2025-01-16 11:32:29,125 - INFO - Filtering out listing e6588odv806o - too many kilometers: 215600
+2025-01-16 11:32:29,125 - INFO - Filtering out listing 36e1opelwnjd due to unwanted keywords
+2025-01-16 11:32:29,126 - INFO - Filtering out listing 8z8kveqmx8z3 due to unwanted keywords
+2025-01-16 11:32:29,127 - INFO - Final response market data: {'market_price': 23000.0, 'median_price': 23000.0, 'average_price': 23127.878787878788, 'min_price': 20490.0, 'max_price': 24500.0, 'total_listings': 39, 'valid_listings': 34, 'sample_size': 33}
+2025-01-16 11:32:29,129 - INFO - API Response market data: {'market_price': 23000.0, 'median_price': 23000.0, 'average_price': 23127.878787878788, 'min_price': 20490.0, 'max_price': 24500.0, 'total_listings': 39, 'valid_listings': 34, 'sample_size': 33}
+2025-01-16 11:32:29,129 - INFO - Final API Response market data: {'market_price': 23000.0, 'median_price': 23000.0, 'average_price': 23127.878787878788, 'min_price': 20490.0, 'max_price': 24500.0, 'total_listings': 39, 'valid_listings': 34, 'sample_size': 33}
+2025-01-16 11:32:52,622 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'order_by': 'price_low_to_high'}
+2025-01-16 11:32:52,622 - INFO - Search endpoint max_kilometers value: None
+2025-01-16 11:32:52,622 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'order_by': 'price_low_to_high'}
+2025-01-16 11:32:52,622 - INFO - max_kilometers value: None
+2025-01-16 11:32:52,622 - INFO - Using max_km value: None
+2025-01-16 11:32:52,622 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=240000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:32:52,850 - INFO - Calculated market data: {'market_price': 12300.0, 'median_price': 12300.0, 'average_price': 12073.636363636364, 'min_price': 10000.0, 'max_price': 14000.0, 'total_listings': 39, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:32:52,852 - INFO - Market price analysis: {'market_price': 12300.0, 'median_price': 12300.0, 'average_price': 12073.636363636364, 'min_price': 10000.0, 'max_price': 14000.0, 'total_listings': 39, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:32:52,852 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=10000&max_sale_price=14000&max_km=240000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:32:53,072 - INFO - Filtering out listing 9jdkrrovd96k - too many kilometers: 230000
+2025-01-16 11:32:53,072 - INFO - Filtering out listing qjw48ex1ggzo - too many kilometers: 218000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing e65gw4qod0jo due to unwanted keywords
+2025-01-16 11:32:53,073 - INFO - Filtering out listing e65850x5rg6o - too many kilometers: 239000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing qzme8gg7y1jv - too many kilometers: 235000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing vjrq3mngywzk - too many kilometers: 213000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing w674rv7xgy6x - too many kilometers: 234000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing 0j24qvm49ezy - too many kilometers: 262000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing xzo210por469 - too many kilometers: 238000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing e658px08n26o due to unwanted keywords
+2025-01-16 11:32:53,073 - INFO - Filtering out listing p6143y434565 - too many kilometers: 215002
+2025-01-16 11:32:53,073 - INFO - Filtering out listing 3zl8pqrlxp6x - too many kilometers: 222000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing qzmevk7xkyjv - too many kilometers: 218000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing nz04891133jo - too many kilometers: 219000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing wzy47k32xxz5 - too many kilometers: 223000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing w674989qyy6x - too many kilometers: 260000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing 4z4e1opdd8jy - too many kilometers: 224000
+2025-01-16 11:32:53,073 - INFO - Filtering out listing 8z8kg91pvoz3 - too many kilometers: 218000
+2025-01-16 11:32:53,073 - INFO - Final response market data: {'market_price': 12300.0, 'median_price': 12300.0, 'average_price': 12073.636363636364, 'min_price': 10000.0, 'max_price': 14000.0, 'total_listings': 39, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:32:53,074 - INFO - API Response market data: {'market_price': 12300.0, 'median_price': 12300.0, 'average_price': 12073.636363636364, 'min_price': 10000.0, 'max_price': 14000.0, 'total_listings': 39, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:32:53,074 - INFO - Final API Response market data: {'market_price': 12300.0, 'median_price': 12300.0, 'average_price': 12073.636363636364, 'min_price': 10000.0, 'max_price': 14000.0, 'total_listings': 39, 'valid_listings': 22, 'sample_size': 22}
+2025-01-16 11:35:12,637 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:35:12,638 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:35:12,638 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:35:12,638 - INFO - max_kilometers value: 160000
+2025-01-16 11:35:12,638 - INFO - Using max_km value: 160000
+2025-01-16 11:35:12,638 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&max_km=160000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:35:12,862 - INFO - Calculated market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15034.714285714286, 'min_price': 11000.0, 'max_price': 23000.0, 'total_listings': 24, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:35:12,864 - INFO - Market price analysis: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15034.714285714286, 'min_price': 11000.0, 'max_price': 23000.0, 'total_listings': 24, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:35:12,864 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=200000&min_sale_price=11000&max_sale_price=23000&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:35:13,096 - INFO - Filtering out listing 0j24qvm49ezy - too many kilometers: 262000
+2025-01-16 11:35:13,097 - INFO - Filtering out listing w674989qyy6x - too many kilometers: 260000
+2025-01-16 11:35:13,097 - INFO - Filtering out listing nz041d0mkejo due to unwanted keywords
+2025-01-16 11:35:13,097 - INFO - Filtering out listing 36ex247kwyzd - likely new car with 0km
+2025-01-16 11:35:13,097 - INFO - Final response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15034.714285714286, 'min_price': 11000.0, 'max_price': 23000.0, 'total_listings': 24, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:35:13,099 - INFO - API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15034.714285714286, 'min_price': 11000.0, 'max_price': 23000.0, 'total_listings': 24, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:35:13,099 - INFO - Final API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15034.714285714286, 'min_price': 11000.0, 'max_price': 23000.0, 'total_listings': 24, 'valid_listings': 22, 'sample_size': 21}
+2025-01-16 11:35:49,448 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:35:49,448 - INFO - Search endpoint max_kilometers value: 160000
+2025-01-16 11:35:49,449 - INFO - Received params: {'brand': 'Audi', 'model': 'A5', 'latitude': 41.242319925587815, 'longitude': 1.7097687721252444, 'distance': 200, 'min_year': 2010, 'max_year': 2013, 'max_kilometers': 160000, 'order_by': 'price_low_to_high'}
+2025-01-16 11:35:49,449 - INFO - max_kilometers value: 160000
+2025-01-16 11:35:49,449 - INFO - Using max_km value: 160000
+2025-01-16 11:35:49,449 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=200000&max_km=160000&min_sale_price=3000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:35:49,667 - INFO - Calculated market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
+2025-01-16 11:35:49,670 - INFO - Market price analysis: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
+2025-01-16 11:35:49,670 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A5&latitude=41.2423&longitude=1.7098&category_ids=100&distance=200000&min_sale_price=9800&max_sale_price=23000&max_km=160000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-16 11:35:49,915 - INFO - Filtering out listing 36e145ypkyjd - too many kilometers: 318000
+2025-01-16 11:35:49,915 - INFO - Filtering out listing pj9m5wpx006e - too many kilometers: 270000
+2025-01-16 11:35:49,916 - INFO - Filtering out listing xzormoedl5z9 - likely new car with 0km
+2025-01-16 11:35:49,916 - INFO - Filtering out listing pzp2qnxn15j3 - too many kilometers: 220000
+2025-01-16 11:35:49,916 - INFO - Filtering out listing pzprpgw24k63 - likely new car with 170km
+2025-01-16 11:35:49,916 - INFO - Filtering out listing 9jdkrxordd6k - too many kilometers: 210000
+2025-01-16 11:35:49,917 - INFO - Filtering out listing 8z8ke7gx08z3 - too many kilometers: 290000
+2025-01-16 11:35:49,917 - INFO - Final response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
+2025-01-16 11:35:49,920 - INFO - API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
+2025-01-16 11:35:49,920 - INFO - Final API Response market data: {'market_price': 15000.0, 'median_price': 15000.0, 'average_price': 15090.75, 'min_price': 9800.0, 'max_price': 23000.0, 'total_listings': 27, 'valid_listings': 25, 'sample_size': 24}
