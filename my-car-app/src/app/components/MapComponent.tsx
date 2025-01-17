@@ -52,7 +52,7 @@ export default function MapComponent({ center, onLocationSelect, distance = 0 }:
   return (
     <MapContainer
       center={center}
-      zoom={6}
+      zoom={5}
       style={{ height: '100%', width: '100%' }}
     >
       <TileLayer
@@ -69,10 +69,11 @@ export default function MapComponent({ center, onLocationSelect, distance = 0 }:
               center={center}
               radius={distance * 1000} // Convert km to meters
               pathOptions={{
-                color: '#1976d2',
-                fillColor: '#1976d2',
+                color: '#4169E1',
+                fillColor: '#9400D3',
                 fillOpacity: 0.1,
-                weight: 1
+                weight: 2,
+                opacity: 0.7
               }}
             />
           )}
