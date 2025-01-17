@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { 
   Container, 
   Typography, 
@@ -19,13 +18,18 @@ import {
   CheckCircle,
   Star,
   Business,
-  ArrowForward
+  ArrowForward,
 } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 
-const MotionTypography = motion(Typography)
+const Chat = dynamic(() => import('../components/Chat'), {
+  ssr: false,
+})
+
+const MotionTypography = motion.create(Typography)
 
 export default function HomePage() {
   const router = useRouter()
@@ -126,11 +130,11 @@ export default function HomePage() {
           top: 0,
           left: 0,
           right: 0,
-          zIndex: 1000,
+          zIndex: 1100,
           background: 'rgba(0,0,0,0.5)',
           backdropFilter: 'blur(20px)',
           borderBottom: '1px solid rgba(255,255,255,0.1)',
-          py: 2
+          py: { xs: 1.5, md: 2 }
         }}
       >
         <Container maxWidth="lg">
@@ -139,34 +143,70 @@ export default function HomePage() {
             alignItems: 'center', 
             justifyContent: 'space-between'
           }}>
-            {/* Logo */}
+            {/* Logo and Title */}
             <Box sx={{ 
-              position: 'relative',
-              width: 120,
-              height: 40
+              display: 'flex',
+              alignItems: 'center',
+              gap: { xs: 1.5, md: 2 }
             }}>
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                fill
-                style={{
-                  objectFit: 'contain'
+              <Box sx={{ 
+                position: 'relative',
+                width: { xs: 100, md: 120 },
+                height: { xs: 32, md: 40 }
+              }}>
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  fill
+                  style={{
+                    objectFit: 'contain'
+                  }}
+                />
+              </Box>
+              <Typography
+                variant="h6"
+                sx={{
+                  display: { xs: 'none', sm: 'block' },
+                  fontSize: { sm: '1.1rem', md: '1.25rem' },
+                  fontWeight: 700,
+                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  whiteSpace: 'nowrap'
                 }}
-              />
+              >
+                ChollosCarFinder
+              </Typography>
             </Box>
 
             {/* Buttons */}
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={{ xs: 1, md: 2 }}>
+              <Button
+                variant="text"
+                sx={{
+                  color: 'white',
+                  px: { xs: 1.5, md: 2 },
+                  py: { xs: 0.75, md: 1 },
+                  textTransform: 'none',
+                  fontSize: { xs: '0.8rem', md: '0.9rem' },
+                  '&:hover': {
+                    background: 'rgba(255,255,255,0.05)'
+                  }
+                }}
+              >
+                Iniciar sesión
+              </Button>
               <Button
                 variant="outlined"
                 sx={{
                   borderColor: 'rgba(255,255,255,0.2)',
                   color: 'white',
                   borderRadius: '28px',
-                  px: 3,
-                  py: 1,
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 0.75, md: 1 },
                   textTransform: 'none',
-                  fontSize: '0.9rem',
+                  fontSize: { xs: '0.8rem', md: '0.9rem' },
                   '&:hover': {
                     borderColor: '#4169E1',
                     background: 'rgba(255,255,255,0.05)'
@@ -179,15 +219,14 @@ export default function HomePage() {
               <Button
                 variant="contained"
                 sx={{
-                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                  background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                   borderRadius: '28px',
-                  px: 3,
-                  py: 1,
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 0.75, md: 1 },
                   textTransform: 'none',
-                  fontSize: '0.9rem',
+                  fontSize: { xs: '0.8rem', md: '0.9rem' },
                   '&:hover': {
-                    background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    opacity: 0.9
+                    background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                   }
                 }}
                 onClick={() => router.push('/search')}
@@ -200,7 +239,7 @@ export default function HomePage() {
       </Box>
 
       {/* Add padding to content to account for fixed header */}
-      <Box sx={{ pt: 8 }}>
+      <Box sx={{ pt: { xs: 6, md: 8 } }}>
         {/* Fixed Background Pattern */}
         <Box
           sx={{
@@ -265,11 +304,11 @@ export default function HomePage() {
           {/* Hero Section - Remove background blobs */}
           <Box sx={{
             color: 'white',
-            pt: { xs: 4, md: 6 },
-            pb: { xs: 12, md: 16 },
+            pt: { xs: 2, md: 6 },
+            pb: { xs: 8, md: 16 },
             position: 'relative',
             overflow: 'hidden',
-            minHeight: '100vh',
+            minHeight: { xs: 'calc(100vh - 64px)', md: '100vh' },
             display: 'flex',
             alignItems: 'center',
           }}>
@@ -348,9 +387,10 @@ export default function HomePage() {
                     <MotionTypography
                       variant="h1"
                       sx={{
-                        fontSize: { xs: '3rem', md: '5rem' },
+                        fontSize: { xs: '2.5rem', sm: '3rem', md: '5rem' },
                         fontWeight: 900,
-                        mb: 2,
+                        mb: { xs: 1, md: 2 },
+                        lineHeight: { xs: 1.2, md: 1.1 },
                         background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                         backgroundClip: 'text',
                         textFillColor: 'transparent',
@@ -367,9 +407,9 @@ export default function HomePage() {
                     <MotionTypography
                       variant="h4"
                       sx={{
-                        fontSize: { xs: '1.5rem', md: '2rem' },
+                        fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
                         fontWeight: 500,
-                        mb: 4,
+                        mb: { xs: 3, md: 4 },
                         color: 'rgba(255,255,255,0.7)',
                         maxWidth: '600px',
                         lineHeight: 1.4
@@ -384,8 +424,8 @@ export default function HomePage() {
                     {/* CTA Buttons */}
                     <Stack
                       component={motion.div}
-                      direction="row"
-                      spacing={2}
+                      direction={{ xs: 'column', sm: 'row' }}
+                      spacing={{ xs: 1.5, sm: 2 }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.4 }}
@@ -393,39 +433,40 @@ export default function HomePage() {
                       <Button
                         variant="contained"
                         size="large"
+                        fullWidth={true}
                         sx={{
-                          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                           borderRadius: '28px',
-                          px: 4,
-                          py: 1.5,
+                          px: { xs: 3, md: 4 },
+                          py: { xs: 1.25, md: 1.5 },
                           textTransform: 'none',
-                          fontSize: '1rem',
+                          fontSize: { xs: '0.9rem', md: '1rem' },
                           '&:hover': {
-                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                            opacity: 0.9
+                            background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                           }
                         }}
                       >
-                        Free Trial
+                        Prueba Gratuita
                       </Button>
                       <Button
                         variant="outlined"
                         size="large"
+                        fullWidth={true}
                         sx={{
                           borderColor: 'rgba(255,255,255,0.2)',
                           color: 'white',
                           borderRadius: '28px',
-                          px: 4,
-                          py: 1.5,
+                          px: { xs: 3, md: 4 },
+                          py: { xs: 1.25, md: 1.5 },
                           textTransform: 'none',
-                          fontSize: '1rem',
+                          fontSize: { xs: '0.9rem', md: '1rem' },
                           '&:hover': {
                             borderColor: 'white',
                             background: 'rgba(255,255,255,0.05)'
                           }
                         }}
                       >
-                        See more
+                        Ver más
                       </Button>
                     </Stack>
                   </Box>
@@ -436,14 +477,14 @@ export default function HomePage() {
 
           {/* Stats Section */}
           <Container maxWidth="lg" sx={{ 
-            mt: { xs: -8, md: -6 }, 
-            mb: { xs: 8, md: 12 },
+            mt: { xs: -6, md: -8 }, 
+            mb: { xs: 6, md: 12 },
             position: 'relative',
             zIndex: 2,
             px: { xs: 2, md: 3 },
           }}>
             <Card sx={{ 
-              borderRadius: 4,
+              borderRadius: { xs: 3, md: 4 },
               boxShadow: 'none',
               background: 'transparent',
               backdropFilter: 'blur(20px)',
@@ -453,13 +494,14 @@ export default function HomePage() {
               border: '1px solid rgba(255,255,255,0.1)'
             }}>
               <CardContent sx={{ 
-                py: { xs: 3, md: 4 },
+                py: { xs: 2.5, md: 4 },
+                px: { xs: 2, md: 3 },
                 background: '#111111',
-                borderRadius: 4
+                borderRadius: { xs: 3, md: 4 }
               }}>
-                <Grid container spacing={3} justifyContent="center">
+                <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center">
                   {stats.map((stat, index) => (
-                    <Grid item xs={12} sm={4} key={index} sx={{ textAlign: 'center' }}>
+                    <Grid item xs={4} key={index} sx={{ textAlign: 'center' }}>
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -470,8 +512,8 @@ export default function HomePage() {
                           variant="h3" 
                           sx={{ 
                             fontWeight: 'bold', 
-                            mb: 1,
-                            fontSize: { xs: '2rem', md: '2.5rem' },
+                            mb: { xs: 0.5, md: 1 },
+                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                             background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
@@ -483,7 +525,7 @@ export default function HomePage() {
                         <Typography 
                           variant="subtitle1" 
                           sx={{
-                            fontSize: { xs: '0.875rem', md: '1rem' },
+                            fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' },
                             color: 'rgba(255,255,255,0.7)'
                           }}
                         >
@@ -501,13 +543,14 @@ export default function HomePage() {
           <Box sx={{ 
             position: 'relative',
             overflow: 'hidden',
-            pb: 12,
+            pb: { xs: 8, md: 12 },
           }}>
             <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-              <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
                 <Typography variant="h3" sx={{ 
                   fontWeight: 'bold', 
-                  mb: 2,
+                  mb: { xs: 1, md: 2 },
+                  fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                   background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
@@ -515,14 +558,17 @@ export default function HomePage() {
                 }}>
                   ¿Por qué elegirnos?
                 </Typography>
-                <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                <Typography variant="h6" sx={{ 
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: { xs: '1rem', sm: '1.25rem' }
+                }}>
                   Herramientas avanzadas para una búsqueda inteligente
                 </Typography>
               </Box>
 
-              <Grid container spacing={4}>
+              <Grid container spacing={{ xs: 2, md: 4 }}>
                 {features.map((feature, index) => (
-                  <Grid item xs={12} md={4} key={index}>
+                  <Grid item xs={12} sm={6} md={4} key={index}>
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -531,7 +577,7 @@ export default function HomePage() {
                     >
                       <Card sx={{ 
                         height: '100%',
-                        borderRadius: 4,
+                        borderRadius: { xs: 3, md: 4 },
                         transition: 'all 0.3s ease-in-out',
                         background: 'transparent',
                         backdropFilter: 'blur(20px)',
@@ -545,24 +591,32 @@ export default function HomePage() {
                       }}>
                         <CardContent sx={{ 
                           textAlign: 'center', 
-                          p: 4,
+                          p: { xs: 3, md: 4 },
                           background: '#111111',
-                          borderRadius: 4
+                          borderRadius: { xs: 3, md: 4 }
                         }}>
                           <Box sx={{ 
-                            mb: 2,
+                            mb: { xs: 1.5, md: 2 },
                             display: 'inline-flex',
-                            p: 2,
+                            p: { xs: 1.5, md: 2 },
                             borderRadius: '50%',
-                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                             color: 'white'
                           }}>
                             {feature.icon}
                           </Box>
-                          <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold', color: 'white' }}>
+                          <Typography variant="h5" sx={{ 
+                            mb: { xs: 1, md: 2 }, 
+                            fontWeight: 'bold', 
+                            color: 'white',
+                            fontSize: { xs: '1.25rem', md: '1.5rem' }
+                          }}>
                             {feature.title}
                           </Typography>
-                          <Typography sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                          <Typography sx={{ 
+                            color: 'rgba(255,255,255,0.7)',
+                            fontSize: { xs: '0.875rem', md: '1rem' }
+                          }}>
                             {feature.description}
                           </Typography>
                         </CardContent>
@@ -576,15 +630,15 @@ export default function HomePage() {
 
           {/* Pricing Section */}
           <Box sx={{ 
-            py: 12, 
+            py: { xs: 8, md: 12 }, 
             position: 'relative',
           }}>
             <Container maxWidth="lg">
-              <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
                 <Chip 
                   label="Precios" 
                   sx={{ 
-                    mb: 2,
+                    mb: { xs: 1.5, md: 2 },
                     px: 2,
                     height: 32,
                     borderRadius: 2,
@@ -592,22 +646,33 @@ export default function HomePage() {
                     backdropFilter: 'blur(20px)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     color: 'white',
+                    fontSize: { xs: '0.75rem', md: '0.875rem' },
                     '&:hover': {
                       background: 'rgba(255,255,255,0.08)'
                     }
                   }} 
                 />
-                <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2, color: 'white' }}>
+                <Typography variant="h3" sx={{ 
+                  fontWeight: 'bold', 
+                  mb: { xs: 1, md: 2 }, 
+                  color: 'white',
+                  fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
+                }}>
                   Planes que se adaptan a tus necesidades
                 </Typography>
-                <Typography variant="h6" sx={{ maxWidth: 600, mx: 'auto', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <Typography variant="h6" sx={{ 
+                  maxWidth: 600, 
+                  mx: 'auto', 
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontSize: { xs: '1rem', sm: '1.25rem' }
+                }}>
                   Elige el plan que mejor se ajuste a ti y empieza a ahorrar en tu próximo coche
                 </Typography>
               </Box>
 
-              <Grid container spacing={4} alignItems="stretch">
+              <Grid container spacing={{ xs: 2, md: 4 }} alignItems="stretch">
                 {pricingTiers.map((tier, index) => (
-                  <Grid item xs={12} md={4} key={index}>
+                  <Grid item xs={12} sm={6} md={4} key={index}>
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -620,7 +685,7 @@ export default function HomePage() {
                         display: 'flex',
                         flexDirection: 'column',
                         position: 'relative',
-                        borderRadius: 4,
+                        borderRadius: { xs: 3, md: 4 },
                         background: 'transparent',
                         backdropFilter: 'blur(20px)',
                         border: '1px solid rgba(255,255,255,0.1)',
@@ -628,10 +693,12 @@ export default function HomePage() {
                         transition: 'all 0.3s ease-in-out',
                         ...(tier.popular ? {
                           border: '1px solid #4169E1',
-                          transform: 'scale(1.05)',
+                          transform: { xs: 'scale(1.02)', md: 'scale(1.05)' },
                         } : {}),
                         '&:hover': {
-                          transform: tier.popular ? 'scale(1.08)' : 'scale(1.03)',
+                          transform: tier.popular ? 
+                            { xs: 'scale(1.04)', md: 'scale(1.08)' } : 
+                            { xs: 'scale(1.02)', md: 'scale(1.03)' },
                           borderColor: '#4169E1',
                           background: 'rgba(255,255,255,0.03)'
                         }
@@ -640,14 +707,14 @@ export default function HomePage() {
                           <Box
                             sx={{
                               position: 'absolute',
-                              top: 12,
-                              right: 12,
-                              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                              top: { xs: 8, md: 12 },
+                              right: { xs: 8, md: 12 },
+                              background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                               color: 'white',
                               py: 0.5,
                               px: 2,
                               borderRadius: 2,
-                              fontSize: '0.875rem',
+                              fontSize: { xs: '0.75rem', md: '0.875rem' },
                               fontWeight: 'bold',
                               boxShadow: '0 4px 12px rgba(65, 105, 225, 0.3)',
                               zIndex: 1
@@ -657,10 +724,10 @@ export default function HomePage() {
                           </Box>
                         )}
                         <CardContent sx={{ 
-                          p: 4, 
+                          p: { xs: 2.5, md: 4 }, 
                           flexGrow: 1,
                           background: '#111111',
-                          borderRadius: 4
+                          borderRadius: { xs: 3, md: 4 }
                         }}>
                           <Box sx={{ 
                             mb: 3,
@@ -780,7 +847,7 @@ export default function HomePage() {
 
           {/* CTA Section */}
           <Box sx={{ 
-            py: 12,
+            py: { xs: 8, md: 12 },
             position: 'relative',
             overflow: 'hidden',
           }}>
@@ -792,7 +859,7 @@ export default function HomePage() {
                 viewport={{ once: true }}
               >
                 <Card sx={{ 
-                  borderRadius: 4,
+                  borderRadius: { xs: 3, md: 4 },
                   background: 'transparent',
                   backdropFilter: 'blur(20px)',
                   border: '1px solid rgba(255,255,255,0.1)',
@@ -804,17 +871,18 @@ export default function HomePage() {
                   }
                 }}>
                   <CardContent sx={{ 
-                    p: 6, 
+                    p: { xs: 3, md: 6 }, 
                     position: 'relative', 
                     zIndex: 1,
                     background: '#111111',
-                    borderRadius: 4
+                    borderRadius: { xs: 3, md: 4 }
                   }}>
-                    <Grid container spacing={4} alignItems="center">
+                    <Grid container spacing={{ xs: 3, md: 4 }} alignItems="center">
                       <Grid item xs={12} md={8}>
                         <Typography variant="h3" sx={{ 
                           fontWeight: 'bold', 
-                          mb: 2,
+                          mb: { xs: 1, md: 2 },
+                          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                           background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                           backgroundClip: 'text',
                           WebkitBackgroundClip: 'text',
@@ -822,26 +890,30 @@ export default function HomePage() {
                         }}>
                           ¿Listo para encontrar tu coche ideal?
                         </Typography>
-                        <Typography variant="h6" sx={{ mb: 4, color: 'rgba(255,255,255,0.7)' }}>
+                        <Typography variant="h6" sx={{ 
+                          mb: { xs: 3, md: 4 }, 
+                          color: 'rgba(255,255,255,0.7)',
+                          fontSize: { xs: '1rem', sm: '1.25rem' }
+                        }}>
                           Empieza tu búsqueda ahora y encuentra las mejores ofertas del mercado
                         </Typography>
                       </Grid>
-                      <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
+                      <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'right' } }}>
                         <Button
                           variant="contained"
                           size="large"
+                          fullWidth={true}
                           onClick={() => router.push('/search')}
                           sx={{
-                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                             borderRadius: '28px',
                             color: 'white',
-                            px: 4,
-                            py: 2,
+                            px: { xs: 3, md: 4 },
+                            py: { xs: 1.5, md: 2 },
                             textTransform: 'none',
-                            fontSize: '1rem',
+                            fontSize: { xs: '0.9rem', md: '1rem' },
                             '&:hover': {
-                              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                              opacity: 0.9
+                              background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                             }
                           }}
                         >
@@ -868,6 +940,9 @@ export default function HomePage() {
           </Box>
         </Box>
       </Box>
+
+      {/* Chat component */}
+      <Chat />
     </Box>
   )
 } 
