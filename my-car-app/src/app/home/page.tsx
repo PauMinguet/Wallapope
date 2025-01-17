@@ -29,6 +29,10 @@ const Chat = dynamic(() => import('../components/Chat'), {
   ssr: false,
 })
 
+const LiveActivityToast = dynamic(() => import('../components/LiveActivityToast'), {
+  ssr: false,
+})
+
 const MotionTypography = motion.create(Typography)
 
 export default function HomePage() {
@@ -943,6 +947,9 @@ export default function HomePage() {
 
       {/* Chat component */}
       <Chat />
+      
+      {/* Live Activity Toast */}
+      <LiveActivityToast />
     </Box>
   )
 } 
