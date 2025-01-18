@@ -1,25 +1,15 @@
-'use client'
-
+import { ClerkProvider } from '@clerk/nextjs'
+import './globals.css'
 import { Inter } from 'next/font/google'
-import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
+import { Metadata } from 'next'
+import UserSync from '@/components/UserSync'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#90caf9',
-    },
-    secondary: {
-      main: '#ce93d8',
-    },
-    background: {
-      default: '#121212',
-      paper: '#1e1e1e',
-    },
-  },
-})
+export const metadata: Metadata = {
+  title: 'ChollosCarFinder',
+  description: 'Encuentra los mejores chollos de coches',
+}
 
 export default function RootLayout({
   children,
@@ -27,11 +17,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <body className={inter.className}>{children}</body>
-      </ThemeProvider>
+    <html lang="es">
+      <ClerkProvider>
+        <body className={inter.className}>
+          <UserSync />
+          {children}
+        </body>
+      </ClerkProvider>
     </html>
   )
 }

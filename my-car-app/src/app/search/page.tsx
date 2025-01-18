@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, Suspense } from 'react'
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { 
   Container, 
@@ -20,15 +19,13 @@ import {
   Alert,
   Box,
   Autocomplete,
-  Slider,
-  Menu,
-  Paper,
-  Chip,
-  Skeleton
+  Slider
 } from '@mui/material'
-import { DirectionsCar, MyLocation, Notifications } from '@mui/icons-material'
+import {MyLocation } from '@mui/icons-material'
 import 'leaflet/dist/leaflet.css'
-import ListingSkeleton from '../components/ListingSkeleton'
+import TopBar from '../components/TopBar'
+import ListingsGrid from '../components/ListingsGrid'
+import { useUser, SignUpButton } from '@clerk/nextjs'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
@@ -290,18 +287,9 @@ export default function SearchPage() {
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
   const [locationError, setLocationError] = useState<string | null>(null)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
   const [selectedSuggestionCategory, setSelectedSuggestionCategory] = useState<string | null>(null)
   const [suggestionCategories, setSuggestionCategories] = useState<Record<string, SuggestionCategory>>({})
-  
-  const handleSubscriptionClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  
-  const handleSubscriptionClose = () => {
-    setAnchorEl(null)
-  }
+  const { isSignedIn } = useUser()
 
   useEffect(() => {
     fetchBrands()
@@ -386,6 +374,11 @@ export default function SearchPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!isSignedIn) {
+      return // The SignUpButton will handle showing the modal
+    }
+    
     setLoading(true)
     setError(null)
     console.log('Submitting form data:', formData)
@@ -578,6 +571,8 @@ export default function SearchPage() {
       minHeight: '100vh',
       color: 'white'
     }}>
+      <TopBar />
+      
       {/* Fixed Background Pattern */}
       <Box
         sx={{
@@ -638,257 +633,13 @@ export default function SearchPage() {
       </Box>
 
       <Container maxWidth="lg" sx={{ 
-        py: 4,
+        py: { xs: 10, md: 12 },
         position: 'relative',
         zIndex: 1
       }}>
-      <Box sx={{ 
-        display: 'flex', 
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        mb: 3,
-        position: 'relative'
-      }}>
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center',
-          gap: 3,
-        }}>
-          <DirectionsCar sx={{ 
-            fontSize: 40, 
-            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'float 3s ease-in-out infinite',
-            '@keyframes float': {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' }
-            }
-          }} />
-          <Box>
-            <Typography variant="h5" component="h1" sx={{ 
-              fontWeight: 'bold',
-              lineHeight: 1.2,
-              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              Buscador de Coches
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-              Busca coches con análisis de precios de mercado
-            </Typography>
-          </Box>
-        </Box>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubscriptionClick}
-          startIcon={<Notifications />}
-          sx={{ 
-            position: 'absolute',
-            right: 0,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            whiteSpace: 'nowrap',
-            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-            color: 'rgba(255,255,255,0.95)',
-            textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-            fontWeight: 500,
-            '&:hover': {
-              background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-            }
-          }}
-        >
-          Alertas Premium
-        </Button>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleSubscriptionClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-        >
-          <Paper sx={{ 
-            p: 2, 
-            maxWidth: 400, 
-            bgcolor: '#111111',
-            color: 'white',
-            backdropFilter: 'blur(10px)',
-            borderRadius: 2,
-            border: '1px solid rgba(255,255,255,0.1)'
-          }}>
-            <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
-              Planes de Suscripción
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }} paragraph>
-              Recibe alertas cuando aparezcan chollos que coincidan con tus criterios
-            </Typography>
-            
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Card variant="outlined" sx={{ 
-                bgcolor: 'rgba(255,255,255,0.05)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: 2,
-                border: '1px solid rgba(255,255,255,0.1)'
-              }}>
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" sx={{ color: 'white' }}>
-                      Básico
-                    </Typography>
-                    <Chip 
-                      label="4,99€/mes" 
-                      sx={{ 
-                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                        color: 'white'
-                      }} 
-                      size="small" 
-                    />
-                  </Box>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • 1 búsqueda personalizada
-                  </Typography>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • Alertas diarias por email
-                  </Typography>
-                  <Button 
-                    variant="outlined" 
-                    fullWidth
-                    sx={{
-                      borderColor: 'rgba(255,255,255,0.3)',
-                      color: 'white',
-                      '&:hover': {
-                        borderColor: 'rgba(255,255,255,0.5)',
-                        background: 'rgba(255,255,255,0.05)'
-                      }
-                    }}
-                  >
-                    Empezar
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card variant="outlined" sx={{ 
-                bgcolor: 'rgba(255,255,255,0.08)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: 2,
-                border: '1px solid rgba(255,255,255,0.2)'
-              }}>
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Typography variant="h6" sx={{ color: 'white' }}>
-                        Pro
-                      </Typography>
-                      <Chip 
-                        label="Popular" 
-                        size="small" 
-                        sx={{ 
-                          background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                          color: 'white'
-                        }} 
-                      />
-                    </Box>
-                    <Chip 
-                      label="9,99€/mes" 
-                      size="small" 
-                      sx={{ 
-                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                        color: 'white'
-                      }} 
-                    />
-                  </Box>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • 5 búsquedas personalizadas
-                  </Typography>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • Alertas instantáneas por email y SMS
-                  </Typography>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • Análisis detallado de precios
-                  </Typography>
-                  <Button 
-                    variant="contained" 
-                    fullWidth
-                    sx={{
-                      background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                      color: 'rgba(255,255,255,0.95)',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-                      fontWeight: 500,
-                      '&:hover': {
-                        background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                      }
-                    }}
-                  >
-                    Empezar
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card variant="outlined" sx={{ 
-                bgcolor: 'rgba(255,255,255,0.05)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: 2,
-                border: '1px solid rgba(255,255,255,0.1)'
-              }}>
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" sx={{ color: 'white' }}>
-                      Empresas
-                    </Typography>
-                    <Chip 
-                      label="24,99€/mes" 
-                      size="small" 
-                      sx={{ 
-                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                        color: 'white'
-                      }} 
-                    />
-                  </Box>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • Búsquedas ilimitadas
-                  </Typography>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • API de acceso
-                  </Typography>
-                  <Typography variant="body2" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    • Soporte prioritario
-                  </Typography>
-                  <Button 
-                    variant="outlined" 
-                    fullWidth
-                    sx={{
-                      borderColor: 'rgba(255,255,255,0.3)',
-                      color: 'white',
-                      '&:hover': {
-                        borderColor: 'rgba(255,255,255,0.5)',
-                        background: 'rgba(255,255,255,0.05)'
-                      }
-                    }}
-                  >
-                    Contactar
-                  </Button>
-                </CardContent>
-              </Card>
-            </Box>
-          </Paper>
-        </Menu>
-
-      </Box>
-
         <Card sx={{ 
           mb: 2, 
-          bgcolor: 'rgba(255,255,255,0.05)',
+          bgcolor: 'rgba(255,255,255,0.1)',
           backdropFilter: 'blur(10px)',
           borderRadius: 2,
           border: '1px solid rgba(255,255,255,0.1)',
@@ -898,332 +649,353 @@ export default function SearchPage() {
             border: '1px solid rgba(255,255,255,0.2)'
           }
         }}>
-        <form onSubmit={handleSubmit}>
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      options={brands}
-                      getOptionLabel={(option) => option.name}
-                      loading={loadingBrands}
-                      value={selectedBrand}
-                      onChange={handleBrandChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Marca"
-                          variant="outlined"
-                          size="small"
-                          InputProps={{
-                            ...params.InputProps,
-                            endAdornment: (
-                              <>
-                                {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                              </>
-                            ),
-                          }}
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      options={models}
-                      getOptionLabel={(option) => option.nome}
-                      loading={loadingModels}
-                      value={selectedModel}
-                      onChange={handleModelChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Modelo"
-                          variant="outlined"
-                          size="small"
-                          InputProps={{
-                            ...params.InputProps,
-                            endAdornment: (
-                              <>
-                                {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                              </>
-                            ),
-                          }}
-                        />
-                      )}
-                    />
-                  </Grid>
+          <form onSubmit={handleSubmit}>
+            <CardContent>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={8}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <Autocomplete
+                        options={brands}
+                        getOptionLabel={(option) => option.name}
+                        loading={loadingBrands}
+                        value={selectedBrand}
+                        onChange={handleBrandChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Marca"
+                            variant="outlined"
+                            size="small"
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <>
+                                  {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Autocomplete
+                        options={models}
+                        getOptionLabel={(option) => option.nome}
+                        loading={loadingModels}
+                        value={selectedModel}
+                        onChange={handleModelChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Modelo"
+                            variant="outlined"
+                            size="small"
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <>
+                                  {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                          />
+                        )}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      options={yearOptions}
-                      value={formData.min_year || null}
-                      onChange={(event, newValue) => {
-                        setFormData(prev => ({
-                          ...prev,
-                          min_year: newValue || ''
-                        }))
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Año mínimo"
-                          variant="outlined"
-                          size="small"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                      options={yearOptions}
-                      value={formData.max_year || null}
-                      onChange={(event, newValue) => {
-                        setFormData(prev => ({
-                          ...prev,
-                          max_year: newValue || ''
-                        }))
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Año máximo"
-                          variant="outlined"
-                          size="small"
-                        />
-                      )}
-                    />
-                  </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Autocomplete
+                        options={yearOptions}
+                        value={formData.min_year || null}
+                        onChange={(event, newValue) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            min_year: newValue || ''
+                          }))
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Año mínimo"
+                            variant="outlined"
+                            size="small"
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Autocomplete
+                        options={yearOptions}
+                        value={formData.max_year || null}
+                        onChange={(event, newValue) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            max_year: newValue || ''
+                          }))
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Año máximo"
+                            variant="outlined"
+                            size="small"
+                          />
+                        )}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth variant="outlined" size="small">
-                      <InputLabel>Tipo de motor</InputLabel>
-                      <Select
-                        name="engine"
-                        value={formData.engine}
-                        label="Tipo de motor"
-                        onChange={handleSelectChange}
-                      >
-                        <MenuItem value="">Cualquiera</MenuItem>
-                        <MenuItem value="gasoline">Gasolina</MenuItem>
-                        <MenuItem value="gasoil">Diésel</MenuItem>
-                        <MenuItem value="electric">Eléctrico</MenuItem>
-                        <MenuItem value="hybrid">Híbrido</MenuItem>
-                      </Select>
-                    </FormControl>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <InputLabel>Tipo de motor</InputLabel>
+                        <Select
+                          name="engine"
+                          value={formData.engine}
+                          label="Tipo de motor"
+                          onChange={handleSelectChange}
+                        >
+                          <MenuItem value="">Cualquiera</MenuItem>
+                          <MenuItem value="gasoline">Gasolina</MenuItem>
+                          <MenuItem value="gasoil">Diésel</MenuItem>
+                          <MenuItem value="electric">Eléctrico</MenuItem>
+                          <MenuItem value="hybrid">Híbrido</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Potencia mínima (CV)"
+                        name="min_horse_power"
+                        type="number"
+                        value={formData.min_horse_power}
+                        onChange={handleInputChange}
+                        variant="outlined"
+                        size="small"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <InputLabel>Cambio</InputLabel>
+                        <Select
+                          name="gearbox"
+                          value={formData.gearbox}
+                          label="Cambio"
+                          onChange={handleSelectChange}
+                        >
+                          <MenuItem value="">Cualquiera</MenuItem>
+                          <MenuItem value="manual">Manual</MenuItem>
+                          <MenuItem value="automatic">Automático</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Distancia de búsqueda: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
+                      </Typography>
+                      <Slider
+                        value={formData.distance}
+                        onChange={handleDistanceChange}
+                        step={null}
+                        marks={distanceMarks}
+                        min={0}
+                        max={500}
+                        sx={{ 
+                          '& .MuiSlider-markLabel': {
+                            display: 'none'
+                          },
+                          '& .MuiSlider-track': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          },
+                          '& .MuiSlider-thumb': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                            '&:hover, &.Mui-focusVisible': {
+                              boxShadow: '0 0 0 8px rgba(65, 105, 225, 0.16)'
+                            }
+                          },
+                          '& .MuiSlider-rail': {
+                            background: 'rgba(255,255,255,0.2)',
+                          },
+                          '& .MuiSlider-mark': {
+                            backgroundColor: 'rgba(255,255,255,0.3)',
+                            height: 8,
+                            width: 2,
+                            '&.MuiSlider-markActive': {
+                              backgroundColor: 'rgba(255,255,255,0.7)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${(formData.max_kilometers / 1000).toFixed(0)}k`}
+                      </Typography>
+                      <Slider
+                        value={formData.max_kilometers}
+                        onChange={(event: Event | null, newValue: number | number[]) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            max_kilometers: newValue as number
+                          }))
+                        }}
+                        step={null}
+                        marks={kilometerMarks}
+                        min={0}
+                        max={240000}
+                        sx={{ 
+                          '& .MuiSlider-markLabel': {
+                            display: 'none'
+                          },
+                          '& .MuiSlider-track': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          },
+                          '& .MuiSlider-thumb': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                            '&:hover, &.Mui-focusVisible': {
+                              boxShadow: '0 0 0 8px rgba(65, 105, 225, 0.16)'
+                            }
+                          },
+                          '& .MuiSlider-rail': {
+                            background: 'rgba(255,255,255,0.2)',
+                          },
+                          '& .MuiSlider-mark': {
+                            backgroundColor: 'rgba(255,255,255,0.3)',
+                            height: 8,
+                            width: 2,
+                            '&.MuiSlider-markActive': {
+                              backgroundColor: 'rgba(255,255,255,0.7)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
+                </Grid>
+
+                <Grid item xs={12} md={4}>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 2
+                  }}>
+                    <Box sx={{ 
+                      width: '300px',
+                      height: '150px',
+                      border: 1,
+                      borderColor: 'grey.300',
+                      borderRadius: 1,
+                      overflow: 'hidden',
+                      position: 'relative'
+                    }}>
+                      <Suspense fallback={
+                        <Box sx={{ 
+                          width: '100%', 
+                          height: '100%', 
+                          bgcolor: 'grey.200',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <CircularProgress />
+                        </Box>
+                      }>
+                        <MapComponent
+                          center={[
+                            formData.latitude ?? SPAIN_CENTER.lat,
+                            formData.longitude ?? SPAIN_CENTER.lng
+                          ]}
+                          onLocationSelect={handleMapClick}
+                          distance={formData.distance}
+                        />
+                      </Suspense>
+                    </Box>
+
+                    <Button
+                      variant="contained"
+                      onClick={handleLocationRequest}
+                      startIcon={<MyLocation />}
                       fullWidth
-                      label="Potencia mínima (CV)"
-                      name="min_horse_power"
-                      type="number"
-                      value={formData.min_horse_power}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth variant="outlined" size="small">
-                      <InputLabel>Cambio</InputLabel>
-                      <Select
-                        name="gearbox"
-                        value={formData.gearbox}
-                        label="Cambio"
-                        onChange={handleSelectChange}
-                      >
-                        <MenuItem value="">Cualquiera</MenuItem>
-                        <MenuItem value="manual">Manual</MenuItem>
-                        <MenuItem value="automatic">Automático</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="subtitle2" gutterBottom>
-                      Distancia de búsqueda: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
-                    </Typography>
-                    <Slider
-                      value={formData.distance}
-                      onChange={handleDistanceChange}
-                      step={null}
-                      marks={distanceMarks}
-                      min={0}
-                      max={500}
                       sx={{ 
-                        '& .MuiSlider-markLabel': {
-                          display: 'none'
-                        },
-                        '& .MuiSlider-track': {
-                          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                        },
-                        '& .MuiSlider-thumb': {
-                          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                          '&:hover, &.Mui-focusVisible': {
-                            boxShadow: '0 0 0 8px rgba(65, 105, 225, 0.16)'
-                          }
-                        },
-                        '& .MuiSlider-rail': {
-                          background: 'rgba(255,255,255,0.2)',
-                        },
-                        '& .MuiSlider-mark': {
-                          backgroundColor: 'rgba(255,255,255,0.3)',
-                          height: 8,
-                          width: 2,
-                          '&.MuiSlider-markActive': {
-                            backgroundColor: 'rgba(255,255,255,0.7)',
-                          }
+                        height: 36,
+                        background: '#2C3E93',
+                        color: 'rgba(255,255,255,0.95)',
+                        textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                        fontWeight: 500,
+                        '&:hover': {
+                          background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                         }
                       }}
-                    />
-                  </Grid>
+                    >
+                      Encuentrame
+                    </Button>
 
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="subtitle2" gutterBottom>
-                      Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${(formData.max_kilometers / 1000).toFixed(0)}k`}
-                    </Typography>
-                    <Slider
-                      value={formData.max_kilometers}
-                      onChange={(event: Event | null, newValue: number | number[]) => {
-                        setFormData(prev => ({
-                          ...prev,
-                          max_kilometers: newValue as number
-                        }))
-                      }}
-                      step={null}
-                      marks={kilometerMarks}
-                      min={0}
-                      max={240000}
-                      sx={{ 
-                        '& .MuiSlider-markLabel': {
-                          display: 'none'
-                        },
-                        '& .MuiSlider-track': {
-                          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                        },
-                        '& .MuiSlider-thumb': {
-                          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                          '&:hover, &.Mui-focusVisible': {
-                            boxShadow: '0 0 0 8px rgba(65, 105, 225, 0.16)'
-                          }
-                        },
-                        '& .MuiSlider-rail': {
-                          background: 'rgba(255,255,255,0.2)',
-                        },
-                        '& .MuiSlider-mark': {
-                          backgroundColor: 'rgba(255,255,255,0.3)',
-                          height: 8,
-                          width: 2,
-                          '&.MuiSlider-markActive': {
-                            backgroundColor: 'rgba(255,255,255,0.7)',
-                          }
-                        }
-                      }}
-                    />
-                  </Grid>
+                    {locationError && (
+                      <Typography color="error" variant="caption" textAlign="center">
+                        {locationError}
+                      </Typography>
+                    )}
+                  </Box>
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} md={4}>
-                <Box sx={{ 
-                  display: 'flex', 
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 2
-                }}>
-                  <Box sx={{ 
-                    width: '300px',
-                    height: '150px',
-                    border: 1,
-                    borderColor: 'grey.300',
-                    borderRadius: 1,
-                    overflow: 'hidden',
-                    position: 'relative'
-                  }}>
-                    <Suspense fallback={
-                      <Box sx={{ 
-                        width: '100%', 
-                        height: '100%', 
-                        bgcolor: 'grey.200',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        <CircularProgress />
-                      </Box>
-                    }>
-                      <MapComponent
-                        center={[
-                          formData.latitude ?? SPAIN_CENTER.lat,
-                          formData.longitude ?? SPAIN_CENTER.lng
-                        ]}
-                        onLocationSelect={handleMapClick}
-                        distance={formData.distance}
-                      />
-                    </Suspense>
-                  </Box>
-
-                  <Button
-                    variant="contained"
-                    onClick={handleLocationRequest}
-                    startIcon={<MyLocation />}
-                    fullWidth
+              <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+                {isSignedIn ? (
+                  <Button 
+                    variant="contained" 
+                    size="large"
+                    type="submit"
+                    disabled={loading}
                     sx={{ 
-                      height: 36,
-                      background: '#2C3E93',
+                      minWidth: 200,
+                      background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                       color: 'rgba(255,255,255,0.95)',
                       textShadow: '0 1px 2px rgba(0,0,0,0.3)',
                       fontWeight: 500,
                       '&:hover': {
                         background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                      },
+                      '&:disabled': {
+                        background: 'rgba(255,255,255,0.12)',
+                        color: 'rgba(255,255,255,0.3)'
                       }
                     }}
                   >
-                    Encuentrame
+                    {loading ? <CircularProgress size={24} /> : 'Buscar'}
                   </Button>
+                ) : (
+                  <SignUpButton mode="modal">
+                    <Button 
+                      variant="contained" 
+                      size="large"
+                      sx={{ 
+                        minWidth: 200,
+                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                        color: 'rgba(255,255,255,0.95)',
+                        textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                        fontWeight: 500,
+                        '&:hover': {
+                          background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                        }
+                      }}
+                    >
+                      Registrarse para buscar
+                    </Button>
+                  </SignUpButton>
+                )}
+              </Box>
+            </CardContent>
+          </form>
+        </Card>
 
-                  {locationError && (
-                    <Typography color="error" variant="caption" textAlign="center">
-                      {locationError}
-                    </Typography>
-                  )}
-                </Box>
-              </Grid>
-            </Grid>
-
-            <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-              <Button 
-                variant="contained" 
-                size="large"
-                type="submit"
-                disabled={loading}
-                sx={{ 
-                  minWidth: 200,
-                  background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                  color: 'rgba(255,255,255,0.95)',
-                  textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-                  fontWeight: 500,
-                  '&:hover': {
-                    background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                  },
-                  '&:disabled': {
-                    background: 'rgba(255,255,255,0.12)',
-                    color: 'rgba(255,255,255,0.3)'
-                  }
-                }}
-              >
-                {loading ? <CircularProgress size={24} /> : 'Buscar'}
-              </Button>
-            </Box>
-          </CardContent>
-        </form>
-      </Card>
-
-      {error && (
+        {error && (
           <Alert 
             severity="error" 
             sx={{ 
@@ -1235,26 +1007,13 @@ export default function SearchPage() {
               }
             }}
           >
-          {error === 'Search failed' ? 'Error en la búsqueda' : 
-           error === 'No listings found' ? 'No se encontraron resultados' : 
-           'Ha ocurrido un error'}
-        </Alert>
-      )}
+            {error === 'Search failed' ? 'Error en la búsqueda' : 
+             error === 'No listings found' ? 'No se encontraron resultados' : 
+             'Ha ocurrido un error'}
+          </Alert>
+        )}
 
-        {loading ? (
-          <>
-            <Box sx={{ mb: 3 }}>
-              <Skeleton variant="rectangular" height={100} sx={{ borderRadius: 1 }} />
-            </Box>
-            <Grid container spacing={3}>
-              {[...Array(6)].map((_, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <ListingSkeleton />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        ) : results && (
+        {results && (
           <Box sx={{
             animation: 'fadeIn 0.5s ease-out',
             '@keyframes fadeIn': {
@@ -1262,256 +1021,76 @@ export default function SearchPage() {
               to: { opacity: 1 }
             }
           }}>
-          {/* Market Analysis Card */}
-          {results.market_data && (
-            <Card sx={{ 
-              mb: 3, 
-              bgcolor: 'rgba(255,255,255,0.05)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: 2,
-              border: '1px solid rgba(255,255,255,0.1)',
-              transition: 'all 0.3s ease-in-out',
-              '&:hover': {
-                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-                border: '1px solid rgba(255,255,255,0.2)'
-              }
-            }}>
-              <CardContent sx={{ p: 2 }}>
-                <Grid container spacing={3} alignItems="center">
-                  <Grid item>
-                    <Typography variant="h6" sx={{ mr: 3, color: 'white' }}>
-                      Análisis de Mercado
-                    </Typography>
+            {/* Market Analysis Card */}
+            {results.market_data && (
+              <Card sx={{ 
+                mb: 3, 
+                bgcolor: 'rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: 2,
+                border: '1px solid rgba(255,255,255,0.1)',
+                transition: 'all 0.3s ease-in-out',
+                '&:hover': {
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }
+              }}>
+                <CardContent sx={{ p: 2 }}>
+                  <Grid container spacing={3} alignItems="center">
+                    <Grid item>
+                      <Typography variant="h6" sx={{ mr: 3, color: 'white' }}>
+                        Análisis de Mercado
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
+                        Media:
+                      </Typography>
+                      <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
+                        {results.market_data.average_price_text}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
+                        Rango:
+                      </Typography>
+                      <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
+                        {results.market_data.min_price_text} - {results.market_data.max_price_text}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
+                        Total anuncios:
+                      </Typography>
+                      <Typography component="span" sx={{ fontWeight: 'bold', color: 'white' }}>
+                        {results.market_data.total_listings}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                      Media:
-                    </Typography>
-                    <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
-                      {results.market_data.average_price_text}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                      Rango:
-                    </Typography>
-                    <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
-                      {results.market_data.min_price_text} - {results.market_data.max_price_text}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                      Total anuncios:
-                    </Typography>
-                    <Typography component="span" sx={{ fontWeight: 'bold', color: 'white' }}>
-                      {results.market_data.total_listings}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          )}
+                </CardContent>
+              </Card>
+            )}
 
-          {/* Listings */}
-          {results.listings?.length > 0 ? (
-            <>
+            {/* Main Listings */}
+            {results.listings?.length > 0 && (
+              <>
                 <Typography variant="h6" sx={{ 
                   mb: 2,
                   fontWeight: 'bold',
                   color: 'text.primary'
                 }}>
-                {results.listings.length} anuncios encontrados
-              </Typography>
+                  {results.listings.length} anuncios encontrados
+                </Typography>
 
-              <Grid container spacing={3}>
-                  {results.listings.map((listing, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={listing.id}>
-                      <Box sx={{
-                        animation: `fadeSlideIn 0.5s ease-out ${index * 0.1}s both`,
-                        '@keyframes fadeSlideIn': {
-                          from: { 
-                            opacity: 0,
-                            transform: 'translateY(20px)'
-                          },
-                          to: { 
-                            opacity: 1,
-                            transform: 'translateY(0)'
-                          }
-                        }
-                      }}>
-                        <Card sx={{ 
-                          height: '100%', 
-                          display: 'flex', 
-                          flexDirection: 'column', 
-                          bgcolor: 'rgba(255,255,255,0.05)',
-                          backdropFilter: 'blur(10px)',
-                          borderRadius: 2,
-                          border: '1px solid rgba(255,255,255,0.1)',
-                          position: 'relative',
-                          overflow: 'visible',
-                          transition: 'all 0.3s ease-in-out',
-                          '&:hover': {
-                            boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-                            border: '1px solid rgba(255,255,255,0.2)'
-                          }
-                        }}>
-                      {/* Price Difference Stamp */}
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          top: -10,
-                          right: -10,
-                          zIndex: 1,
-                          bgcolor: '#d32f2f',
-                          color: '#fff',
-                              width: 75,
-                              height: 75,
-                          borderRadius: '50%',
-                          fontWeight: 'bold',
-                          boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transform: 'rotate(-12deg)',
-                          border: '2px solid rgba(255,255,255,0.3)',
-                              padding: '2px',
-                          '&::before': {
-                            content: '""',
-                            position: 'absolute',
-                            top: -2,
-                            left: -2,
-                            right: -2,
-                            bottom: -2,
-                            borderRadius: '50%',
-                            border: '2px solid rgba(255,255,255,0.4)',
-                          }
-                        }}
-                      >
-                        <Typography 
-                          sx={{ 
-                            fontSize: '0.9rem',
-                            lineHeight: 1,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                                mb: 0.5
-                            }}
-                          >
-                              {Math.round(Math.abs(listing.price_difference)).toLocaleString('es-ES')}
-                            €
-                          </Typography>
-                            <Typography
-                              sx={{
-                                fontSize: '0.7rem',
-                                lineHeight: 1,
-                                textAlign: 'center',
-                                textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                                opacity: 0.9
-                              }}
-                            >
-                              {listing.price_difference_percentage}
-                        </Typography>
-                      </Box>
-                      <CardContent sx={{ flex: 1, p: 2 }}>
-                        {listing.listing_images?.[0]?.image_url && (
-                          <Box sx={{ position: 'relative', paddingTop: '56.25%', mb: 2 }}>
-                            <Image 
-                              src={listing.listing_images[0].image_url} 
-                              alt={listing.title}
-                              fill
-                              style={{
-                                objectFit: 'cover',
-                                borderRadius: 8
-                              }}
-                            />
-                          </Box>
-                        )}
-                        <Typography variant="h6" gutterBottom noWrap sx={{ color: 'white' }}>
-                          {listing.title}
-                        </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                          <Box>
-                            <Typography variant="h5" sx={{ 
-                              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                              backgroundClip: 'text',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              fontWeight: 'bold'
-                            }}>
-                              {listing.price_text}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                              Mercado: {listing.market_price_text}
-                            </Typography>
-                          </Box>
-                        </Box>
-                        <Grid container spacing={1} sx={{ mb: 2 }}>
-                              <Grid item xs={4}>
-                            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Año</Typography>
-                            <Typography variant="body2" sx={{ color: 'white' }}>{listing.year}</Typography>
-                          </Grid>
-                              <Grid item xs={4}>
-                            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>KM</Typography>
-                            <Typography variant="body2" sx={{ color: 'white' }}>{listing.kilometers?.toLocaleString() || 'N/D'}</Typography>
-                          </Grid>
-                              <Grid item xs={4}>
-                                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Potencia</Typography>
-                                <Typography variant="body2" sx={{ color: 'white' }}>{listing.horsepower ? `${listing.horsepower} CV` : 'N/D'}</Typography>
-                              </Grid>
-                              <Grid item xs={4}>
-                            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Motor</Typography>
-                            <Typography variant="body2" sx={{ color: 'white' }}>{listing.fuel_type || 'N/D'}</Typography>
-                          </Grid>
-                              <Grid item xs={4}>
-                            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Cambio</Typography>
-                            <Typography variant="body2" sx={{ color: 'white' }}>{listing.transmission || 'N/D'}</Typography>
-                            </Grid>
-                              <Grid item xs={4}>
-                                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Distancia</Typography>
-                                <Typography variant="body2" sx={{ color: 'white' }}>{listing.distance ? `${listing.distance} km` : 'N/D'}</Typography>
-                          </Grid>
-                        </Grid>
-                        <Button 
-                          variant="outlined" 
-                          fullWidth
-                          href={listing.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{ 
-                            mt: 'auto',
-                            borderColor: 'rgba(255,255,255,0.3)',
-                            color: 'white',
-                            '&:hover': {
-                              borderColor: 'rgba(255,255,255,0.5)',
-                              background: 'rgba(255,255,255,0.05)'
-                            }
-                          }}
-                        >
-                          Ver Anuncio
-                        </Button>
-                      </CardContent>
-                    </Card>
-                      </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </>
-          ) : (
-              <Alert 
-                severity="info"
-                sx={{
-                  animation: 'slideIn 0.3s ease-out',
-                  '@keyframes slideIn': {
-                    from: { transform: 'translateY(-20px)', opacity: 0 },
-                    to: { transform: 'translateY(0)', opacity: 1 }
-                  }
-                }}
-              >
-              No se encontraron anuncios con los criterios seleccionados. Prueba a ajustar los parámetros de búsqueda.
-            </Alert>
-          )}
+                <ListingsGrid 
+                  listings={results.listings} 
+                  loading={loading}
+                  showNoResults={!loading && (!results.listings || results.listings.length === 0)}
+                />
+              </>
+            )}
 
+            {/* Suggested Listings */}
             {Object.keys(suggestionCategories).length > 0 && (
               <Box sx={{ mt: 4 }}>
                 <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -1536,206 +1115,36 @@ export default function SearchPage() {
                 </Grid>
                 
                 {selectedSuggestionCategory && suggestionCategories[selectedSuggestionCategory] && (
-                  <Grid container spacing={2}>
-                    {suggestionCategories[selectedSuggestionCategory].listings.map((listing: ApiListing) => {
-                      const price = listing.content.price;
-                      const marketPrice = results?.market_data?.median_price || 0;
-                      const priceDifference = marketPrice - price;
-                      const differencePercentage = (priceDifference / marketPrice) * 100;
-
-                      const transformedListing = {
-                        id: listing.id,
-                        title: listing.content.title,
-                        description: listing.content.storytelling,
-                        price: price,
-                        price_text: formatPrice(price),
-                        market_price: marketPrice,
-                        market_price_text: formatPrice(marketPrice),
-                        price_difference: priceDifference,
-                        price_difference_percentage: `${Math.abs(differencePercentage).toFixed(1)}%`,
-                        location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-                        year: listing.content.year,
-                        kilometers: listing.content.km,
-                        fuel_type: listing.content.engine,
-                        transmission: listing.content.gearbox,
-                        url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-                        horsepower: listing.content.horsepower,
-                        distance: listing.content.distance,
-                        listing_images: listing.content.images.map((img: ApiImage) => ({
-                          image_url: img.large || img.original
-                        }))
-                      };
-
-                      return (
-                        <Grid item xs={12} sm={6} md={4} key={listing.id}>
-                          <Box sx={{
-                            animation: 'fadeSlideIn 0.5s ease-out both',
-                            '@keyframes fadeSlideIn': {
-                              from: { 
-                                opacity: 0,
-                                transform: 'translateY(20px)'
-                              },
-                              to: { 
-                                opacity: 1,
-                                transform: 'translateY(0)'
-                              }
-                            }
-                          }}>
-                            <Card sx={{ 
-                              height: '100%', 
-                              display: 'flex', 
-                              flexDirection: 'column', 
-                              bgcolor: 'rgba(255,255,255,0.05)',
-                              backdropFilter: 'blur(10px)',
-                              borderRadius: 2,
-                              border: '1px solid rgba(255,255,255,0.1)',
-                              position: 'relative',
-                              overflow: 'visible',
-                              transition: 'all 0.3s ease-in-out',
-                              '&:hover': {
-                                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-                                border: '1px solid rgba(255,255,255,0.2)'
-                              }
-                            }}>
-                              {/* Price Difference Stamp */}
-                              <Box
-                                sx={{
-                                  position: 'absolute',
-                                  top: -10,
-                                  right: -10,
-                                  zIndex: 1,
-                                  bgcolor: '#d32f2f',
-                                  color: '#fff',
-                                  width: 75,
-                                  height: 75,
-                                  borderRadius: '50%',
-                                  fontWeight: 'bold',
-                                  boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
-                                  display: 'flex',
-                                  flexDirection: 'column',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  transform: 'rotate(-12deg)',
-                                  border: '2px solid rgba(255,255,255,0.3)',
-                                  padding: '2px',
-                                  '&::before': {
-                                    content: '""',
-                                    position: 'absolute',
-                                    top: -2,
-                                    left: -2,
-                                    right: -2,
-                                    bottom: -2,
-                                    borderRadius: '50%',
-                                    border: '2px solid rgba(255,255,255,0.4)',
-                                  }
-                                }}
-                              >
-                                <Typography 
-                                  sx={{ 
-                                    fontSize: '0.9rem',
-                                    lineHeight: 1,
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                                    mb: 0.5
-                                  }}
-                                >
-                                  {Math.round(Math.abs(transformedListing.price_difference)).toLocaleString('es-ES')}€
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    fontSize: '0.7rem',
-                                    lineHeight: 1,
-                                    textAlign: 'center',
-                                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                                    opacity: 0.9
-                                  }}
-                                >
-                                  {transformedListing.price_difference_percentage}
-                                </Typography>
-                              </Box>
-                              <CardContent sx={{ flex: 1, p: 2 }}>
-                                {transformedListing.listing_images?.[0]?.image_url && (
-                                  <Box sx={{ position: 'relative', paddingTop: '56.25%', mb: 2 }}>
-                                    <Image 
-                                      src={transformedListing.listing_images[0].image_url} 
-                                      alt={transformedListing.title}
-                                      fill
-                                      style={{
-                                        objectFit: 'cover',
-                                        borderRadius: 8
-                                      }}
-                                    />
-                                  </Box>
-                                )}
-                                <Typography variant="h6" gutterBottom noWrap sx={{ color: 'white' }}>
-                                  {transformedListing.title}
-                                </Typography>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                  <Box>
-                                    <Typography variant="h5" sx={{ 
-                                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                                      backgroundClip: 'text',
-                                      WebkitBackgroundClip: 'text',
-                                      WebkitTextFillColor: 'transparent',
-                                      fontWeight: 'bold'
-                                    }}>
-                                      {transformedListing.price_text}
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                                      Mercado: {transformedListing.market_price_text}
-                                    </Typography>
-                                  </Box>
-                                </Box>
-                                <Grid container spacing={1} sx={{ mb: 2 }}>
-                                  <Grid item xs={4}>
-                                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Año</Typography>
-                                    <Typography variant="body2" sx={{ color: 'white' }}>{transformedListing.year}</Typography>
-                                  </Grid>
-                                  <Grid item xs={4}>
-                                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>KM</Typography>
-                                    <Typography variant="body2" sx={{ color: 'white' }}>{transformedListing.kilometers.toLocaleString() || 'N/D'}</Typography>
-                                  </Grid>
-                                  <Grid item xs={4}>
-                                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Potencia</Typography>
-                                    <Typography variant="body2" sx={{ color: 'white' }}>{transformedListing.horsepower ? `${transformedListing.horsepower} CV` : 'N/D'}</Typography>
-                                  </Grid>
-                                  <Grid item xs={4}>
-                                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Motor</Typography>
-                                    <Typography variant="body2" sx={{ color: 'white' }}>{transformedListing.fuel_type || 'N/D'}</Typography>
-                                  </Grid>
-                                  <Grid item xs={4}>
-                                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Cambio</Typography>
-                                    <Typography variant="body2" sx={{ color: 'white' }}>{transformedListing.transmission || 'N/D'}</Typography>
-                                  </Grid>
-                                  <Grid item xs={4}>
-                                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Distancia</Typography>
-                                    <Typography variant="body2" sx={{ color: 'white' }}>{transformedListing.distance ? `${transformedListing.distance} km` : 'N/D'}</Typography>
-                                  </Grid>
-                                </Grid>
-                                <Button 
-                                  href={transformedListing.url} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  variant="contained" 
-                                  fullWidth 
-                                  sx={{ mt: 2 }}
-                                >
-                                  Ver anuncio
-                                </Button>
-                              </CardContent>
-                            </Card>
-                          </Box>
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
+                  <ListingsGrid 
+                    listings={suggestionCategories[selectedSuggestionCategory].listings.map(listing => ({
+                      id: listing.id,
+                      title: listing.content.title,
+                      description: listing.content.storytelling,
+                      price: listing.content.price,
+                      price_text: formatPrice(listing.content.price),
+                      market_price: results.market_data?.median_price || 0,
+                      market_price_text: formatPrice(results.market_data?.median_price || 0),
+                      price_difference: (results.market_data?.median_price || 0) - listing.content.price,
+                      price_difference_percentage: `${Math.abs(((results.market_data?.median_price || 0) - listing.content.price) / (results.market_data?.median_price || 1) * 100).toFixed(1)}%`,
+                      location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
+                      year: listing.content.year,
+                      kilometers: listing.content.km,
+                      fuel_type: listing.content.engine,
+                      transmission: listing.content.gearbox,
+                      url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
+                      horsepower: listing.content.horsepower,
+                      distance: listing.content.distance,
+                      listing_images: listing.content.images.map(img => ({
+                        image_url: img.large || img.original
+                      }))
+                    }))}
+                  />
                 )}
               </Box>
             )}
           </Box>
-      )}
-    </Container>
+        )}
+      </Container>
     </Box>
   )
 } 

@@ -24,6 +24,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import TopBar from '../components/TopBar'
 
 const Chat = dynamic(() => import('../components/Chat'), {
   ssr: false,
@@ -127,120 +128,7 @@ export default function HomePage() {
         }
       }
     }}>
-      {/* Sticky Top Bar */}
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1100,
-          background: 'rgba(0,0,0,0.5)',
-          backdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          py: { xs: 1.5, md: 2 }
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'space-between'
-          }}>
-            {/* Logo and Title */}
-            <Box sx={{ 
-              display: 'flex',
-              alignItems: 'center',
-              gap: { xs: 1.5, md: 2 }
-            }}>
-              <Box sx={{ 
-                position: 'relative',
-                width: { xs: 100, md: 120 },
-                height: { xs: 32, md: 40 }
-              }}>
-                <Image
-                  src="/logo.png"
-                  alt="Logo"
-                  fill
-                  style={{
-                    objectFit: 'contain'
-                  }}
-                />
-              </Box>
-              <Typography
-                variant="h6"
-                sx={{
-                  display: { xs: 'none', sm: 'block' },
-                  fontSize: { sm: '1.1rem', md: '1.25rem' },
-                  fontWeight: 700,
-                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                ChollosCarFinder
-              </Typography>
-            </Box>
-
-            {/* Buttons */}
-            <Stack direction="row" spacing={{ xs: 1, md: 2 }}>
-              <Button
-                variant="text"
-                sx={{
-                  color: 'white',
-                  px: { xs: 1.5, md: 2 },
-                  py: { xs: 0.75, md: 1 },
-                  textTransform: 'none',
-                  fontSize: { xs: '0.8rem', md: '0.9rem' },
-                  '&:hover': {
-                    background: 'rgba(255,255,255,0.05)'
-                  }
-                }}
-              >
-                Iniciar sesión
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  color: 'white',
-                  borderRadius: '28px',
-                  px: { xs: 2, md: 3 },
-                  py: { xs: 0.75, md: 1 },
-                  textTransform: 'none',
-                  fontSize: { xs: '0.8rem', md: '0.9rem' },
-                  '&:hover': {
-                    borderColor: '#4169E1',
-                    background: 'rgba(255,255,255,0.05)'
-                  }
-                }}
-                onClick={() => router.push('/search')}
-              >
-                Pruébalo
-              </Button>
-              <Button
-                variant="contained"
-                sx={{
-                  background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                  borderRadius: '28px',
-                  px: { xs: 2, md: 3 },
-                  py: { xs: 0.75, md: 1 },
-                  textTransform: 'none',
-                  fontSize: { xs: '0.8rem', md: '0.9rem' },
-                  '&:hover': {
-                    background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                  }
-                }}
-                onClick={() => router.push('/search')}
-              >
-                Empezar ahora
-              </Button>
-            </Stack>
-          </Box>
-        </Container>
-      </Box>
+      <TopBar />
 
       {/* Add padding to content to account for fixed header */}
       <Box sx={{ pt: { xs: 6, md: 8 } }}>
@@ -341,16 +229,6 @@ export default function HomePage() {
                   height: '100%'
                 }}
               >
-                {/* Main car image */}
-                <Image
-                  src="/car-silouette.png"
-                  alt="Car Silhouette"
-                  fill
-                  style={{
-                    objectFit: 'contain',
-                    filter: 'brightness(0.8) contrast(1.2)',
-                  }}
-                />
                 {/* Reflection effect */}
                 <Box
                   sx={{
@@ -437,6 +315,7 @@ export default function HomePage() {
                       <Button
                         variant="contained"
                         size="large"
+                        href="/search"
                         fullWidth={true}
                         sx={{
                           background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
