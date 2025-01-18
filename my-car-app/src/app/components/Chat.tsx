@@ -15,15 +15,14 @@ interface ChatProps {
   onClose: () => void;
 }
 
-export default function Chat({ }: ChatProps) {
-  const [isChatOpen, setIsChatOpen] = useState(false)
+export default function Chat({ isOpen, onClose }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentMessage, setCurrentMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const handleChatToggle = () => {
-    setIsChatOpen(prev => !prev)
+    onClose()
   }
 
   const scrollToBottom = () => {
@@ -96,38 +95,40 @@ export default function Chat({ }: ChatProps) {
 
   return (
     <Box>
-      {/* Chat Button */}
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: '24px',
-          right: '24px',
-          zIndex: 1200,
-        }}
-      >
-        <IconButton
-          onClick={handleChatToggle}
+      {/* Chat Button - Only show if not opened by parent */}
+      {!isOpen && (
+        <Box
           sx={{
-            width: 56,
-            height: 56,
-            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-            color: 'white',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-            '&:hover': {
-              background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.4)',
-            },
-            transition: 'all 0.3s ease',
-            transform: isChatOpen ? 'scale(0.9)' : 'scale(1)',
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 1200,
           }}
         >
-          <MessageSquare className="h-6 w-6" />
-        </IconButton>
-      </Box>
+          <IconButton
+            onClick={handleChatToggle}
+            sx={{
+              width: 56,
+              height: 56,
+              background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+              color: 'white',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+              '&:hover': {
+                background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.4)',
+              },
+              transition: 'all 0.3s ease',
+              transform: isOpen ? 'scale(0.9)' : 'scale(1)',
+            }}
+          >
+            <MessageSquare className="h-6 w-6" />
+          </IconButton>
+        </Box>
+      )}
 
       {/* Chat Window */}
-      <Fade in={isChatOpen}>
+      <Fade in={isOpen}>
         <Box
           sx={{
             position: 'fixed',

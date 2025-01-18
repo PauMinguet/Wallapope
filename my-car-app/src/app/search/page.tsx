@@ -428,9 +428,8 @@ export default function SearchPage() {
     }
     
     if (!isSignedIn) {
-      // Save form data before showing login modal
       localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
-      setHasAttemptedSearch(true) // Set the flag when user attempts to search
+      setHasAttemptedSearch(true)
       setShowSignIn(true)
       return
     }
@@ -439,7 +438,6 @@ export default function SearchPage() {
     setError(null)
     
     try {
-      // Convert numeric fields to numbers
       const searchParams = {
         ...formData,
         min_year: formData.min_year ? parseInt(formData.min_year) : undefined,
@@ -448,7 +446,6 @@ export default function SearchPage() {
         max_kilometers: formData.max_kilometers
       }
 
-      // Remove empty fields from the request
       const cleanParams = Object.fromEntries(
         Object.entries(searchParams).filter(([, value]) => 
           value !== '' && 
@@ -456,8 +453,6 @@ export default function SearchPage() {
           value !== null
         )
       )
-
-      console.log('Sending request with params:', cleanParams)
 
       const response = await fetch(`${BACKEND_URL}/api/search-single-car`, {
         method: 'POST',
@@ -472,7 +467,55 @@ export default function SearchPage() {
       if (data.error) {
         setError(data.error)
       } else {
-        setResults(data)
+        // Transform the listings to match our frontend format
+        const marketData = data.market_data || {}
+        const marketPrice = marketData.average_price || 0
+        
+        const transformedData = {
+          ...data,
+          listings: data.listings.map((listing: ApiListing) => {
+            const price = listing.content.price
+            const priceDifference = marketPrice - price
+            const differencePercentage = (priceDifference / marketPrice) * 100
+
+            return {
+              id: listing.id,
+              title: listing.content.title,
+              description: listing.content.storytelling,
+              price: price,
+              price_text: formatPrice(price),
+              market_price: marketPrice,
+              market_price_text: formatPrice(marketPrice),
+              price_difference: priceDifference,
+              price_difference_percentage: `${Math.abs(differencePercentage).toFixed(1)}%`,
+              location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
+              year: listing.content.year,
+              kilometers: listing.content.km,
+              fuel_type: listing.content.engine,
+              transmission: listing.content.gearbox,
+              url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
+              horsepower: listing.content.horsepower,
+              distance: listing.content.distance / 1000, // Convert to km
+              listing_images: listing.content.images.map((img: ApiImage) => ({
+                image_url: img.large || img.original
+              }))
+            }
+          }),
+          market_data: marketData ? {
+            average_price: marketData.average_price || 0,
+            average_price_text: formatPrice(marketData.average_price || 0),
+            median_price: marketData.median_price || 0,
+            median_price_text: formatPrice(marketData.median_price || 0),
+            min_price: marketData.min_price || 0,
+            min_price_text: formatPrice(marketData.min_price || 0),
+            max_price: marketData.max_price || 0,
+            max_price_text: formatPrice(marketData.max_price || 0),
+            total_listings: marketData.total_listings || 0,
+            valid_listings: marketData.valid_listings || 0
+          } : undefined
+        }
+        
+        setResults(transformedData)
       }
     } catch (err) {
       setError('Failed to perform search')
@@ -1206,7 +1249,7 @@ export default function SearchPage() {
                 <Typography variant="h6" sx={{ 
                   mb: 2,
                   fontWeight: 'bold',
-                  color: 'text.primary'
+                  color: 'white'
                 }}>
                   {results.listings.length} anuncios encontrados
                 </Typography>
