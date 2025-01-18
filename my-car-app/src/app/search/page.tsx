@@ -25,7 +25,7 @@ import {MyLocation } from '@mui/icons-material'
 import 'leaflet/dist/leaflet.css'
 import TopBar from '../components/TopBar'
 import ListingsGrid from '../components/ListingsGrid'
-import { useUser, SignUpButton } from '@clerk/nextjs'
+import { useUser, SignIn } from '@clerk/nextjs'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
@@ -274,8 +274,24 @@ function categorizeSuggestedListings(
   return categories;
 }
 
+const STORAGE_KEY = 'carSearchFormData'
+
 export default function SearchPage() {
-  const [formData, setFormData] = useState<SearchFormData>(initialFormData)
+  const [formData, setFormData] = useState<SearchFormData>(() => {
+    // Try to get saved form data from localStorage on initial load
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved)
+          return parsed
+        } catch (e) {
+          console.error('Error parsing saved form data:', e)
+        }
+      }
+    }
+    return initialFormData
+  })
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState<SearchResult | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -289,6 +305,35 @@ export default function SearchPage() {
   const [selectedSuggestionCategory, setSelectedSuggestionCategory] = useState<string | null>(null)
   const [suggestionCategories, setSuggestionCategories] = useState<Record<string, SuggestionCategory>>({})
   const { isSignedIn } = useUser()
+  const [showSignIn, setShowSignIn] = useState(false)
+  const [hasAttemptedSearch, setHasAttemptedSearch] = useState(false)
+
+  // Save form data whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
+    }
+  }, [formData])
+
+  // Restore selected brand and model when form data is loaded
+  useEffect(() => {
+    if (formData.brand) {
+      const foundBrand = brands.find(b => b.name === formData.brand)
+      if (foundBrand) {
+        setSelectedBrand(foundBrand)
+        // Fetch models for this brand
+        fetchModels(foundBrand.id.toString()).then(() => {
+          // After models are fetched, try to restore selected model
+          if (formData.model) {
+            const foundModel = models.find(m => m.nome === formData.model)
+            if (foundModel) {
+              setSelectedModel(foundModel)
+            }
+          }
+        })
+      }
+    }
+  }, [brands]) // Only run when brands are loaded
 
   useEffect(() => {
     fetchBrands()
@@ -375,7 +420,11 @@ export default function SearchPage() {
     e.preventDefault()
     
     if (!isSignedIn) {
-      return // The SignUpButton will handle showing the modal
+      // Save form data before showing login modal
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
+      setHasAttemptedSearch(true) // Set the flag when user attempts to search
+      setShowSignIn(true)
+      return
     }
     
     setLoading(true)
@@ -412,91 +461,11 @@ export default function SearchPage() {
       })
 
       const data = await response.json()
-      console.log('=== API Response ===')
-      console.log('Status:', response.status)
-      console.log('Raw response:', data)
-      console.log('Raw market data:', data.market_data)
-      console.log('===================')
       
       if (data.error) {
         setError(data.error)
       } else {
-        // Transform the listings to match our frontend format
-        const marketData = data.market_data || {}
-        const marketPrice = marketData.average_price || 0
-        console.log('Market price:', marketPrice)
-        console.log('Raw market data:', marketData)
-        
-        const transformedData: SearchResult = {
-          success: data.success,
-          filtered_results: data.filtered_results,
-          total_results: data.total_results,
-          search_parameters: data.search_parameters,
-          url: data.search_url,
-          market_data: marketData ? {
-            average_price: marketData.average_price || 0,
-            average_price_text: formatPrice(marketData.average_price || 0),
-            median_price: marketData.median_price || 0,
-            median_price_text: formatPrice(marketData.median_price || 0),
-            min_price: marketData.min_price || 0,
-            min_price_text: formatPrice(marketData.min_price || 0),
-            max_price: marketData.max_price || 0,
-            max_price_text: formatPrice(marketData.max_price || 0),
-            total_listings: marketData.total_listings || 0,
-            valid_listings: marketData.valid_listings || 0
-          } : undefined,
-          listings: data.listings.map((listing: ApiListing) => {
-            const price = listing.content.price
-            const priceDifference = marketPrice - price
-            const differencePercentage = (priceDifference / marketPrice) * 100
-
-            return {
-              id: listing.id,
-              title: listing.content.title,
-              description: listing.content.storytelling,
-              price: price,
-              price_text: formatPrice(price),
-              market_price: marketPrice,
-              market_price_text: formatPrice(marketPrice),
-              price_difference: priceDifference,
-              price_difference_percentage: `${Math.abs(differencePercentage).toFixed(1)}%`,
-              location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-              year: listing.content.year,
-              kilometers: listing.content.km,
-              fuel_type: listing.content.engine,
-              transmission: listing.content.gearbox,
-              url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-              horsepower: listing.content.horsepower,
-              distance: listing.content.distance,
-              listing_images: listing.content.images.map((img: ApiImage) => ({
-                image_url: img.large || img.original
-              }))
-            }
-          }),
-          suggested_listings: data.suggested_listings || []
-        }
-        
-        console.log('Transformed data:', transformedData)
-        console.log('Transformed market data:', transformedData.market_data)
-        
-        // Log suggested listings
-        const suggestedListings = transformedData.suggested_listings
-        if (suggestedListings && suggestedListings.length > 0) {
-          console.log('=== Suggested Listings ===')
-          console.log(`Found ${suggestedListings.length} suggested listings:`)
-          suggestedListings.forEach((listing, index) => {
-            console.log(`\nSuggested Listing ${index + 1}:`)
-            console.log(`Title: ${listing.content.title}`)
-            console.log(`Price: ${listing.content.price}€`)
-            console.log(`Year: ${listing.content.year}`)
-            console.log(`KM: ${listing.content.km}`)
-            console.log(`Location: ${listing.content.location.city}`)
-            console.log(`URL: https://es.wallapop.com/item/${listing.content.web_slug}`)
-          })
-          console.log('========================')
-        }
-        
-        setResults(transformedData)
+        setResults(data)
       }
     } catch (err) {
       setError('Failed to perform search')
@@ -586,6 +555,14 @@ export default function SearchPage() {
       color: 'rgba(255, 255, 255, 0.7)'
     }
   }
+
+  // Add effect to detect login and perform search
+  useEffect(() => {
+    if (isSignedIn && hasAttemptedSearch) {
+      handleSubmit(new Event('submit') as any)
+      setHasAttemptedSearch(false) // Reset the flag after performing the search
+    }
+  }, [isSignedIn])
 
   return (
     <Box sx={{ 
@@ -1112,49 +1089,29 @@ export default function SearchPage() {
               </Grid>
 
               <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-                {isSignedIn ? (
-                  <Button 
-                    variant="contained" 
-                    size="large"
-                    type="submit"
-                    disabled={loading}
-                    sx={{ 
-                      minWidth: 200,
-                      background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                      color: 'rgba(255,255,255,0.95)',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-                      fontWeight: 500,
-                      '&:hover': {
-                        background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                      },
-                      '&:disabled': {
-                        background: 'rgba(255,255,255,0.12)',
-                        color: 'rgba(255,255,255,0.3)'
-                      }
-                    }}
-                  >
-                    {loading ? <CircularProgress size={24} /> : 'Buscar'}
-                  </Button>
-                ) : (
-                  <SignUpButton mode="modal">
-                    <Button 
-                      variant="contained" 
-                      size="large"
-                      sx={{ 
-                        minWidth: 200,
-                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                        color: 'rgba(255,255,255,0.95)',
-                        textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-                        fontWeight: 500,
-                        '&:hover': {
-                          background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                        }
-                      }}
-                    >
-                      Registrarse para buscar
-                    </Button>
-                  </SignUpButton>
-                )}
+                <Button 
+                  variant="contained" 
+                  size="large"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  sx={{ 
+                    minWidth: 200,
+                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                    color: 'rgba(255,255,255,0.95)',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                    fontWeight: 500,
+                    borderRadius: '28px',
+                    '&:hover': {
+                      background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                    },
+                    '&:disabled': {
+                      background: 'rgba(255,255,255,0.12)',
+                      color: 'rgba(255,255,255,0.3)'
+                    }
+                  }}
+                >
+                  {loading ? <CircularProgress size={24} /> : 'Buscar'}
+                </Button>
               </Box>
             </CardContent>
           </form>
@@ -1310,6 +1267,40 @@ export default function SearchPage() {
           </Box>
         )}
       </Container>
+      
+      {showSignIn && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            bgcolor: 'rgba(0,0,0,0.8)',
+            backdropFilter: 'blur(8px)',
+            zIndex: 1200,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          onClick={() => setShowSignIn(false)}
+        >
+          <Box 
+            onClick={(e) => e.stopPropagation()}
+            sx={{ 
+              maxWidth: '400px',
+              width: '90%',
+              borderRadius: 2,
+              overflow: 'hidden'
+            }}
+          >
+            <SignIn 
+              afterSignInUrl={window.location.href}
+              afterSignUpUrl={window.location.href}
+            />
+          </Box>
+        </Box>
+      )}
     </Box>
   )
 } 

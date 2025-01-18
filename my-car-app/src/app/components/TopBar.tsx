@@ -182,13 +182,15 @@ export default function TopBar() {
                     sx={{
                       color: 'white',
                       borderColor: 'rgba(255,255,255,0.3)',
+                      borderRadius: '28px',
+                      px: { xs: 2, md: 3 },
                       '&:hover': {
                         borderColor: 'white',
                         bgcolor: 'rgba(255,255,255,0.1)'
                       }
                     }}
                   >
-                    Iniciar Sesión
+                    Log In
                   </Button>
                 </SignInButton>
                 <SignUpButton mode="modal">
@@ -197,12 +199,14 @@ export default function TopBar() {
                     sx={{
                       background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                       color: 'white',
+                      borderRadius: '28px',
+                      px: { xs: 2, md: 3 },
                       '&:hover': {
                         background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                       }
                     }}
                   >
-                    Registrarse
+                    Sign Up
                   </Button>
                 </SignUpButton>
               </>
