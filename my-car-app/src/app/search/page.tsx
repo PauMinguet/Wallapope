@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect, Suspense, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import { 
   Container, 
@@ -315,6 +315,21 @@ export default function SearchPage() {
     }
   }, [formData])
 
+  const fetchModels = useCallback(async (brandId: string) => {
+    setLoadingModels(true)
+    try {
+      const response = await fetch(`/api/car-data?type=models&brandId=${brandId}`)
+      if (!response.ok) throw new Error('Failed to fetch models')
+      const data = await response.json()
+      setModels(data || [])
+    } catch (err) {
+      console.error('Error fetching models:', err)
+      setError('Error cargando los modelos')
+    } finally {
+      setLoadingModels(false)
+    }
+  }, [])
+
   // Restore selected brand and model when form data is loaded
   useEffect(() => {
     if (formData.brand) {
@@ -333,7 +348,7 @@ export default function SearchPage() {
         })
       }
     }
-  }, [brands]) // Only run when brands are loaded
+  }, [brands, formData.brand, formData.model, models, fetchModels])
 
   useEffect(() => {
     fetchBrands()
@@ -358,21 +373,6 @@ export default function SearchPage() {
       setError('Error cargando las marcas')
     } finally {
       setLoadingBrands(false)
-    }
-  }
-
-  const fetchModels = async (brandId: string) => {
-    setLoadingModels(true)
-    try {
-      const response = await fetch(`/api/car-data?type=models&brandId=${brandId}`)
-      if (!response.ok) throw new Error('Failed to fetch models')
-      const data = await response.json()
-      setModels(data || [])
-    } catch (err) {
-      console.error('Error fetching models:', err)
-      setError('Error cargando los modelos')
-    } finally {
-      setLoadingModels(false)
     }
   }
 
@@ -416,8 +416,10 @@ export default function SearchPage() {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = useCallback(async (e: React.FormEvent | React.SyntheticEvent) => {
+    if (e) {
+      e.preventDefault()
+    }
     
     if (!isSignedIn) {
       // Save form data before showing login modal
@@ -429,7 +431,6 @@ export default function SearchPage() {
     
     setLoading(true)
     setError(null)
-    console.log('Submitting form data:', formData)
     
     try {
       // Convert numeric fields to numbers
@@ -473,7 +474,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [formData, isSignedIn])
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-ES', {
@@ -559,10 +560,10 @@ export default function SearchPage() {
   // Add effect to detect login and perform search
   useEffect(() => {
     if (isSignedIn && hasAttemptedSearch) {
-      handleSubmit(new Event('submit') as any)
+      handleSubmit({ preventDefault: () => {} } as React.FormEvent<HTMLFormElement>)
       setHasAttemptedSearch(false) // Reset the flag after performing the search
     }
-  }, [isSignedIn])
+  }, [isSignedIn, hasAttemptedSearch, handleSubmit])
 
   return (
     <Box sx={{ 
