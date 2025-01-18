@@ -283,7 +283,6 @@ export default function SearchPage() {
   const [models, setModels] = useState<Model[]>([])
   const [loadingBrands, setLoadingBrands] = useState(true)
   const [loadingModels, setLoadingModels] = useState(false)
-  const yearOptions = Array.from({ length: 36 }, (_, i) => (2025 - i).toString())
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
   const [locationError, setLocationError] = useState<string | null>(null)
@@ -563,6 +562,31 @@ export default function SearchPage() {
     }
   }, [results]);
 
+  // Add common styles for input fields
+  const inputStyles = {
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: 'rgba(255, 255, 255, 0.23)',
+      },
+      '&:hover fieldset': {
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      }
+    },
+    '& .MuiInputLabel-root': {
+      color: 'rgba(255, 255, 255, 0.7)',
+      '&.Mui-focused': {
+        color: 'white'
+      }
+    },
+    '& .MuiAutocomplete-clearIndicator, & .MuiAutocomplete-popupIndicator': {
+      color: 'rgba(255, 255, 255, 0.7)'
+    }
+  }
+
   return (
     <Box sx={{ 
       overflow: 'hidden',
@@ -637,6 +661,30 @@ export default function SearchPage() {
         position: 'relative',
         zIndex: 1
       }}>
+        {/* Title Section */}
+        <Box sx={{ textAlign: 'left', mb: { xs: 4, md: 6 } }}>
+          <Typography variant="h4" component="h1" sx={{ 
+            fontWeight: 'bold',
+            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            Encuentra tu coche ideal
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: 500,
+              mb: { xs: 1, md: 1.5 },
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
+            }}
+          >
+            Personaliza tu búsqueda y descubre las mejores ofertas del mercado
+          </Typography>
+        </Box>
+
         <Card sx={{ 
           mb: 2, 
           bgcolor: 'rgba(255,255,255,0.1)',
@@ -667,6 +715,7 @@ export default function SearchPage() {
                             label="Marca"
                             variant="outlined"
                             size="small"
+                            sx={inputStyles}
                             InputProps={{
                               ...params.InputProps,
                               endAdornment: (
@@ -678,6 +727,20 @@ export default function SearchPage() {
                             }}
                           />
                         )}
+                        sx={{
+                          '& .MuiAutocomplete-paper': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            color: 'white',
+                          },
+                          '& .MuiAutocomplete-option': {
+                            '&:hover': {
+                              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            },
+                            '&[aria-selected="true"]': {
+                              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            }
+                          }
+                        }}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -693,6 +756,7 @@ export default function SearchPage() {
                             label="Modelo"
                             variant="outlined"
                             size="small"
+                            sx={inputStyles}
                             InputProps={{
                               ...params.InputProps,
                               endAdornment: (
@@ -704,58 +768,122 @@ export default function SearchPage() {
                             }}
                           />
                         )}
+                        sx={{
+                          '& .MuiAutocomplete-paper': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            color: 'white',
+                          },
+                          '& .MuiAutocomplete-option': {
+                            '&:hover': {
+                              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            },
+                            '&[aria-selected="true"]': {
+                              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            }
+                          }
+                        }}
                       />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
-                      <Autocomplete
-                        options={yearOptions}
-                        value={formData.min_year || null}
-                        onChange={(event, newValue) => {
+                      <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
+                        Año: {formData.min_year || 1990} - {formData.max_year || 2025}
+                      </Typography>
+                      <Slider
+                        value={[
+                          parseInt(formData.min_year || '1990'),
+                          parseInt(formData.max_year || '2025')
+                        ]}
+                        onChange={(event: Event, newValue: number | number[]) => {
+                          const [min, max] = newValue as number[];
                           setFormData(prev => ({
                             ...prev,
-                            min_year: newValue || ''
-                          }))
+                            min_year: min.toString(),
+                            max_year: max.toString()
+                          }));
                         }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Año mínimo"
-                            variant="outlined"
-                            size="small"
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Autocomplete
-                        options={yearOptions}
-                        value={formData.max_year || null}
-                        onChange={(event, newValue) => {
-                          setFormData(prev => ({
-                            ...prev,
-                            max_year: newValue || ''
-                          }))
+                        min={1990}
+                        max={2025}
+                        step={1}
+                        marks={[
+                          { value: 1990, label: '1990' },
+                          { value: 2000, label: '2000' },
+                          { value: 2010, label: '2010' },
+                          { value: 2020, label: '2020' },
+                          { value: 2025, label: '2025' }
+                        ]}
+                        sx={{ 
+                          '& .MuiSlider-markLabel': {
+                            color: 'rgba(255,255,255,0.7)',
+                          },
+                          '& .MuiSlider-track': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          },
+                          '& .MuiSlider-thumb': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                            '&:hover, &.Mui-focusVisible': {
+                              boxShadow: '0 0 0 8px rgba(65, 105, 225, 0.16)'
+                            }
+                          },
+                          '& .MuiSlider-rail': {
+                            background: 'rgba(255,255,255,0.2)',
+                          },
+                          '& .MuiSlider-mark': {
+                            backgroundColor: 'rgba(255,255,255,0.3)',
+                            height: 8,
+                            width: 2,
+                            '&.MuiSlider-markActive': {
+                              backgroundColor: 'rgba(255,255,255,0.7)',
+                            }
+                          }
                         }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Año máximo"
-                            variant="outlined"
-                            size="small"
-                          />
-                        )}
                       />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                       <FormControl fullWidth variant="outlined" size="small">
-                        <InputLabel>Tipo de motor</InputLabel>
+                        <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)', '&.Mui-focused': { color: 'white' } }}>
+                          Tipo de motor
+                        </InputLabel>
                         <Select
                           name="engine"
                           value={formData.engine}
                           label="Tipo de motor"
                           onChange={handleSelectChange}
+                          sx={{
+                            color: 'white',
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.5)',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'white',
+                            },
+                            '& .MuiSvgIcon-root': {
+                              color: 'white',
+                            }
+                          }}
+                          MenuProps={{
+                            PaperProps: {
+                              sx: {
+                                bgcolor: 'rgba(0, 0, 0, 0.9)',
+                                color: 'white',
+                                '& .MuiMenuItem-root': {
+                                  '&:hover': {
+                                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                  },
+                                  '&.Mui-selected': {
+                                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                                    '&:hover': {
+                                      bgcolor: 'rgba(255, 255, 255, 0.2)',
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }}
                         >
                           <MenuItem value="">Cualquiera</MenuItem>
                           <MenuItem value="gasoline">Gasolina</MenuItem>
@@ -775,17 +903,54 @@ export default function SearchPage() {
                         onChange={handleInputChange}
                         variant="outlined"
                         size="small"
+                        sx={inputStyles}
                       />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                       <FormControl fullWidth variant="outlined" size="small">
-                        <InputLabel>Cambio</InputLabel>
+                        <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)', '&.Mui-focused': { color: 'white' } }}>
+                          Cambio
+                        </InputLabel>
                         <Select
                           name="gearbox"
                           value={formData.gearbox}
                           label="Cambio"
                           onChange={handleSelectChange}
+                          sx={{
+                            color: 'white',
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.5)',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'white',
+                            },
+                            '& .MuiSvgIcon-root': {
+                              color: 'white',
+                            }
+                          }}
+                          MenuProps={{
+                            PaperProps: {
+                              sx: {
+                                bgcolor: 'rgba(0, 0, 0, 0.9)',
+                                color: 'white',
+                                '& .MuiMenuItem-root': {
+                                  '&:hover': {
+                                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                  },
+                                  '&.Mui-selected': {
+                                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                                    '&:hover': {
+                                      bgcolor: 'rgba(255, 255, 255, 0.2)',
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }}
                         >
                           <MenuItem value="">Cualquiera</MenuItem>
                           <MenuItem value="manual">Manual</MenuItem>
@@ -795,7 +960,7 @@ export default function SearchPage() {
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
-                      <Typography variant="subtitle2" gutterBottom>
+                      <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
                         Distancia de búsqueda: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
                       </Typography>
                       <Slider
@@ -834,7 +999,7 @@ export default function SearchPage() {
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
-                      <Typography variant="subtitle2" gutterBottom>
+                      <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
                         Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${(formData.max_kilometers / 1000).toFixed(0)}k`}
                       </Typography>
                       <Slider
@@ -922,7 +1087,6 @@ export default function SearchPage() {
                       variant="contained"
                       onClick={handleLocationRequest}
                       startIcon={<MyLocation />}
-                      fullWidth
                       sx={{ 
                         height: 36,
                         background: '#2C3E93',
@@ -931,7 +1095,8 @@ export default function SearchPage() {
                         fontWeight: 500,
                         '&:hover': {
                           background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                        }
+                        },
+                        marginBottom: 2
                       }}
                     >
                       Encuentrame

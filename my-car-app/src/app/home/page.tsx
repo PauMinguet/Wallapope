@@ -25,6 +25,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import TopBar from '../components/TopBar'
+import { useState } from 'react'
 
 const Chat = dynamic(() => import('../components/Chat'), {
   ssr: false,
@@ -38,6 +39,7 @@ const MotionTypography = motion.create(Typography)
 
 export default function HomePage() {
   const router = useRouter()
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
   const features = [
     {
@@ -707,6 +709,7 @@ export default function HomePage() {
                 <Button
                   variant="outlined"
                   endIcon={<ArrowForward />}
+                  onClick={() => setIsChatOpen(true)}
                   sx={{ 
                     fontWeight: 'bold',
                     borderColor: 'rgba(255,255,255,0.2)',
@@ -825,7 +828,7 @@ export default function HomePage() {
       </Box>
 
       {/* Chat component */}
-      <Chat />
+      <Chat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       
       {/* Live Activity Toast */}
       <LiveActivityToast />

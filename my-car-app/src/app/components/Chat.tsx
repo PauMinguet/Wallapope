@@ -10,7 +10,12 @@ interface Message {
   content: string
 }
 
-export default function Chat() {
+interface ChatProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function Chat({ }: ChatProps) {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [currentMessage, setCurrentMessage] = useState('')
@@ -127,9 +132,9 @@ export default function Chat() {
           sx={{
             position: 'fixed',
             bottom: '96px',
-            right: '24px',
-            width: '380px',
-            height: '600px',
+            right: { xs: '12px', sm: '24px' },
+            width: { xs: 'calc(100% - 24px)', sm: '380px' },
+            height: '500px',
             bgcolor: '#111111',
             borderRadius: '16px',
             boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
