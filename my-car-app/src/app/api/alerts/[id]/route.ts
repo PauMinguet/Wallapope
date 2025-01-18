@@ -7,16 +7,11 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_KEY!
 )
 
-interface RouteSegmentProps {
-  params: { id: string }
-}
-
-export async function PUT(
-  request: NextRequest,
-  props: RouteSegmentProps
-) {
+export async function POST(
+  request: NextRequest
+): Promise<NextResponse> {
   const { userId } = getAuth(request)
-  const { id } = props.params
+  const id = request.url.split('/').pop()
   
   if (!userId) {
     return new NextResponse('Unauthorized', { status: 401 })
@@ -65,4 +60,4 @@ export async function PUT(
     console.error('Error updating alert:', error)
     return new NextResponse('Error updating alert', { status: 500 })
   }
-} 
+}

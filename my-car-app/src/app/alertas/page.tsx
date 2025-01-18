@@ -414,7 +414,7 @@ export default function AlertasPage() {
           ? `/api/alerts/${editingAlert.id}`
           : '/api/alerts',
         {
-          method: editingAlert ? 'PUT' : 'POST',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
