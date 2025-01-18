@@ -330,37 +330,61 @@ export default function SearchPage() {
     }
   }, [])
 
-  // Restore selected brand and model when form data is loaded
-  useEffect(() => {
-    if (formData.brand) {
-      const foundBrand = brands.find(b => b.name === formData.brand)
-      if (foundBrand) {
-        setSelectedBrand(foundBrand)
-        // Fetch models for this brand
-        fetchModels(foundBrand.id.toString()).then(() => {
-          // After models are fetched, try to restore selected model
-          if (formData.model) {
-            const foundModel = models.find(m => m.nome === formData.model)
-            if (foundModel) {
-              setSelectedModel(foundModel)
-            }
-          }
-        })
-      }
-    }
-  }, [brands, formData.brand, formData.model, models, fetchModels])
-
+  // Initial data load
   useEffect(() => {
     fetchBrands()
   }, [])
 
+  // Handle brand selection and model fetching
   useEffect(() => {
     if (selectedBrand) {
       fetchModels(selectedBrand.id.toString())
     } else {
       setModels([])
     }
-  }, [selectedBrand])
+  }, [selectedBrand?.id, fetchModels])
+
+  // Restore saved form data only once when brands are loaded
+  useEffect(() => {
+    if (brands.length > 0 && formData.brand) {
+      const foundBrand = brands.find(b => b.name === formData.brand)
+      if (foundBrand) {
+        setSelectedBrand(foundBrand)
+        // Only fetch models if we have a model to restore
+        if (formData.model) {
+          fetchModels(foundBrand.id.toString())
+        }
+      }
+    }
+  }, [brands, formData.brand, formData.model, fetchModels])
+
+  // Update selected model when models array changes
+  useEffect(() => {
+    if (models.length > 0 && formData.model) {
+      const foundModel = models.find(m => m.nome === formData.model)
+      if (foundModel) {
+        setSelectedModel(foundModel)
+      }
+    }
+  }, [models, formData.model])
+
+  const handleBrandChange = useCallback((event: React.SyntheticEvent | null, newValue: Brand | null) => {
+    setSelectedBrand(newValue)
+    setSelectedModel(null)
+    setFormData(prev => ({
+      ...prev,
+      brand: newValue ? newValue.name : '',
+      model: '' // Reset model when brand changes
+    }))
+  }, [])
+
+  const handleModelChange = useCallback((event: React.SyntheticEvent | null, newValue: Model | null) => {
+    setSelectedModel(newValue)
+    setFormData(prev => ({
+      ...prev,
+      model: newValue ? newValue.nome : ''
+    }))
+  }, [])
 
   const fetchBrands = async () => {
     try {
@@ -396,24 +420,6 @@ export default function SearchPage() {
         ...(name === 'brand' ? { model: '' } : {})
       }))
     }
-  }
-
-  const handleBrandChange = (event: React.SyntheticEvent | null, newValue: Brand | null) => {
-    setSelectedBrand(newValue)
-    setSelectedModel(null)
-    setFormData(prev => ({
-      ...prev,
-      brand: newValue ? newValue.name : '',
-      model: '' // Reset model when brand changes
-    }))
-  }
-
-  const handleModelChange = (event: React.SyntheticEvent | null, newValue: Model | null) => {
-    setSelectedModel(newValue)
-    setFormData(prev => ({
-      ...prev,
-      model: newValue ? newValue.nome : ''
-    }))
   }
 
   const handleSubmit = useCallback(async (e: React.FormEvent | React.SyntheticEvent) => {
