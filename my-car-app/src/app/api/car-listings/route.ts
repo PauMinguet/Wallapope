@@ -88,7 +88,7 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    // Filter and transform listings
+
     const filteredListings = listings
       .filter((listing: CarListing) => {
         // Skip if any flag is true (reserved, sold, banned, etc)
