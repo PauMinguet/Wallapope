@@ -12,6 +12,8 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_KEY!
 )
 
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+
 export async function POST(req: Request) {
   const body = await req.text()
   const headersList = await headers()
@@ -29,47 +31,102 @@ export async function POST(req: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     )
-  } catch (error) {
-    return new NextResponse(`Webhook Error: ${error instanceof Error ? error.message : 'Unknown Error'}`, { status: 400 })
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err)
+    return new NextResponse('Webhook signature verification failed', { status: 400 })
   }
 
-  const session = event.data.object as Stripe.Checkout.Session
+  try {
+    switch (event.type) {
+      case 'customer.subscription.created':
+      case 'customer.subscription.updated':
+      case 'customer.subscription.deleted': {
+        const subscription = event.data.object as Stripe.Subscription
+        const customerId = subscription.customer as string
+        
+        // Get user from Supabase using Stripe customer ID
+        const { data: userData } = await supabase
+          .from('users')
+          .select('clerk_id')
+          .eq('stripe_customer_id', customerId)
+          .single()
 
-  switch (event.type) {
-    case 'checkout.session.completed':
-      // Retrieve the subscription details
-      const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
+        if (!userData) {
+          console.error('User not found for customer:', customerId)
+          return new NextResponse('User not found', { status: 404 })
+        }
 
-      // Update the user's subscription status
-      await supabase
-        .from('users')
-        .update({
-          stripe_customer_id: session.customer,
-          subscription_status: 'active',
-          subscription_tier: subscription.metadata.tier,
-          subscription_end_date: new Date(subscription.current_period_end * 1000).toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .eq('clerk_id', session.metadata?.userId)
+        // Update user's subscription status
+        await supabase
+          .from('users')
+          .update({
+            subscription_status: subscription.status,
+            subscription_tier: subscription.metadata.tier,
+            subscription_id: subscription.id,
+            current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            cancel_at_period_end: subscription.cancel_at_period_end
+          })
+          .eq('clerk_id', userData.clerk_id)
 
-      break
+        break
+      }
 
-    case 'customer.subscription.updated':
-    case 'customer.subscription.deleted':
-      const subscriptionUpdated = event.data.object as Stripe.Subscription
-      
-      // Update the user's subscription status
-      await supabase
-        .from('users')
-        .update({
-          subscription_status: subscriptionUpdated.status === 'active' ? 'active' : 'inactive',
-          subscription_end_date: new Date(subscriptionUpdated.current_period_end * 1000).toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .eq('stripe_customer_id', subscriptionUpdated.customer)
+      case 'customer.subscription.trial_will_end': {
+        const subscription = event.data.object as Stripe.Subscription
+        // Handle trial ending - maybe send notification to user
+        break
+      }
 
-      break
+      case 'invoice.payment_succeeded': {
+        const invoice = event.data.object as Stripe.Invoice
+        if (invoice.subscription) {
+          const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string)
+          
+          // Update payment status and next billing date
+          const { data: userData } = await supabase
+            .from('users')
+            .select('clerk_id')
+            .eq('stripe_customer_id', invoice.customer as string)
+            .single()
+
+          if (userData) {
+            await supabase
+              .from('users')
+              .update({
+                last_payment_status: 'succeeded',
+                current_period_end: new Date(subscription.current_period_end * 1000).toISOString()
+              })
+              .eq('clerk_id', userData.clerk_id)
+          }
+        }
+        break
+      }
+
+      case 'invoice.payment_failed': {
+        const invoice = event.data.object as Stripe.Invoice
+        
+        // Update payment status
+        const { data: userData } = await supabase
+          .from('users')
+          .select('clerk_id')
+          .eq('stripe_customer_id', invoice.customer as string)
+          .single()
+
+        if (userData) {
+          await supabase
+            .from('users')
+            .update({
+              last_payment_status: 'failed'
+            })
+            .eq('clerk_id', userData.clerk_id)
+        }
+        break
+      }
+    }
+
+    return new NextResponse('Webhook processed successfully', { status: 200 })
+  } catch (err) {
+    console.error('Error processing webhook:', err)
+    return new NextResponse('Webhook processing failed', { status: 500 })
   }
-
-  return new NextResponse(null, { status: 200 })
 } 

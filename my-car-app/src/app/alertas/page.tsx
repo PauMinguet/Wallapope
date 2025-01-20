@@ -55,6 +55,7 @@ import { useUser } from '@clerk/nextjs'
 import TopBar from '../components/TopBar'
 import { getCurrentUser } from '@/lib/db'
 import ListingsGrid from '../components/ListingsGrid'
+import { useSubscription } from '@/hooks/useSubscription'
 
 // Dynamic import for the map component
 const MapComponent = dynamic(
@@ -253,6 +254,9 @@ export default function AlertasPage() {
   const [testResults, setTestResults] = useState<Record<string, TestResults>>({})
   const [testingAlerts, setTestingAlerts] = useState<Record<string, boolean>>({})
   const [visibleTestResults, setVisibleTestResults] = useState<Record<string, boolean>>({})
+
+  // Require at least 'basic' subscription to access alerts
+  const { loading: subscriptionLoading } = useSubscription('basic')
 
   // Update the authentication check
   useEffect(() => {
@@ -587,6 +591,20 @@ export default function AlertasPage() {
   // Only return null if we're actually redirecting
   if (!isSignedIn && isLoaded) {
     return null
+  }
+
+  if (subscriptionLoading) {
+    return (
+      <Box sx={{ 
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: '#000000'
+      }}>
+        <CircularProgress sx={{ color: 'white' }} />
+      </Box>
+    )
   }
 
   return (

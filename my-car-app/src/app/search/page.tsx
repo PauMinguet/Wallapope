@@ -26,6 +26,7 @@ import 'leaflet/dist/leaflet.css'
 import TopBar from '../components/TopBar'
 import ListingsGrid from '../components/ListingsGrid'
 import { useUser, SignIn } from '@clerk/nextjs'
+import { useSubscription } from '@/hooks/useSubscription'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
@@ -277,6 +278,7 @@ function categorizeSuggestedListings(
 const STORAGE_KEY = 'carSearchFormData'
 
 export default function SearchPage() {
+  const { loading: subscriptionLoading } = useSubscription('pro')
   const [formData, setFormData] = useState<SearchFormData>(() => {
     // Try to get saved form data from localStorage on initial load
     if (typeof window !== 'undefined') {
@@ -613,6 +615,20 @@ export default function SearchPage() {
       setHasAttemptedSearch(false) // Reset the flag after performing the search
     }
   }, [isSignedIn, hasAttemptedSearch, handleSubmit])
+
+  if (subscriptionLoading) {
+    return (
+      <Box sx={{ 
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: '#000000'
+      }}>
+        <CircularProgress sx={{ color: 'white' }} />
+      </Box>
+    )
+  }
 
   return (
     <Box sx={{ 
