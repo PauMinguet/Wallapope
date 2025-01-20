@@ -342,7 +342,7 @@ export default function SearchPage() {
     } else {
       setModels([])
     }
-  }, [selectedBrand?.id, fetchModels])
+  }, [selectedBrand, fetchModels])
 
   // Restore saved form data only once when brands are loaded
   useEffect(() => {

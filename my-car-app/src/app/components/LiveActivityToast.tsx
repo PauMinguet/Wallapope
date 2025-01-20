@@ -11,7 +11,7 @@ const carModels = {
   Audi: ['A1', 'A3', 'A4', 'A6', 'Q3', 'Q5'],
   Toyota: ['Corolla', 'RAV4', 'Yaris', 'C-HR', 'Camry', 'Land Cruiser'],
   Honda: ['Civic', 'CR-V', 'HR-V', 'Jazz', 'Accord'],
-  Ford: ['Fiesta', 'Focus', 'Kuga', 'Puma', 'Mustang'],
+  Ford: ['Fiesta', 'Focus', 'Kuga', 'Puma'],
   Volkswagen: ['Golf', 'Polo', 'Tiguan', 'T-Roc', 'Passat'],
   Seat: ['Ibiza', 'Leon', 'Arona', 'Ateca', 'Tarraco'],
   Renault: ['Clio', 'Captur', 'Megane', 'Kadjar', 'Arkana'],
@@ -47,7 +47,7 @@ export default function LiveActivityToast() {
       const models = carModels[make as keyof typeof carModels]
       const model = models[Math.floor(Math.random() * models.length)]
       const currentYear = new Date().getFullYear()
-      const year = Math.floor(Math.random() * 8) + (currentYear - 7)
+      const year = Math.floor(Math.random() * 8) + (currentYear - 10)
       const username = generateRandomUser()
 
       setNotification({
@@ -67,7 +67,7 @@ export default function LiveActivityToast() {
 
     const interval = setInterval(() => {
       createNotification()
-    }, Math.floor(Math.random() * 10000) + 10000) // Random delay between 10-20 seconds
+    }, Math.floor(Math.random() * 10000) + 20000) // Random delay between 10-20 seconds
 
     return () => clearInterval(interval)
   }, [])

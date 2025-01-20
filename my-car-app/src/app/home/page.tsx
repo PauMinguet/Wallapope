@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import TopBar from '../components/TopBar'
 import { useState } from 'react'
+import { useUser } from '@clerk/nextjs'
 
 const Chat = dynamic(() => import('../components/Chat'), {
   ssr: false,
@@ -40,6 +41,29 @@ const MotionTypography = motion.create(Typography)
 export default function HomePage() {
   const router = useRouter()
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const { isSignedIn } = useUser()
+
+  const handleSubscription = async (tier: string) => {
+    if (!isSignedIn) {
+      router.push('/sign-up')
+      return
+    }
+
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tier }),
+      })
+
+      const { url } = await response.json()
+      window.location.href = url
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
 
   const features = [
     {
@@ -78,7 +102,8 @@ export default function HomePage() {
         'Actualizaciones diarias'
       ],
       icon: <Search sx={{ fontSize: 40 }} />,
-      color: 'primary' as const
+      color: 'primary' as const,
+      tier: 'basic'
     },
     {
       title: 'Pro',
@@ -95,7 +120,8 @@ export default function HomePage() {
       ],
       icon: <Star sx={{ fontSize: 40 }} />,
       color: 'warning' as const,
-      popular: true
+      popular: true,
+      tier: 'pro'
     },
     {
       title: 'Empresas',
@@ -111,7 +137,8 @@ export default function HomePage() {
         'Integración personalizada'
       ],
       icon: <Business sx={{ fontSize: 40 }} />,
-      color: 'primary' as const
+      color: 'primary' as const,
+      tier: 'business'
     }
   ]
 
@@ -669,6 +696,7 @@ export default function HomePage() {
                             fullWidth
                             size="large"
                             endIcon={<ArrowForward />}
+                            onClick={() => handleSubscription(tier.tier)}
                             sx={{
                               py: 1.5,
                               borderRadius: '28px',
