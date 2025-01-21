@@ -32,7 +32,7 @@ export default function PricingSection({ onContactClick }: PricingSectionProps) 
   const pricingTiers = [
     {
       title: 'Básico',
-      price: '4,99€',
+      price: '3,99€',
       period: '/mes',
       description: 'Perfecto para empezar a buscar tu coche ideal',
       features: [
@@ -47,16 +47,15 @@ export default function PricingSection({ onContactClick }: PricingSectionProps) 
     },
     {
       title: 'Pro',
-      price: '9,99€',
+      price: '11,99€',
       period: '/mes',
       description: 'Para compradores serios que quieren las mejores ofertas',
       features: [
         '5 búsquedas guardadas',
-        'Alertas instantáneas',
+        'Alertas personalizadas',
         'Análisis avanzado de precios',
-        'Predicción de precios',
-        'Historial de precios',
-        'Soporte prioritario'
+        'Soporte prioritario',
+        'Modo rápido: 10 chollos preconfiguradas',
       ],
       icon: <Star sx={{ fontSize: 40 }} />,
       color: 'warning' as const,
@@ -64,17 +63,18 @@ export default function PricingSection({ onContactClick }: PricingSectionProps) 
       tier: 'pro'
     },
     {
-      title: 'Empresas',
-      price: '24,99€',
+      title: 'Compraventa',
+      price: '39,99€',
       period: '/mes',
       description: 'Solución completa para profesionales del sector',
       features: [
         'Búsquedas ilimitadas',
-        'API de acceso',
+        'Historial de precios',
         'Panel de control avanzado',
+        'Modo rápido: Descubre chollos con solo deslizar',
         'Análisis de mercado en tiempo real',
         'Soporte 24/7',
-        'Integración personalizada'
+        'Canal directo para sugerencias de mejoras o funciones personalizadas'
       ],
       icon: <Business sx={{ fontSize: 40 }} />,
       color: 'primary' as const,

@@ -8,17 +8,12 @@ import {
   Grid,
   Card,
   CardContent,
-  Chip,
   Stack,
 } from '@mui/material'
 import { 
   Search,
   TrendingDown,
   Notifications,
-  CheckCircle,
-  Star,
-  Business,
-  ArrowForward,
 } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -26,7 +21,6 @@ import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import TopBar from '../components/TopBar'
 import { useState } from 'react'
-import { useUser } from '@clerk/nextjs'
 import PricingSection from '../components/PricingSection'
 
 const Chat = dynamic(() => import('../components/Chat'), {
@@ -42,29 +36,6 @@ const MotionTypography = motion.create(Typography)
 export default function HomePage() {
   const router = useRouter()
   const [isChatOpen, setIsChatOpen] = useState(false)
-  const { isSignedIn } = useUser()
-
-  const handleSubscription = async (tier: string) => {
-    if (!isSignedIn) {
-      router.push('/sign-up')
-      return
-    }
-
-    try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ tier }),
-      })
-
-      const { url } = await response.json()
-      window.location.href = url
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }
 
   const features = [
     {
@@ -88,59 +59,6 @@ export default function HomePage() {
     { number: '50K+', label: 'Coches analizados' },
     { number: '30%', label: 'Ahorro medio' },
     { number: '24/7', label: 'Monitorización' }
-  ]
-
-  const pricingTiers = [
-    {
-      title: 'Básico',
-      price: '4,99€',
-      period: '/mes',
-      description: 'Perfecto para empezar a buscar tu coche ideal',
-      features: [
-        '1 búsqueda guardada',
-        'Alertas por email',
-        'Análisis básico de precios',
-        'Actualizaciones diarias'
-      ],
-      icon: <Search sx={{ fontSize: 40 }} />,
-      color: 'primary' as const,
-      tier: 'basic'
-    },
-    {
-      title: 'Pro',
-      price: '9,99€',
-      period: '/mes',
-      description: 'Para compradores serios que quieren las mejores ofertas',
-      features: [
-        '5 búsquedas guardadas',
-        'Alertas instantáneas',
-        'Análisis avanzado de precios',
-        'Predicción de precios',
-        'Historial de precios',
-        'Soporte prioritario'
-      ],
-      icon: <Star sx={{ fontSize: 40 }} />,
-      color: 'warning' as const,
-      popular: true,
-      tier: 'pro'
-    },
-    {
-      title: 'Empresas',
-      price: '24,99€',
-      period: '/mes',
-      description: 'Solución completa para profesionales del sector',
-      features: [
-        'Búsquedas ilimitadas',
-        'API de acceso',
-        'Panel de control avanzado',
-        'Análisis de mercado en tiempo real',
-        'Soporte 24/7',
-        'Integración personalizada'
-      ],
-      icon: <Business sx={{ fontSize: 40 }} />,
-      color: 'primary' as const,
-      tier: 'business'
-    }
   ]
 
   return (
