@@ -12,8 +12,6 @@ import {
 import ListingSkeleton from './ListingSkeleton';
 import { SxProps, Theme } from '@mui/material/styles';
 
-
-
 interface Listing {
   id: string;
   title: string;

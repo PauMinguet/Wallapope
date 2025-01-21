@@ -16,7 +16,10 @@ interface ChatProps {
 }
 
 export default function Chat({ isOpen, onClose }: ChatProps) {
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([{
+    role: 'assistant',
+    content: '¡Hola! 👋 Soy tu asistente de ChollosCarFinder. Puedo ayudarte a:\n\n• Encontrar el coche perfecto para ti\n• Resolver dudas sobre precios y mercado\n• Explicarte cómo funcionan nuestras alertas\n• Asesorarte en tu búsqueda\n\n¿En qué puedo ayudarte hoy?'
+  }])
   const [currentMessage, setCurrentMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -101,7 +104,7 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
           sx={{
             position: 'fixed',
             bottom: '24px',
-            right: '24px',
+            right: '240px',
             zIndex: 1200,
           }}
         >
@@ -132,7 +135,7 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
         <Box
           sx={{
             position: 'fixed',
-            bottom: '96px',
+            bottom: '110px',
             right: { xs: '12px', sm: '24px' },
             width: { xs: 'calc(100% - 24px)', sm: '380px' },
             height: '500px',
@@ -184,41 +187,6 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
               gap: 2,
             }}
           >
-            {messages.length === 0 && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '100%',
-                  textAlign: 'center',
-                  gap: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: '50%',
-                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <MessageSquare className="h-8 w-8 text-white" />
-                </Box>
-                <Box>
-                  <Box component="p" sx={{ color: 'white', fontWeight: 600, mb: 1 }}>
-                    ¡Bienvenido al Chat!
-                  </Box>
-                  <Box component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
-                    ¿En qué puedo ayudarte a encontrar tu coche ideal?
-                  </Box>
-                </Box>
-              </Box>
-            )}
             {messages.map((message, index) => (
               <Box
                 key={index}
@@ -232,6 +200,7 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
                     maxWidth: '80%',
                     borderRadius: '16px',
                     p: 2,
+                    whiteSpace: 'pre-line',
                     ...(message.role === 'user'
                       ? {
                           background: 'linear-gradient(45deg, #2C3E93, #6B238E)',

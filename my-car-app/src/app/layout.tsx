@@ -1,4 +1,5 @@
 import { ClerkProvider } from '@clerk/nextjs'
+import { dark } from '@clerk/themes'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
@@ -17,13 +18,22 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es">
-      <ClerkProvider>
+    <ClerkProvider appearance={{
+      baseTheme: dark,
+      variables: {
+        colorBackground: '#111111',
+        colorInputBackground: 'rgba(255,255,255,0.05)',
+        colorInputText: 'white',
+        colorTextOnPrimaryBackground: 'white',
+        colorPrimary: '#4169E1',
+      }
+    }}>
+      <html lang="es">
         <body className={inter.className}>
           <UserSync />
           {children}
         </body>
-      </ClerkProvider>
-    </html>
+      </html>
+    </ClerkProvider>
   )
 }

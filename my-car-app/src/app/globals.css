@@ -3,3 +3,25 @@
 @tailwind utilities;
 
 /* Add any custom styles here */
+
+:root {
+  background-color: #000000;
+}
+
+html,
+body {
+  background-color: #000000;
+  color: white;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

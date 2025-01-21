@@ -52,14 +52,14 @@ import {
 } from '@mui/icons-material'
 import dynamic from 'next/dynamic'
 import { useUser } from '@clerk/nextjs'
-import TopBar from '../components/TopBar'
+import TopBar from '../../components/TopBar'
 import { getCurrentUser } from '@/lib/db'
-import ListingsGrid from '../components/ListingsGrid'
+import ListingsGrid from '../../components/ListingsGrid'
 import { useSubscription } from '@/hooks/useSubscription'
 
 // Dynamic import for the map component
 const MapComponent = dynamic(
-  () => import('../components/MapComponent'),
+  () => import('../../components/MapComponent'),
   { 
     ssr: false,
     loading: () => null

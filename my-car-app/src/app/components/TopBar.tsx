@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import { useState, useEffect } from 'react'
 import { 
   Box, 
   Container, 
@@ -30,6 +32,12 @@ export default function TopBar() {
   const { isSignedIn } = useUser()
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null)
   const isMobile = useMediaQuery(useTheme().breakpoints.down('md'))
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.push('/app')
+    }
+  }, [isSignedIn, router])
 
   return (
     <Box
@@ -75,8 +83,7 @@ export default function TopBar() {
             <Typography
               variant="h6"
               sx={{
-                display: { xs: 'none', sm: 'block' },
-                fontSize: { sm: '1.1rem', md: '1.25rem' },
+                fontSize: { sm: '1.5rem', md: '1.5rem' },
                 fontWeight: 700,
                 background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                 backgroundClip: 'text',
@@ -85,12 +92,12 @@ export default function TopBar() {
                 whiteSpace: 'nowrap'
               }}
             >
-              ChollosCarFinder
+              ChollosCar
             </Typography>
           </Box>
 
           {/* Auth Buttons */}
-          <Stack direction="row" spacing={{ xs: 1, md: 2 }}>
+          <Stack direction="row" spacing={{ xs: 0.5, md: 2 }}>
             {isSignedIn ? (
               <>
                 {/* Navigation buttons for logged-in users */}
@@ -176,37 +183,47 @@ export default function TopBar() {
               </>
             ) : (
               <>
-                <SignInButton mode="modal">
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      color: 'white',
-                      borderColor: 'rgba(255,255,255,0.3)',
-                      borderRadius: '28px',
-                      px: { xs: 2, md: 3 },
-                      '&:hover': {
-                        borderColor: 'white',
-                        bgcolor: 'rgba(255,255,255,0.1)'
-                      }
-                    }}
-                  >
-                    Log In
-                  </Button>
-                </SignInButton>
+                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <SignInButton mode="modal">
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        color: 'white',
+                        borderColor: 'rgba(255,255,255,0.3)',
+                        borderRadius: '20px',
+                        px: { xs: 1.5, md: 3 },
+                        py: { xs: 0.5, md: 1 },
+                        fontSize: { xs: '0.75rem', md: '0.875rem' },
+                        minWidth: { xs: 'unset', md: 'auto' },
+                        '&:hover': {
+                          borderColor: 'white',
+                          bgcolor: 'rgba(255,255,255,0.1)'
+                        }
+                      }}
+                    >
+                      Iniciar Sesión
+                    </Button>
+                  </SignInButton>
+                </Box>
                 <SignUpButton mode="modal">
                   <Button
                     variant="contained"
+                    size="small"
                     sx={{
                       background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                       color: 'white',
-                      borderRadius: '28px',
-                      px: { xs: 2, md: 3 },
+                      borderRadius: '20px',
+                      px: { xs: 1.5, md: 3 },
+                      py: { xs: 0.5, md: 1 },
+                      fontSize: { xs: '0.75rem', md: '0.875rem' },
+                      minWidth: { xs: 'unset', md: 'auto' },
                       '&:hover': {
                         background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                       }
                     }}
                   >
-                    Sign Up
+                    {isMobile ? 'Iniciar Sesión' : 'Registrarse'}
                   </Button>
                 </SignUpButton>
               </>
