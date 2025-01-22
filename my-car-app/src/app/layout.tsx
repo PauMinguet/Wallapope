@@ -28,8 +28,8 @@ export default function RootLayout({
         colorPrimary: '#4169E1',
       }
     }}>
-      <html lang="es">
-        <body className={inter.className}>
+      <html lang="es" suppressHydrationWarning>
+        <body className={inter.className} suppressHydrationWarning>
           <UserSync />
           {children}
         </body>

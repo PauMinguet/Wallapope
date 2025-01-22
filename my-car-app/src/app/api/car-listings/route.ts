@@ -99,7 +99,7 @@ export async function GET() {
         // Skip listings with unwanted keywords
         const unwantedKeywords = [
           'accidentado', 'accidentada', 'inundado', 'accidente', 
-          'despiece', 'reparar', 'no arranca'
+          'despiece', 'reparar', 'no arranca', 'flexicar'
         ]
         const lowerTitle = listing.title.toLowerCase()
         const lowerDesc = (listing.description || '').toLowerCase()

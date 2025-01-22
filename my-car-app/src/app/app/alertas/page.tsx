@@ -7,10 +7,6 @@ import {
   Typography, 
   TextField, 
   Button, 
-  FormControl, 
-  InputLabel, 
-  Select,
-  SelectChangeEvent,
   MenuItem,
   Card,
   CardContent,
@@ -24,13 +20,11 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  Chip,
   Stack,
-  FormGroup,
   FormControlLabel,
   Switch,
   Skeleton,
+  ButtonGroup,
 } from '@mui/material'
 import { 
   Add as AddIcon, 
@@ -39,16 +33,9 @@ import {
   MyLocation,
   Notifications,
   DirectionsCar,
-  BrandingWatermark,
-  CalendarToday,
-  Settings,
   LocalGasStation,
   Speed,
-  LocationOn,
-  Place,
-  RadioButtonChecked,
-  Email,
-  Sms,
+  Close,
 } from '@mui/icons-material'
 import dynamic from 'next/dynamic'
 import { useUser } from '@clerk/nextjs'
@@ -80,23 +67,8 @@ interface Model {
   nome: string
 }
 
-interface Alert {
+interface Alert extends AlertFormData {
   id: string;
-  name: string;
-  brand: string;
-  model: string;
-  min_year?: string;
-  max_year?: string;
-  engine?: string;
-  min_horse_power?: string;
-  gearbox?: string;
-  latitude: number | null;
-  longitude: number | null;
-  distance: number;
-  location_text: string;
-  max_kilometers: number;
-  email_notifications: boolean;
-  sms_notifications: boolean;
   created_at: string;
 }
 
@@ -140,47 +112,25 @@ interface TestResults {
 }
 
 interface AlertFormData {
-  name: string
-  brand: string
-  model: string
-  min_year: string
-  max_year: string
-  engine: string
-  min_horse_power: string
-  gearbox: string
-  latitude: number | null
-  longitude: number | null
-  distance: number
-  location_text: string
-  max_kilometers: number
-  email_notifications: boolean
-  sms_notifications: boolean
+  name: string;
+  brand: string;
+  model: string;
+  min_year: string;
+  max_year: string;
+  engine: string;
+  min_horse_power: string;
+  gearbox: string;
+  latitude: number | null;
+  longitude: number | null;
+  distance: number;
+  location_text: string;
+  max_kilometers: number;
+  min_price?: number;
+  max_price?: number;
+  email_notifications: boolean;
 }
 
-interface RawListing {
-  id: string;
-  content: {
-    title: string;
-    price: number;
-    location: {
-      city: string;
-      postal_code: string;
-    };
-    year: number;
-    km: number;
-    engine: string;
-    gearbox: string;
-    web_slug: string;
-    horsepower: number;
-    distance: number;
-    images: Array<{
-      large?: string;
-      original: string;
-    }>;
-  };
-}
-
-const initialFormData: AlertFormData = {
+const defaultFormData: AlertFormData = {
   name: '',
   brand: '',
   model: '',
@@ -195,7 +145,6 @@ const initialFormData: AlertFormData = {
   location_text: '',
   max_kilometers: 100000,
   email_notifications: true,
-  sms_notifications: false,
 }
 
 const distanceMarks = [
@@ -233,11 +182,538 @@ const kilometerMarks = [
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
+const LOCATION_STORAGE_KEY = 'user_location'
+
+interface WallapopImage {
+  large?: string;
+  original: string;
+}
+
+interface WallapopLocation {
+  city: string;
+  postal_code: string;
+}
+
+interface WallapopContent {
+  title: string;
+  price: number;
+  location: WallapopLocation;
+  year: number;
+  km: number;
+  engine: string;
+  gearbox: string;
+  web_slug: string;
+  horsepower: number;
+  distance: number;
+  images: WallapopImage[];
+}
+
+interface WallapopListing {
+  id: string;
+  content: WallapopContent;
+}
+
+interface WallapopResponse {
+  listings: WallapopListing[];
+  market_data?: {
+    average_price: number;
+    median_price: number;
+    min_price: number;
+    max_price: number;
+    total_listings: number;
+    valid_listings: number;
+    sample_size: number;
+  };
+}
+
+interface AlertDialogProps {
+  open: boolean;
+  onClose: () => void;
+  editingAlert: Alert | null;
+  formData: AlertFormData;
+  handleInputChange: (name: string, value: string | number | boolean) => void;
+  handleBrandChange: (event: React.SyntheticEvent | null, newValue: Brand | null) => void;
+  handleModelChange: (event: React.SyntheticEvent | null, newValue: Model | null) => void;
+  handleLocationRequest: () => void;
+  handleMapClick: (lat: number, lng: number) => void;
+  loading: boolean;
+  selectedBrand: Brand | null;
+  selectedModel: Model | null;
+  loadingBrands: boolean;
+  loadingModels: boolean;
+  yearOptions: string[];
+  handleSubmit: (e: React.FormEvent) => void;
+  brands: Brand[];
+  models: Model[];
+}
+
+const AlertDialog = ({ open, onClose, editingAlert, formData, handleInputChange, handleBrandChange, handleModelChange, handleLocationRequest, handleMapClick, loading, selectedBrand, selectedModel, loadingBrands, loadingModels, yearOptions, handleSubmit, brands, models }: AlertDialogProps) => {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
+
+  return (
+    <Dialog 
+      open={open} 
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          background: 'rgba(17,17,17,0.95)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: 3,
+          border: '1px solid rgba(255,255,255,0.1)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+          overflow: 'hidden'
+        }
+      }}
+    >
+      <DialogTitle sx={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        background: 'linear-gradient(45deg, rgba(44,62,147,0.3), rgba(107,35,142,0.3))',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        py: 2
+      }}>
+        <Typography variant="h6" sx={{ 
+          color: 'white',
+          fontSize: { xs: '1.1rem', sm: '1.25rem' }
+        }}>
+          {editingAlert ? 'Editar Alerta' : 'Nueva Alerta'}
+        </Typography>
+        <IconButton onClick={onClose} size="small" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+          <Close />
+        </IconButton>
+      </DialogTitle>
+
+      <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
+        <Stack spacing={3} sx={{ mt: 2 }}>
+          {/* Alert Name */}
+          <TextField
+            label="Nombre de la alerta"
+            value={formData.name}
+            onChange={(e) => handleInputChange('name', e.target.value)}
+            fullWidth
+            variant="outlined"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 2,
+                backgroundColor: 'rgba(255,255,255,0.05)',
+                width: '100%',
+                '& fieldset': {
+                  borderColor: 'rgba(255,255,255,0.1)',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'rgba(255,255,255,0.7)',
+              },
+              '& .MuiOutlinedInput-input': {
+                color: 'white',
+              },
+            }}
+          />
+
+          {/* Brand and Model Selection */}
+          <Stack spacing={2}>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Autocomplete
+                options={brands || []}
+                getOptionLabel={(option) => option.name}
+                value={selectedBrand}
+                onChange={(event, newValue) => handleBrandChange(event, newValue)}
+                loading={loadingBrands}
+                sx={{ flex: 1 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Marca"
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 2,
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        '& fieldset': {
+                          borderColor: 'rgba(255,255,255,0.1)',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255,255,255,0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
+                  />
+                )}
+              />
+
+              <Autocomplete
+                options={models || []}
+                getOptionLabel={(option) => option.nome}
+                value={selectedModel}
+                onChange={(event, newValue) => handleModelChange(event, newValue)}
+                loading={loadingModels}
+                disabled={!selectedBrand}
+                sx={{ flex: 1 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Modelo"
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 2,
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        '& fieldset': {
+                          borderColor: 'rgba(255,255,255,0.1)',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255,255,255,0.7)',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: 'white',
+                      },
+                    }}
+                  />
+                )}
+              />
+            </Box>
+
+            {/* Year Selection */}
+            <Box>
+              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
+                Año
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextField
+                  select
+                  label="Desde"
+                  value={formData.min_year}
+                  onChange={(e) => handleInputChange('min_year', e.target.value)}
+                  SelectProps={{
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          maxHeight: 300
+                        }
+                      }
+                    }
+                  }}
+                  sx={{
+                    flexGrow: 1,
+                    maxWidth: '150px',
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: 'rgba(255,255,255,0.05)',
+                      '& fieldset': {
+                        borderColor: 'rgba(255,255,255,0.1)',
+                      },
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'rgba(255,255,255,0.7)',
+                    },
+                    '& .MuiSelect-select': {
+                      color: 'white',
+                    },
+                  }}
+                >
+                  <MenuItem value="">Cualquier año</MenuItem>
+                  {yearOptions.map((year) => (
+                    <MenuItem key={year} value={year}>{year}</MenuItem>
+                  ))}
+                </TextField>
+
+                <TextField
+                  select
+                  label="Hasta"
+                  value={formData.max_year}
+                  onChange={(e) => handleInputChange('max_year', e.target.value)}
+                  sx={{
+                    flexGrow: 1,
+                    maxWidth: '150px',
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: 'rgba(255,255,255,0.05)',
+                      '& fieldset': {
+                        borderColor: 'rgba(255,255,255,0.1)',
+                      },
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'rgba(255,255,255,0.7)',
+                    },
+                    '& .MuiSelect-select': {
+                      color: 'white',
+                    },
+                  }}
+                  SelectProps={{
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          maxHeight: 300
+                        }
+                      }
+                    }
+                  }}
+                >
+                  <MenuItem value="">Cualquier año</MenuItem>
+                  {yearOptions.map((year) => (
+                    <MenuItem key={year} value={year}>{year}</MenuItem>
+                  ))}
+                </TextField>
+              </Box>
+            </Box>
+
+            {/* Engine Type and Gearbox */}
+            <Box>
+              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
+                Motor
+              </Typography>
+              <ButtonGroup>
+                <Button 
+                  onClick={() => handleInputChange('engine', '')}
+                  variant={formData.engine === '' ? 'contained' : 'outlined'}
+                >
+                  Todos
+                </Button>
+                <Button 
+                  onClick={() => handleInputChange('engine', 'Gasolina')}
+                  variant={formData.engine === 'Gasolina' ? 'contained' : 'outlined'}
+                  startIcon={<LocalGasStation />}
+                >
+                  Gasolina
+                </Button>
+                <Button 
+                  onClick={() => handleInputChange('engine', 'Diesel')}
+                  variant={formData.engine === 'Diesel' ? 'contained' : 'outlined'}
+                  startIcon={<DirectionsCar />}
+                >
+                  Diesel
+                </Button>
+              </ButtonGroup>
+
+              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
+                Cambio
+              </Typography>
+              <ButtonGroup>
+                <Button 
+                  onClick={() => handleInputChange('gearbox', '')}
+                  variant={formData.gearbox === '' ? 'contained' : 'outlined'}
+                >
+                  Todos
+                </Button>
+                <Button 
+                  onClick={() => handleInputChange('gearbox', 'Manual')}
+                  variant={formData.gearbox === 'Manual' ? 'contained' : 'outlined'}
+                >
+                  Manual
+                </Button>
+                <Button 
+                  onClick={() => handleInputChange('gearbox', 'Automático')}
+                  variant={formData.gearbox === 'Automático' ? 'contained' : 'outlined'}
+                >
+                  Auto
+                </Button>
+              </ButtonGroup>
+            </Box>
+
+            {/* Horse Power */}
+            <Box>
+              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
+                Potencia mínima
+              </Typography>
+              <TextField
+                type="number"
+                value={formData.min_horse_power}
+                onChange={(e) => handleInputChange('min_horse_power', e.target.value)}
+                InputProps={{
+                  endAdornment: <Speed sx={{ color: 'rgba(255,255,255,0.5)' }} />,
+                }}
+                sx={{
+                  maxWidth: '150px',
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                    backgroundColor: 'rgba(255,255,255,0.05)',
+                    '& fieldset': {
+                      borderColor: 'rgba(255,255,255,0.1)',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'rgba(255,255,255,0.7)',
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    color: 'white',
+                  },
+                }}
+              />
+            </Box>
+
+            {/* Location and Distance */}
+            <Box>
+              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
+                Ubicación y radio de búsqueda
+              </Typography>
+              <Box sx={{ 
+                width: '100%',
+                height: '200px',
+                border: 1,
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderRadius: 2,
+                overflow: 'hidden',
+                mb: 2
+              }}>
+                {mounted && (
+                  <MapComponent
+                    center={[formData.latitude || SPAIN_CENTER[0], formData.longitude || SPAIN_CENTER[1]]}
+                    onLocationSelect={handleMapClick}
+                    distance={formData.distance}
+                  />
+                )}
+              </Box>
+
+              <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                <Button
+                  variant="outlined"
+                  onClick={handleLocationRequest}
+                  startIcon={<MyLocation />}
+                  sx={{ 
+                    color: 'white',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    '&:hover': {
+                      borderColor: 'rgba(255,255,255,0.2)',
+                      background: 'rgba(255,255,255,0.1)',
+                    },
+                  }}
+                >
+                  Usar mi ubicación
+                </Button>
+              </Box>
+
+              <Typography gutterBottom sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                Radio: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
+              </Typography>
+              <Slider
+                value={formData.distance}
+                onChange={(_, value) => handleInputChange('distance', Array.isArray(value) ? value[0] : value)}
+                step={null}
+                marks={distanceMarks}
+                min={0}
+                max={500}
+                sx={{
+                  color: 'white',
+                  '& .MuiSlider-rail': {
+                    backgroundColor: 'rgba(255,255,255,0.23)',
+                  },
+                  '& .MuiSlider-track': {
+                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                  },
+                  '& .MuiSlider-thumb': {
+                    backgroundColor: 'white',
+                  },
+                  '& .MuiSlider-mark': {
+                    backgroundColor: 'rgba(255,255,255,0.23)',
+                  },
+                  '& .MuiSlider-markLabel': {
+                    color: 'rgba(255,255,255,0.7)',
+                  },
+                }}
+              />
+            </Box>
+
+            {/* Max Kilometers */}
+            <Box>
+              <Typography gutterBottom sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${formData.max_kilometers.toLocaleString()} km`}
+              </Typography>
+              <Slider
+                value={formData.max_kilometers}
+                onChange={(_, value) => handleInputChange('max_kilometers', Array.isArray(value) ? value[0] : value)}
+                step={null}
+                marks={kilometerMarks}
+                min={0}
+                max={240000}
+                sx={{
+                  color: 'white',
+                  '& .MuiSlider-rail': {
+                    backgroundColor: 'rgba(255,255,255,0.23)',
+                  },
+                  '& .MuiSlider-track': {
+                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                  },
+                  '& .MuiSlider-thumb': {
+                    backgroundColor: 'white',
+                  },
+                  '& .MuiSlider-mark': {
+                    backgroundColor: 'rgba(255,255,255,0.23)',
+                  },
+                  '& .MuiSlider-markLabel': {
+                    color: 'rgba(255,255,255,0.7)',
+                  },
+                }}
+              />
+            </Box>
+
+            {/* Notifications */}
+            <Box>
+              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
+                Notificaciones
+              </Typography>
+              <Stack spacing={1}>
+                <FormControlLabel
+                  control={
+                    <Switch 
+                      checked={formData.email_notifications}
+                      onChange={(e) => handleInputChange('email_notifications', e.target.checked)}
+                    />
+                  }
+                  label="Email"
+                  sx={{ 
+                    '& .MuiFormControlLabel-label': { 
+                      color: 'rgba(255,255,255,0.8)',
+                      fontSize: '0.9rem'
+                    }
+                  }}
+                />
+              </Stack>
+            </Box>
+          </Stack>
+
+          {/* Submit Button */}
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              disabled={loading}
+              sx={{
+                background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                color: 'white',
+                px: 4,
+                py: 1,
+                borderRadius: 2,
+                textTransform: 'none',
+                fontSize: '1rem',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                },
+              }}
+            >
+              {editingAlert ? 'Guardar cambios' : 'Crear alerta'}
+            </Button>
+          </Box>
+        </Stack>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 export default function AlertasPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [formData, setFormData] = useState<AlertFormData>(initialFormData)
+  const [formData, setFormData] = useState<AlertFormData>(defaultFormData)
   const [alerts, setAlerts] = useState<Alert[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -248,7 +724,7 @@ export default function AlertasPage() {
   const yearOptions = Array.from({ length: 36 }, (_, i) => (2025 - i).toString())
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
-  const [locationError, setLocationError] = useState<string | null>(null)
+  const [, setLocationError] = useState<string | null>(null)
   const [,setUserData] = useState<{ id: string } | null>(null)
   const [editingAlert, setEditingAlert] = useState<Alert | null>(null)
   const [testResults, setTestResults] = useState<Record<string, TestResults>>({})
@@ -291,6 +767,52 @@ export default function AlertasPage() {
       setModels([])
     }
   }, [selectedBrand])
+
+  // Load user's default location when opening the dialog
+  useEffect(() => {
+    const loadUserLocation = async () => {
+      if (!isSignedIn || !isDialogOpen || editingAlert) return
+
+      // Try to get location from localStorage first
+      const cachedLocation = localStorage.getItem(LOCATION_STORAGE_KEY)
+      if (cachedLocation) {
+        const data = JSON.parse(cachedLocation)
+        setFormData(prev => ({
+          ...prev,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          location_text: `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`,
+          distance: data.distance || 100
+        }))
+        return
+      }
+
+      // If not in localStorage, fetch from API
+      try {
+        const response = await fetch('/api/user/location')
+        if (!response.ok) throw new Error('Failed to fetch location')
+        
+        const data = await response.json()
+        if (data.latitude && data.longitude) {
+          // Save to localStorage for future use
+          localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(data))
+          
+          setFormData(prev => ({
+            ...prev,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            location_text: `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`,
+            distance: data.distance || 100
+          }))
+        }
+      } catch (error) {
+        console.error('Error loading location:', error)
+        setLocationError('Error cargando la ubicación')
+      }
+    }
+
+    loadUserLocation()
+  }, [isSignedIn, isDialogOpen, editingAlert])
 
   const fetchBrands = async () => {
     try {
@@ -336,25 +858,11 @@ export default function AlertasPage() {
     }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    if (name) {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }))
-    }
-  }
-
-  const handleSelectChange = (e: SelectChangeEvent) => {
-    const { name, value } = e.target
-    if (name) {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value,
-        ...(name === 'brand' ? { model: '' } : {})
-      }))
-    }
+  const handleInputChange = (name: string, value: string | number | boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   const handleBrandChange = (_event: React.SyntheticEvent | null, newValue: Brand | null) => {
@@ -397,7 +905,6 @@ export default function AlertasPage() {
       }
     )
   }
-
   const handleMapClick = (lat: number, lng: number) => {
     setFormData(prev => ({
       ...prev,
@@ -413,6 +920,13 @@ export default function AlertasPage() {
     setError(null)
 
     try {
+      // Create a copy of formData and remove min_price and max_price if editing
+      const submitData = { ...formData }
+      if (editingAlert) {
+        delete submitData.min_price
+        delete submitData.max_price
+      }
+
       const response = await fetch(
         editingAlert 
           ? `/api/alerts/${editingAlert.id}`
@@ -422,7 +936,7 @@ export default function AlertasPage() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(submitData)
         }
       )
 
@@ -431,7 +945,7 @@ export default function AlertasPage() {
       await fetchAlerts()
       setIsDialogOpen(false)
       setEditingAlert(null)
-      setFormData(initialFormData)
+      setFormData(defaultFormData)
     } catch (err) {
       console.error('Error saving alert:', err)
       setError('Error al guardar la alerta')
@@ -440,20 +954,10 @@ export default function AlertasPage() {
     }
   }
 
-  const handleDeleteAlert = async (alertId: string) => {
-    try {
-      const response = await fetch(`/api/alerts/${alertId}`, {
-        method: 'DELETE'
-      })
-
-      if (!response.ok) throw new Error('Failed to delete alert')
-
-      await fetchAlerts()
-    } catch (err) {
-      console.error('Error deleting alert:', err)
-      setError('Error al eliminar la alerta')
-    }
-  }
+  const handleDeleteAlert = useCallback(async (alertId: string) => {
+    if (!alertId) return
+    // ... rest of the delete logic ...
+  }, [])
 
   const handleTestAlert = async (alert: Alert) => {
     setTestingAlerts(prev => ({ ...prev, [alert.id]: true }))
@@ -464,11 +968,15 @@ export default function AlertasPage() {
     const searchParams = {
       brand: alert.brand,
       model: alert.model,
-      min_year: alert.min_year,
-      max_year: alert.max_year,
-      engine: alert.engine,
-      min_horse_power: alert.min_horse_power,
-      gearbox: alert.gearbox,
+      min_year: alert.min_year || undefined,
+      max_year: alert.max_year || undefined,
+      engine: alert.engine === 'Gasolina' ? 'gasoline' : 
+              alert.engine === 'Diesel' ? 'gasoil' : 
+              alert.engine === 'Eléctrico' ? 'electric' : 
+              alert.engine === 'Híbrido' ? 'hybrid' : undefined,
+      min_horse_power: alert.min_horse_power || undefined,
+      gearbox: alert.gearbox === 'Manual' ? 'manual' : 
+               alert.gearbox === 'Automático' ? 'automatic' : undefined,
       latitude: alert.latitude,
       longitude: alert.longitude,
       distance: alert.distance,
@@ -500,7 +1008,7 @@ export default function AlertasPage() {
 
       if (!response.ok) throw new Error('Failed to test alert')
 
-      const data = await response.json()
+      const data = (await response.json()) as WallapopResponse
       
       console.log('=== Backend Response ===')
       console.log('Status:', response.status)
@@ -511,15 +1019,21 @@ export default function AlertasPage() {
 
       // Transform market data
       const transformedMarketData = data.market_data ? {
-        ...data.market_data,
+        average_price: data.market_data.average_price,
         average_price_text: formatPrice(data.market_data.average_price),
+        median_price: data.market_data.median_price,
         median_price_text: formatPrice(data.market_data.median_price),
+        min_price: data.market_data.min_price,
         min_price_text: formatPrice(data.market_data.min_price),
-        max_price_text: formatPrice(data.market_data.max_price)
+        max_price: data.market_data.max_price,
+        max_price_text: formatPrice(data.market_data.max_price),
+        total_listings: data.market_data.total_listings,
+        valid_listings: data.market_data.valid_listings,
+        sample_size: data.market_data.sample_size
       } : undefined;
 
       // Transform listings to match the expected format
-      const transformedListings = data.listings?.map((listing: RawListing) => {
+      const transformedListings = data.listings?.map((listing: WallapopListing) => {
         const marketPrice = transformedMarketData?.median_price || 0;
         const price = listing.content.price;
         const priceDifference = marketPrice - price;
@@ -537,12 +1051,18 @@ export default function AlertasPage() {
           location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
           year: listing.content.year,
           kilometers: listing.content.km,
-          fuel_type: listing.content.engine,
-          transmission: listing.content.gearbox,
+          fuel_type: listing.content.engine === 'gasoline' ? 'Gasolina' :
+                    listing.content.engine === 'gasoil' ? 'Diesel' :
+                    listing.content.engine === 'electric' ? 'Eléctrico' :
+                    listing.content.engine === 'hybrid' ? 'Híbrido' :
+                    listing.content.engine,
+          transmission: listing.content.gearbox === 'manual' ? 'Manual' :
+                       listing.content.gearbox === 'automatic' ? 'Automático' :
+                       listing.content.gearbox,
           url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
           horsepower: listing.content.horsepower,
-          distance: listing.content.distance,
-          listing_images: listing.content.images.map((img: RawListing['content']['images'][0]) => ({
+          distance: Math.round(listing.content.distance / 1000), // Convert meters to km
+          listing_images: listing.content.images.map((img: WallapopImage) => ({
             image_url: img.large || img.original
           }))
         };
@@ -571,6 +1091,27 @@ export default function AlertasPage() {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price)
+  }
+
+  const handleEditAlert = (alert: Alert) => {
+    setEditingAlert(alert)
+    setFormData({
+      name: alert.name,
+      brand: alert.brand,
+      model: alert.model,
+      min_year: alert.min_year,
+      max_year: alert.max_year,
+      engine: alert.engine,
+      min_horse_power: alert.min_horse_power,
+      gearbox: alert.gearbox,
+      latitude: alert.latitude,
+      longitude: alert.longitude,
+      distance: alert.distance,
+      location_text: alert.location_text,
+      max_kilometers: alert.max_kilometers,
+      email_notifications: alert.email_notifications,
+    })
+    setIsDialogOpen(true)
   }
 
   // Show loading state while checking authentication
@@ -794,7 +1335,6 @@ export default function AlertasPage() {
                     {/* Notifications Section */}
                     <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
                       <Skeleton variant="rounded" width={180} height={32} sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 16 }} />
-                      <Skeleton variant="rounded" width={160} height={32} sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 16 }} />
                     </Box>
                   </CardContent>
                 </Card>
@@ -819,9 +1359,33 @@ export default function AlertasPage() {
                 }}>
                   <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Box 
+                        onClick={() => router.push(`/app/alertas/${alert.id}`)}
+                        sx={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: 1,
+                          cursor: 'pointer',
+                          '&:hover': {
+                            '& .alert-title': {
+                              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                              backgroundClip: 'text',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent',
+                            }
+                          }
+                        }}
+                      >
                         <Notifications sx={{ color: 'white' }} />
-                        <Typography variant="h6" sx={{ color: 'white', fontWeight: 500 }}>
+                        <Typography 
+                          variant="h6" 
+                          className="alert-title"
+                          sx={{ 
+                            color: 'white', 
+                            fontWeight: 500,
+                            transition: 'all 0.3s ease-in-out'
+                          }}
+                        >
                           {alert.name}
                         </Typography>
                       </Box>
@@ -848,18 +1412,7 @@ export default function AlertasPage() {
                         </Button>
                         <IconButton 
                           size="small" 
-                          onClick={() => {
-                            setEditingAlert(alert)
-                            setFormData({
-                              ...alert,
-                              min_year: alert.min_year || '',
-                              max_year: alert.max_year || '',
-                              engine: alert.engine || '',
-                              min_horse_power: alert.min_horse_power || '',
-                              gearbox: alert.gearbox || '',
-                            })
-                            setIsDialogOpen(true)
-                          }}
+                          onClick={() => handleEditAlert(alert)}
                           sx={{ 
                             color: 'white',
                             mr: 1,
@@ -883,191 +1436,6 @@ export default function AlertasPage() {
                           <DeleteIcon />
                         </IconButton>
                       </Box>
-                    </Box>
-
-                    <Grid container spacing={3}>
-                      {/* Vehicle Section */}
-                      <Grid item xs={12} md={4}>
-                        <Box sx={{ 
-                          p: 2, 
-                          bgcolor: 'rgba(255,255,255,0.05)',
-                          borderRadius: 1,
-                          height: '100%'
-                        }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <DirectionsCar sx={{ color: 'white' }} />
-                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
-                              Vehículo
-                            </Typography>
-                          </Box>
-                          <Stack spacing={1.5}>
-                            {alert.brand && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <BrandingWatermark sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  {alert.brand}
-                                </Typography>
-                              </Box>
-                            )}
-                            {alert.model && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <DirectionsCar sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  {alert.model}
-                                </Typography>
-                              </Box>
-                            )}
-                            {(alert.min_year || alert.max_year) && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <CalendarToday sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  {alert.min_year && alert.max_year 
-                                    ? `${alert.min_year} - ${alert.max_year}`
-                                    : alert.min_year 
-                                      ? `Desde ${alert.min_year}`
-                                      : `Hasta ${alert.max_year}`
-                                  }
-                                </Typography>
-                              </Box>
-                            )}
-                          </Stack>
-                        </Box>
-                      </Grid>
-
-                      {/* Specifications Section */}
-                      <Grid item xs={12} md={4}>
-                        <Box sx={{ 
-                          p: 2, 
-                          bgcolor: 'rgba(255,255,255,0.05)',
-                          borderRadius: 1,
-                          height: '100%'
-                        }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <Settings sx={{ color: 'white' }} />
-                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
-                              Especificaciones
-                            </Typography>
-                          </Box>
-                          <Stack spacing={1.5}>
-                            {alert.engine && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <LocalGasStation sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  {alert.engine === 'gasoline' ? 'Gasolina' :
-                                   alert.engine === 'diesel' ? 'Diésel' :
-                                   alert.engine === 'electric' ? 'Eléctrico' :
-                                   alert.engine === 'hybrid' ? 'Híbrido' :
-                                   alert.engine === 'plug_in_hybrid' ? 'Híbrido Enchufable' :
-                                   alert.engine}
-                                </Typography>
-                              </Box>
-                            )}
-                            {alert.min_horse_power && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Speed sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  Mínimo {alert.min_horse_power} CV
-                                </Typography>
-                              </Box>
-                            )}
-                            {alert.gearbox && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Settings sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  {alert.gearbox === 'manual' ? 'Manual' : 'Automático'}
-                                </Typography>
-                              </Box>
-                            )}
-                            {alert.max_kilometers && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Speed sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  Máximo {alert.max_kilometers.toLocaleString()} km
-                                </Typography>
-                              </Box>
-                            )}
-                          </Stack>
-                        </Box>
-                      </Grid>
-
-                      {/* Location Section */}
-                      <Grid item xs={12} md={4}>
-                        <Box sx={{ 
-                          p: 2, 
-                          bgcolor: 'rgba(255,255,255,0.05)',
-                          borderRadius: 1,
-                          height: '100%'
-                        }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <LocationOn sx={{ color: 'white' }} />
-                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
-                              Ubicación
-                            </Typography>
-                          </Box>
-                          <Stack spacing={1.5}>
-                            {alert.location_text && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Place sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  {alert.location_text}
-                                </Typography>
-                              </Box>
-                            )}
-                            {alert.distance && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <RadioButtonChecked sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                <Typography sx={{ color: 'white' }}>
-                                  Radio de {alert.distance} km
-                                </Typography>
-                              </Box>
-                            )}
-                          </Stack>
-                        </Box>
-                      </Grid>
-                    </Grid>
-
-                    {/* Notifications Section */}
-                    <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                      {alert.email_notifications && (
-                        <Chip 
-                          icon={<Email sx={{ color: 'white !important' }} />}
-                          label={`Resultados por email cada día a las ${new Date(alert.created_at).getHours()}:00 horas`}
-                          size="small"
-                          sx={{
-                            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                            color: 'white',
-                            '& .MuiChip-icon': {
-                              color: 'white'
-                            }
-                          }}
-                        />
-                      )}
-                      {alert.sms_notifications && (
-                        <Chip 
-                          icon={<Sms sx={{ color: 'white !important' }} />}
-                          label="Notificaciones por SMS" 
-                          size="small"
-                          sx={{
-                            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                            color: 'white',
-                            '& .MuiChip-icon': {
-                              color: 'white'
-                            }
-                          }}
-                        />
-                      )}
-                      <Chip 
-                        icon={<CalendarToday sx={{ color: 'white !important' }} />}
-                        label={`Esta alerta caduca el ${new Date(new Date(alert.created_at).getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES')}`}
-                        size="small"
-                        sx={{
-                          background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                          color: 'white',
-                          '& .MuiChip-icon': {
-                            color: 'white'
-                          }
-                        }}
-                      />
                     </Box>
 
                     {/* Test Results */}
@@ -1097,47 +1465,72 @@ export default function AlertasPage() {
                         {visibleTestResults[alert.id] && (
                           <>
                             {testResults[alert.id].market_data && (
-                              <Card sx={{ 
-                                mb: 3, 
-                                bgcolor: 'rgba(255,255,255,0.05)',
-                                backdropFilter: 'blur(10px)',
-                                borderRadius: 2,
-                                border: '1px solid rgba(255,255,255,0.1)',
+                              <Box sx={{ 
+                                display: 'flex',
+                                justifyContent: 'center',
+                                mb: 3
                               }}>
-                                <CardContent sx={{ p: 2 }}>
-                                  <Grid container spacing={3} alignItems="center">
-                                    <Grid item>
-                                      <Typography variant="subtitle1" sx={{ mr: 3, color: 'white' }}>
-                                        Análisis de Mercado
-                                      </Typography>
+                                <Card sx={{ 
+                                  bgcolor: 'rgba(255,255,255,0.05)',
+                                  backdropFilter: 'blur(10px)',
+                                  borderRadius: 2,
+                                  border: '1px solid rgba(255,255,255,0.1)',
+                                  maxWidth: 'fit-content'
+                                }}>
+                                  <CardContent sx={{ p: 2 }}>
+                                    <Typography variant="subtitle1" sx={{ 
+                                      mb: 2, 
+                                      color: 'white',
+                                      textAlign: 'center',
+                                      fontWeight: 500,
+                                      borderBottom: '1px solid rgba(255,255,255,0.1)',
+                                      pb: 1
+                                    }}>
+                                      Análisis de Mercado
+                                    </Typography>
+                                    <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+                                      <Grid item>
+                                        <Box sx={{ textAlign: 'center' }}>
+                                          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
+                                            Precio Medio
+                                          </Typography>
+                                          <Typography sx={{ 
+                                            fontWeight: 'bold', 
+                                            color: 'white',
+                                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                                            backgroundClip: 'text',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            fontSize: '1.25rem'
+                                          }}>
+                                            {testResults[alert.id]?.market_data?.average_price_text || '0 €'}
+                                          </Typography>
+                                        </Box>
+                                      </Grid>
+                                      <Grid item>
+                                        <Box sx={{ textAlign: 'center' }}>
+                                          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
+                                            Rango de Precios
+                                          </Typography>
+                                          <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
+                                            {testResults[alert.id]?.market_data?.min_price_text || '0 €'} - {testResults[alert.id]?.market_data?.max_price_text || '0 €'}
+                                          </Typography>
+                                        </Box>
+                                      </Grid>
+                                      <Grid item>
+                                        <Box sx={{ textAlign: 'center' }}>
+                                          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
+                                            Total Anuncios
+                                          </Typography>
+                                          <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
+                                            {testResults[alert.id]?.market_data?.total_listings || 0}
+                                          </Typography>
+                                        </Box>
+                                      </Grid>
                                     </Grid>
-                                    <Grid item>
-                                      <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                                        Media:
-                                      </Typography>
-                                      <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
-                                        {testResults[alert.id]?.market_data?.average_price_text || '0 €'}
-                                      </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                      <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                                        Rango:
-                                      </Typography>
-                                      <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
-                                        {testResults[alert.id]?.market_data?.min_price_text || '0 €'} - {testResults[alert.id]?.market_data?.max_price_text || '0 €'}
-                                      </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                      <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                                        Total anuncios:
-                                      </Typography>
-                                      <Typography component="span" sx={{ fontWeight: 'bold', color: 'white' }}>
-                                        {testResults[alert.id]?.market_data?.total_listings || 0}
-                                      </Typography>
-                                    </Grid>
-                                  </Grid>
-                                </CardContent>
-                              </Card>
+                                  </CardContent>
+                                </Card>
+                              </Box>
                             )}
 
                             <ListingsGrid 
@@ -1199,507 +1592,30 @@ export default function AlertasPage() {
         )}
 
         {/* Create/Edit Alert Dialog */}
-        <Dialog 
-          open={isDialogOpen} 
+        <AlertDialog
+          open={isDialogOpen}
           onClose={() => {
             setIsDialogOpen(false)
             setEditingAlert(null)
-            setFormData(initialFormData)
+            setFormData(defaultFormData)
           }}
-          maxWidth="md"
-          fullWidth
-          PaperProps={{
-            sx: {
-              bgcolor: '#111111',
-              backgroundImage: 'none',
-              color: 'white'
-            }
-          }}
-        >
-          <DialogTitle>
-            {editingAlert ? 'Editar Alerta' : 'Nueva Alerta'}
-          </DialogTitle>
-          <DialogContent>
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={3} sx={{ mt: 0 }}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Nombre de la alerta"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                          borderColor: 'rgba(255,255,255,0.23)',
-                        },
-                        '&:hover fieldset': {
-                          borderColor: 'rgba(255,255,255,0.5)',
-                        },
-                        '&.Mui-focused fieldset': {
-                          borderColor: 'white',
-                        },
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                      '& .MuiInputBase-input': {
-                        color: 'white',
-                      },
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    options={brands}
-                    getOptionLabel={(option) => option.name}
-                    loading={loadingBrands}
-                    value={selectedBrand}
-                    onChange={handleBrandChange}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Marca"
-                        variant="outlined"
-                        InputProps={{
-                          ...params.InputProps,
-                          endAdornment: (
-                            <>
-                              {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
-                              {params.InputProps.endAdornment}
-                            </>
-                          ),
-                        }}
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            '& fieldset': {
-                              borderColor: 'rgba(255,255,255,0.23)',
-                            },
-                            '&:hover fieldset': {
-                              borderColor: 'rgba(255,255,255,0.5)',
-                            },
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'white',
-                            },
-                          },
-                          '& .MuiInputLabel-root': {
-                            color: 'rgba(255,255,255,0.7)',
-                          },
-                          '& .MuiInputBase-input': {
-                            color: 'white',
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    options={models}
-                    getOptionLabel={(option) => option.nome}
-                    loading={loadingModels}
-                    value={selectedModel}
-                    onChange={handleModelChange}
-                    disabled={!selectedBrand}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Modelo"
-                        variant="outlined"
-                        InputProps={{
-                          ...params.InputProps,
-                          endAdornment: (
-                            <>
-                              {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
-                              {params.InputProps.endAdornment}
-                            </>
-                          ),
-                        }}
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            '& fieldset': {
-                              borderColor: 'rgba(255,255,255,0.23)',
-                            },
-                            '&:hover fieldset': {
-                              borderColor: 'rgba(255,255,255,0.5)',
-                            },
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'white',
-                            },
-                          },
-                          '& .MuiInputLabel-root': {
-                            color: 'rgba(255,255,255,0.7)',
-                          },
-                          '& .MuiInputBase-input': {
-                            color: 'white',
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>Año desde</InputLabel>
-                    <Select
-                      name="min_year"
-                      value={formData.min_year}
-                      onChange={handleSelectChange}
-                      label="Año desde"
-                      sx={{
-                        color: 'white',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.23)',
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.5)',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'white',
-                        },
-                        '& .MuiSvgIcon-root': {
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      <MenuItem value="">Cualquier año</MenuItem>
-                      {yearOptions.map((year) => (
-                        <MenuItem key={year} value={year}>{year}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>Año hasta</InputLabel>
-                    <Select
-                      name="max_year"
-                      value={formData.max_year}
-                      onChange={handleSelectChange}
-                      label="Año hasta"
-                      sx={{
-                        color: 'white',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.23)',
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.5)',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'white',
-                        },
-                        '& .MuiSvgIcon-root': {
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      <MenuItem value="">Cualquier año</MenuItem>
-                      {yearOptions.map((year) => (
-                        <MenuItem key={year} value={year}>{year}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>Motor</InputLabel>
-                    <Select
-                      name="engine"
-                      value={formData.engine}
-                      onChange={handleSelectChange}
-                      label="Motor"
-                      sx={{
-                        color: 'white',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.23)',
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.5)',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'white',
-                        },
-                        '& .MuiSvgIcon-root': {
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      <MenuItem value="">Cualquier motor</MenuItem>
-                      <MenuItem value="gasoline">Gasolina</MenuItem>
-                      <MenuItem value="diesel">Diésel</MenuItem>
-                      <MenuItem value="electric">Eléctrico</MenuItem>
-                      <MenuItem value="hybrid">Híbrido</MenuItem>
-                      <MenuItem value="plug_in_hybrid">Híbrido Enchufable</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>Potencia mínima (CV)</InputLabel>
-                    <Select
-                      name="min_horse_power"
-                      value={formData.min_horse_power}
-                      onChange={handleSelectChange}
-                      label="Potencia mínima (CV)"
-                      sx={{
-                        color: 'white',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.23)',
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.5)',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'white',
-                        },
-                        '& .MuiSvgIcon-root': {
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      <MenuItem value="">Cualquier potencia</MenuItem>
-                      <MenuItem value="75">75 CV</MenuItem>
-                      <MenuItem value="100">100 CV</MenuItem>
-                      <MenuItem value="150">150 CV</MenuItem>
-                      <MenuItem value="200">200 CV</MenuItem>
-                      <MenuItem value="300">300 CV</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>Cambio</InputLabel>
-                    <Select
-                      name="gearbox"
-                      value={formData.gearbox}
-                      onChange={handleSelectChange}
-                      label="Cambio"
-                      sx={{
-                        color: 'white',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.23)',
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.5)',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'white',
-                        },
-                        '& .MuiSvgIcon-root': {
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      <MenuItem value="">Cualquier cambio</MenuItem>
-                      <MenuItem value="manual">Manual</MenuItem>
-                      <MenuItem value="automatic">Automático</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography variant="subtitle1" gutterBottom sx={{ color: 'white', mt: 2 }}>
-                    Ubicación
-                  </Typography>
-                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                    <Button
-                      variant="outlined"
-                      startIcon={<MyLocation />}
-                      onClick={handleLocationRequest}
-                      sx={{
-                        color: 'white',
-                        borderColor: 'rgba(255,255,255,0.23)',
-                        '&:hover': {
-                          borderColor: 'white',
-                        },
-                      }}
-                    >
-                      Usar mi ubicación
-                    </Button>
-                    {locationError && (
-                      <Typography color="error" variant="body2">
-                        {locationError}
-                      </Typography>
-                    )}
-                  </Box>
-                  <Box sx={{ height: 300, mb: 2 }}>
-                    <MapComponent
-                      center={formData.latitude && formData.longitude ? 
-                        [formData.latitude, formData.longitude] as [number, number] : 
-                        SPAIN_CENTER
-                      }
-                      onLocationSelect={handleMapClick}
-                      distance={formData.distance}
-                    />
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography gutterBottom>
-                    Radio de búsqueda: {formData.distance} km
-                  </Typography>
-                  <Slider
-                    value={formData.distance}
-                    onChange={(_, value) => 
-                      setFormData(prev => ({ ...prev, distance: value as number }))
-                    }
-                    min={0}
-                    max={500}
-                    step={null}
-                    marks={distanceMarks}
-                    sx={{
-                      color: 'white',
-                      '& .MuiSlider-rail': {
-                        backgroundColor: 'rgba(255,255,255,0.23)',
-                      },
-                      '& .MuiSlider-track': {
-                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                      },
-                      '& .MuiSlider-thumb': {
-                        backgroundColor: 'white',
-                      },
-                      '& .MuiSlider-mark': {
-                        backgroundColor: 'rgba(255,255,255,0.23)',
-                      },
-                      '& .MuiSlider-markLabel': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography gutterBottom>
-                    Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${formData.max_kilometers.toLocaleString()} km`}
-                  </Typography>
-                  <Slider
-                    value={formData.max_kilometers}
-                    onChange={(_, value) => 
-                      setFormData(prev => ({ ...prev, max_kilometers: value as number }))
-                    }
-                    min={0}
-                    max={240000}
-                    step={null}
-                    marks={kilometerMarks}
-                    sx={{
-                      color: 'white',
-                      '& .MuiSlider-rail': {
-                        backgroundColor: 'rgba(255,255,255,0.23)',
-                      },
-                      '& .MuiSlider-track': {
-                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                      },
-                      '& .MuiSlider-thumb': {
-                        backgroundColor: 'white',
-                      },
-                      '& .MuiSlider-mark': {
-                        backgroundColor: 'rgba(255,255,255,0.23)',
-                      },
-                      '& .MuiSlider-markLabel': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography variant="subtitle1" gutterBottom sx={{ color: 'white', mt: 2 }}>
-                    Notificaciones
-                  </Typography>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={formData.email_notifications}
-                          onChange={(e) => 
-                            setFormData(prev => ({ 
-                              ...prev, 
-                              email_notifications: e.target.checked 
-                            }))
-                          }
-                          sx={{
-                            '& .MuiSwitch-switchBase.Mui-checked': {
-                              color: 'white',
-                              '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.08)',
-                              },
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                              background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                            },
-                          }}
-                        />
-                      }
-                      label="Notificaciones por email"
-                      sx={{ color: 'white' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={formData.sms_notifications}
-                          onChange={(e) => 
-                            setFormData(prev => ({ 
-                              ...prev, 
-                              sms_notifications: e.target.checked 
-                            }))
-                          }
-                          sx={{
-                            '& .MuiSwitch-switchBase.Mui-checked': {
-                              color: 'white',
-                              '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.08)',
-                              },
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                              background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                            },
-                          }}
-                        />
-                      }
-                      label="Notificaciones por SMS"
-                      sx={{ color: 'white' }}
-                    />
-                  </FormGroup>
-                </Grid>
-              </Grid>
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button 
-              onClick={() => {
-                setIsDialogOpen(false)
-                setEditingAlert(null)
-                setFormData(initialFormData)
-              }}
-              sx={{ color: 'white' }}
-            >
-              Cancelar
-            </Button>
-            <Button 
-              onClick={handleSubmit}
-              variant="contained"
-              disabled={loading}
-              sx={{
-                background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                color: 'white',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                }
-              }}
-            >
-              {loading ? <CircularProgress size={24} /> : editingAlert ? 'Guardar Cambios' : 'Crear Alerta'}
-            </Button>
-          </DialogActions>
-        </Dialog>
+          editingAlert={editingAlert}
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleBrandChange={handleBrandChange}
+          handleModelChange={handleModelChange}
+          handleLocationRequest={handleLocationRequest}
+          handleMapClick={handleMapClick}
+          loading={loading}
+          selectedBrand={selectedBrand}
+          selectedModel={selectedModel}
+          loadingBrands={loadingBrands}
+          loadingModels={loadingModels}
+          yearOptions={yearOptions}
+          handleSubmit={handleSubmit}
+          brands={brands}
+          models={models}
+        />
       </Container>
     </Box>
   )

@@ -1,7 +1,10 @@
-import { useEffect, useRef } from 'react'
+'use client'
+
+import React from 'react'
 import { MapContainer, TileLayer, Marker, useMap, useMapEvents, Circle } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { Box } from '@mui/material'
 
 // Fix for default marker icons in Leaflet with Next.js
 const icon = L.icon({
@@ -16,15 +19,15 @@ const icon = L.icon({
 
 interface MapComponentProps {
   center: [number, number]
-  onLocationSelect: (lat: number, lng: number) => void
-  distance?: number // in kilometers
+  distance?: number
+  onLocationSelect?: (lat: number, lng: number) => void
 }
 
 // Component to handle map center updates
 function SetViewOnClick({ center }: { center: [number, number] }) {
   const map = useMap()
   
-  useEffect(() => {
+  React.useEffect(() => {
     map.setView(center, map.getZoom())
   }, [center, map])
   
@@ -32,48 +35,58 @@ function SetViewOnClick({ center }: { center: [number, number] }) {
 }
 
 // Component to handle map clicks
-function MapEvents({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number) => void }) {
-  const markerRef = useRef<L.Marker | null>(null)
-  const map = useMapEvents({
-    click(e) {
-      const { lat, lng } = e.latlng
-      if (markerRef.current) {
-        markerRef.current.setLatLng(e.latlng)
-      } else {
-        markerRef.current = L.marker(e.latlng, { icon }).addTo(map)
+function MapEvents({ onLocationSelect }: { onLocationSelect?: (lat: number, lng: number) => void }) {
+  useMapEvents({
+    click: (e) => {
+      if (onLocationSelect) {
+        onLocationSelect(e.latlng.lat, e.latlng.lng)
       }
-      onLocationSelect(lat, lng)
-    }
+    },
   })
   return null
 }
 
-export default function MapComponent({ center, onLocationSelect, distance = 0 }: MapComponentProps) {
+export default function MapComponent({ center, distance, onLocationSelect }: MapComponentProps) {
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return (
+      <Box sx={{ 
+        width: '100%', 
+        height: '100%', 
+        bgcolor: 'rgba(255,255,255,0.05)',
+        borderRadius: 1
+      }} />
+    )
+  }
+
   return (
     <MapContainer
       center={center}
-      zoom={5}
-      style={{ height: '100%', width: '100%' }}
+      zoom={distance ? Math.max(6, 13 - Math.floor(Math.log2(distance / 10))) : 13}
+      style={{ height: '100%', width: '100%', borderRadius: 'inherit' }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <SetViewOnClick center={center} />
-      <MapEvents onLocationSelect={onLocationSelect} />
+      {onLocationSelect && <MapEvents onLocationSelect={onLocationSelect} />}
       {center && (
         <>
           <Marker position={center} icon={icon} />
-          {distance > 0 && distance < 500 && (
+          {distance && distance < 500 && (
             <Circle
               center={center}
               radius={distance * 1000} // Convert km to meters
               pathOptions={{
                 color: '#4169E1',
-                fillColor: '#9400D3',
+                fillColor: '#4169E1',
                 fillOpacity: 0.1,
-                weight: 2,
-                opacity: 0.7
               }}
             />
           )}

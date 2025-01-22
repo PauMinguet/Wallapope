@@ -7,14 +7,10 @@ import {
   Typography, 
   Button, 
   Stack,
-  IconButton,
-  Menu,
-  MenuItem,
-  useMediaQuery,
   useTheme,
 } from '@mui/material'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { 
   SignInButton,
   SignUpButton,
@@ -22,22 +18,45 @@ import {
   useUser,
 } from '@clerk/nextjs'
 import { 
-  Menu as MenuIcon,
-  Notifications as NotificationsIcon,
   Search as SearchIcon,
+  Settings,
+  FlashOn,
 } from '@mui/icons-material'
 
 export default function TopBar() {
   const router = useRouter()
+  const pathname = usePathname()
   const { isSignedIn } = useUser()
-  const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null)
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('md'))
-
+  const [isMobileView, setIsMobileView] = useState(false)
+  const theme = useTheme()
+  
   useEffect(() => {
-    if (isSignedIn) {
-      router.push('/app')
+    const checkMobile = () => {
+      setIsMobileView(window.innerWidth < theme.breakpoints.values.md)
     }
-  }, [isSignedIn, router])
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [theme.breakpoints.values.md])
+
+  const sections = [
+    { 
+      label: 'Búsqueda', 
+      href: '/app', 
+      icon: <SearchIcon sx={{ fontSize: '1.2rem' }} />
+    },
+    { 
+      label: 'Modo Rápido', 
+      href: '/app/coches', 
+      icon: <FlashOn sx={{ fontSize: '1.2rem' }} />
+    },
+    { 
+      label: 'Ajustes', 
+      href: '/app/ajustes', 
+      icon: <Settings sx={{ fontSize: '1.2rem' }} />
+    }
+  ]
 
   return (
     <Box
@@ -53,7 +72,7 @@ export default function TopBar() {
         py: { xs: 1.5, md: 2 }
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
         <Box sx={{ 
           display: 'flex', 
           alignItems: 'center', 
@@ -63,13 +82,13 @@ export default function TopBar() {
           <Box sx={{ 
             display: 'flex',
             alignItems: 'center',
-            gap: { xs: 1.5, md: 2 },
+            gap: { xs: 0.5, md: 2 },
             cursor: 'pointer'
           }} onClick={() => router.push('/')}>
             <Box sx={{ 
               position: 'relative',
-              width: { xs: 100, md: 120 },
-              height: { xs: 50, md: 50 }
+              width: { xs: 80, md: 120 },
+              height: { xs: 40, md: 50 }
             }}>
               <Image
                 src="/logo.png"
@@ -83,7 +102,7 @@ export default function TopBar() {
             <Typography
               variant="h6"
               sx={{
-                fontSize: { sm: '1.5rem', md: '1.5rem' },
+                fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.5rem' },
                 fontWeight: 700,
                 background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                 backgroundClip: 'text',
@@ -101,85 +120,57 @@ export default function TopBar() {
             {isSignedIn ? (
               <>
                 {/* Navigation buttons for logged-in users */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, alignItems: 'center' }}>
-                  <Button
-                    href="/search"
-                    startIcon={<SearchIcon />}
-                    sx={{
-                      color: 'white',
-                      '&:hover': {
-                        bgcolor: 'rgba(255,255,255,0.1)'
-                      }
-                    }}
-                  >
-                    Buscar Coches
-                  </Button>
-                  <Button
-                    href="/alertas"
-                    startIcon={<NotificationsIcon />}
-                    sx={{
-                      color: 'white',
-                      '&:hover': {
-                        bgcolor: 'rgba(255,255,255,0.1)'
-                      }
-                    }}
-                  >
-                    Mis Alertas
-                  </Button>
-                </Box>
-
-                {/* Mobile menu button */}
-                {isMobile && (
-                  <>
-                    <IconButton
-                      onClick={(e) => setMobileMenuAnchor(e.currentTarget)}
-                      sx={{ 
-                        color: 'white',
-                        display: { xs: 'flex', md: 'none' }
-                      }}
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                    <Menu
-                      anchorEl={mobileMenuAnchor}
-                      open={Boolean(mobileMenuAnchor)}
-                      onClose={() => setMobileMenuAnchor(null)}
-                      PaperProps={{
-                        sx: {
-                          bgcolor: '#111111',
-                          color: 'white',
-                          '& .MuiMenuItem-root': {
-                            color: 'white',
-                            '&:hover': {
-                              bgcolor: 'rgba(255,255,255,0.1)'
-                            }
-                          }
+                <Box sx={{ 
+                  display: 'flex', 
+                  gap: { xs: 0.5, md: 1 },
+                  '& .MuiButton-root': {
+                    color: 'white',
+                    textTransform: 'none',
+                    fontSize: '0.9rem',
+                    py: 1,
+                    px: { xs: 1, md: 2 },
+                    minWidth: { xs: '40px', md: 'auto' },
+                    borderRadius: 2,
+                    '&:hover': {
+                      background: 'rgba(255,255,255,0.1)'
+                    },
+                    '&.active': {
+                      background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
+                    }
+                  }
+                }}>
+                  {sections.map((section) => (
+                    <Button
+                      key={section.href}
+                      className={pathname === section.href ? 'active' : ''}
+                      onClick={() => router.push(section.href)}
+                      startIcon={!isMobileView ? section.icon : undefined}
+                      sx={{
+                        '& .MuiButton-startIcon': {
+                          margin: { xs: 0, md: '0 8px 0 -4px' }
                         }
                       }}
                     >
-                      <MenuItem 
-                        onClick={() => {
-                          router.push('/search')
-                          setMobileMenuAnchor(null)
-                        }}
-                      >
-                        <SearchIcon sx={{ mr: 1 }} />
-                        Buscar Coches
-                      </MenuItem>
-                      <MenuItem 
-                        onClick={() => {
-                          router.push('/alertas')
-                          setMobileMenuAnchor(null)
-                        }}
-                      >
-                        <NotificationsIcon sx={{ mr: 1 }} />
-                        Mis Alertas
-                      </MenuItem>
-                    </Menu>
-                  </>
-                )}
+                      {isMobileView ? (
+                        section.icon
+                      ) : (
+                        section.label
+                      )}
+                    </Button>
+                  ))}
+                </Box>
 
-                <UserButton afterSignOutUrl="/" />
+                <UserButton 
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: {
+                        width: '35px',
+                        height: '35px'
+                      }
+                    }
+                  }}
+                />
               </>
             ) : (
               <>
@@ -223,7 +214,7 @@ export default function TopBar() {
                       }
                     }}
                   >
-                    {isMobile ? 'Iniciar Sesión' : 'Registrarse'}
+                    {isMobileView ? 'Iniciar Sesión' : 'Registrarse'}
                   </Button>
                 </SignUpButton>
               </>

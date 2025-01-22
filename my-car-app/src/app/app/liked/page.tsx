@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Container, Typography, IconButton, Card, CardMedia, CardContent, CardActions } from '@mui/material'
 import { ArrowLeft, OpenInNew, Delete, Search } from '@mui/icons-material'
 import Link from 'next/link'
-import { LikedListing } from '../../../types/listing'
+import { LikedListing } from '../../../../types/listing'
 
 const styles = {
   card: {
