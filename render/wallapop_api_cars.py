@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Define unwanted keywords as a global constant
 UNWANTED_KEYWORDS = [
-    'accidentado', 'accidentada', 'inundado', 'motor roto', 'siniestro', 'accidente', 'inundó', 'averias', 'golpe', 'averia', 'gripado', 
+    'accidentado', 'accidentada', 'inundado', 'motor roto', 'siniestro', 'ocasionplus', 'accidente', 'inundó', 'averias', 'golpe', 'averia', 'gripado', 
     'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', 'averiada', '647 358 133', 'mallorca', 'palma'
 ]
 
@@ -344,7 +344,7 @@ def get_market_price(car):
         # Build search URL for market analysis
         base_url = "https://api.wallapop.com/api/v3/cars/search"
         search_params = {
-            'keywords': car['modelo'],
+            'model': car['modelo'],
             'brand': car['marca'],
             'latitude': '41.224151',
             'longitude': '1.7255678',
@@ -353,7 +353,8 @@ def get_market_price(car):
             'min_year': start_year.strip(),
             'max_year': end_year.strip(),
             'max_km': '200000',
-            'order_by': 'price_low_to_high'
+            'order_by': 'price_low_to_high',
+            'min_sale_price': '3000',
         }
 
         # Add engine type if specified
