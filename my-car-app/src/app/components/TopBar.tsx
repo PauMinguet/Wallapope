@@ -21,6 +21,7 @@ import {
   Search as SearchIcon,
   Settings,
   FlashOn,
+  Notifications as NotificationsIcon,
 } from '@mui/icons-material'
 
 export default function TopBar() {
@@ -50,6 +51,11 @@ export default function TopBar() {
       label: 'Modo Rápido', 
       href: '/app/coches', 
       icon: <FlashOn sx={{ fontSize: '1.2rem' }} />
+    },
+    { 
+      label: 'Alertas', 
+      href: '/app/alertas', 
+      icon: <NotificationsIcon sx={{ fontSize: '1.2rem' }} />
     },
     { 
       label: 'Ajustes', 

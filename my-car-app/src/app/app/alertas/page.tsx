@@ -25,6 +25,7 @@ import {
   Switch,
   Skeleton,
   ButtonGroup,
+  Chip,
 } from '@mui/material'
 import { 
   Add as AddIcon, 
@@ -36,12 +37,18 @@ import {
   LocalGasStation,
   Speed,
   Close,
+  BrandingWatermark,
+  Settings,
+  Place,
+  LocationOn,
+  CalendarToday,
+  Email,
+  NearMe,
 } from '@mui/icons-material'
 import dynamic from 'next/dynamic'
 import { useUser } from '@clerk/nextjs'
 import TopBar from '../../components/TopBar'
 import { getCurrentUser } from '@/lib/db'
-import ListingsGrid from '../../components/ListingsGrid'
 import { useSubscription } from '@/hooks/useSubscription'
 
 // Dynamic import for the map component
@@ -72,44 +79,7 @@ interface Alert extends AlertFormData {
   created_at: string;
 }
 
-interface Listing {
-  id: string;
-  title: string;
-  price: number;
-  price_text: string;
-  market_price: number;
-  market_price_text: string;
-  price_difference: number;
-  price_difference_percentage: string;
-  location: string;
-  year: number;
-  kilometers: number;
-  fuel_type: string;
-  transmission: string;
-  url: string;
-  horsepower: number;
-  distance: number;
-  listing_images: Array<{ image_url: string }>;
-}
 
-interface MarketData {
-  average_price: number;
-  average_price_text: string;
-  median_price: number;
-  median_price_text: string;
-  min_price: number;
-  min_price_text: string;
-  max_price: number;
-  max_price_text: string;
-  total_listings: number;
-  valid_listings: number;
-}
-
-interface TestResults {
-  alertId: string;
-  listings: Listing[];
-  market_data?: MarketData;
-}
 
 interface AlertFormData {
   name: string;
@@ -180,51 +150,9 @@ const kilometerMarks = [
   { value: 240000, label: 'No limit' }
 ]
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
 const LOCATION_STORAGE_KEY = 'user_location'
 
-interface WallapopImage {
-  large?: string;
-  original: string;
-}
-
-interface WallapopLocation {
-  city: string;
-  postal_code: string;
-}
-
-interface WallapopContent {
-  title: string;
-  price: number;
-  location: WallapopLocation;
-  year: number;
-  km: number;
-  engine: string;
-  gearbox: string;
-  web_slug: string;
-  horsepower: number;
-  distance: number;
-  images: WallapopImage[];
-}
-
-interface WallapopListing {
-  id: string;
-  content: WallapopContent;
-}
-
-interface WallapopResponse {
-  listings: WallapopListing[];
-  market_data?: {
-    average_price: number;
-    median_price: number;
-    min_price: number;
-    max_price: number;
-    total_listings: number;
-    valid_listings: number;
-    sample_size: number;
-  };
-}
 
 interface AlertDialogProps {
   open: boolean;
@@ -715,7 +643,7 @@ export default function AlertasPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [formData, setFormData] = useState<AlertFormData>(defaultFormData)
   const [alerts, setAlerts] = useState<Alert[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [brands, setBrands] = useState<Brand[]>([])
   const [models, setModels] = useState<Model[]>([])
@@ -724,12 +652,9 @@ export default function AlertasPage() {
   const yearOptions = Array.from({ length: 36 }, (_, i) => (2025 - i).toString())
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
-  const [, setLocationError] = useState<string | null>(null)
-  const [,setUserData] = useState<{ id: string } | null>(null)
+  const [ , setLocationError] = useState<string | null>(null)
+  const [ , setUserData] = useState<{ id: string } | null>(null)
   const [editingAlert, setEditingAlert] = useState<Alert | null>(null)
-  const [testResults, setTestResults] = useState<Record<string, TestResults>>({})
-  const [testingAlerts, setTestingAlerts] = useState<Record<string, boolean>>({})
-  const [visibleTestResults, setVisibleTestResults] = useState<Record<string, boolean>>({})
 
   // Require at least 'basic' subscription to access alerts
   const { loading: subscriptionLoading } = useSubscription('basic')
@@ -958,140 +883,6 @@ export default function AlertasPage() {
     if (!alertId) return
     // ... rest of the delete logic ...
   }, [])
-
-  const handleTestAlert = async (alert: Alert) => {
-    setTestingAlerts(prev => ({ ...prev, [alert.id]: true }))
-    // Automatically show results when testing
-    setVisibleTestResults(prev => ({ ...prev, [alert.id]: true }))
-    
-    // Create initial search params
-    const searchParams = {
-      brand: alert.brand,
-      model: alert.model,
-      min_year: alert.min_year || undefined,
-      max_year: alert.max_year || undefined,
-      engine: alert.engine === 'Gasolina' ? 'gasoline' : 
-              alert.engine === 'Diesel' ? 'gasoil' : 
-              alert.engine === 'Eléctrico' ? 'electric' : 
-              alert.engine === 'Híbrido' ? 'hybrid' : undefined,
-      min_horse_power: alert.min_horse_power || undefined,
-      gearbox: alert.gearbox === 'Manual' ? 'manual' : 
-               alert.gearbox === 'Automático' ? 'automatic' : undefined,
-      latitude: alert.latitude,
-      longitude: alert.longitude,
-      distance: alert.distance,
-      max_kilometers: alert.max_kilometers
-    }
-
-    // Clean up empty values
-    const cleanParams = Object.fromEntries(
-      Object.entries(searchParams).filter(([, value]) => 
-        value !== '' && 
-        value !== null && 
-        value !== undefined
-      )
-    );
-
-    console.log('=== Testing Alert ===')
-    console.log('Alert ID:', alert.id)
-    console.log('Alert Name:', alert.name)
-    console.log('Search Parameters:', cleanParams)
-    
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/search-single-car`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(cleanParams)
-      })
-
-      if (!response.ok) throw new Error('Failed to test alert')
-
-      const data = (await response.json()) as WallapopResponse
-      
-      console.log('=== Backend Response ===')
-      console.log('Status:', response.status)
-      console.log('Total Results:', data.listings?.length || 0)
-      console.log('Market Data:', data.market_data)
-      console.log('First 3 Listings:', data.listings?.slice(0, 3))
-      console.log('====================')
-
-      // Transform market data
-      const transformedMarketData = data.market_data ? {
-        average_price: data.market_data.average_price,
-        average_price_text: formatPrice(data.market_data.average_price),
-        median_price: data.market_data.median_price,
-        median_price_text: formatPrice(data.market_data.median_price),
-        min_price: data.market_data.min_price,
-        min_price_text: formatPrice(data.market_data.min_price),
-        max_price: data.market_data.max_price,
-        max_price_text: formatPrice(data.market_data.max_price),
-        total_listings: data.market_data.total_listings,
-        valid_listings: data.market_data.valid_listings,
-        sample_size: data.market_data.sample_size
-      } : undefined;
-
-      // Transform listings to match the expected format
-      const transformedListings = data.listings?.map((listing: WallapopListing) => {
-        const marketPrice = transformedMarketData?.median_price || 0;
-        const price = listing.content.price;
-        const priceDifference = marketPrice - price;
-        const differencePercentage = (priceDifference / marketPrice) * 100;
-
-        return {
-          id: listing.id,
-          title: listing.content.title,
-          price: price,
-          price_text: formatPrice(price),
-          market_price: marketPrice,
-          market_price_text: formatPrice(marketPrice),
-          price_difference: priceDifference,
-          price_difference_percentage: `${Math.abs(differencePercentage).toFixed(1)}%`,
-          location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-          year: listing.content.year,
-          kilometers: listing.content.km,
-          fuel_type: listing.content.engine === 'gasoline' ? 'Gasolina' :
-                    listing.content.engine === 'gasoil' ? 'Diesel' :
-                    listing.content.engine === 'electric' ? 'Eléctrico' :
-                    listing.content.engine === 'hybrid' ? 'Híbrido' :
-                    listing.content.engine,
-          transmission: listing.content.gearbox === 'manual' ? 'Manual' :
-                       listing.content.gearbox === 'automatic' ? 'Automático' :
-                       listing.content.gearbox,
-          url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-          horsepower: listing.content.horsepower,
-          distance: Math.round(listing.content.distance / 1000), // Convert meters to km
-          listing_images: listing.content.images.map((img: WallapopImage) => ({
-            image_url: img.large || img.original
-          }))
-        };
-      }) || [];
-      
-      setTestResults(prev => ({
-        ...prev,
-        [alert.id]: {
-          alertId: alert.id,
-          listings: transformedListings,
-          market_data: transformedMarketData
-        }
-      }))
-    } catch (err) {
-      console.error('Error testing alert:', err)
-      setError('Error al probar la alerta')
-    } finally {
-      setTestingAlerts(prev => ({ ...prev, [alert.id]: false }))
-    }
-  }
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price)
-  }
 
   const handleEditAlert = (alert: Alert) => {
     setEditingAlert(alert)
@@ -1345,37 +1136,37 @@ export default function AlertasPage() {
           <Grid container spacing={3}>
             {alerts.map((alert) => (
               <Grid item xs={12} key={alert.id}>
-                <Card sx={{ 
-                  height: '100%',
-                  bgcolor: 'rgba(255,255,255,0.1)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: 2,
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  transition: 'all 0.3s ease-in-out',
-                  '&:hover': {
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                  }
-                }}>
+                <Card 
+                  onClick={() => router.push(`/app/alertas/${alert.id}`)}
+                  sx={{ 
+                    height: '100%',
+                    bgcolor: 'rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: 2,
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    transition: 'all 0.3s ease-in-out',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    '&:hover': {
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'translateY(-2px)',
+                      '& .alert-title': {
+                        background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                      }
+                    }
+                  }}
+                >
                   <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                      <Box 
-                        onClick={() => router.push(`/app/alertas/${alert.id}`)}
-                        sx={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 1,
-                          cursor: 'pointer',
-                          '&:hover': {
-                            '& .alert-title': {
-                              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                              backgroundClip: 'text',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                            }
-                          }
-                        }}
-                      >
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 1
+                      }}>
                         <Notifications sx={{ color: 'white' }} />
                         <Typography 
                           variant="h6" 
@@ -1388,34 +1179,44 @@ export default function AlertasPage() {
                         >
                           {alert.name}
                         </Typography>
-                      </Box>
-                      <Box>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          onClick={() => handleTestAlert(alert)}
-                          disabled={testingAlerts[alert.id]}
+                        <Typography
                           sx={{
-                            mr: 2,
-                            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                            color: 'white',
-                            '&:hover': {
-                              background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                            color: 'rgba(255,255,255,0.5)',
+                            fontSize: '0.875rem',
+                            ml: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            transition: 'all 0.3s ease',
+                            '& .arrow': {
+                              transition: 'transform 0.3s ease',
+                              ml: 0.5,
+                              opacity: 0.7
+                            },
+                            '.MuiCard-root:hover &': {
+                              color: 'white',
+                              '& .arrow': {
+                                transform: 'translateX(4px)',
+                                opacity: 1
+                              }
                             }
                           }}
                         >
-                          {testingAlerts[alert.id] ? (
-                            <CircularProgress size={20} sx={{ color: 'white' }} />
-                          ) : (
-                            'Probar Alerta'
-                          )}
-                        </Button>
+                          Ver detalles <span className="arrow">→</span>
+                        </Typography>
+                      </Box>
+                      <Box 
+                        onClick={(e) => e.stopPropagation()} // Prevent card click when clicking buttons
+                        sx={{ 
+                          display: 'flex',
+                          gap: 1,
+                          zIndex: 1 // Ensure buttons are clickable
+                        }}
+                      >
                         <IconButton 
                           size="small" 
                           onClick={() => handleEditAlert(alert)}
                           sx={{ 
                             color: 'white',
-                            mr: 1,
                             '&:hover': {
                               bgcolor: 'rgba(255,255,255,0.1)'
                             }
@@ -1438,122 +1239,184 @@ export default function AlertasPage() {
                       </Box>
                     </Box>
 
-                    {/* Test Results */}
-                    {testResults[alert.id] && (
-                      <Box sx={{ mt: 3 }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                          <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
-                            Resultados de la prueba
-                          </Typography>
-                          <Button
-                            size="small"
-                            onClick={() => setVisibleTestResults(prev => ({
-                              ...prev,
-                              [alert.id]: !prev[alert.id]
-                            }))}
-                            sx={{
-                              color: 'white',
-                              '&:hover': {
-                                background: 'rgba(255,255,255,0.1)'
-                              }
-                            }}
-                          >
-                            {visibleTestResults[alert.id] ? 'Ocultar Resultados' : 'Mostrar Resultados'}
-                          </Button>
-                        </Box>
-
-                        {visibleTestResults[alert.id] && (
-                          <>
-                            {testResults[alert.id].market_data && (
-                              <Box sx={{ 
-                                display: 'flex',
-                                justifyContent: 'center',
-                                mb: 3
-                              }}>
-                                <Card sx={{ 
-                                  bgcolor: 'rgba(255,255,255,0.05)',
-                                  backdropFilter: 'blur(10px)',
-                                  borderRadius: 2,
-                                  border: '1px solid rgba(255,255,255,0.1)',
-                                  maxWidth: 'fit-content'
-                                }}>
-                                  <CardContent sx={{ p: 2 }}>
-                                    <Typography variant="subtitle1" sx={{ 
-                                      mb: 2, 
-                                      color: 'white',
-                                      textAlign: 'center',
-                                      fontWeight: 500,
-                                      borderBottom: '1px solid rgba(255,255,255,0.1)',
-                                      pb: 1
-                                    }}>
-                                      Análisis de Mercado
-                                    </Typography>
-                                    <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                                      <Grid item>
-                                        <Box sx={{ textAlign: 'center' }}>
-                                          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
-                                            Precio Medio
-                                          </Typography>
-                                          <Typography sx={{ 
-                                            fontWeight: 'bold', 
-                                            color: 'white',
-                                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                                            backgroundClip: 'text',
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            fontSize: '1.25rem'
-                                          }}>
-                                            {testResults[alert.id]?.market_data?.average_price_text || '0 €'}
-                                          </Typography>
-                                        </Box>
-                                      </Grid>
-                                      <Grid item>
-                                        <Box sx={{ textAlign: 'center' }}>
-                                          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
-                                            Rango de Precios
-                                          </Typography>
-                                          <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
-                                            {testResults[alert.id]?.market_data?.min_price_text || '0 €'} - {testResults[alert.id]?.market_data?.max_price_text || '0 €'}
-                                          </Typography>
-                                        </Box>
-                                      </Grid>
-                                      <Grid item>
-                                        <Box sx={{ textAlign: 'center' }}>
-                                          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
-                                            Total Anuncios
-                                          </Typography>
-                                          <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
-                                            {testResults[alert.id]?.market_data?.total_listings || 0}
-                                          </Typography>
-                                        </Box>
-                                      </Grid>
-                                    </Grid>
-                                  </CardContent>
-                                </Card>
-                              </Box>
+                    {/* Details Grid */}
+                    <Grid container spacing={3}>
+                      {/* Vehicle Section */}
+                      <Grid item xs={12} md={4}>
+                        <Box sx={{ 
+                          p: 2, 
+                          bgcolor: 'rgba(255,255,255,0.05)',
+                          borderRadius: 1,
+                          height: '100%'
+                        }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <DirectionsCar sx={{ color: 'white' }} />
+                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
+                              Vehículo
+                            </Typography>
+                          </Box>
+                          <Grid container spacing={2}>
+                            {alert.brand && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <BrandingWatermark sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    {alert.brand} {alert.model}
+                                  </Typography>
+                                </Box>
+                              </Grid>
                             )}
+                            {(alert.min_year || alert.max_year) && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <CalendarToday sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    {alert.min_year && alert.max_year 
+                                      ? `${alert.min_year} - ${alert.max_year}`
+                                      : alert.min_year 
+                                        ? `Desde ${alert.min_year}`
+                                        : `Hasta ${alert.max_year}`
+                                    }
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                          </Grid>
+                        </Box>
+                      </Grid>
 
-                            <ListingsGrid 
-                              listings={testResults[alert.id].listings}
-                              loading={testingAlerts[alert.id]}
-                              showNoResults={!testingAlerts[alert.id] && (!testResults[alert.id].listings || testResults[alert.id].listings.length === 0)}
-                              sx={{ 
-                                '& .MuiGrid-item': {
-                                  '@media (min-width: 600px)': {
-                                    flexBasis: '50%',
-                                    maxWidth: '50%',
-                                  },
-                                  '@media (min-width: 960px)': {
-                                    flexBasis: '33.333333%',
-                                    maxWidth: '33.333333%',
-                                  }
-                                }
-                              }}
-                            />
-                          </>
-                        )}
-                      </Box>
-                    )}
+                      {/* Specifications Section */}
+                      <Grid item xs={12} md={4}>
+                        <Box sx={{ 
+                          p: 2, 
+                          bgcolor: 'rgba(255,255,255,0.05)',
+                          borderRadius: 1,
+                          height: '100%'
+                        }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <Settings sx={{ color: 'white' }} />
+                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
+                              Especificaciones
+                            </Typography>
+                          </Box>
+                          <Grid container spacing={2}>
+                            {alert.engine && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <LocalGasStation sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    {alert.engine}
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                            {alert.min_horse_power && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <Speed sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    Mínimo {alert.min_horse_power} CV
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                            {alert.gearbox && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <Settings sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    {alert.gearbox}
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                            {alert.max_kilometers && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <Speed sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    Máximo {alert.max_kilometers.toLocaleString()} km
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                          </Grid>
+                        </Box>
+                      </Grid>
+
+                      {/* Location Section */}
+                      <Grid item xs={12} md={4}>
+                        <Box sx={{ 
+                          p: 2, 
+                          bgcolor: 'rgba(255,255,255,0.05)',
+                          borderRadius: 1,
+                          height: '100%'
+                        }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <Place sx={{ color: 'white' }} />
+                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
+                              Ubicación
+                            </Typography>
+                          </Box>
+                          <Grid container spacing={2}>
+                            {alert.location_text && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <LocationOn sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    {alert.location_text}
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                            {alert.distance && (
+                              <Grid item xs={12}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <NearMe sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white' }}>
+                                    Radio de {alert.distance} km
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            )}
+                          </Grid>
+                        </Box>
+                      </Grid>
+                    </Grid>
+
+                    {/* Notifications */}
+                    <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                      {alert.email_notifications && (
+                        <Chip 
+                          icon={<Email sx={{ color: 'white !important' }} />}
+                          label={`Resultados por email cada día a las ${new Date(alert.created_at).getHours().toString().padStart(2, '0')}:00`}
+                          size="small"
+                          sx={{
+                            background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                            color: 'white',
+                            '& .MuiChip-icon': {
+                              color: 'white'
+                            }
+                          }}
+                        />
+                      )}
+                      <Chip 
+                        icon={<CalendarToday sx={{ color: 'white !important' }} />}
+                        label={`Caduca el ${new Date(new Date(alert.created_at).getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', {
+                          day: '2-digit',
+                          month: 'long',
+                          year: 'numeric'
+                        })}`}
+                        size="small"
+                        sx={{
+                          background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                          color: 'white',
+                          '& .MuiChip-icon': {
+                            color: 'white'
+                          }
+                        }}
+                      />
+                    </Box>
                   </CardContent>
                 </Card>
               </Grid>

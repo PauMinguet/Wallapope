@@ -11,157 +11,61 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_KEY
 )
 
-interface CarListing {
+interface Listing {
   id: string
   title: string
-  description: string
   price: number
-  currency: string
-  web_slug: string
-  distance: number
-  location: {
-    postal_code: string
-    city: string
-    country_code: string
-  }
-  brand: string
-  model: string
+  price_text: string
+  price_difference: number
+  price_difference_percentage: string
+  market_price: number
+  market_price_text: string
+  location: string
   year: number
-  version: string
   kilometers: number
-  engine_type: string
-  gearbox: string
-  horsepower: number
-  seller_info: {
-    id: string
-    micro_name: string
-    image: string
-    online: boolean
-    kind: string
-  }
-  flags: {
-    pending: boolean
-    sold: boolean
-    reserved: boolean
-    banned: boolean
-    expired: boolean
-    onhold: boolean
-  }
-  search_id: string
-  external_id: string
-  car_images: Array<{
-    image_urls: {
-      large: string
-      original: string
-    }
-    image_order: number
-  }>
-  car_searches: {
-    brand: string
-    model: string
-    market_price: number
-    frontend_url: string
-  }
+  fuel_type: string
+  transmission: string
+  url: string
+  listing_images: Array<{ image_url: string }>
+}
+
+interface Run {
+  listings: Listing[]
+  created_at: string
 }
 
 export async function GET() {
   try {
-    const { data: listings, error } = await supabase
-      .from('car_listings')
-      .select(`
-        *,
-        car_images!inner (
-          image_urls,
-          image_order
-        ),
-        car_searches!inner (
-          brand,
-          model,
-          market_price,
-          frontend_url
-        )
-      `)
+    // Get all runs from modo_rapido_runs
+    const { data: runs, error } = await supabase
+      .from('modo_rapido_runs')
+      .select('listings, created_at')
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching listings:', error)
+      console.error('Error fetching modo rapido runs:', error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    if (!runs || runs.length === 0) {
+      return NextResponse.json([])
+    }
 
-    const filteredListings = listings
-      .filter((listing: CarListing) => {
-        // Skip if any flag is true (reserved, sold, banned, etc)
-        if (listing.flags && Object.values(listing.flags).some(flag => flag === true)) {
-          return false
-        }
+    // Merge all listings from all runs
+    const allListings = runs.reduce<Listing[]>((acc, run: Run) => {
+      const runListings = run.listings || []
+      return [...acc, ...runListings]
+    }, [])
 
-        // Skip listings with unwanted keywords
-        const unwantedKeywords = [
-          'accidentado', 'accidentada', 'inundado', 'accidente', 
-          'despiece', 'reparar', 'no arranca', 'flexicar'
-        ]
-        const lowerTitle = listing.title.toLowerCase()
-        const lowerDesc = (listing.description || '').toLowerCase()
+    // Remove duplicates based on listing id
+    const uniqueListings = allListings.filter((listing, index, self) =>
+      index === self.findIndex((l) => l.id === listing.id)
+    )
 
-        if (unwantedKeywords.some(keyword => 
-          lowerTitle.includes(keyword) || lowerDesc.includes(keyword)
-        )) {
-          return false
-        }
+    // Sort by price difference by default
+    const sortedListings = uniqueListings.sort((a, b) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
 
-        // Skip if kilometers > 200000
-        if (listing.kilometers > 200000) {
-          return false
-        }
-
-        // Skip if no images
-        if (!listing.car_images?.length) {
-          return false
-        }
-
-        return true
-      })
-      .map((listing: CarListing) => {
-        const marketPrice = listing.car_searches?.market_price || 0
-        const price_difference = marketPrice - listing.price
-        const percentageDifference = marketPrice ? ((price_difference / marketPrice) * 100).toFixed(1) : '0.0'
-
-        // Get the first image and use the large or original URL
-        const sortedImages = listing.car_images.sort((a, b) => a.image_order - b.image_order)
-        const firstImage = sortedImages[0]?.image_urls
-        const imageUrl = firstImage?.large || firstImage?.original
-
-        return {
-          id: listing.id,
-          external_id: listing.external_id,
-          title: listing.title,
-          description: listing.description,
-          price: listing.price,
-          price_text: `${listing.price.toLocaleString('es-ES')}€`,
-          price_difference,
-          price_difference_percentage: `${percentageDifference}%`,
-          market_price: marketPrice,
-          market_price_text: marketPrice ? `${marketPrice.toLocaleString('es-ES')}€` : 'N/A',
-          location: `${listing.location.city}, ${listing.location.postal_code}`,
-          year: listing.year,
-          kilometers: listing.kilometers,
-          fuel_type: listing.engine_type,
-          transmission: listing.gearbox,
-          url: `https://es.wallapop.com/item/${listing.web_slug}`,
-          listing_images: [{
-            image_url: imageUrl
-          }],
-          searches: {
-            model: listing.car_searches?.model,
-            brand: listing.car_searches?.brand,
-            search_url: listing.car_searches?.frontend_url
-          }
-        }
-      })
-      .sort((a, b) => b.price_difference - a.price_difference)
-
-    return NextResponse.json(filteredListings)
+    return NextResponse.json(sortedListings)
   } catch (error) {
     console.error('Error in car-listings endpoint:', error)
     return NextResponse.json(

@@ -33,6 +33,7 @@ import {
   LocalOffer,
   TrendingDown,
   NearMe,
+  ArrowBack,
 } from '@mui/icons-material'
 import TopBar from '../../../components/TopBar'
 import ListingsGrid from '../../../components/ListingsGrid'
@@ -203,7 +204,7 @@ const MapComponent = dynamic(() => import('../../../components/MapComponent'), {
 
 export default function AlertDetailPage() {
   const pathname = usePathname()
-  const id = pathname.split('/')[3] // Get the alert ID from the URL
+  const id = pathname.split('/')[3]
   const router = useRouter()
   const { isSignedIn, isLoaded } = useUser()
   const [alert, setAlert] = useState<Alert | null>(null)
@@ -214,6 +215,7 @@ export default function AlertDetailPage() {
   const [testResults, setTestResults] = useState<AlertRun | null>(null)
   const [mapAnchorEl, setMapAnchorEl] = useState<HTMLElement | null>(null)
   const openMap = Boolean(mapAnchorEl)
+  const [visibleTestResults, setVisibleTestResults] = useState(true)
 
   const loadData = useCallback(async () => {
     try {
@@ -492,15 +494,28 @@ export default function AlertDetailPage() {
         )}
 
         <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="h4" component="h1" sx={{ 
-            fontWeight: 'bold',
-            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            {alert.name}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <IconButton
+              onClick={() => router.push('/app/alertas')}
+              sx={{ 
+                color: 'white',
+                '&:hover': {
+                  background: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              <ArrowBack />
+            </IconButton>
+            <Typography variant="h4" component="h1" sx={{ 
+              fontWeight: 'bold',
+              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
+              {alert.name}
+            </Typography>
+          </Box>
           <Button
             variant="contained"
             onClick={handleTestAlert}
@@ -771,84 +786,137 @@ export default function AlertDetailPage() {
                 border: '1px solid rgba(255,255,255,0.1)'
               }}>
                 <CardContent>
-                  <Typography variant="h6" sx={{ mb: 3, color: 'white' }}>
-                    Resultados de la Prueba
-                  </Typography>
-                  
-                  {testResults.market_data && (
-                    <Box sx={{ 
-                      display: 'flex',
-                      justifyContent: 'center',
-                      mb: 3
-                    }}>
-                      <Card sx={{ 
-                        bgcolor: 'rgba(255,255,255,0.05)',
-                        backdropFilter: 'blur(10px)',
-                        borderRadius: 2,
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        maxWidth: 'fit-content'
-                      }}>
-                        <CardContent sx={{ p: 2 }}>
-                          <Typography variant="subtitle1" sx={{ 
-                            mb: 2, 
-                            color: 'white',
-                            textAlign: 'center',
-                            fontWeight: 500,
-                            borderBottom: '1px solid rgba(255,255,255,0.1)',
-                            pb: 1
-                          }}>
-                            Análisis de Mercado
-                          </Typography>
-                          <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                            <Grid item>
-                              <Box sx={{ textAlign: 'center' }}>
-                                <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
-                                  Precio Medio
-                                </Typography>
-                                <Typography sx={{ 
-                                  fontWeight: 'bold', 
-                                  color: 'white',
-                                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                                  backgroundClip: 'text',
-                                  WebkitBackgroundClip: 'text',
-                                  WebkitTextFillColor: 'transparent',
-                                  fontSize: '1.25rem'
-                                }}>
-                                  {formatPrice(testResults.market_data.average_price)}
-                                </Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item>
-                              <Box sx={{ textAlign: 'center' }}>
-                                <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
-                                  Rango de Precios
-                                </Typography>
-                                <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
-                                  {formatPrice(testResults.market_data.min_price)} - {formatPrice(testResults.market_data.max_price)}
-                                </Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item>
-                              <Box sx={{ textAlign: 'center' }}>
-                                <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
-                                  Total Anuncios
-                                </Typography>
-                                <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
-                                  {testResults.market_data.total_listings}
-                                </Typography>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                      </Card>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    gap: 2
+                  }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Typography variant="h6" sx={{ color: 'white' }}>
+                        Resultados de la Prueba
+                      </Typography>
+                      {testResults.market_data && (
+                        <Box sx={{ display: 'flex', gap: 3 }}>
+                          <Box>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem' }}>
+                              Precio Medio
+                            </Typography>
+                            <Typography sx={{ 
+                              color: 'white',
+                              fontWeight: 'bold',
+                              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                              backgroundClip: 'text',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent'
+                            }}>
+                              {formatPrice(testResults.market_data.average_price)}
+                            </Typography>
+                          </Box>
+                          <Box>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem' }}>
+                              Total Anuncios
+                            </Typography>
+                            <Typography sx={{ color: 'white', fontWeight: 'bold' }}>
+                              {testResults.market_data.total_listings}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      )}
                     </Box>
-                  )}
+                    <Button
+                      size="small"
+                      onClick={() => setVisibleTestResults(!visibleTestResults)}
+                      sx={{
+                        color: 'white',
+                        '&:hover': {
+                          background: 'rgba(255,255,255,0.1)'
+                        }
+                      }}
+                    >
+                      {visibleTestResults ? 'Ocultar Detalles' : 'Mostrar Detalles'}
+                    </Button>
+                  </Box>
 
-                  <ListingsGrid 
-                    listings={testResults.listings}
-                    loading={isTesting}
-                    showNoResults={!isTesting && (!testResults.listings || testResults.listings.length === 0)}
-                  />
+                  {visibleTestResults && (
+                    <>
+                      {testResults.market_data && (
+                        <Box sx={{ 
+                          display: 'flex',
+                          justifyContent: 'center',
+                          mt: 3,
+                          mb: 3
+                        }}>
+                          <Card sx={{ 
+                            bgcolor: 'rgba(255,255,255,0.05)',
+                            backdropFilter: 'blur(10px)',
+                            borderRadius: 2,
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            maxWidth: 'fit-content'
+                          }}>
+                            <CardContent sx={{ p: 2 }}>
+                              <Typography variant="subtitle1" sx={{ 
+                                mb: 2, 
+                                color: 'white',
+                                textAlign: 'center',
+                                fontWeight: 500,
+                                borderBottom: '1px solid rgba(255,255,255,0.1)',
+                                pb: 1
+                              }}>
+                                Análisis de Mercado
+                              </Typography>
+                              <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+                                <Grid item>
+                                  <Box sx={{ textAlign: 'center' }}>
+                                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
+                                      Precio Medio
+                                    </Typography>
+                                    <Typography sx={{ 
+                                      fontWeight: 'bold', 
+                                      color: 'white',
+                                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                                      backgroundClip: 'text',
+                                      WebkitBackgroundClip: 'text',
+                                      WebkitTextFillColor: 'transparent',
+                                      fontSize: '1.25rem'
+                                    }}>
+                                      {formatPrice(testResults.market_data.average_price)}
+                                    </Typography>
+                                  </Box>
+                                </Grid>
+                                <Grid item>
+                                  <Box sx={{ textAlign: 'center' }}>
+                                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
+                                      Rango de Precios
+                                    </Typography>
+                                    <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
+                                      {formatPrice(testResults.market_data.min_price)} - {formatPrice(testResults.market_data.max_price)}
+                                    </Typography>
+                                  </Box>
+                                </Grid>
+                                <Grid item>
+                                  <Box sx={{ textAlign: 'center' }}>
+                                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 0.5 }}>
+                                      Total Anuncios
+                                    </Typography>
+                                    <Typography sx={{ fontWeight: 'bold', color: 'white' }}>
+                                      {testResults.market_data.total_listings}
+                                    </Typography>
+                                  </Box>
+                                </Grid>
+                              </Grid>
+                            </CardContent>
+                          </Card>
+                        </Box>
+                      )}
+
+                      <ListingsGrid 
+                        listings={testResults.listings}
+                        loading={isTesting}
+                        showNoResults={!isTesting && (!testResults.listings || testResults.listings.length === 0)}
+                      />
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </Grid>
