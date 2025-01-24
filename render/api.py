@@ -2,6 +2,7 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 import wallapop_api_cars
 import wallapop_endpoint_search
+from process_modo_rapido import process_modo_rapido_entries
 import logging
 import os
 from pydantic import BaseModel
@@ -519,4 +520,15 @@ async def process_alerts():
             
     except Exception as e:
         logger.error(f"Error in process_alerts: {str(e)}")
+        return {"error": str(e)}
+
+@app.get("/api/process-modo-rapido")
+async def process_modo_rapido():
+    """Process all modo_rapido entries and run searches"""
+    try:
+        supabase = init_supabase()
+        return process_modo_rapido_entries(supabase)
+            
+    except Exception as e:
+        logger.error(f"Error in process_modo_rapido: {str(e)}")
         return {"error": str(e)} 
