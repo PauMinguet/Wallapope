@@ -19202,3 +19202,271 @@ Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&mode
 2025-01-25 21:36:59,148 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
 2025-01-25 21:36:59,407 - INFO - HTTP Request: POST https://xiqbuolkrzuqmndwhudd.supabase.co/rest/v1/alert_runs "HTTP/2 201 Created"
 2025-01-25 21:37:01,211 - INFO - Email notification sent successfully to minguetpau@gmail.com
+2025-01-26 02:21:25,014 - INFO - Search endpoint received params: {'brand': 'Volkswagen', 'model': 'Golf', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:21:25,016 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:21:25,016 - INFO - Received params: {'brand': 'Volkswagen', 'model': 'Golf', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:21:25,016 - INFO - Market analysis km range: 192000 - 264000
+2025-01-26 02:21:25,016 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=264000&min_sale_price=3000&order_by=price_low_to_high&min_km=192000&min_year=2014&max_year=2016
+2025-01-26 02:21:25,771 - INFO - Calculated market data: {'market_price': 8000.0, 'median_price': 8000.0, 'average_price': 8039.8, 'min_price': 6000.0, 'max_price': 9200.0, 'total_listings': 40, 'valid_listings': 5, 'sample_size': 5}
+2025-01-26 02:21:25,773 - INFO - Price range for bargain search: 4019 - 7235 (based on average price 8039.8)
+2025-01-26 02:21:25,773 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=4019&max_sale_price=7235&max_km=240000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-26 02:21:26,606 - INFO - Filtering out listing nz043grkwrjo - likely new car with 0km
+2025-01-26 02:21:26,607 - INFO - Filtering out listing vjrq23v009zk due to unwanted keywords
+2025-01-26 02:21:26,607 - INFO - Filtering out listing x6qm8ggy8ojy - too many kilometers: 220000
+2025-01-26 02:21:26,607 - INFO - Filtering out listing nzx4n5xkq7j2 - too many kilometers: 222000
+2025-01-26 02:21:26,607 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:21:26,608 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=4019&max_sale_price=7235&max_km=264000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-26 02:21:27,145 - INFO - Found 2 suggested listings
+2025-01-26 02:21:27,145 - INFO - Final response includes 2 suggested listings
+2025-01-26 02:21:27,145 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:21:27,150 - INFO - API Response market data: {'market_price': 8000.0, 'median_price': 8000.0, 'average_price': 8039.8, 'min_price': 6000.0, 'max_price': 9200.0, 'total_listings': 40, 'valid_listings': 5, 'sample_size': 5}
+2025-01-26 02:21:27,150 - INFO - Final API Response market data: {'market_price': 8000.0, 'median_price': 8000.0, 'average_price': 8039.8, 'min_price': 6000.0, 'max_price': 9200.0, 'total_listings': 40, 'valid_listings': 5, 'sample_size': 5}
+2025-01-26 02:28:41,350 - INFO - Search endpoint received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:28:41,351 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:28:41,351 - INFO - Received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:28:41,352 - INFO - Market analysis km range: 192000 - 264000
+2025-01-26 02:28:41,352 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=264000&min_sale_price=3000&order_by=price_low_to_high&min_km=192000&min_year=2017&max_year=2019
+2025-01-26 02:28:41,954 - WARNING - No valid prices found for market analysis
+2025-01-26 02:31:22,368 - INFO - Search endpoint received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:31:22,368 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:31:22,368 - INFO - Received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:31:22,368 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:31:22,368 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:31:22,954 - WARNING - No valid prices found for market analysis
+2025-01-26 02:31:46,600 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2011, 'max_year': 2013, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:31:46,602 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:31:46,602 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2011, 'max_year': 2013, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:31:46,602 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:31:46,602 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2011&max_year=2013
+2025-01-26 02:31:47,152 - INFO - Calculated market data: {'market_price': 6900.0, 'median_price': 6900.0, 'average_price': 6816.666666666667, 'min_price': 6500.0, 'max_price': 7300.0, 'total_listings': 40, 'valid_listings': 6, 'sample_size': 6}
+2025-01-26 02:31:47,154 - INFO - Price range for bargain search: 3408 - 6135 (based on average price 6816.666666666667)
+2025-01-26 02:31:47,154 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=3408&max_sale_price=6135&max_km=240000&order_by=price_low_to_high&min_year=2011&max_year=2013
+2025-01-26 02:31:47,659 - INFO - Filtering out listing 36e1voxp98jd - too many kilometers: 224000
+2025-01-26 02:31:47,660 - INFO - Filtering out listing wzv4dxp37rzl - too many kilometers: 239926
+2025-01-26 02:31:47,660 - INFO - Filtering out listing ejk8n2o2k9jx - too many kilometers: 278000
+2025-01-26 02:31:47,660 - INFO - Filtering out listing 8j34dwd29769 - too many kilometers: 217000
+2025-01-26 02:31:47,660 - INFO - Filtering out listing p614dq9r8265 due to unwanted keywords
+2025-01-26 02:31:47,660 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:31:47,660 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=3408&max_sale_price=6135&max_km=264000&order_by=price_low_to_high&min_year=2010&max_year=2013
+2025-01-26 02:31:48,178 - INFO - Found 8 suggested listings
+2025-01-26 02:31:48,178 - INFO - Final response includes 8 suggested listings
+2025-01-26 02:31:48,178 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:32:03,847 - INFO - Search endpoint received params: {'brand': 'Seat', 'model': 'León', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:03,847 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:32:03,848 - INFO - Received params: {'brand': 'Seat', 'model': 'León', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:03,848 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:32:03,848 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Seat&model=Le%C3%B3n&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2014&max_year=2016
+2025-01-26 02:32:04,368 - INFO - Calculated market data: {'market_price': 7000.0, 'median_price': 7000.0, 'average_price': 6960.0, 'min_price': 6500.0, 'max_price': 7400.0, 'total_listings': 40, 'valid_listings': 5, 'sample_size': 5}
+2025-01-26 02:32:04,370 - INFO - Price range for bargain search: 3480 - 6264 (based on average price 6960.0)
+2025-01-26 02:32:04,370 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Seat&model=Le%C3%B3n&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=3480&max_sale_price=6264&max_km=240000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-26 02:32:04,876 - INFO - Filtering out listing x6qm348mwojy due to unwanted keywords
+2025-01-26 02:32:04,876 - INFO - Filtering out listing nzx48nym01j2 due to unwanted keywords
+2025-01-26 02:32:04,876 - INFO - Filtering out listing qzme8q85kojv - too many kilometers: 240000
+2025-01-26 02:32:04,876 - INFO - Filtering out listing mzn2k2mwokzn - too many kilometers: 210010
+2025-01-26 02:32:04,876 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:32:04,876 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Seat&model=Le%C3%B3n&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=3480&max_sale_price=6264&max_km=264000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-26 02:32:05,390 - INFO - Found 1 suggested listings
+2025-01-26 02:32:05,390 - INFO - Final response includes 1 suggested listings
+2025-01-26 02:32:05,390 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:32:05,393 - INFO - API Response market data: {'market_price': 7000.0, 'median_price': 7000.0, 'average_price': 6960.0, 'min_price': 6500.0, 'max_price': 7400.0, 'total_listings': 40, 'valid_listings': 5, 'sample_size': 5}
+2025-01-26 02:32:05,393 - INFO - Final API Response market data: {'market_price': 7000.0, 'median_price': 7000.0, 'average_price': 6960.0, 'min_price': 6500.0, 'max_price': 7400.0, 'total_listings': 40, 'valid_listings': 5, 'sample_size': 5}
+2025-01-26 02:32:24,716 - INFO - Search endpoint received params: {'brand': 'Volkswagen', 'model': 'Golf', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:24,716 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:32:24,716 - INFO - Received params: {'brand': 'Volkswagen', 'model': 'Golf', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:24,716 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:32:24,716 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:32:25,288 - INFO - Calculated market data: {'market_price': 10500.0, 'median_price': 10500.0, 'average_price': 10295.272727272728, 'min_price': 8999.0, 'max_price': 10990.0, 'total_listings': 40, 'valid_listings': 11, 'sample_size': 11}
+2025-01-26 02:32:25,290 - INFO - Price range for bargain search: 5147 - 9265 (based on average price 10295.272727272728)
+2025-01-26 02:32:25,290 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=5147&max_sale_price=9265&max_km=240000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-26 02:32:26,057 - INFO - Filtering out listing 0j242n827vzy due to unwanted keywords
+2025-01-26 02:32:26,058 - INFO - Filtering out listing qjw450d4mwzo - too many kilometers: 220000
+2025-01-26 02:32:26,058 - INFO - Filtering out listing p614m9m9y565 - too many kilometers: 260000
+2025-01-26 02:32:26,059 - INFO - Filtering out listing 9jdk08mdk26k due to unwanted keywords
+2025-01-26 02:32:26,059 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:32:26,059 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=5147&max_sale_price=9265&max_km=264000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-26 02:32:26,558 - INFO - Found 7 suggested listings
+2025-01-26 02:32:26,559 - INFO - Final response includes 7 suggested listings
+2025-01-26 02:32:26,559 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:32:26,562 - INFO - API Response market data: {'market_price': 10500.0, 'median_price': 10500.0, 'average_price': 10295.272727272728, 'min_price': 8999.0, 'max_price': 10990.0, 'total_listings': 40, 'valid_listings': 11, 'sample_size': 11}
+2025-01-26 02:32:26,562 - INFO - Final API Response market data: {'market_price': 10500.0, 'median_price': 10500.0, 'average_price': 10295.272727272728, 'min_price': 8999.0, 'max_price': 10990.0, 'total_listings': 40, 'valid_listings': 11, 'sample_size': 11}
+2025-01-26 02:32:43,010 - INFO - Search endpoint received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:43,011 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:32:43,011 - INFO - Received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:43,011 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:32:43,012 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2014&max_year=2016
+2025-01-26 02:32:43,767 - WARNING - No valid prices found for market analysis
+2025-01-26 02:32:47,880 - INFO - Search endpoint received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:47,880 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:32:47,880 - INFO - Received params: {'brand': 'Audi', 'model': 'A3', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:32:47,880 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:32:47,881 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2014&max_year=2016
+2025-01-26 02:32:48,442 - INFO - Calculated market data: {'market_price': 9990.0, 'median_price': 9990.0, 'average_price': 9758.8, 'min_price': 9350.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 10, 'sample_size': 10}
+2025-01-26 02:32:48,444 - INFO - Price range for bargain search: 4879 - 8782 (based on average price 9758.8)
+2025-01-26 02:32:48,444 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=4879&max_sale_price=8782&max_km=240000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-26 02:32:48,974 - INFO - Filtering out listing qzmedo7kn1jv - too many kilometers: 240000
+2025-01-26 02:32:48,974 - INFO - Filtering out listing qjw450k544zo - too many kilometers: 210000
+2025-01-26 02:32:48,974 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:32:48,975 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Audi&model=A3&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=4879&max_sale_price=8782&max_km=264000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-26 02:32:49,621 - INFO - Found 3 suggested listings
+2025-01-26 02:32:49,622 - INFO - Final response includes 3 suggested listings
+2025-01-26 02:32:49,622 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:32:49,627 - INFO - API Response market data: {'market_price': 9990.0, 'median_price': 9990.0, 'average_price': 9758.8, 'min_price': 9350.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 10, 'sample_size': 10}
+2025-01-26 02:32:49,627 - INFO - Final API Response market data: {'market_price': 9990.0, 'median_price': 9990.0, 'average_price': 9758.8, 'min_price': 9350.0, 'max_price': 10000.0, 'total_listings': 40, 'valid_listings': 10, 'sample_size': 10}
+2025-01-26 02:36:12,502 - INFO - Search endpoint received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:36:12,504 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:36:12,505 - INFO - Received params: {'brand': 'BMW', 'model': 'Serie', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:36:12,505 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:36:12,505 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:36:12,979 - WARNING - No valid prices found for market analysis
+2025-01-26 02:36:54,904 - INFO - Search endpoint received params: {'brand': 'Mercedes', 'model': 'Clase', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:36:54,906 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:36:54,906 - INFO - Received params: {'brand': 'Mercedes', 'model': 'Clase', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:36:54,906 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:36:54,907 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:36:55,230 - WARNING - No valid prices found for market analysis
+2025-01-26 02:38:38,135 - INFO - Search endpoint received params: {'brand': 'Mercedes', 'model': 'Clase A', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:38:38,136 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:38:38,136 - INFO - Received params: {'brand': 'Mercedes', 'model': 'Clase A', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:38:38,137 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:38:38,137 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase%20A&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:38:38,612 - INFO - Calculated market data: {'market_price': 18990.0, 'median_price': 18990.0, 'average_price': 18073.333333333332, 'min_price': 14990.0, 'max_price': 32800.0, 'total_listings': 39, 'valid_listings': 39, 'sample_size': 36}
+2025-01-26 02:38:38,614 - INFO - Price range for bargain search: 9036 - 16266 (based on average price 18073.333333333332)
+2025-01-26 02:38:38,614 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase%20A&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=9036&max_sale_price=16266&max_km=240000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-26 02:38:39,137 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:38:39,137 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase%20A&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=9036&max_sale_price=16266&max_km=264000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-26 02:38:39,560 - INFO - Found 20 suggested listings
+2025-01-26 02:38:39,560 - INFO - Final response includes 20 suggested listings
+2025-01-26 02:38:39,560 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:38:39,564 - INFO - API Response market data: {'market_price': 18990.0, 'median_price': 18990.0, 'average_price': 18073.333333333332, 'min_price': 14990.0, 'max_price': 32800.0, 'total_listings': 39, 'valid_listings': 39, 'sample_size': 36}
+2025-01-26 02:38:39,564 - INFO - Final API Response market data: {'market_price': 18990.0, 'median_price': 18990.0, 'average_price': 18073.333333333332, 'min_price': 14990.0, 'max_price': 32800.0, 'total_listings': 39, 'valid_listings': 39, 'sample_size': 36}
+2025-01-26 02:39:25,178 - INFO - Search endpoint received params: {'brand': 'Mercedes', 'model': 'Clase A', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:39:25,178 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:39:25,178 - INFO - Received params: {'brand': 'Mercedes', 'model': 'Clase A', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:39:25,178 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:39:25,178 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase%20A&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:39:25,609 - INFO - Calculated market data: {'market_price': 32800.0, 'median_price': 32800.0, 'average_price': 30097.5, 'min_price': 21990.0, 'max_price': 32800.0, 'total_listings': 39, 'valid_listings': 4, 'sample_size': 4}
+2025-01-26 02:39:25,611 - INFO - Price range for bargain search: 15048 - 27087 (based on average price 30097.5)
+2025-01-26 02:39:25,612 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase%20A&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=15048&max_sale_price=27087&max_km=240000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-26 02:39:25,992 - INFO - Filtering out listing w674od9o9w6x due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing wzv47y9847zl due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing w674od75m86x due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing mzn21rn8nyzn due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing 0j2420vx0mzy due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing nzx4n1n5k5j2 due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing vjrq5495y4zk due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing pzp2ed99olj3 due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing p61405o03d65 due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing 8z8k38dkqlz3 due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing mzn2k3r9qyzn due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing wzv4729g84zl due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing wzy41r3k4xz5 due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing p61408gp4265 due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing 0j247n9lmmzy due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing wzv47yv7pdzl due to unwanted keywords
+2025-01-26 02:39:25,992 - INFO - Filtering out listing xzo24834k769 due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 3zl8wog08n6x due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing vjrq89ld9lzk due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing nz04pmxkgrjo due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing e6581vx7n06o due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 36e17wp7nyjd due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing qjw45nqo54zo due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing pj9mp01wlk6e due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing e658klq21p6o due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 36e14rp4evjd due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing p6143ldnd765 due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 0j242l39omzy due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing nz04olg293jo due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 0j247ykvemzy due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing w674od92x96x due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 36e17wwxmvjd due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing ejk83xllpqjx due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 9jdk07npd46k due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 9jdk07n08l6k due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing xzo248323269 due to unwanted keywords
+2025-01-26 02:39:25,993 - INFO - Filtering out listing 8j34d3enw769 due to unwanted keywords
+2025-01-26 02:39:25,994 - INFO - Filtering out listing xzo2482yy569 due to unwanted keywords
+2025-01-26 02:39:25,994 - INFO - Filtering out listing ejk83xyee9jx due to unwanted keywords
+2025-01-26 02:39:25,994 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:39:25,994 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Mercedes&model=Clase%20A&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=15048&max_sale_price=27087&max_km=264000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-26 02:39:26,403 - INFO - Found 1 suggested listings
+2025-01-26 02:39:26,403 - INFO - Final response includes 1 suggested listings
+2025-01-26 02:39:26,403 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:39:26,405 - INFO - API Response market data: {'market_price': 32800.0, 'median_price': 32800.0, 'average_price': 30097.5, 'min_price': 21990.0, 'max_price': 32800.0, 'total_listings': 39, 'valid_listings': 4, 'sample_size': 4}
+2025-01-26 02:39:26,405 - INFO - Final API Response market data: {'market_price': 32800.0, 'median_price': 32800.0, 'average_price': 30097.5, 'min_price': 21990.0, 'max_price': 32800.0, 'total_listings': 39, 'valid_listings': 4, 'sample_size': 4}
+2025-01-26 02:39:40,641 - INFO - Search endpoint received params: {'brand': 'BMW', 'model': 'Serie 3', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:39:40,643 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:39:40,643 - INFO - Received params: {'brand': 'BMW', 'model': 'Serie 3', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2017, 'max_year': 2019, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:39:40,643 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:39:40,643 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie%203&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2017&max_year=2019
+2025-01-26 02:39:41,132 - INFO - Calculated market data: {'market_price': 14800.0, 'median_price': 14800.0, 'average_price': 14598.333333333334, 'min_price': 11600.0, 'max_price': 14990.0, 'total_listings': 40, 'valid_listings': 13, 'sample_size': 12}
+2025-01-26 02:39:41,133 - INFO - Price range for bargain search: 7299 - 13138 (based on average price 14598.333333333334)
+2025-01-26 02:39:41,133 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie%203&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=7299&max_sale_price=13138&max_km=240000&order_by=price_low_to_high&min_year=2017&max_year=2019
+2025-01-26 02:39:41,719 - INFO - Filtering out listing qjw4w4yokgzo - likely new car with 0km
+2025-01-26 02:39:41,719 - INFO - Filtering out listing mzn2xr7x2kzn due to unwanted keywords
+2025-01-26 02:39:41,719 - INFO - Filtering out listing 8j34lpx9n169 - too many kilometers: 228000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing 4z4el12rgwjy - too many kilometers: 220000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing e658lgd83k6o - too many kilometers: 220000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing p614lymyd565 - too many kilometers: 220000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing pzp2mrxr5lj3 - too many kilometers: 220000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing qzmewy0xkgjv - too many kilometers: 220000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing qjw4ql2wyezo - too many kilometers: 230000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing qjw4dqn75gzo - too many kilometers: 210000
+2025-01-26 02:39:41,719 - INFO - Filtering out listing nz04xqr41vjo - too many kilometers: 210000
+2025-01-26 02:39:41,719 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:39:41,719 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=BMW&model=Serie%203&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=7299&max_sale_price=13138&max_km=264000&order_by=price_low_to_high&min_year=2016&max_year=2019
+2025-01-26 02:39:42,088 - INFO - Found 4 suggested listings
+2025-01-26 02:39:42,088 - INFO - Final response includes 4 suggested listings
+2025-01-26 02:39:42,088 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:39:42,090 - INFO - API Response market data: {'market_price': 14800.0, 'median_price': 14800.0, 'average_price': 14598.333333333334, 'min_price': 11600.0, 'max_price': 14990.0, 'total_listings': 40, 'valid_listings': 13, 'sample_size': 12}
+2025-01-26 02:39:42,090 - INFO - Final API Response market data: {'market_price': 14800.0, 'median_price': 14800.0, 'average_price': 14598.333333333334, 'min_price': 11600.0, 'max_price': 14990.0, 'total_listings': 40, 'valid_listings': 13, 'sample_size': 12}
+2025-01-26 02:39:53,183 - INFO - Search endpoint received params: {'brand': 'Volkswagen', 'model': 'Golf', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:39:53,183 - INFO - Search endpoint max_kilometers value: 240000
+2025-01-26 02:39:53,183 - INFO - Received params: {'brand': 'Volkswagen', 'model': 'Golf', 'latitude': 40.4637, 'longitude': -3.7492, 'distance': 500000, 'min_year': 2014, 'max_year': 2016, 'max_kilometers': 240000, 'min_sale_price': 3000, 'order_by': 'price_low_to_high'}
+2025-01-26 02:39:53,183 - INFO - Market analysis km range: 144000 - 288000
+2025-01-26 02:39:53,184 - INFO - 
+Market price search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&max_km=288000&min_sale_price=3000&order_by=price_low_to_high&min_km=144000&min_year=2014&max_year=2016
+2025-01-26 02:39:53,574 - INFO - Calculated market data: {'market_price': 8199.0, 'median_price': 8199.0, 'average_price': 8186.625, 'min_price': 6000.0, 'max_price': 8500.0, 'total_listings': 40, 'valid_listings': 9, 'sample_size': 8}
+2025-01-26 02:39:53,577 - INFO - Price range for bargain search: 4093 - 7367 (based on average price 8186.625)
+2025-01-26 02:39:53,577 - INFO - 
+Listing search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=500000000&min_sale_price=4093&max_sale_price=7367&max_km=240000&order_by=price_low_to_high&min_year=2014&max_year=2016
+2025-01-26 02:39:53,929 - INFO - Filtering out listing nz043grkwrjo - likely new car with 0km
+2025-01-26 02:39:53,930 - INFO - Filtering out listing vjrq23v009zk due to unwanted keywords
+2025-01-26 02:39:53,930 - INFO - Filtering out listing x6qm8ggy8ojy - too many kilometers: 220000
+2025-01-26 02:39:53,930 - INFO - Filtering out listing nzx4n5xkq7j2 - too many kilometers: 222000
+2025-01-26 02:39:53,930 - INFO - Performing expanded search for suggestions...
+2025-01-26 02:39:53,931 - INFO - 
+Expanded search URL: https://api.wallapop.com/api/v3/cars/search?brand=Volkswagen&model=Golf&latitude=40.4637&longitude=-3.7492&category_ids=100&distance=550000000&min_sale_price=4093&max_sale_price=7367&max_km=264000&order_by=price_low_to_high&min_year=2013&max_year=2016
+2025-01-26 02:39:54,258 - INFO - Found 3 suggested listings
+2025-01-26 02:39:54,258 - INFO - Final response includes 3 suggested listings
+2025-01-26 02:39:54,258 - INFO - Final response structure: ['success', 'search_parameters', 'listings', 'total_results', 'filtered_results', 'search_url', 'market_data', 'suggested_listings']
+2025-01-26 02:39:54,260 - INFO - API Response market data: {'market_price': 8199.0, 'median_price': 8199.0, 'average_price': 8186.625, 'min_price': 6000.0, 'max_price': 8500.0, 'total_listings': 40, 'valid_listings': 9, 'sample_size': 8}
+2025-01-26 02:39:54,260 - INFO - Final API Response market data: {'market_price': 8199.0, 'median_price': 8199.0, 'average_price': 8186.625, 'min_price': 6000.0, 'max_price': 8500.0, 'total_listings': 40, 'valid_listings': 9, 'sample_size': 8}

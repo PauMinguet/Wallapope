@@ -13,7 +13,7 @@ SPAIN_CENTER = {
 
 # Define unwanted keywords as a global constant
 UNWANTED_KEYWORDS = [
-    'accidentado', 'accidentada', 'inundado', 'accidente', 'inundó', 'dana', 'averias', 'golpe', 'averia', 'gripado', 
+    'accidentado', 'accidentada', 'inundado', 'accidente', 'inundó', 'flexicar', 'dana', 'averias', 'golpe', 'averia', 'gripado', 
     'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', 'averiada', '647 358 133', 'mallorca', 'palma'
 ]
 
@@ -39,8 +39,8 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         
         # Calculate kilometer range for market analysis (80-110% of max_km)
         if max_km is not None:
-            market_max_km = int(float(max_km) * 1.10)  # 110% of max_km
-            market_min_km = int(float(max_km) * 0.80)  # 80% of max_km
+            market_max_km = int(float(max_km) * 1.20)  # 110% of max_km
+            market_min_km = int(float(max_km) * 0.60)  # 80% of max_km
             logger.info(f"Market analysis km range: {market_min_km} - {market_max_km}")
         else:
             market_max_km = 240000
