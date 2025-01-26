@@ -4,6 +4,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
 import UserSync from '@/components/UserSync'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,6 +34,8 @@ export default function RootLayout({
         <body className={inter.className} suppressHydrationWarning>
           <UserSync />
           {children}
+          <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>
