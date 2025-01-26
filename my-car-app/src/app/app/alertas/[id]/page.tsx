@@ -34,11 +34,13 @@ import {
   TrendingDown,
   NearMe,
   ArrowBack,
+  Edit,
 } from '@mui/icons-material'
 import TopBar from '../../../components/TopBar'
 import ListingsGrid from '../../../components/ListingsGrid'
 import { formatPrice } from '@/lib/utils'
 import dynamic from 'next/dynamic'
+import AlertDialog from '../../../components/AlertDialog'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
@@ -143,6 +145,23 @@ interface ApiResponse {
   };
 }
 
+interface AlertFormData {
+  name: string;
+  brand: string;
+  model: string;
+  min_year: string;
+  max_year: string;
+  engine: string;
+  min_horse_power: string;
+  gearbox: string;
+  latitude: number | null;
+  longitude: number | null;
+  distance: number;
+  location_text: string;
+  max_kilometers: number;
+  email_notifications: boolean;
+}
+
 const formatDateTime = (dateString: string) => {
   const date = new Date(dateString)
   const today = new Date()
@@ -216,6 +235,7 @@ export default function AlertDetailPage() {
   const [mapAnchorEl, setMapAnchorEl] = useState<HTMLElement | null>(null)
   const openMap = Boolean(mapAnchorEl)
   const [visibleTestResults, setVisibleTestResults] = useState(true)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
 
   const loadData = useCallback(async () => {
     try {
@@ -420,6 +440,25 @@ export default function AlertDetailPage() {
     setMapAnchorEl(null)
   }
 
+  const handleEditAlert = async (formData: AlertFormData) => {
+    try {
+      const response = await fetch(`/api/alerts/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+
+      if (!response.ok) throw new Error('Failed to update alert')
+      await loadData()
+      setIsEditDialogOpen(false)
+    } catch (err) {
+      console.error('Error updating alert:', err)
+      setError('Error al actualizar la alerta')
+    }
+  }
+
   if (!isLoaded || loading) {
     return (
       <Box sx={{ 
@@ -516,20 +555,37 @@ export default function AlertDetailPage() {
               {alert.name}
             </Typography>
           </Box>
-          <Button
-            variant="contained"
-            onClick={handleTestAlert}
-            disabled={isTesting}
-            sx={{
-              background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-              color: 'white',
-              '&:hover': {
-                background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-              }
-            }}
-          >
-            {isTesting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Probar Alerta'}
-          </Button>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="outlined"
+              onClick={() => setIsEditDialogOpen(true)}
+              startIcon={<Edit />}
+              sx={{
+                color: 'white',
+                borderColor: 'rgba(255,255,255,0.3)',
+                '&:hover': {
+                  borderColor: 'rgba(255,255,255,0.5)',
+                  background: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              Editar
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleTestAlert}
+              disabled={isTesting}
+              sx={{
+                background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                color: 'white',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                }
+              }}
+            >
+              {isTesting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Probar'}
+            </Button>
+          </Box>
         </Box>
 
         <Grid container spacing={3}>
@@ -1255,6 +1311,29 @@ export default function AlertDetailPage() {
           </Grid>
         </Grid>
       </Container>
+
+      <AlertDialog
+        open={isEditDialogOpen}
+        onClose={() => setIsEditDialogOpen(false)}
+        initialData={{
+          name: alert.name,
+          brand: alert.brand,
+          model: alert.model,
+          min_year: alert.min_year,
+          max_year: alert.max_year,
+          engine: alert.engine,
+          min_horse_power: alert.min_horse_power,
+          gearbox: alert.gearbox,
+          latitude: alert.latitude,
+          longitude: alert.longitude,
+          distance: alert.distance,
+          location_text: alert.location_text,
+          max_kilometers: alert.max_kilometers,
+          email_notifications: alert.email_notifications
+        }}
+        onSubmit={handleEditAlert}
+        isEditing={true}
+      />
     </Box>
   )
 } 

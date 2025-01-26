@@ -43,9 +43,10 @@ interface ListingsGridProps {
   loading?: boolean;
   showNoResults?: boolean;
   sx?: SxProps<Theme>;
+  simplified?: boolean;
 }
 
-const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoResults, sx }) => {
+const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoResults, sx, simplified = false }) => {
   if (loading) {
     return (
       <Grid container spacing={3} sx={sx}>
@@ -219,56 +220,60 @@ const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoRe
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Cambio</Typography>
                     <Typography variant="body2" sx={{ color: 'white' }}>{listing.transmission || 'N/D'}</Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Distancia</Typography>
-                    <Typography variant="body2" sx={{ color: 'white' }}>{listing.distance ? `${listing.distance} km` : 'N/D'}</Typography>
-                  </Grid>
+                  {!simplified && (
+                    <Grid item xs={4}>
+                      <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Distancia</Typography>
+                      <Typography variant="body2" sx={{ color: 'white' }}>{listing.distance ? `${listing.distance} km` : 'N/D'}</Typography>
+                    </Grid>
+                  )}
                 </Grid>
-                <Box sx={{ 
-                  mt: 'auto',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  gap: 1,
-                  '& .MuiButton-root': {
-                    py: 0.5,
-                    px: 1.5,
-                    fontSize: '0.8rem',
-                    background: 'linear-gradient(45deg, rgba(44,62,147,0.6), rgba(107,35,142,0.6))',
-                    borderColor: 'transparent',
-                    color: 'white',
-                    minWidth: 'unset',
-                    '&:hover': {
-                      background: 'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(125,43,166,0.8))',
-                      transform: 'translateY(-1px)',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                    },
-                    '& .MuiButton-startIcon': {
-                      marginRight: 0.5
-                    },
-                    transition: 'all 0.2s ease'
-                  }
-                }}>
-                  <Button 
-                    variant="outlined" 
-                    href={listing.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    startIcon={<OpenInNew sx={{ fontSize: '1rem' }} />}
-                  >
-                    Ver
-                  </Button>
-                  {listing.searches?.search_url && (
+                {!simplified && (
+                  <Box sx={{ 
+                    mt: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: 1,
+                    '& .MuiButton-root': {
+                      py: 0.5,
+                      px: 1.5,
+                      fontSize: '0.8rem',
+                      background: 'linear-gradient(45deg, rgba(44,62,147,0.6), rgba(107,35,142,0.6))',
+                      borderColor: 'transparent',
+                      color: 'white',
+                      minWidth: 'unset',
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(125,43,166,0.8))',
+                        transform: 'translateY(-1px)',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                      },
+                      '& .MuiButton-startIcon': {
+                        marginRight: 0.5
+                      },
+                      transition: 'all 0.2s ease'
+                    }
+                  }}>
                     <Button 
-                      variant="outlined"
-                      href={listing.searches.search_url}
+                      variant="outlined" 
+                      href={listing.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      startIcon={<Search sx={{ fontSize: '1rem' }} />}
+                      startIcon={<OpenInNew sx={{ fontSize: '1rem' }} />}
                     >
-                      Similares
+                      Ver
                     </Button>
-                  )}
-                </Box>
+                    {listing.searches?.search_url && (
+                      <Button 
+                        variant="outlined"
+                        href={listing.searches.search_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        startIcon={<Search sx={{ fontSize: '1rem' }} />}
+                      >
+                        Similares
+                      </Button>
+                    )}
+                  </Box>
+                )}
               </CardContent>
             </Card>
           </Box>

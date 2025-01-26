@@ -9,6 +9,8 @@ import {
   Card,
   CardContent,
   Stack,
+  CircularProgress,
+  Alert,
 } from '@mui/material'
 import { 
   Search,
@@ -22,6 +24,7 @@ import TopBar from './components/TopBar'
 import { useState } from 'react'
 import PricingSection from './components/PricingSection'
 import Footer from './components/Footer'
+import ListingsGrid from './components/ListingsGrid'
 
 const Chat = dynamic(() => import('./components/Chat'), {
   ssr: false,
@@ -33,11 +36,64 @@ const LiveActivityToast = dynamic(() => import('./components/LiveActivityToast')
 
 const MotionTypography = motion.create(Typography)
 
+interface MarketData {
+  average_price: number;
+  min_price: number;
+  max_price: number;
+  total_listings: number;
+  median_price: number;
+}
+
+interface ListingImage {
+  large?: string;
+  original: string;
+}
+
+interface ListingContent {
+  title: string;
+  storytelling: string;
+  price: number;
+  location: {
+    city: string;
+    postal_code: string;
+  };
+  year: number;
+  km: number;
+  engine: string;
+  gearbox: string;
+  web_slug: string;
+  horsepower: number;
+  distance: number;
+  images: ListingImage[];
+}
+
+interface Listing {
+  id: string;
+  content: ListingContent;
+}
+
+interface QuickSearchResults {
+  market_data?: MarketData;
+  listings?: Listing[];
+}
+
 export default function HomePage() {
   const router = useRouter()
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [selectedModel, setSelectedModel] = useState<string | null>(null)
   const [selectedYear, setSelectedYear] = useState<string | null>(null)
+  const [quickSearchResults, setQuickSearchResults] = useState<QuickSearchResults | null>(null)
+  const [quickSearchError, setQuickSearchError] = useState<string | null>(null)
+  const [isQuickSearching, setIsQuickSearching] = useState(false)
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price)
+  }
 
   const features = [
     {
@@ -62,6 +118,70 @@ export default function HomePage() {
     { number: '20%', label: 'Ahorro medio' },
     { number: '24/7', label: 'Monitorización' }
   ]
+
+  const handleQuickSearch = async () => {
+    if (!selectedModel && !selectedYear) {
+      return
+    }
+
+    setIsQuickSearching(true)
+    setQuickSearchError(null)
+
+    try {
+      // Parse the selected model into brand and model, handling special cases
+      let brand, model
+      if (selectedModel) {
+        if (selectedModel.startsWith('BMW')) {
+          brand = 'BMW'
+          model = selectedModel.replace('BMW ', '') // This will keep "Serie 3" as is
+        } else if (selectedModel.startsWith('Mercedes')) {
+          brand = 'Mercedes'
+          model = selectedModel.replace('Mercedes ', '') // This will keep "Clase A" as is
+        } else {
+          // For other cases like "Volkswagen Golf", "Audi A3", "Seat León"
+          [brand, model] = selectedModel.split(' ')
+        }
+      }
+
+      // Parse the selected year range
+      const [minYear, maxYear] = selectedYear?.split(' - ').map(Number) || []
+
+      const searchParams = {
+        brand,
+        model,
+        min_year: minYear,
+        max_year: maxYear,
+        latitude: 40.4637,
+        longitude: -3.7492,
+        distance: 500000
+      }
+
+      // Remove undefined values
+      const cleanParams = Object.fromEntries(
+        Object.entries(searchParams).filter(([, v]) => v !== undefined)
+      )
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search-single-car`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cleanParams)
+      })
+
+      if (!response.ok) {
+        throw new Error('Search failed')
+      }
+
+      const data = await response.json()
+      setQuickSearchResults(data)
+    } catch (error) {
+      console.error('Error performing quick search:', error)
+      setQuickSearchError('Error en la búsqueda rápida')
+    } finally {
+      setIsQuickSearching(false)
+    }
+  }
 
   return (
     <Box sx={{ 
@@ -423,7 +543,8 @@ export default function HomePage() {
                   <Button
                     variant="contained"
                     size="large"
-                    onClick={() => router.push('/search')}
+                    onClick={handleQuickSearch}
+                    disabled={isQuickSearching}
                     sx={{
                       mt: 2,
                       background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
@@ -441,11 +562,139 @@ export default function HomePage() {
                       transition: 'all 0.3s ease'
                     }}
                   >
-                    Ver búsqueda avanzada 🔍
+                    {isQuickSearching ? (
+                      <CircularProgress size={24} sx={{ color: 'white' }} />
+                    ) : selectedModel || selectedYear ? (
+                      'Buscar 🔍'
+                    ) : (
+                      'Ver búsqueda avanzada 🔍'
+                    )}
                   </Button>
                   <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textAlign: 'center', mt: 0.5 }}>
                     Accede a todos los filtros y alertas automáticas con una de nuestras subscripciones a medida
                   </Typography>
+
+                  {/* Quick Search Results */}
+                  {quickSearchError && (
+                    <Alert 
+                      severity="error" 
+                      sx={{ 
+                        mt: 3,
+                        animation: 'slideIn 0.3s ease-out',
+                        '@keyframes slideIn': {
+                          from: { transform: 'translateY(-20px)', opacity: 0 },
+                          to: { transform: 'translateY(0)', opacity: 1 }
+                        }
+                      }}
+                    >
+                      {quickSearchError}
+                    </Alert>
+                  )}
+
+                  {quickSearchResults && (
+                    <Box sx={{ 
+                      mt: 4,
+                      animation: 'fadeIn 0.5s ease-out',
+                      '@keyframes fadeIn': {
+                        from: { opacity: 0 },
+                        to: { opacity: 1 }
+                      }
+                    }}>
+                      {/* Market Analysis Section */}
+                      {quickSearchResults.market_data && (
+                        <Box sx={{ mb: 4 }}>
+                          <Grid container spacing={3} alignItems="center">
+                            <Grid item>
+                              <Typography variant="h6" sx={{ mr: 3, color: 'white' }}>
+                                Análisis de Mercado
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
+                                Media:
+                              </Typography>
+                              <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
+                                {formatPrice(quickSearchResults.market_data.average_price)}
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
+                                Rango:
+                              </Typography>
+                              <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
+                                {formatPrice(quickSearchResults.market_data.min_price)} - {formatPrice(quickSearchResults.market_data.max_price)}
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
+                                Total anuncios:
+                              </Typography>
+                              <Typography component="span" sx={{ fontWeight: 'bold', color: 'white' }}>
+                                {quickSearchResults.market_data.total_listings}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      )}
+
+                      {/* Divider */}
+                      <Box sx={{ 
+                        height: 1, 
+                        bgcolor: 'rgba(255,255,255,0.1)', 
+                        mb: 4 
+                      }} />
+
+                      {/* Quick Search Listings */}
+                      {quickSearchResults?.listings && quickSearchResults.listings.length > 0 && (
+                        <>
+                          <Typography variant="h6" sx={{ 
+                            mb: 3,
+                            fontWeight: 'bold',
+                            color: 'white'
+                          }}>
+                            {quickSearchResults.listings.length} anuncios encontrados
+                          </Typography>
+
+                          <Box sx={{ 
+                            '& .MuiGrid-container': { 
+                              justifyContent: 'center',
+                              '& .MuiGrid-item': {
+                                maxWidth: { xs: '100%', sm: '50%', md: '33.333%' }
+                              }
+                            }
+                          }}>
+                            <ListingsGrid 
+                              listings={quickSearchResults.listings.map((listing: Listing) => ({
+                                id: listing.id,
+                                title: listing.content.title,
+                                description: listing.content.storytelling,
+                                price: listing.content.price,
+                                price_text: formatPrice(listing.content.price),
+                                market_price: quickSearchResults.market_data?.median_price || 0,
+                                market_price_text: formatPrice(quickSearchResults.market_data?.median_price || 0),
+                                price_difference: (quickSearchResults.market_data?.median_price || 0) - listing.content.price,
+                                price_difference_percentage: `${Math.abs(((quickSearchResults.market_data?.median_price || 0) - listing.content.price) / (quickSearchResults.market_data?.median_price || 1) * 100).toFixed(1)}%`,
+                                location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
+                                year: listing.content.year,
+                                kilometers: listing.content.km,
+                                fuel_type: listing.content.engine,
+                                transmission: listing.content.gearbox,
+                                url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
+                                horsepower: listing.content.horsepower,
+                                distance: listing.content.distance,
+                                listing_images: listing.content.images.map((img: ListingImage) => ({
+                                  image_url: img.large || img.original
+                                }))
+                              }))}
+                              loading={isQuickSearching}
+                              showNoResults={!isQuickSearching && (!quickSearchResults.listings || quickSearchResults.listings.length === 0)}
+                              simplified={true}
+                            />
+                          </Box>
+                        </>
+                      )}
+                    </Box>
+                  )}
                 </Box>
               </CardContent>
             </Card>

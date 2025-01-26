@@ -5,38 +5,23 @@ import { useRouter } from 'next/navigation'
 import { 
   Container, 
   Typography, 
-  TextField, 
   Button, 
-  MenuItem,
   Card,
   CardContent,
   Grid,
   CircularProgress,
   Alert,
   Box,
-  Autocomplete,
-  Slider,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   Stack,
-  FormControlLabel,
-  Switch,
   Skeleton,
-  ButtonGroup,
   Chip,
 } from '@mui/material'
 import { 
   Add as AddIcon, 
-  Edit as EditIcon, 
-  Delete as DeleteIcon,
-  MyLocation,
   Notifications,
   DirectionsCar,
   LocalGasStation,
   Speed,
-  Close,
   BrandingWatermark,
   Settings,
   Place,
@@ -45,23 +30,13 @@ import {
   Email,
   NearMe,
 } from '@mui/icons-material'
-import dynamic from 'next/dynamic'
 import { useUser } from '@clerk/nextjs'
 import TopBar from '../../components/TopBar'
 import { getCurrentUser } from '@/lib/db'
 import { useSubscription } from '@/hooks/useSubscription'
+import AlertDialogComponent from '../../components/AlertDialog'
 
-// Dynamic import for the map component
-const MapComponent = dynamic(
-  () => import('../../components/MapComponent'),
-  { 
-    ssr: false,
-    loading: () => null
-  }
-)
 
-// Spain's center coordinates
-const SPAIN_CENTER: [number, number] = [40.4637, -3.7492]
 
 interface Brand {
   id: number
@@ -117,541 +92,25 @@ const defaultFormData: AlertFormData = {
   email_notifications: true,
 }
 
-const distanceMarks = [
-  { value: 0, label: '0' },
-  { value: 20, label: '20' },
-  { value: 40, label: '40' },
-  { value: 60, label: '60' },
-  { value: 80, label: '80' },
-  { value: 100, label: '100' },
-  { value: 120, label: '120' },
-  { value: 140, label: '140' },
-  { value: 160, label: '160' },
-  { value: 180, label: '180' },
-  { value: 200, label: '200' },
-  { value: 300, label: '300' },
-  { value: 400, label: '400' },
-  { value: 500, label: 'No limit' }
-]
 
-const kilometerMarks = [
-  { value: 0, label: '0' },
-  { value: 20000, label: '20k' },
-  { value: 40000, label: '40k' },
-  { value: 60000, label: '60k' },
-  { value: 80000, label: '80k' },
-  { value: 100000, label: '100k' },
-  { value: 120000, label: '120k' },
-  { value: 140000, label: '140k' },
-  { value: 160000, label: '160k' },
-  { value: 180000, label: '180k' },
-  { value: 200000, label: '200k' },
-  { value: 220000, label: '220k' },
-  { value: 240000, label: 'No limit' }
-]
 
 
 const LOCATION_STORAGE_KEY = 'user_location'
 
 
-interface AlertDialogProps {
-  open: boolean;
-  onClose: () => void;
-  editingAlert: Alert | null;
-  formData: AlertFormData;
-  handleInputChange: (name: string, value: string | number | boolean) => void;
-  handleBrandChange: (event: React.SyntheticEvent | null, newValue: Brand | null) => void;
-  handleModelChange: (event: React.SyntheticEvent | null, newValue: Model | null) => void;
-  handleLocationRequest: () => void;
-  handleMapClick: (lat: number, lng: number) => void;
-  loading: boolean;
-  selectedBrand: Brand | null;
-  selectedModel: Model | null;
-  loadingBrands: boolean;
-  loadingModels: boolean;
-  yearOptions: string[];
-  handleSubmit: (e: React.FormEvent) => void;
-  brands: Brand[];
-  models: Model[];
-}
-
-const AlertDialog = ({ open, onClose, editingAlert, formData, handleInputChange, handleBrandChange, handleModelChange, handleLocationRequest, handleMapClick, loading, selectedBrand, selectedModel, loadingBrands, loadingModels, yearOptions, handleSubmit, brands, models }: AlertDialogProps) => {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
-
-  return (
-    <Dialog 
-      open={open} 
-      onClose={onClose}
-      maxWidth="sm"
-      fullWidth
-      PaperProps={{
-        sx: {
-          background: 'rgba(17,17,17,0.95)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: 3,
-          border: '1px solid rgba(255,255,255,0.1)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-          overflow: 'hidden'
-        }
-      }}
-    >
-      <DialogTitle sx={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between',
-        background: 'linear-gradient(45deg, rgba(44,62,147,0.3), rgba(107,35,142,0.3))',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-        py: 2
-      }}>
-        <Typography variant="h6" sx={{ 
-          color: 'white',
-          fontSize: { xs: '1.1rem', sm: '1.25rem' }
-        }}>
-          {editingAlert ? 'Editar Alerta' : 'Nueva Alerta'}
-        </Typography>
-        <IconButton onClick={onClose} size="small" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-          <Close />
-        </IconButton>
-      </DialogTitle>
-
-      <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
-        <Stack spacing={3} sx={{ mt: 2 }}>
-          {/* Alert Name */}
-          <TextField
-            label="Nombre de la alerta"
-            value={formData.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
-            fullWidth
-            variant="outlined"
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 2,
-                backgroundColor: 'rgba(255,255,255,0.05)',
-                width: '100%',
-                '& fieldset': {
-                  borderColor: 'rgba(255,255,255,0.1)',
-                },
-              },
-              '& .MuiInputLabel-root': {
-                color: 'rgba(255,255,255,0.7)',
-              },
-              '& .MuiOutlinedInput-input': {
-                color: 'white',
-              },
-            }}
-          />
-
-          {/* Brand and Model Selection */}
-          <Stack spacing={2}>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Autocomplete
-                options={brands || []}
-                getOptionLabel={(option) => option.name}
-                value={selectedBrand}
-                onChange={(event, newValue) => handleBrandChange(event, newValue)}
-                loading={loadingBrands}
-                sx={{ flex: 1 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Marca"
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                        backgroundColor: 'rgba(255,255,255,0.05)',
-                        '& fieldset': {
-                          borderColor: 'rgba(255,255,255,0.1)',
-                        },
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                      '& .MuiInputBase-input': {
-                        color: 'white',
-                      },
-                    }}
-                  />
-                )}
-              />
-
-              <Autocomplete
-                options={models || []}
-                getOptionLabel={(option) => option.nome}
-                value={selectedModel}
-                onChange={(event, newValue) => handleModelChange(event, newValue)}
-                loading={loadingModels}
-                disabled={!selectedBrand}
-                sx={{ flex: 1 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Modelo"
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                        backgroundColor: 'rgba(255,255,255,0.05)',
-                        '& fieldset': {
-                          borderColor: 'rgba(255,255,255,0.1)',
-                        },
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                      '& .MuiInputBase-input': {
-                        color: 'white',
-                      },
-                    }}
-                  />
-                )}
-              />
-            </Box>
-
-            {/* Year Selection */}
-            <Box>
-              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
-                Año
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <TextField
-                  select
-                  label="Desde"
-                  value={formData.min_year}
-                  onChange={(e) => handleInputChange('min_year', e.target.value)}
-                  SelectProps={{
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          maxHeight: 300
-                        }
-                      }
-                    }
-                  }}
-                  sx={{
-                    flexGrow: 1,
-                    maxWidth: '150px',
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                      backgroundColor: 'rgba(255,255,255,0.05)',
-                      '& fieldset': {
-                        borderColor: 'rgba(255,255,255,0.1)',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'rgba(255,255,255,0.7)',
-                    },
-                    '& .MuiSelect-select': {
-                      color: 'white',
-                    },
-                  }}
-                >
-                  <MenuItem value="">Cualquier año</MenuItem>
-                  {yearOptions.map((year) => (
-                    <MenuItem key={year} value={year}>{year}</MenuItem>
-                  ))}
-                </TextField>
-
-                <TextField
-                  select
-                  label="Hasta"
-                  value={formData.max_year}
-                  onChange={(e) => handleInputChange('max_year', e.target.value)}
-                  sx={{
-                    flexGrow: 1,
-                    maxWidth: '150px',
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                      backgroundColor: 'rgba(255,255,255,0.05)',
-                      '& fieldset': {
-                        borderColor: 'rgba(255,255,255,0.1)',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'rgba(255,255,255,0.7)',
-                    },
-                    '& .MuiSelect-select': {
-                      color: 'white',
-                    },
-                  }}
-                  SelectProps={{
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          maxHeight: 300
-                        }
-                      }
-                    }
-                  }}
-                >
-                  <MenuItem value="">Cualquier año</MenuItem>
-                  {yearOptions.map((year) => (
-                    <MenuItem key={year} value={year}>{year}</MenuItem>
-                  ))}
-                </TextField>
-              </Box>
-            </Box>
-
-            {/* Engine Type and Gearbox */}
-            <Box>
-              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
-                Motor
-              </Typography>
-              <ButtonGroup>
-                <Button 
-                  onClick={() => handleInputChange('engine', '')}
-                  variant={formData.engine === '' ? 'contained' : 'outlined'}
-                >
-                  Todos
-                </Button>
-                <Button 
-                  onClick={() => handleInputChange('engine', 'Gasolina')}
-                  variant={formData.engine === 'Gasolina' ? 'contained' : 'outlined'}
-                  startIcon={<LocalGasStation />}
-                >
-                  Gasolina
-                </Button>
-                <Button 
-                  onClick={() => handleInputChange('engine', 'Diesel')}
-                  variant={formData.engine === 'Diesel' ? 'contained' : 'outlined'}
-                  startIcon={<DirectionsCar />}
-                >
-                  Diesel
-                </Button>
-              </ButtonGroup>
-
-              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
-                Cambio
-              </Typography>
-              <ButtonGroup>
-                <Button 
-                  onClick={() => handleInputChange('gearbox', '')}
-                  variant={formData.gearbox === '' ? 'contained' : 'outlined'}
-                >
-                  Todos
-                </Button>
-                <Button 
-                  onClick={() => handleInputChange('gearbox', 'Manual')}
-                  variant={formData.gearbox === 'Manual' ? 'contained' : 'outlined'}
-                >
-                  Manual
-                </Button>
-                <Button 
-                  onClick={() => handleInputChange('gearbox', 'Automático')}
-                  variant={formData.gearbox === 'Automático' ? 'contained' : 'outlined'}
-                >
-                  Auto
-                </Button>
-              </ButtonGroup>
-            </Box>
-
-            {/* Horse Power */}
-            <Box>
-              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
-                Potencia mínima
-              </Typography>
-              <TextField
-                type="number"
-                value={formData.min_horse_power}
-                onChange={(e) => handleInputChange('min_horse_power', e.target.value)}
-                InputProps={{
-                  endAdornment: <Speed sx={{ color: 'rgba(255,255,255,0.5)' }} />,
-                }}
-                sx={{
-                  maxWidth: '150px',
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: 2,
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                    '& fieldset': {
-                      borderColor: 'rgba(255,255,255,0.1)',
-                    },
-                  },
-                  '& .MuiInputLabel-root': {
-                    color: 'rgba(255,255,255,0.7)',
-                  },
-                  '& .MuiOutlinedInput-input': {
-                    color: 'white',
-                  },
-                }}
-              />
-            </Box>
-
-            {/* Location and Distance */}
-            <Box>
-              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
-                Ubicación y radio de búsqueda
-              </Typography>
-              <Box sx={{ 
-                width: '100%',
-                height: '200px',
-                border: 1,
-                borderColor: 'rgba(255,255,255,0.1)',
-                borderRadius: 2,
-                overflow: 'hidden',
-                mb: 2
-              }}>
-                {mounted && (
-                  <MapComponent
-                    center={[formData.latitude || SPAIN_CENTER[0], formData.longitude || SPAIN_CENTER[1]]}
-                    onLocationSelect={handleMapClick}
-                    distance={formData.distance}
-                  />
-                )}
-              </Box>
-
-              <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <Button
-                  variant="outlined"
-                  onClick={handleLocationRequest}
-                  startIcon={<MyLocation />}
-                  sx={{ 
-                    color: 'white',
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    '&:hover': {
-                      borderColor: 'rgba(255,255,255,0.2)',
-                      background: 'rgba(255,255,255,0.1)',
-                    },
-                  }}
-                >
-                  Usar mi ubicación
-                </Button>
-              </Box>
-
-              <Typography gutterBottom sx={{ color: 'rgba(255,255,255,0.9)' }}>
-                Radio: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
-              </Typography>
-              <Slider
-                value={formData.distance}
-                onChange={(_, value) => handleInputChange('distance', Array.isArray(value) ? value[0] : value)}
-                step={null}
-                marks={distanceMarks}
-                min={0}
-                max={500}
-                sx={{
-                  color: 'white',
-                  '& .MuiSlider-rail': {
-                    backgroundColor: 'rgba(255,255,255,0.23)',
-                  },
-                  '& .MuiSlider-track': {
-                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                  },
-                  '& .MuiSlider-thumb': {
-                    backgroundColor: 'white',
-                  },
-                  '& .MuiSlider-mark': {
-                    backgroundColor: 'rgba(255,255,255,0.23)',
-                  },
-                  '& .MuiSlider-markLabel': {
-                    color: 'rgba(255,255,255,0.7)',
-                  },
-                }}
-              />
-            </Box>
-
-            {/* Max Kilometers */}
-            <Box>
-              <Typography gutterBottom sx={{ color: 'rgba(255,255,255,0.9)' }}>
-                Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${formData.max_kilometers.toLocaleString()} km`}
-              </Typography>
-              <Slider
-                value={formData.max_kilometers}
-                onChange={(_, value) => handleInputChange('max_kilometers', Array.isArray(value) ? value[0] : value)}
-                step={null}
-                marks={kilometerMarks}
-                min={0}
-                max={240000}
-                sx={{
-                  color: 'white',
-                  '& .MuiSlider-rail': {
-                    backgroundColor: 'rgba(255,255,255,0.23)',
-                  },
-                  '& .MuiSlider-track': {
-                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                  },
-                  '& .MuiSlider-thumb': {
-                    backgroundColor: 'white',
-                  },
-                  '& .MuiSlider-mark': {
-                    backgroundColor: 'rgba(255,255,255,0.23)',
-                  },
-                  '& .MuiSlider-markLabel': {
-                    color: 'rgba(255,255,255,0.7)',
-                  },
-                }}
-              />
-            </Box>
-
-            {/* Notifications */}
-            <Box>
-              <Typography variant="subtitle2" sx={{ mb: 1, color: 'rgba(255,255,255,0.9)' }}>
-                Notificaciones
-              </Typography>
-              <Stack spacing={1}>
-                <FormControlLabel
-                  control={
-                    <Switch 
-                      checked={formData.email_notifications}
-                      onChange={(e) => handleInputChange('email_notifications', e.target.checked)}
-                    />
-                  }
-                  label="Email"
-                  sx={{ 
-                    '& .MuiFormControlLabel-label': { 
-                      color: 'rgba(255,255,255,0.8)',
-                      fontSize: '0.9rem'
-                    }
-                  }}
-                />
-              </Stack>
-            </Box>
-          </Stack>
-
-          {/* Submit Button */}
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              variant="contained"
-              onClick={handleSubmit}
-              disabled={loading}
-              sx={{
-                background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                color: 'white',
-                px: 4,
-                py: 1,
-                borderRadius: 2,
-                textTransform: 'none',
-                fontSize: '1rem',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                },
-              }}
-            >
-              {editingAlert ? 'Guardar cambios' : 'Crear alerta'}
-            </Button>
-          </Box>
-        </Stack>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
 export default function AlertasPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [formData, setFormData] = useState<AlertFormData>(defaultFormData)
+  const [ , setFormData] = useState<AlertFormData>(defaultFormData)
   const [alerts, setAlerts] = useState<Alert[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [brands, setBrands] = useState<Brand[]>([])
-  const [models, setModels] = useState<Model[]>([])
-  const [loadingBrands, setLoadingBrands] = useState(true)
-  const [loadingModels, setLoadingModels] = useState(false)
-  const yearOptions = Array.from({ length: 36 }, (_, i) => (2025 - i).toString())
-  const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
-  const [selectedModel, setSelectedModel] = useState<Model | null>(null)
+  const [ , setBrands] = useState<Brand[]>([])
+  const [ , setModels] = useState<Model[]>([])
+  const [ , setLoadingBrands] = useState(true)
+  const [ , setLoadingModels] = useState(false)
+  const [selectedBrand, ] = useState<Brand | null>(null)
   const [ , setLocationError] = useState<string | null>(null)
   const [ , setUserData] = useState<{ id: string } | null>(null)
   const [editingAlert, setEditingAlert] = useState<Alert | null>(null)
@@ -783,126 +242,23 @@ export default function AlertasPage() {
     }
   }
 
-  const handleInputChange = (name: string, value: string | number | boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
 
-  const handleBrandChange = (_event: React.SyntheticEvent | null, newValue: Brand | null) => {
-    setSelectedBrand(newValue)
-    setSelectedModel(null)
-    setFormData(prev => ({
-      ...prev,
-      brand: newValue ? newValue.name : '',
-      model: ''
-    }))
-  }
-
-  const handleModelChange = (event: React.SyntheticEvent | null, newValue: Model | null) => {
-    setSelectedModel(newValue)
-    setFormData(prev => ({
-      ...prev,
-      model: newValue ? newValue.nome : ''
-    }))
-  }
-
-  const handleLocationRequest = () => {
-    if (!navigator.geolocation) {
-      setLocationError('Geolocation is not supported by your browser')
-      return
-    }
-
-    setLocationError(null)
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setFormData(prev => ({
-          ...prev,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          location_text: 'Current Location'
-        }))
-      },
-      (error) => {
-        setLocationError('Unable to retrieve your location')
-        console.error('Geolocation error:', error)
-      }
-    )
-  }
-  const handleMapClick = (lat: number, lng: number) => {
-    setFormData(prev => ({
-      ...prev,
-      latitude: lat,
-      longitude: lng,
-      location_text: `${lat.toFixed(4)}, ${lng.toFixed(4)}`
-    }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
-
+  const handleCreateAlert = async (formData: AlertFormData) => {
     try {
-      // Create a copy of formData and remove min_price and max_price if editing
-      const submitData = { ...formData }
-      if (editingAlert) {
-        delete submitData.min_price
-        delete submitData.max_price
-      }
+      const response = await fetch('/api/alerts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
 
-      const response = await fetch(
-        editingAlert 
-          ? `/api/alerts/${editingAlert.id}`
-          : '/api/alerts',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(submitData)
-        }
-      )
-
-      if (!response.ok) throw new Error('Failed to save alert')
-
+      if (!response.ok) throw new Error('Failed to create alert')
       await fetchAlerts()
-      setIsDialogOpen(false)
-      setEditingAlert(null)
-      setFormData(defaultFormData)
     } catch (err) {
-      console.error('Error saving alert:', err)
-      setError('Error al guardar la alerta')
-    } finally {
-      setLoading(false)
+      console.error('Error creating alert:', err)
+      setError('Error al crear la alerta')
     }
-  }
-
-  const handleDeleteAlert = useCallback(async (alertId: string) => {
-    if (!alertId) return
-    // ... rest of the delete logic ...
-  }, [])
-
-  const handleEditAlert = (alert: Alert) => {
-    setEditingAlert(alert)
-    setFormData({
-      name: alert.name,
-      brand: alert.brand,
-      model: alert.model,
-      min_year: alert.min_year,
-      max_year: alert.max_year,
-      engine: alert.engine,
-      min_horse_power: alert.min_horse_power,
-      gearbox: alert.gearbox,
-      latitude: alert.latitude,
-      longitude: alert.longitude,
-      distance: alert.distance,
-      location_text: alert.location_text,
-      max_kilometers: alert.max_kilometers,
-      email_notifications: alert.email_notifications,
-    })
-    setIsDialogOpen(true)
   }
 
   // Show loading state while checking authentication
@@ -1204,39 +560,6 @@ export default function AlertasPage() {
                           Ver detalles <span className="arrow">→</span>
                         </Typography>
                       </Box>
-                      <Box 
-                        onClick={(e) => e.stopPropagation()} // Prevent card click when clicking buttons
-                        sx={{ 
-                          display: 'flex',
-                          gap: 1,
-                          zIndex: 1 // Ensure buttons are clickable
-                        }}
-                      >
-                        <IconButton 
-                          size="small" 
-                          onClick={() => handleEditAlert(alert)}
-                          sx={{ 
-                            color: 'white',
-                            '&:hover': {
-                              bgcolor: 'rgba(255,255,255,0.1)'
-                            }
-                          }}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton 
-                          size="small" 
-                          onClick={() => handleDeleteAlert(alert.id)}
-                          sx={{ 
-                            color: 'white',
-                            '&:hover': {
-                              bgcolor: 'rgba(255,255,255,0.1)'
-                            }
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Box>
                     </Box>
 
                     {/* Details Grid */}
@@ -1455,29 +778,12 @@ export default function AlertasPage() {
         )}
 
         {/* Create/Edit Alert Dialog */}
-        <AlertDialog
+        <AlertDialogComponent
           open={isDialogOpen}
-          onClose={() => {
-            setIsDialogOpen(false)
-            setEditingAlert(null)
-            setFormData(defaultFormData)
-          }}
-          editingAlert={editingAlert}
-          formData={formData}
-          handleInputChange={handleInputChange}
-          handleBrandChange={handleBrandChange}
-          handleModelChange={handleModelChange}
-          handleLocationRequest={handleLocationRequest}
-          handleMapClick={handleMapClick}
-          loading={loading}
-          selectedBrand={selectedBrand}
-          selectedModel={selectedModel}
-          loadingBrands={loadingBrands}
-          loadingModels={loadingModels}
-          yearOptions={yearOptions}
-          handleSubmit={handleSubmit}
-          brands={brands}
-          models={models}
+          onClose={() => setIsDialogOpen(false)}
+          initialData={editingAlert || undefined}
+          onSubmit={handleCreateAlert}
+          isEditing={!!editingAlert}
         />
       </Container>
     </Box>

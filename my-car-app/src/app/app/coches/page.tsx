@@ -52,8 +52,6 @@ export default function CochesPage() {
 
   // Handle sorting separately
   useEffect(() => {
-    if (!listings.length) return
-
     const sortedData = [...listings]
     if (sortBy === 'distance') {
       sortedData.sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity))
@@ -63,8 +61,11 @@ export default function CochesPage() {
       sortedData.sort((a, b) => Math.abs(parseFloat(b.price_difference_percentage)) - Math.abs(parseFloat(a.price_difference_percentage)))
     }
     
-    setListings(sortedData)
-  }, [sortBy])
+    // Only update if the sorted array is different from current listings
+    if (JSON.stringify(sortedData) !== JSON.stringify(listings)) {
+      setListings(sortedData)
+    }
+  }, [sortBy, listings])
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
