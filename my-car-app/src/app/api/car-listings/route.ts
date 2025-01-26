@@ -34,13 +34,19 @@ interface Run {
   created_at: string
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const url = new URL(request.url)
+    const page = parseInt(url.searchParams.get('page') || '1')
+    const limit = parseInt(url.searchParams.get('limit') || '12')
+    const offset = (page - 1) * limit
+
     // Get all runs from modo_rapido_runs
     const { data: runs, error } = await supabase
       .from('modo_rapido_runs')
       .select('listings, created_at')
       .order('created_at', { ascending: false })
+      .limit(300)
 
     if (error) {
       console.error('Error fetching modo rapido runs:', error)
@@ -48,7 +54,7 @@ export async function GET() {
     }
 
     if (!runs || runs.length === 0) {
-      return NextResponse.json([])
+      return NextResponse.json({ listings: [], total: 0 })
     }
 
     // Merge all listings from all runs
@@ -65,7 +71,17 @@ export async function GET() {
     // Sort by price difference by default
     const sortedListings = uniqueListings.sort((a, b) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
 
-    return NextResponse.json(sortedListings)
+    // Apply pagination
+    const paginatedListings = sortedListings.slice(offset, offset + limit)
+    const total = sortedListings.length
+
+    return NextResponse.json({
+      listings: paginatedListings,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit)
+    })
   } catch (error) {
     console.error('Error in car-listings endpoint:', error)
     return NextResponse.json(

@@ -7,6 +7,13 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_KEY!
 )
 
+// Define subscription tier limits
+const SUBSCRIPTION_LIMITS = {
+  basic: 1,
+  pro: 5,
+  business: Infinity
+}
+
 export async function GET(
   request: NextRequest
 ): Promise<NextResponse> {
@@ -56,12 +63,37 @@ export async function POST(
     // First get the user's data from Supabase
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id')
+      .select('id, subscription_tier, subscription_status, current_period_end')
       .eq('clerk_id', userId)
       .single()
 
     if (userError) throw userError
     if (!userData) throw new Error('User not found')
+
+    // Check if subscription is active and not expired
+    const isActive = userData.subscription_status === 'active'
+    const isExpired = userData.current_period_end ? new Date(userData.current_period_end) < new Date() : true
+
+    if (!isActive || isExpired) {
+      return new NextResponse('Active subscription required', { status: 403 })
+    }
+
+    // Get current number of alerts
+    const { count, error: countError } = await supabase
+      .from('alertas')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userData.id)
+
+    if (countError) throw countError
+
+    // Get limit based on subscription tier
+    const limit = SUBSCRIPTION_LIMITS[userData.subscription_tier as keyof typeof SUBSCRIPTION_LIMITS] || 0
+    const currentAlerts = count || 0
+
+    // Check if user has reached their limit
+    if (currentAlerts >= limit) {
+      return new NextResponse(`Alert limit reached for ${userData.subscription_tier} tier`, { status: 403 })
+    }
 
     const body = await request.json()
     // Remove any user-related fields from the body

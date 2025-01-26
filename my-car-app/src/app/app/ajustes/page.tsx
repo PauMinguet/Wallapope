@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Container, Typography, Box, Paper, Stack, Switch, FormControlLabel, Button, Slider } from '@mui/material'
+import { Container, Typography, Box, Paper, Stack, Switch, FormControlLabel, Button, Slider, CircularProgress } from '@mui/material'
 import { motion } from 'framer-motion'
 import { MyLocation } from '@mui/icons-material'
 import dynamic from 'next/dynamic'
 import { useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
+import { useSubscription } from '@/hooks/useSubscription'
 
 const MapComponent = dynamic(
   () => import('../../components/MapComponent'),
@@ -20,6 +22,23 @@ const SPAIN_CENTER = {
   lat: 40.4637,
   lng: -3.7492
 }
+
+const LoadingScreen = () => (
+  <Box sx={{ 
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bgcolor: '#000000',
+    zIndex: 9999
+  }}>
+    <CircularProgress sx={{ color: 'white' }} />
+  </Box>
+)
 
 const distanceMarks = [
   { value: 0, label: '0', showOnMobile: true },
@@ -43,7 +62,10 @@ const MotionTypography = motion(Typography)
 const LOCATION_STORAGE_KEY = 'user_location'
 
 export default function AjustesPage() {
-  const { isSignedIn } = useUser()
+  const router = useRouter()
+  const { isSignedIn, isLoaded } = useUser()
+  const { loading: subscriptionLoading, isSubscribed } = useSubscription('basic')
+  const [initialLoad, setInitialLoad] = useState(true)
   const [location, setLocation] = useState({
     latitude: SPAIN_CENTER.lat,
     longitude: SPAIN_CENTER.lng
@@ -51,24 +73,41 @@ export default function AjustesPage() {
   const [distance, setDistance] = useState<number>(100)
   const [locationError, setLocationError] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
-  const [, setIsLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+
+  // Handle subscription check and redirect
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push('/')
+      return
+    }
+
+    if (!subscriptionLoading) {
+      if (!isSubscribed) {
+        router.push('/pricing')
+      } else {
+        setInitialLoad(false)
+      }
+    }
+  }, [subscriptionLoading, isSubscribed, router, isLoaded, isSignedIn])
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 600)
     }
     
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+    if (!initialLoad && !subscriptionLoading) {
+      checkMobile()
+      window.addEventListener('resize', checkMobile)
+      return () => window.removeEventListener('resize', checkMobile)
+    }
+  }, [initialLoad, subscriptionLoading])
 
   // Load user's location and distance
   useEffect(() => {
-    const loadUserLocation = async () => {
-      if (!isSignedIn) return
+    if (initialLoad || subscriptionLoading || !isSignedIn) return
 
+    const loadUserLocation = async () => {
       // Try to get location from localStorage first
       const cachedLocation = localStorage.getItem(LOCATION_STORAGE_KEY)
       if (cachedLocation) {
@@ -80,7 +119,6 @@ export default function AjustesPage() {
         if (data.distance) {
           setDistance(data.distance)
         }
-        setIsLoading(false)
         return
       }
 
@@ -103,13 +141,16 @@ export default function AjustesPage() {
       } catch (error) {
         console.error('Error loading location:', error)
         setLocationError('Error cargando la ubicación')
-      } finally {
-        setIsLoading(false)
       }
     }
 
     loadUserLocation()
-  }, [isSignedIn])
+  }, [isSignedIn, initialLoad, subscriptionLoading])
+
+  // Show loading screen during initial load or subscription check
+  if (initialLoad || subscriptionLoading || !isLoaded) {
+    return <LoadingScreen />
+  }
 
   // Save location and distance when they change
   const saveLocation = async (newLocation: typeof location, newDistance: number) => {

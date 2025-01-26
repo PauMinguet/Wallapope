@@ -15,6 +15,10 @@ import {
   Stack,
   Skeleton,
   Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material'
 import { 
   Add as AddIcon, 
@@ -29,6 +33,7 @@ import {
   CalendarToday,
   Email,
   NearMe,
+  NotificationsOff,
 } from '@mui/icons-material'
 import { useUser } from '@clerk/nextjs'
 import TopBar from '../../components/TopBar'
@@ -52,6 +57,13 @@ interface Model {
 interface Alert extends AlertFormData {
   id: string;
   created_at: string;
+}
+
+// Add new interface for subscription error
+interface SubscriptionError {
+  message: string;
+  type: 'subscription_limit';
+  currentTier: string;
 }
 
 
@@ -97,11 +109,31 @@ const defaultFormData: AlertFormData = {
 
 const LOCATION_STORAGE_KEY = 'user_location'
 
+const LoadingScreen = () => (
+  <Box sx={{ 
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bgcolor: '#000000',
+    zIndex: 9999
+  }}>
+    <CircularProgress sx={{ color: 'white' }} />
+  </Box>
+)
 
 export default function AlertasPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
+  const { loading: subscriptionLoading, isSubscribed, currentTier } = useSubscription('basic')
+  const [initialLoad, setInitialLoad] = useState(true)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isSubscriptionLimitModalOpen, setIsSubscriptionLimitModalOpen] = useState(false)
+  const [subscriptionError, setSubscriptionError] = useState<SubscriptionError | null>(null)
   const [ , setFormData] = useState<AlertFormData>(defaultFormData)
   const [alerts, setAlerts] = useState<Alert[]>([])
   const [loading, setLoading] = useState(true)
@@ -115,42 +147,50 @@ export default function AlertasPage() {
   const [ , setUserData] = useState<{ id: string } | null>(null)
   const [editingAlert, setEditingAlert] = useState<Alert | null>(null)
 
-  // Require at least 'basic' subscription to access alerts
-  const { loading: subscriptionLoading } = useSubscription('basic')
-
-  // Update the authentication check
+  // Handle subscription check and redirect
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       router.push('/')
+      return
     }
-  }, [isSignedIn, isLoaded, router])
+
+    if (!subscriptionLoading) {
+      if (!isSubscribed || !currentTier) {
+        router.push('/pricing')
+      } else {
+        setInitialLoad(false)
+      }
+    }
+  }, [subscriptionLoading, isSubscribed, currentTier, router, isLoaded, isSignedIn])
 
   const fetchUserData = useCallback(async () => {
-    if (!user?.id) return
+    if (initialLoad || subscriptionLoading || !user?.id) return
     const data = await getCurrentUser(user.id)
     setUserData(data)
-  }, [user?.id])
+  }, [user?.id, initialLoad, subscriptionLoading])
 
   useEffect(() => {
-    if (isSignedIn && user?.id) {
+    if (!initialLoad && !subscriptionLoading && isSignedIn && user?.id) {
       fetchUserData()
     }
-  }, [isSignedIn, user?.id, fetchUserData])
+  }, [isSignedIn, user?.id, fetchUserData, initialLoad, subscriptionLoading])
 
   useEffect(() => {
+    if (initialLoad || subscriptionLoading) return
     fetchBrands()
     if (isSignedIn) {
       fetchAlerts()
     }
-  }, [isSignedIn])
+  }, [isSignedIn, initialLoad, subscriptionLoading])
 
   useEffect(() => {
+    if (initialLoad || subscriptionLoading) return
     if (selectedBrand) {
       fetchModels(selectedBrand.id.toString())
     } else {
       setModels([])
     }
-  }, [selectedBrand])
+  }, [selectedBrand, initialLoad, subscriptionLoading])
 
   // Load user's default location when opening the dialog
   useEffect(() => {
@@ -253,46 +293,31 @@ export default function AlertasPage() {
         body: JSON.stringify(formData)
       })
 
-      if (!response.ok) throw new Error('Failed to create alert')
+      if (!response.ok) {
+        const errorText = await response.text()
+        if (errorText.includes('Alert limit reached')) {
+          setSubscriptionError({
+            message: errorText,
+            type: 'subscription_limit',
+            currentTier: errorText.split(' ')[4] // Extract tier from "Alert limit reached for basic tier"
+          })
+          setIsSubscriptionLimitModalOpen(true)
+          return
+        }
+        throw new Error(errorText)
+      }
+
       await fetchAlerts()
+      setIsDialogOpen(false)
     } catch (err) {
       console.error('Error creating alert:', err)
       setError('Error al crear la alerta')
     }
   }
 
-  // Show loading state while checking authentication
-  if (!isLoaded) {
-    return (
-      <Box sx={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh',
-        bgcolor: '#000000'
-      }}>
-        <CircularProgress sx={{ color: 'white' }} />
-      </Box>
-    )
-  }
-
-  // Only return null if we're actually redirecting
-  if (!isSignedIn && isLoaded) {
-    return null
-  }
-
-  if (subscriptionLoading) {
-    return (
-      <Box sx={{ 
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: '#000000'
-      }}>
-        <CircularProgress sx={{ color: 'white' }} />
-      </Box>
-    )
+  // Show loading screen during initial load or subscription check
+  if (initialLoad || subscriptionLoading || !isLoaded) {
+    return <LoadingScreen />
   }
 
   return (
@@ -785,6 +810,89 @@ export default function AlertasPage() {
           onSubmit={handleCreateAlert}
           isEditing={!!editingAlert}
         />
+
+        {/* Subscription Limit Modal */}
+        <Dialog
+          open={isSubscriptionLimitModalOpen}
+          onClose={() => setIsSubscriptionLimitModalOpen(false)}
+          PaperProps={{
+            sx: {
+              bgcolor: 'rgba(25,25,25,0.9)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 3,
+              color: 'white',
+              minWidth: { xs: '90%', sm: 400 }
+            }
+          }}
+        >
+          <DialogTitle sx={{ 
+            textAlign: 'center',
+            pb: 1,
+            pt: 3,
+            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 'bold'
+          }}>
+            Límite de Alertas Alcanzado
+          </DialogTitle>
+          <DialogContent sx={{ pt: 3 }}>
+            <Stack spacing={3} alignItems="center">
+              <NotificationsOff sx={{ fontSize: 60, color: 'rgba(255,255,255,0.7)' }} />
+              <Typography variant="body1" sx={{ textAlign: 'center', color: 'rgba(255,255,255,0.9)' }}>
+                Has alcanzado el límite de alertas para tu suscripción {subscriptionError?.currentTier}.
+                Actualiza tu plan para crear más alertas y acceder a funciones premium.
+              </Typography>
+            </Stack>
+          </DialogContent>
+          <DialogActions sx={{ p: 3, justifyContent: 'center', gap: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setIsSubscriptionLimitModalOpen(false)
+                router.push('/pricing')
+              }}
+              sx={{
+                px: 3,
+                py: 1,
+                background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                color: 'white',
+                borderRadius: '20px',
+                textTransform: 'none',
+                fontSize: '0.9rem',
+                minWidth: '140px',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                  opacity: 0.9
+                }
+              }}
+            >
+              Ver Planes
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => setIsSubscriptionLimitModalOpen(false)}
+              sx={{
+                px: 3,
+                py: 1,
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                borderRadius: '20px',
+                textTransform: 'none',
+                fontSize: '0.9rem',
+                minWidth: '140px',
+                '&:hover': {
+                  borderColor: '#4169E1',
+                  background: 'rgba(255,255,255,0.05)'
+                }
+              }}
+            >
+              Cancelar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container>
     </Box>
   )
