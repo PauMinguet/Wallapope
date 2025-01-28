@@ -18,7 +18,7 @@ interface ChatProps {
 export default function Chat({ isOpen, onClose }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([{
     role: 'assistant',
-    content: '¡Hola! 👋 Soy tu asistente de ChollosCar. Puedo ayudarte a:\n\n• Encontrar el coche perfecto para ti\n• Resolver dudas sobre precios y mercado\n• Explicarte cómo funcionan nuestras alertas\n• Asesorarte en tu búsqueda\n\n¿En qué puedo ayudarte hoy?'
+    content: '👋 ¿Buscas ahorrar hasta un 20% en tu próximo coche? Te ayudo a elegir el plan perfecto para encontrar los mejores chollos. ¿Qué tipo de coche buscas?'
   }])
   const [currentMessage, setCurrentMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
