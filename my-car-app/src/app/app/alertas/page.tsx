@@ -40,7 +40,7 @@ import TopBar from '../../components/TopBar'
 import { getCurrentUser } from '@/lib/db'
 import { useSubscription } from '@/hooks/useSubscription'
 import AlertDialogComponent from '../../components/AlertDialog'
-
+import Footer from '../../components/Footer'
 
 
 interface Brand {
@@ -321,6 +321,7 @@ export default function AlertasPage() {
   }
 
   return (
+    <>
     <Box sx={{ 
       overflow: 'hidden',
       bgcolor: '#000000',
@@ -895,5 +896,7 @@ export default function AlertasPage() {
         </Dialog>
       </Container>
     </Box>
+    <Footer />
+    </>
   )
 } 

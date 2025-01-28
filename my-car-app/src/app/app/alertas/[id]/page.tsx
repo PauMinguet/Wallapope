@@ -41,6 +41,7 @@ import ListingsGrid from '../../../components/ListingsGrid'
 import { formatPrice } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import AlertDialog from '../../../components/AlertDialog'
+import Footer from '../../../components/Footer'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
@@ -476,6 +477,7 @@ export default function AlertDetailPage() {
   if (!alert) return null
 
   return (
+    <>
     <Box sx={{ 
       overflow: 'hidden',
       bgcolor: '#000000',
@@ -1335,5 +1337,7 @@ export default function AlertDetailPage() {
         isEditing={true}
       />
     </Box>
+    <Footer />
+    </>
   )
 } 

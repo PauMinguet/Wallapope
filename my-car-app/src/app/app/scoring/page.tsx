@@ -25,6 +25,7 @@ import {
 } from '@mui/icons-material'
 import { useRouter } from 'next/navigation'
 import { useSubscription } from '@/hooks/useSubscription'
+import Footer from '../../components/Footer'
 
 const MotionTypography = motion(Typography)
 const MotionBox = motion(Box)
@@ -203,6 +204,7 @@ export default function ScoringPage() {
   }
 
   return (
+    <>
     <Box sx={{ 
       overflow: 'hidden',
       bgcolor: '#000000',
@@ -473,5 +475,7 @@ export default function ScoringPage() {
         </Container>
       </Box>
     </Box>
+    <Footer />
+    </>
   )
 } 
