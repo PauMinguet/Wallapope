@@ -25,7 +25,7 @@ interface PricingSectionProps {
   onContactClick: () => void;
 }
 
-export default function PricingSection({ onContactClick }: PricingSectionProps) {
+export default function PricingSection({ }: PricingSectionProps) {
   const router = useRouter()
   const { isSignedIn } = useUser()
 
@@ -72,9 +72,8 @@ export default function PricingSection({ onContactClick }: PricingSectionProps) 
         'Historial de precios',
         'Panel de control avanzado',
         'Modo rápido: Descubre chollos con solo deslizar',
-        'Análisis de mercado en tiempo real',
         'Soporte 24/7',
-        'Canal directo para sugerencias de mejoras o funciones personalizadas'
+        'Canal directo para mejoras o funciones personalizadas'
       ],
       icon: <Business sx={{ fontSize: 40 }} />,
       color: 'primary' as const,
@@ -301,7 +300,7 @@ export default function PricingSection({ onContactClick }: PricingSectionProps) 
           <Button
             variant="outlined"
             endIcon={<ArrowForward />}
-            onClick={onContactClick}
+            onClick={() => router.push('/contacto')}
             sx={{ 
               fontWeight: 'bold',
               borderColor: 'rgba(255,255,255,0.2)',

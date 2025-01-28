@@ -38,7 +38,7 @@ export default function Footer() {
         >
           <Button
             variant="text"
-            onClick={() => router.push('/contact')}
+            onClick={() => router.push('/contacto')}
             sx={{
               color: 'rgba(255,255,255,0.8)',
               minWidth: 0,

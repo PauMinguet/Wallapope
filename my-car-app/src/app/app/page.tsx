@@ -9,6 +9,7 @@ import {
   CardContent,
   Box,
   CircularProgress,
+  Button,
 } from '@mui/material'
 import { 
   Search as SearchIcon,
@@ -17,11 +18,14 @@ import {
   FlashOn as FlashOnIcon,
   TrendingUp as TrendingUpIcon,
   NotificationsActive as NotificationsActiveIcon,
+  Feedback as FeedbackIcon,
 } from '@mui/icons-material'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { useSubscription } from '@/hooks/useSubscription'
 import { motion } from 'framer-motion'
+import FeedbackDialog from '../components/FeedbackDialog'
+import Footer from '../components/Footer'
 
 const MotionBox = motion(Box)
 const MotionTypography = motion(Typography)
@@ -48,6 +52,7 @@ export default function DashboardPage() {
   const { isSignedIn, isLoaded } = useUser()
   const { loading: subscriptionLoading, isSubscribed } = useSubscription('basic')
   const [initialLoad, setInitialLoad] = useState(true)
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
 
   // Handle subscription check and redirect
   useEffect(() => {
@@ -101,7 +106,7 @@ export default function DashboardPage() {
       description: 'Datos y estadísticas en tiempo real',
       longDescription: 'Accede a análisis detallados del mercado, tendencias de precios y estadísticas que te ayudarán a tomar mejores decisiones de compra y venta.',
       icon: <TrendingUpIcon sx={{ fontSize: 40 }} />,
-      href: '/app/search',
+      href: '/app/mercado',
       color: '#4169E1',
       isPro: false,
     },
@@ -116,6 +121,13 @@ export default function DashboardPage() {
       color: '#4169E1',
     },
     {
+      title: 'Scoring',
+      description: 'Análisis de oportunidades',
+      icon: <TrendingUpIcon sx={{ fontSize: 30 }} />,
+      href: '/app/scoring',
+      color: '#00C853',
+    },
+    {
       title: 'Favoritos',
       description: 'Coches guardados',
       icon: <FavoriteIcon sx={{ fontSize: 30 }} />,
@@ -126,7 +138,7 @@ export default function DashboardPage() {
       title: 'Ajustes',
       description: 'Configuración',
       icon: <SettingsIcon sx={{ fontSize: 30 }} />,
-      href: '/app/settings',
+      href: '/app/ajustes',
       color: '#757575',
     },
   ]
@@ -197,37 +209,67 @@ export default function DashboardPage() {
       {/* Content Container */}
       <Box sx={{ position: 'relative', zIndex: 1 }}>
         <Container maxWidth="lg" sx={{ py: 4 }}>
-          <MotionTypography 
-            variant="h4" 
-            sx={{ 
-              mb: 1, 
-              fontWeight: 700,
-              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' }
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Bienvenido a CholloCars
-          </MotionTypography>
+          <Box sx={{ 
+            mb: 4, 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 2
+          }}>
+            <Box>
+              <MotionTypography 
+                variant="h4" 
+                sx={{ 
+                  mb: 1, 
+                  fontWeight: 700,
+                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' }
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Bienvenido a CholloCars
+              </MotionTypography>
 
-          <MotionTypography 
-            variant="body1" 
-            sx={{ 
-              mb: 6,
-              color: 'rgba(255,255,255,0.7)',
-              maxWidth: 600
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Accede a todas las herramientas y servicios para encontrar las mejores oportunidades en el mercado de coches de segunda mano.
-          </MotionTypography>
+              <MotionTypography 
+                variant="body1" 
+                sx={{ 
+                  color: 'rgba(255,255,255,0.7)',
+                  maxWidth: 600
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                Accede a todas las herramientas y servicios para encontrar las mejores oportunidades en el mercado de coches de segunda mano.
+              </MotionTypography>
+            </Box>
+
+            <Button
+              variant="outlined"
+              startIcon={<FeedbackIcon />}
+              onClick={() => setIsFeedbackOpen(true)}
+              sx={{
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                borderRadius: '20px',
+                textTransform: 'none',
+                px: 3,
+                py: 1,
+                '&:hover': {
+                  borderColor: '#4169E1',
+                  background: 'rgba(255,255,255,0.05)'
+                }
+              }}
+            >
+              Sugerencias
+            </Button>
+          </Box>
 
           {/* Featured Services */}
           <Typography 
@@ -417,8 +459,15 @@ export default function DashboardPage() {
               </Grid>
             ))}
           </Grid>
+
+          {/* Feedback Dialog */}
+          <FeedbackDialog 
+            open={isFeedbackOpen}
+            onClose={() => setIsFeedbackOpen(false)}
+          />
         </Container>
       </Box>
+      <Footer />
     </Box>
   )
 } 

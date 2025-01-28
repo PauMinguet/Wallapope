@@ -24,6 +24,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useSubscription } from '@/hooks/useSubscription'
 import ListingsGrid, { Listing } from '../../components/ListingsGrid'
+import Footer from '../../components/Footer'
 
 const MotionTypography = motion(Typography)
 
@@ -133,212 +134,215 @@ export default function CochesPage() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ 
-        display: 'flex', 
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: 2,
-        mb: { xs: 2, md: 3 }
-      }}>
-        <MotionTypography
-          variant="h1"
-          sx={{
-            fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' },
-            fontWeight: 900,
-            lineHeight: { xs: 1.1, md: 1.1 },
-            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-            backgroundClip: 'text',
-            textFillColor: 'transparent',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Modo Rápido
-        </MotionTypography>
+    <>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 2,
+          mb: { xs: 2, md: 3 }
+        }}>
+          <MotionTypography
+            variant="h1"
+            sx={{
+              fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' },
+              fontWeight: 900,
+              lineHeight: { xs: 1.1, md: 1.1 },
+              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+              backgroundClip: 'text',
+              textFillColor: 'transparent',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Modo Rápido
+          </MotionTypography>
 
-        <Stack 
-          direction="row" 
-          spacing={1} 
-          sx={{ 
-            '& .MuiButton-root': {
-              py: 0.5,
-              px: 1.5,
-              fontSize: '0.8rem',
-              color: 'white',
-              borderColor: 'rgba(255,255,255,0.2)',
-              '&.active': {
-                background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
-                borderColor: 'transparent',
-              },
-              '&:hover': {
-                borderColor: 'rgba(255,255,255,0.4)',
-                background: 'rgba(255,255,255,0.05)'
+          <Stack 
+            direction="row" 
+            spacing={1} 
+            sx={{ 
+              '& .MuiButton-root': {
+                py: 0.5,
+                px: 1.5,
+                fontSize: '0.8rem',
+                color: 'white',
+                borderColor: 'rgba(255,255,255,0.2)',
+                '&.active': {
+                  background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
+                  borderColor: 'transparent',
+                },
+                '&:hover': {
+                  borderColor: 'rgba(255,255,255,0.4)',
+                  background: 'rgba(255,255,255,0.05)'
+                }
               }
+            }}
+          >
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<LocationOn sx={{ fontSize: '1rem' }} />}
+              className={sortBy === 'distance' ? 'active' : ''}
+              onClick={() => setSortBy('distance')}
+            >
+              Distancia
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<LocalOffer sx={{ fontSize: '1rem' }} />}
+              className={sortBy === 'discount' ? 'active' : ''}
+              onClick={() => setSortBy('discount')}
+            >
+              Descuento
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<Percent sx={{ fontSize: '1rem' }} />}
+              className={sortBy === 'percentage' ? 'active' : ''}
+              onClick={() => setSortBy('percentage')}
+            >
+              Porcentaje
+            </Button>
+          </Stack>
+        </Box>
+
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            <ListingsGrid 
+              listings={listings}
+              loading={loading}
+              showNoResults={!loading && (!listings || listings.length === 0)}
+            />
+            
+            {totalPages > 1 && (
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                mt: 4,
+                '& .MuiPagination-ul': {
+                  '& .MuiPaginationItem-root': {
+                    color: 'white',
+                    borderColor: 'rgba(255,255,255,0.2)',
+                    '&.Mui-selected': {
+                      background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
+                      borderColor: 'transparent',
+                    },
+                    '&:hover': {
+                      borderColor: 'rgba(255,255,255,0.4)',
+                      background: 'rgba(255,255,255,0.05)'
+                    }
+                  }
+                }
+              }}>
+                <Pagination 
+                  count={totalPages} 
+                  page={page} 
+                  onChange={handlePageChange}
+                  variant="outlined"
+                  shape="rounded"
+                  size="large"
+                />
+              </Box>
+            )}
+          </>
+        )}
+
+        {/* Subscription Required Modal */}
+        <Dialog
+          open={isSubscriptionModalOpen}
+          onClose={() => setIsSubscriptionModalOpen(false)}
+          PaperProps={{
+            sx: {
+              bgcolor: 'rgba(25,25,25,0.9)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 3,
+              color: 'white',
+              minWidth: { xs: '90%', sm: 400 }
             }
           }}
         >
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<LocationOn sx={{ fontSize: '1rem' }} />}
-            className={sortBy === 'distance' ? 'active' : ''}
-            onClick={() => setSortBy('distance')}
-          >
-            Distancia
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<LocalOffer sx={{ fontSize: '1rem' }} />}
-            className={sortBy === 'discount' ? 'active' : ''}
-            onClick={() => setSortBy('discount')}
-          >
-            Descuento
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<Percent sx={{ fontSize: '1rem' }} />}
-            className={sortBy === 'percentage' ? 'active' : ''}
-            onClick={() => setSortBy('percentage')}
-          >
-            Porcentaje
-          </Button>
-        </Stack>
-      </Box>
-
-      {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          <ListingsGrid 
-            listings={listings}
-            loading={loading}
-            showNoResults={!loading && (!listings || listings.length === 0)}
-          />
-          
-          {totalPages > 1 && (
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              mt: 4,
-              '& .MuiPagination-ul': {
-                '& .MuiPaginationItem-root': {
-                  color: 'white',
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  '&.Mui-selected': {
-                    background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
-                    borderColor: 'transparent',
-                  },
-                  '&:hover': {
-                    borderColor: 'rgba(255,255,255,0.4)',
-                    background: 'rgba(255,255,255,0.05)'
-                  }
-                }
-              }
-            }}>
-              <Pagination 
-                count={totalPages} 
-                page={page} 
-                onChange={handlePageChange}
-                variant="outlined"
-                shape="rounded"
-                size="large"
-              />
-            </Box>
-          )}
-        </>
-      )}
-
-      {/* Subscription Required Modal */}
-      <Dialog
-        open={isSubscriptionModalOpen}
-        onClose={() => setIsSubscriptionModalOpen(false)}
-        PaperProps={{
-          sx: {
-            bgcolor: 'rgba(25,25,25,0.9)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: 3,
-            color: 'white',
-            minWidth: { xs: '90%', sm: 400 }
-          }
-        }}
-      >
-        <DialogTitle sx={{ 
-          textAlign: 'center',
-          pb: 1,
-          pt: 3,
-          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          fontWeight: 'bold'
-        }}>
-          Función Premium
-        </DialogTitle>
-        <DialogContent sx={{ pt: 3 }}>
-          <Stack spacing={3} alignItems="center">
-            <LockOutlined sx={{ fontSize: 60, color: 'rgba(255,255,255,0.7)' }} />
-            <Typography variant="body1" sx={{ textAlign: 'center', color: 'rgba(255,255,255,0.9)' }}>
-              El Modo Rápido está disponible exclusivamente para suscriptores Pro y Business.
-              Actualiza tu plan para acceder a esta y otras funciones premium.
-            </Typography>
-          </Stack>
-        </DialogContent>
-        <DialogActions sx={{ p: 3, justifyContent: 'center', gap: 2 }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              setIsSubscriptionModalOpen(false)
-              router.push('/pricing')
-            }}
-            sx={{
-              px: 3,
-              py: 1,
-              background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-              color: 'white',
-              borderRadius: '20px',
-              textTransform: 'none',
-              fontSize: '0.9rem',
-              minWidth: '140px',
-              '&:hover': {
+          <DialogTitle sx={{ 
+            textAlign: 'center',
+            pb: 1,
+            pt: 3,
+            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 'bold'
+          }}>
+            Función Premium
+          </DialogTitle>
+          <DialogContent sx={{ pt: 3 }}>
+            <Stack spacing={3} alignItems="center">
+              <LockOutlined sx={{ fontSize: 60, color: 'rgba(255,255,255,0.7)' }} />
+              <Typography variant="body1" sx={{ textAlign: 'center', color: 'rgba(255,255,255,0.9)' }}>
+                El Modo Rápido está disponible exclusivamente para suscriptores Pro y Business.
+                Actualiza tu plan para acceder a esta y otras funciones premium.
+              </Typography>
+            </Stack>
+          </DialogContent>
+          <DialogActions sx={{ p: 3, justifyContent: 'center', gap: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setIsSubscriptionModalOpen(false)
+                router.push('/pricing')
+              }}
+              sx={{
+                px: 3,
+                py: 1,
                 background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                opacity: 0.9
-              }
-            }}
-          >
-            Ver Planes
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => setIsSubscriptionModalOpen(false)}
-            sx={{
-              px: 3,
-              py: 1,
-              borderColor: 'rgba(255,255,255,0.2)',
-              color: 'white',
-              borderRadius: '20px',
-              textTransform: 'none',
-              fontSize: '0.9rem',
-              minWidth: '140px',
-              '&:hover': {
-                borderColor: '#4169E1',
-                background: 'rgba(255,255,255,0.05)'
-              }
-            }}
-          >
-            Cancelar
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Container>
+                color: 'white',
+                borderRadius: '20px',
+                textTransform: 'none',
+                fontSize: '0.9rem',
+                minWidth: '140px',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                  opacity: 0.9
+                }
+              }}
+            >
+              Ver Planes
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => setIsSubscriptionModalOpen(false)}
+              sx={{
+                px: 3,
+                py: 1,
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                borderRadius: '20px',
+                textTransform: 'none',
+                fontSize: '0.9rem',
+                minWidth: '140px',
+                '&:hover': {
+                  borderColor: '#4169E1',
+                  background: 'rgba(255,255,255,0.05)'
+                }
+              }}
+            >
+              Cancelar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+      <Footer />
+    </>
   )
 } 

@@ -19,7 +19,7 @@ import {
   Alert,
   Box,
   Autocomplete,
-  Slider
+  Slider,
 } from '@mui/material'
 import {MyLocation } from '@mui/icons-material'
 import 'leaflet/dist/leaflet.css'
@@ -27,6 +27,7 @@ import TopBar from '../components/TopBar'
 import ListingsGrid from '../components/ListingsGrid'
 import { useUser, SignIn } from '@clerk/nextjs'
 import { useSubscription } from '@/hooks/useSubscription'
+import Footer from '../components/Footer'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
@@ -1367,6 +1368,7 @@ export default function SearchPage() {
           </Box>
         </Box>
       )}
+      <Footer />
     </Box>
   )
 } 

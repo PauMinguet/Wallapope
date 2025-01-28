@@ -11,6 +11,7 @@ import {
   Stack,
   CircularProgress,
   Alert,
+  Chip,
 } from '@mui/material'
 import { 
   Search,
@@ -80,6 +81,7 @@ interface QuickSearchResults {
 export default function HomePage() {
   const router = useRouter()
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [searchStep, setSearchStep] = useState<'model' | 'year' | 'results'>('model')
   const [selectedModel, setSelectedModel] = useState<string | null>(null)
   const [selectedYear, setSelectedYear] = useState<string | null>(null)
   const [quickSearchResults, setQuickSearchResults] = useState<QuickSearchResults | null>(null)
@@ -119,32 +121,37 @@ export default function HomePage() {
     { number: '24/7', label: 'Monitorización' }
   ]
 
-  const handleQuickSearch = async () => {
-    if (!selectedModel && !selectedYear) {
-      return
-    }
+  const handleModelSelect = (make: string) => {
+    setSelectedModel(make)
+    setSearchStep('year')
+  }
 
+  const handleYearSelect = async (year: string) => {
+    setSelectedYear(year)
+    setSearchStep('results')
+    
+    // Automatically trigger search
+    const prevModel = selectedModel
     setIsQuickSearching(true)
     setQuickSearchError(null)
 
     try {
       // Parse the selected model into brand and model, handling special cases
       let brand, model
-      if (selectedModel) {
-        if (selectedModel.startsWith('BMW')) {
+      if (prevModel) {
+        if (prevModel.startsWith('BMW')) {
           brand = 'BMW'
-          model = selectedModel.replace('BMW ', '') // This will keep "Serie 3" as is
-        } else if (selectedModel.startsWith('Mercedes')) {
+          model = prevModel.replace('BMW ', '')
+        } else if (prevModel.startsWith('Mercedes')) {
           brand = 'Mercedes'
-          model = selectedModel.replace('Mercedes ', '') // This will keep "Clase A" as is
+          model = prevModel.replace('Mercedes ', '')
         } else {
-          // For other cases like "Volkswagen Golf", "Audi A3", "Seat León"
-          [brand, model] = selectedModel.split(' ')
+          [brand, model] = prevModel.split(' ')
         }
       }
 
       // Parse the selected year range
-      const [minYear, maxYear] = selectedYear?.split(' - ').map(Number) || []
+      const [minYear, maxYear] = year.split(' - ').map(Number)
 
       const searchParams = {
         brand,
@@ -156,7 +163,6 @@ export default function HomePage() {
         distance: 500000
       }
 
-      // Remove undefined values
       const cleanParams = Object.fromEntries(
         Object.entries(searchParams).filter(([, v]) => v !== undefined)
       )
@@ -181,6 +187,14 @@ export default function HomePage() {
     } finally {
       setIsQuickSearching(false)
     }
+  }
+
+  const resetSearch = () => {
+    setSearchStep('model')
+    setSelectedModel(null)
+    setSelectedYear(null)
+    setQuickSearchResults(null)
+    setQuickSearchError(null)
   }
 
   return (
@@ -429,14 +443,58 @@ export default function HomePage() {
                       lineHeight: 1.4
                     }}
                   >
-                    Haz click en cualquier opción para ver una demo de búsqueda. 
+                    {searchStep === 'model' && 'Selecciona un modelo para empezar'}
+                    {searchStep === 'year' && 'Ahora, elige un rango de años'}
+                    {searchStep === 'results' && 'Resultados de tu búsqueda'}
                   </Typography>
 
-                  {/* Makes Row */}
-                  <Stack spacing={0.5} sx={{ width: '100%' }}>
-                    <Typography variant="subtitle2" sx={{ color: 'rgba(255,255,255,0.7)', textAlign: 'center', fontSize: '0.85rem' }}>
-                      Coches más buscados
-                    </Typography>
+                  {/* Selected Options Display */}
+                  {(selectedModel || selectedYear) && (
+                    <Stack 
+                      direction="row" 
+                      spacing={1} 
+                      sx={{ 
+                        mb: 2,
+                        flexWrap: 'wrap',
+                        gap: 1,
+                        justifyContent: 'center'
+                      }}
+                    >
+                      {selectedModel && (
+                        <Chip
+                          label={selectedModel}
+                          onDelete={resetSearch}
+                          sx={{
+                            background: 'linear-gradient(45deg, rgba(65,105,225,0.2), rgba(148,0,211,0.2))',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            color: 'white',
+                            '& .MuiChip-deleteIcon': {
+                              color: 'rgba(255,255,255,0.7)',
+                              '&:hover': { color: 'white' }
+                            }
+                          }}
+                        />
+                      )}
+                      {selectedYear && (
+                        <Chip
+                          label={selectedYear}
+                          onDelete={resetSearch}
+                          sx={{
+                            background: 'linear-gradient(45deg, rgba(65,105,225,0.2), rgba(148,0,211,0.2))',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            color: 'white',
+                            '& .MuiChip-deleteIcon': {
+                              color: 'rgba(255,255,255,0.7)',
+                              '&:hover': { color: 'white' }
+                            }
+                          }}
+                        />
+                      )}
+                    </Stack>
+                  )}
+
+                  {/* Model Selection */}
+                  {searchStep === 'model' && (
                     <Stack
                       direction="row"
                       spacing={1}
@@ -450,7 +508,7 @@ export default function HomePage() {
                         <Button
                           key={make}
                           variant="contained"
-                          onClick={() => setSelectedModel(selectedModel === make ? null : make)}
+                          onClick={() => handleModelSelect(make)}
                           sx={{
                             background: [
                               'linear-gradient(45deg, rgba(65,105,225,0.7), rgba(107,35,142,0.7))',
@@ -464,7 +522,6 @@ export default function HomePage() {
                             px: 2,
                             py: 1,
                             textTransform: 'none',
-                            border: selectedModel === make ? '2px solid white' : '2px solid transparent',
                             '&:hover': {
                               background: [
                                 'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(125,43,166,0.8))',
@@ -483,13 +540,10 @@ export default function HomePage() {
                         </Button>
                       ))}
                     </Stack>
-                  </Stack>
+                  )}
 
-                  {/* Year Ranges Row */}
-                  <Stack spacing={0.5} sx={{ width: '100%', mt: 1 }}>
-                    <Typography variant="subtitle2" sx={{ color: 'rgba(255,255,255,0.7)', textAlign: 'center', fontSize: '0.85rem' }}>
-                      Rango de años populares
-                    </Typography>
+                  {/* Year Selection */}
+                  {searchStep === 'year' && (
                     <Stack
                       direction="row"
                       spacing={1}
@@ -508,7 +562,7 @@ export default function HomePage() {
                         <Button
                           key={year.range}
                           variant="contained"
-                          onClick={() => setSelectedYear(selectedYear === year.range ? null : year.range)}
+                          onClick={() => handleYearSelect(year.range)}
                           sx={{
                             background: [
                               'linear-gradient(45deg, rgba(65,105,225,0.7), rgba(44,62,147,0.7))',
@@ -520,7 +574,6 @@ export default function HomePage() {
                             px: 2,
                             py: 1,
                             textTransform: 'none',
-                            border: selectedYear === year.range ? '2px solid white' : '2px solid transparent',
                             '&:hover': {
                               background: [
                                 'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(54,74,173,0.8))',
@@ -537,44 +590,16 @@ export default function HomePage() {
                         </Button>
                       ))}
                     </Stack>
-                  </Stack>
+                  )}
 
-                  {/* Search Button */}
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={handleQuickSearch}
-                    disabled={isQuickSearching}
-                    sx={{
-                      mt: 2,
-                      background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
-                      color: 'white',
-                      borderRadius: '28px',
-                      px: 3,
-                      py: 1,
-                      textTransform: 'none',
-                      fontSize: '1rem',
-                      '&:hover': {
-                        background: 'linear-gradient(45deg, rgba(54,74,173,0.9), rgba(125,43,166,0.9))',
-                        transform: 'translateY(-2px)',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.2)'
-                      },
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    {isQuickSearching ? (
-                      <CircularProgress size={24} sx={{ color: 'white' }} />
-                    ) : selectedModel || selectedYear ? (
-                      'Buscar 🔍'
-                    ) : (
-                      'Ver búsqueda avanzada 🔍'
-                    )}
-                  </Button>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textAlign: 'center', mt: 0.5 }}>
-                    Accede a todos los filtros y alertas automáticas con una de nuestras subscripciones a medida
-                  </Typography>
+                  {/* Loading State */}
+                  {isQuickSearching && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+                      <CircularProgress sx={{ color: 'white' }} />
+                    </Box>
+                  )}
 
-                  {/* Quick Search Results */}
+                  {/* Error State */}
                   {quickSearchError && (
                     <Alert 
                       severity="error" 
@@ -591,14 +616,16 @@ export default function HomePage() {
                     </Alert>
                   )}
 
-                  {quickSearchResults && (
+                  {/* Results Section */}
+                  {searchStep === 'results' && quickSearchResults && !isQuickSearching && (
                     <Box sx={{ 
                       mt: 4,
                       animation: 'fadeIn 0.5s ease-out',
                       '@keyframes fadeIn': {
                         from: { opacity: 0 },
                         to: { opacity: 1 }
-                      }
+                      },
+                      width: '100%'
                     }}>
                       {/* Market Analysis Section */}
                       {quickSearchResults.market_data && (

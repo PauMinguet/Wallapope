@@ -18,7 +18,7 @@ interface ChatProps {
 export default function Chat({ isOpen, onClose }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([{
     role: 'assistant',
-    content: '¡Hola! 👋 Soy tu asistente de ChollosCarFinder. Puedo ayudarte a:\n\n• Encontrar el coche perfecto para ti\n• Resolver dudas sobre precios y mercado\n• Explicarte cómo funcionan nuestras alertas\n• Asesorarte en tu búsqueda\n\n¿En qué puedo ayudarte hoy?'
+    content: '¡Hola! 👋 Soy tu asistente de ChollosCar. Puedo ayudarte a:\n\n• Encontrar el coche perfecto para ti\n• Resolver dudas sobre precios y mercado\n• Explicarte cómo funcionan nuestras alertas\n• Asesorarte en tu búsqueda\n\n¿En qué puedo ayudarte hoy?'
   }])
   const [currentMessage, setCurrentMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -164,7 +164,7 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <MessageSquare className="h-4 w-4 text-white" />
               <Box component="h3" sx={{ color: 'white', fontWeight: 600, fontSize: '0.95rem' }}>
-                Chatea con ChollosCarFinder
+                Chatea con ChollosCar
               </Box>
             </Box>
             <IconButton
@@ -185,6 +185,7 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
+              bgcolor: '#111111',
             }}
           >
             {messages.map((message, index) => (
@@ -205,10 +206,12 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
                       ? {
                           background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                           color: 'white',
+                          borderBottomRightRadius: '4px',
                         }
                       : {
-                          bgcolor: 'rgba(255,255,255,0.05)',
+                          bgcolor: 'rgba(255,255,255,0.1)',
                           color: 'white',
+                          borderBottomLeftRadius: '4px',
                         }),
                   }}
                 >
@@ -220,10 +223,11 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
               <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <Box
                   sx={{
-                    bgcolor: 'rgba(255,255,255,0.05)',
+                    bgcolor: 'rgba(255,255,255,0.1)',
                     color: 'white',
                     maxWidth: '80%',
                     borderRadius: '16px',
+                    borderBottomLeftRadius: '4px',
                     p: 2,
                   }}
                 >
@@ -291,6 +295,7 @@ export default function Chat({ isOpen, onClose }: ChatProps) {
                 borderRadius: '12px',
                 px: 2,
                 py: 1.5,
+                fontSize: '0.9rem',
                 '&:focus': {
                   outline: 'none',
                   boxShadow: '0 0 0 2px #4169E1',
