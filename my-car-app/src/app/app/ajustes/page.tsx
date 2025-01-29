@@ -64,7 +64,7 @@ const LOCATION_STORAGE_KEY = 'user_location'
 export default function AjustesPage() {
   const router = useRouter()
   const { isSignedIn, isLoaded } = useUser()
-  const { loading: subscriptionLoading, isSubscribed } = useSubscription('basic')
+  const { loading: subscriptionLoading, isSubscribed } = useSubscription()
   const [initialLoad, setInitialLoad] = useState(true)
   const [location, setLocation] = useState({
     latitude: SPAIN_CENTER.lat,

@@ -129,7 +129,7 @@ const LoadingScreen = () => (
 export default function AlertasPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   const router = useRouter()
-  const { loading: subscriptionLoading, isSubscribed, currentTier } = useSubscription('basic')
+  const { loading: subscriptionLoading, isSubscribed, currentTier } = useSubscription()
   const [initialLoad, setInitialLoad] = useState(true)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isSubscriptionLimitModalOpen, setIsSubscriptionLimitModalOpen] = useState(false)
