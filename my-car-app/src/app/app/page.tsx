@@ -50,7 +50,7 @@ const LoadingScreen = () => (
 export default function DashboardPage() {
   const router = useRouter()
   const { isSignedIn, isLoaded } = useUser()
-  const { loading: subscriptionLoading, isSubscribed } = useSubscription('basic')
+  const { loading: subscriptionLoading, isSubscribed } = useSubscription()
   const [initialLoad, setInitialLoad] = useState(true)
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
 
