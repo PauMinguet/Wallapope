@@ -6,7 +6,7 @@ export default function ContactChat() {
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([
     {
       role: 'assistant',
-      content: '¡Hola! 👋 Soy tu asistente de ChollosCarFinder. Puedo ayudarte a:\n\n• Encontrar el coche perfecto para ti\n• Resolver dudas sobre precios y mercado\n• Explicarte cómo funcionan nuestras alertas\n• Asesorarte en tu búsqueda\n\n¿En qué puedo ayudarte hoy?'
+      content: '¡Hola! 👋 Soy tu asistente de ChollosCars. Puedo ayudarte a:\n\n• Encontrar el coche perfecto para ti\n• Resolver dudas sobre precios y mercado\n• Explicarte cómo funcionan nuestras alertas\n• Asesorarte en tu búsqueda\n\n¿En qué puedo ayudarte hoy?'
     }
   ])
   const [currentMessage, setCurrentMessage] = useState('')
@@ -88,7 +88,7 @@ export default function ContactChat() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <MessageSquare className="h-4 w-4 text-white" />
           <Box component="h3" sx={{ color: 'white', fontWeight: 600, fontSize: '0.95rem', m: 0 }}>
-            Chatea con ChollosCarFinder
+            Chatea con ChollosCars
           </Box>
         </Box>
       </Box>
