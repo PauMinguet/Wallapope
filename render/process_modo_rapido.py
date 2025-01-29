@@ -74,89 +74,93 @@ def process_modo_rapido_entries(supabase):
                 result = wallapop_endpoint_search.search_wallapop_endpoint(search_params)
                 
                 if result and result.get('listings'):
-                    # Calculate market data
+                    # First, insert market data
                     market_data = result.get('market_data', {})
+                    market_data_insert = {
+                        'average_price': market_data.get('average_price', 0),
+                        'median_price': market_data.get('median_price', 0),
+                        'min_price': market_data.get('min_price', 0),
+                        'max_price': market_data.get('max_price', 0),
+                        'total_listings': market_data.get('total_listings', 0),
+                        'valid_listings': market_data.get('valid_listings', 0),
+                        'created_at': datetime.now(timezone.utc).isoformat()
+                    }
                     
-                    # Transform listings to match frontend format
-                    transformed_listings = []
+                    logger.info(f"Inserting market data for entry {entry['id']}")
+                    market_data_response = supabase.table('market_data').insert(market_data_insert).execute()
+                    if hasattr(market_data_response, 'error') and market_data_response.error:
+                        logger.error(f"Error inserting market data for entry {entry['id']}: {market_data_response.error}")
+                        continue
+                    
+                    market_data_id = market_data_response.data[0]['id']
+                    
+                    # Then, create modo_rapido_run
+                    run_data = {
+                        'modo_rapido_id': entry['id'],
+                        'market_data_id': market_data_id,
+                        'created_at': datetime.now(timezone.utc).isoformat()
+                    }
+                    
+                    logger.info(f"Creating modo_rapido_run for entry {entry['id']}")
+                    run_response = supabase.table('modo_rapido_runs').insert(run_data).execute()
+                    if hasattr(run_response, 'error') and run_response.error:
+                        logger.error(f"Error inserting run for entry {entry['id']}: {run_response.error}")
+                        continue
+                    
+                    run_id = run_response.data[0]['id']
+                    
+                    # Transform and insert listings
+                    listings_to_insert = []
                     for listing in result['listings']:
-                        content = listing['content']
-                        price = float(content['price'])
+                        price = float(listing['price'])
                         market_price = market_data.get('median_price', 0)
                         price_difference = market_price - price
                         price_difference_percentage = (price_difference / market_price * 100) if market_price > 0 else 0
-                                                    
+                        
                         try:
-                            distance_km = round(float(content.get('distance', 0)))
+                            distance_km = round(float(listing.get('distance', 0)))
                         except Exception as e:
                             distance_km = 0
                         
-                        transformed_listing = {
-                            'id': content['id'],
-                            'title': content['title'],
+                        listing_data = {
+                            'modo_rapido_run_id': run_id,
+                            'listing_id': listing['listing_id'],
+                            'title': listing['title'],
                             'price': price,
-                            'price_text': format_price_text(price),
+                            'price_text': listing['price_text'],
                             'market_price': market_price,
                             'market_price_text': format_price_text(market_price),
                             'price_difference': round(price_difference, 2),
                             'price_difference_percentage': f"{abs(price_difference_percentage):.1f}%",
-                            'location': f"{content['location']['city']}, {content['location']['postal_code']}",
-                            'year': int(content['year']),
-                            'kilometers': int(content['km']),
-                            'fuel_type': content['engine'].capitalize() if content['engine'] else '',
-                            'transmission': content['gearbox'].capitalize() if content['gearbox'] else '',
-                            'url': f"https://es.wallapop.com/item/{content['web_slug']}",
-                            'horsepower': float(content.get('horsepower', 0)),
+                            'location': listing['location'],
+                            'year': listing['year'],
+                            'kilometers': listing['kilometers'],
+                            'fuel_type': listing['fuel_type'],
+                            'transmission': listing['transmission'],
+                            'url': listing['url'],
+                            'horsepower': listing['horsepower'],
                             'distance': distance_km,
-                            'listing_images': [
-                                {'image_url': img.get('large', img.get('original'))} 
-                                for img in content.get('images', [])
-                                if isinstance(img, dict) and (img.get('large') or img.get('original'))
-                            ]
+                            'listing_images': listing['listing_images'],
+                            'created_at': datetime.now(timezone.utc).isoformat()
                         }
-                        transformed_listings.append(transformed_listing)
+                        listings_to_insert.append(listing_data)
                     
-                    # Transform market data to match frontend format
-                    transformed_market_data = {
-                        'average_price': market_data.get('average_price', 0),
-                        'average_price_text': format_price_text(market_data.get('average_price', 0)),
-                        'median_price': market_data.get('median_price', 0),
-                        'median_price_text': format_price_text(market_data.get('median_price', 0)),
-                        'min_price': market_data.get('min_price', 0),
-                        'min_price_text': format_price_text(market_data.get('min_price', 0)),
-                        'max_price': market_data.get('max_price', 0),
-                        'max_price_text': format_price_text(market_data.get('max_price', 0)),
-                        'total_listings': market_data.get('total_listings', 0),
-                        'valid_listings': market_data.get('valid_listings', 0)
-                    }
-                    
-                    # Insert run data
-                    run_data = {
-                        'modo_rapido_id': entry['id'],
-                        'listings': transformed_listings,
-                        'market_data': transformed_market_data,
-                        'created_at': datetime.now(timezone.utc).isoformat()
-                    }
-                    
-                    try:
-                        # Insert data into modo_rapido_runs table
-                        response = supabase.table('modo_rapido_runs').insert(run_data).execute()
-                        if hasattr(response, 'error') and response.error:
-                            logger.error(f"Error inserting run for entry {entry['id']}: {response.error}")
+                    if listings_to_insert:
+                        logger.info(f"Inserting {len(listings_to_insert)} listings for run {run_id}")
+                        listing_response = supabase.table('modo_rapido_listings').insert(listings_to_insert).execute()
+                        if hasattr(listing_response, 'error') and listing_response.error:
+                            logger.error(f"Error inserting listings for run {run_id}: {listing_response.error}")
                             continue
-                        
-                        successful_entries += 1
-                        logger.info(f"Successfully processed entry {entry['id']} with {len(transformed_listings)} listings")
-                        
-                        processed_entries.append({
-                            'modo_rapido_id': entry['id'],
-                            'success': True,
-                            'listings_found': len(transformed_listings),
-                            'market_data': transformed_market_data
-                        })
-                    except Exception as e:
-                        logger.error(f"Error inserting run for entry {entry['id']}: {str(e)}")
-                        continue
+                    
+                    successful_entries += 1
+                    logger.info(f"Successfully processed entry {entry['id']} with {len(listings_to_insert)} listings")
+                    
+                    processed_entries.append({
+                        'modo_rapido_id': entry['id'],
+                        'success': True,
+                        'listings_found': len(listings_to_insert),
+                        'market_data': market_data
+                    })
                 else:
                     logger.info(f"No listings found for entry {entry['id']}")
                     processed_entries.append({

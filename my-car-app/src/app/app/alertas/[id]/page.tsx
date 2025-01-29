@@ -35,6 +35,7 @@ import {
   NearMe,
   ArrowBack,
   Edit,
+  Search,
 } from '@mui/icons-material'
 import TopBar from '../../../components/TopBar'
 import ListingsGrid from '../../../components/ListingsGrid'
@@ -50,6 +51,8 @@ interface AlertRun {
   created_at: string;
   listings: Listing[];
   market_data: MarketData;
+  market_search_url?: string;
+  search_url?: string;
 }
 
 interface AlertRunWithExpanded extends AlertRun {
@@ -112,38 +115,38 @@ interface Alert {
 
 interface ApiListing {
   id: string;
-  content: {
-    title: string;
-    price: number;
-    location: {
-      city: string;
-      postal_code: string;
-    };
-    year: number;
-    km: number;
-    engine: string;
-    gearbox: string;
-    horsepower: number;
-    distance: number;
-    web_slug: string;
-    images: Array<{
-      large?: string;
-      original: string;
-    }>;
-  };
+  listing_id: string;
+  title: string;
+  price: number;
+  price_text: string;
+  market_price: number;
+  market_price_text: string;
+  price_difference: number;
+  price_difference_percentage: string;
+  location: string;
+  year: number;
+  kilometers: number;
+  fuel_type: string;
+  transmission: string;
+  url: string;
+  horsepower: number;
+  distance: number;
+  listing_images: ListingImage[];
 }
 
 interface ApiResponse {
+  success: boolean;
   listings: ApiListing[];
-  market_data?: {
+  market_data: {
     average_price: number;
     median_price: number;
     min_price: number;
     max_price: number;
     total_listings: number;
     valid_listings: number;
-    sample_size: number;
   };
+  search_url: string;
+  market_search_url: string;
 }
 
 interface AlertFormData {
@@ -295,125 +298,58 @@ export default function AlertDetailPage() {
   }, [isSignedIn, isLoaded, loadData, router])
 
   const handleTestAlert = async () => {
-    if (!alert) return
-    
-    setIsTesting(true)
-    setError(null)
-
-    const searchParams = {
-      brand: alert.brand,
-      model: alert.model,
-      min_year: alert.min_year || undefined,
-      max_year: alert.max_year || undefined,
-      engine: alert.engine === 'Gasolina' ? 'gasoline' : 
-              alert.engine === 'Diesel' ? 'gasoil' : 
-              alert.engine === 'Eléctrico' ? 'electric' : 
-              alert.engine === 'Híbrido' ? 'hybrid' : undefined,
-      min_horse_power: alert.min_horse_power || undefined,
-      gearbox: alert.gearbox === 'Manual' ? 'manual' : 
-               alert.gearbox === 'Automático' ? 'automatic' : undefined,
-      latitude: alert.latitude,
-      longitude: alert.longitude,
-      distance: alert.distance,
-      max_kilometers: alert.max_kilometers
-    }
-
-    // Clean up empty values
-    const cleanParams = Object.fromEntries(
-      Object.entries(searchParams).filter(([, value]) => 
-        value !== '' && 
-        value !== null && 
-        value !== undefined
-      )
-    );
-
     try {
+      setIsTesting(true)
+      setError(null)
+
       const response = await fetch(`${BACKEND_URL}/api/search-single-car`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cleanParams)
+        body: JSON.stringify({
+          brand: alert?.brand,
+          model: alert?.model,
+          latitude: alert?.latitude,
+          longitude: alert?.longitude,
+          distance: alert?.distance,
+          min_year: alert?.min_year,
+          max_year: alert?.max_year,
+          max_kilometers: alert?.max_kilometers,
+          min_sale_price: 3000,
+          min_horse_power: alert?.min_horse_power,
+          order_by: 'price_low_to_high'
+        })
       })
 
       if (!response.ok) throw new Error('Failed to test alert')
+      const data: ApiResponse = await response.json()
 
-      const data = await response.json() as ApiResponse
-      console.log('Raw data:', data)
+      // Transform the data to match the backend's expected format
+      const transformedData = {
+        listings: data.listings,
+        market_data: {
+          average_price: data.market_data.average_price,
+          median_price: data.market_data.median_price,
+          min_price: data.market_data.min_price,
+          max_price: data.market_data.max_price,
+          total_listings: data.market_data.total_listings,
+          valid_listings: data.market_data.valid_listings
+        },
+        market_search_url: data.market_search_url,
+        search_url: data.search_url
+      }
 
-      // Transform market data
-      const transformedMarketData = data.market_data ? {
-        average_price: data.market_data.average_price,
-        average_price_text: formatPrice(data.market_data.average_price),
-        median_price: data.market_data.median_price,
-        median_price_text: formatPrice(data.market_data.median_price),
-        min_price: data.market_data.min_price,
-        min_price_text: formatPrice(data.market_data.min_price),
-        max_price: data.market_data.max_price,
-        max_price_text: formatPrice(data.market_data.max_price),
-        total_listings: data.market_data.total_listings,
-        valid_listings: data.market_data.valid_listings,
-        sample_size: data.market_data.sample_size
-      } : undefined;
-
-      // Transform listings to match the expected format
-      const transformedListings = data.listings?.map((listing: ApiListing) => {
-        const marketPrice = transformedMarketData?.median_price || 0;
-        const price = listing.content.price;
-        const priceDifference = marketPrice - price;
-        const differencePercentage = (priceDifference / marketPrice) * 100;
-
-        return {
-          id: listing.id,
-          title: listing.content.title,
-          price: price,
-          price_text: formatPrice(price),
-          market_price: marketPrice,
-          market_price_text: formatPrice(marketPrice),
-          price_difference: priceDifference,
-          price_difference_percentage: `${Math.abs(differencePercentage).toFixed(1)}%`,
-          location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-          year: listing.content.year,
-          kilometers: listing.content.km,
-          fuel_type: listing.content.engine === 'gasoline' ? 'Gasolina' :
-                    listing.content.engine === 'gasoil' ? 'Diesel' :
-                    listing.content.engine === 'electric' ? 'Eléctrico' :
-                    listing.content.engine === 'hybrid' ? 'Híbrido' :
-                    listing.content.engine,
-          transmission: listing.content.gearbox === 'manual' ? 'Manual' :
-                       listing.content.gearbox === 'automatic' ? 'Automático' :
-                       listing.content.gearbox,
-          url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-          horsepower: listing.content.horsepower,
-          distance: Math.round(listing.content.distance),
-          listing_images: listing.content.images.map(img => ({
-            image_url: img.large || img.original
-          }))
-        };
-      }) || [];
-
-      const transformedData: AlertRun = {
-        id: new Date().toISOString(), // Generate a unique ID for the test run
-        created_at: new Date().toISOString(),
-        listings: transformedListings,
-        market_data: data.market_data || {
-          average_price: 0,
-          median_price: 0,
-          min_price: 0,
-          max_price: 0,
-          total_listings: 0,
-          valid_listings: 0,
-          sample_size: 0
-        }
-      };
-
-      setTestResults(transformedData)
-      
       // Save the test run
-      await fetch(`/api/alerts/${alert.id}/runs`, {
+      const saveResponse = await fetch(`/api/alerts/${alert?.id}/runs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(transformedData)
       })
 
+      if (!saveResponse.ok) throw new Error('Failed to save test run')
+      const savedRun = await saveResponse.json()
+      
+      setTestResults(savedRun)
+      
       // Refresh alert runs
       loadData()
     } catch (err) {
@@ -963,6 +899,59 @@ export default function AlertDetailPage() {
                                   </Box>
                                 </Grid>
                               </Grid>
+                              
+                              {/* Add URL buttons */}
+                              <Box sx={{ 
+                                mt: 2, 
+                                pt: 2, 
+                                borderTop: '1px solid rgba(255,255,255,0.1)',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                gap: 2
+                              }}>
+                                {testResults.market_search_url && (
+                                  <Button
+                                    variant="outlined"
+                                    size="small"
+                                    href={testResults.market_search_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    startIcon={<Search />}
+                                    sx={{
+                                      color: 'white',
+                                      borderColor: 'rgba(255,255,255,0.3)',
+                                      fontSize: '0.75rem',
+                                      '&:hover': {
+                                        borderColor: 'rgba(255,255,255,0.5)',
+                                        background: 'rgba(255,255,255,0.1)'
+                                      }
+                                    }}
+                                  >
+                                    Ver Análisis de Mercado
+                                  </Button>
+                                )}
+                                {testResults.search_url && (
+                                  <Button
+                                    variant="outlined"
+                                    size="small"
+                                    href={testResults.search_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    startIcon={<Search />}
+                                    sx={{
+                                      color: 'white',
+                                      borderColor: 'rgba(255,255,255,0.3)',
+                                      fontSize: '0.75rem',
+                                      '&:hover': {
+                                        borderColor: 'rgba(255,255,255,0.5)',
+                                        background: 'rgba(255,255,255,0.1)'
+                                      }
+                                    }}
+                                  >
+                                    Ver Búsqueda
+                                  </Button>
+                                )}
+                              </Box>
                             </CardContent>
                           </Card>
                         </Box>
@@ -1288,6 +1277,59 @@ export default function AlertDetailPage() {
                                           </Box>
                                         </Grid>
                                       </Grid>
+                                      
+                                      {/* Add URL buttons */}
+                                      <Box sx={{ 
+                                        mt: 2, 
+                                        pt: 2, 
+                                        borderTop: '1px solid rgba(255,255,255,0.1)',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        gap: 2
+                                      }}>
+                                        {run.market_search_url && (
+                                          <Button
+                                            variant="outlined"
+                                            size="small"
+                                            href={run.market_search_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            startIcon={<Search />}
+                                            sx={{
+                                              color: 'white',
+                                              borderColor: 'rgba(255,255,255,0.3)',
+                                              fontSize: '0.75rem',
+                                              '&:hover': {
+                                                borderColor: 'rgba(255,255,255,0.5)',
+                                                background: 'rgba(255,255,255,0.1)'
+                                              }
+                                            }}
+                                          >
+                                            Ver Análisis de Mercado
+                                          </Button>
+                                        )}
+                                        {run.search_url && (
+                                          <Button
+                                            variant="outlined"
+                                            size="small"
+                                            href={run.search_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            startIcon={<Search />}
+                                            sx={{
+                                              color: 'white',
+                                              borderColor: 'rgba(255,255,255,0.3)',
+                                              fontSize: '0.75rem',
+                                              '&:hover': {
+                                                borderColor: 'rgba(255,255,255,0.5)',
+                                                background: 'rgba(255,255,255,0.1)'
+                                              }
+                                            }}
+                                          >
+                                            Ver Búsqueda
+                                          </Button>
+                                        )}
+                                      </Box>
                                     </CardContent>
                                   </Card>
                                 </Box>

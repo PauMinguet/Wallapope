@@ -83,20 +83,32 @@ export default function CochesPage() {
         
         if (storedListings) {
           const data = JSON.parse(storedListings)
-          data.sort((a: Listing, b: Listing) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
-          setListings(data)
-          setTotalPages(Math.ceil(data.length / itemsPerPage))
+          if (Array.isArray(data)) {
+            data.sort((a: Listing, b: Listing) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
+            setListings(data)
+            setTotalPages(Math.ceil(data.length / itemsPerPage))
+          } else {
+            // If stored data is invalid, remove it
+            localStorage.removeItem(STORAGE_KEY)
+            throw new Error('Invalid stored data')
+          }
           setLoading(false)
           return
         }
 
         const response = await fetch(`/api/car-listings?page=${page}&limit=${itemsPerPage}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch listings')
+        }
         const data = await response.json()
-        setListings(data.listings)
-        setTotalPages(data.totalPages)
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data.listings))
+        if (Array.isArray(data.listings)) {
+          setListings(data.listings)
+          setTotalPages(data.totalPages)
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data.listings))
+        }
       } catch (error) {
         console.error('Error fetching listings:', error)
+        setListings([])
       } finally {
         setLoading(false)
       }
@@ -107,7 +119,7 @@ export default function CochesPage() {
 
   // Handle sorting
   useEffect(() => {
-    if (initialLoad || subscriptionLoading) return
+    if (initialLoad || subscriptionLoading || !Array.isArray(listings) || listings.length === 0) return
 
     const sortedData = [...listings]
     if (sortBy === 'distance') {
@@ -115,7 +127,11 @@ export default function CochesPage() {
     } else if (sortBy === 'discount') {
       sortedData.sort((a, b) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
     } else if (sortBy === 'percentage') {
-      sortedData.sort((a, b) => Math.abs(parseFloat(b.price_difference_percentage)) - Math.abs(parseFloat(a.price_difference_percentage)))
+      sortedData.sort((a, b) => {
+        const percentA = parseFloat(b.price_difference_percentage.replace('%', ''))
+        const percentB = parseFloat(a.price_difference_percentage.replace('%', ''))
+        return Math.abs(percentA) - Math.abs(percentB)
+      })
     }
     
     if (JSON.stringify(sortedData) !== JSON.stringify(listings)) {

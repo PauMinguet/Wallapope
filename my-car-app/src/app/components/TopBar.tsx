@@ -18,10 +18,11 @@ import {
   useUser,
 } from '@clerk/nextjs'
 import { 
-  Search as SearchIcon,
   Settings,
   FlashOn,
   Notifications as NotificationsIcon,
+  Menu as MenuIcon,
+  Analytics as AnalyticsIcon,
 } from '@mui/icons-material'
 
 export default function TopBar() {
@@ -43,14 +44,19 @@ export default function TopBar() {
 
   const sections = [
     { 
-      label: 'Búsqueda', 
+      label: 'Menú', 
       href: '/app', 
-      icon: <SearchIcon sx={{ fontSize: '1.2rem' }} />
+      icon: <MenuIcon sx={{ fontSize: '1.2rem' }} />
     },
     { 
       label: 'Modo Rápido', 
       href: '/app/coches', 
       icon: <FlashOn sx={{ fontSize: '1.2rem' }} />
+    },
+    { 
+      label: 'Mercado', 
+      href: '/app/mercado', 
+      icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />
     },
     { 
       label: 'Alertas', 
@@ -78,7 +84,7 @@ export default function TopBar() {
         py: { xs: 1.5, md: 2 }
       }}
     >
-      <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 0.25, sm: 1, md: 2 } }}>
         <Box sx={{ 
           display: 'flex', 
           alignItems: 'center', 
@@ -88,13 +94,14 @@ export default function TopBar() {
           <Box sx={{ 
             display: 'flex',
             alignItems: 'center',
-            gap: { xs: 0.5, md: 2 },
-            cursor: 'pointer'
+            gap: { xs: 0.25, md: 2 },
+            cursor: 'pointer',
+            pl: { xs: 0.25, md: 0 }
           }} onClick={() => router.push('/')}>
             <Box sx={{ 
               position: 'relative',
-              width: { xs: 80, md: 120 },
-              height: { xs: 40, md: 50 }
+              width: { xs: 70, md: 120 },
+              height: { xs: 35, md: 50 }
             }}>
               <Image
                 src="/logo.png"
@@ -108,7 +115,7 @@ export default function TopBar() {
             <Typography
               variant="h6"
               sx={{
-                fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.5rem' },
+                fontSize: { xs: '1.5rem', sm: '1.5rem', md: '1.5rem' },
                 fontWeight: 700,
                 background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                 backgroundClip: 'text',
@@ -117,25 +124,25 @@ export default function TopBar() {
                 whiteSpace: 'nowrap'
               }}
             >
-              ChollosCar
+              ChollosCars
             </Typography>
           </Box>
 
           {/* Auth Buttons */}
-          <Stack direction="row" spacing={{ xs: 0.5, md: 2 }}>
+          <Stack direction="row" spacing={{ xs: 0.25, md: 2 }} sx={{ pr: { xs: 0.5, md: 0 } }}>
             {isSignedIn ? (
               <>
                 {/* Navigation buttons for logged-in users */}
                 <Box sx={{ 
                   display: 'flex', 
-                  gap: { xs: 0.5, md: 1 },
+                  gap: { xs: 0.25, md: 1 },
                   '& .MuiButton-root': {
                     color: 'white',
                     textTransform: 'none',
                     fontSize: '0.9rem',
-                    py: 1,
-                    px: { xs: 1, md: 2 },
-                    minWidth: { xs: '40px', md: 'auto' },
+                    py: { xs: 0.5, md: 1 },
+                    px: { xs: 0.5, md: 2 },
+                    minWidth: { xs: '32px', md: 'auto' },
                     borderRadius: 2,
                     '&:hover': {
                       background: 'rgba(255,255,255,0.1)'

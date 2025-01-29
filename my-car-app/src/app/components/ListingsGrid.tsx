@@ -33,9 +33,8 @@ export interface Listing {
   listing_images: Array<{
     image_url: string;
   }>;
-  searches?: {
-    search_url?: string;
-  };
+  market_search_url?: string;
+  search_url?: string;
 }
 
 interface ListingsGridProps {
@@ -261,15 +260,26 @@ const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoRe
                     >
                       Ver
                     </Button>
-                    {listing.searches?.search_url && (
+                    {listing.search_url && (
                       <Button 
                         variant="outlined"
-                        href={listing.searches.search_url}
+                        href={listing.search_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         startIcon={<Search sx={{ fontSize: '1rem' }} />}
                       >
                         Similares
+                      </Button>
+                    )}
+                    {listing.market_search_url && (
+                      <Button 
+                        variant="outlined"
+                        href={listing.market_search_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        startIcon={<Search sx={{ fontSize: '1rem' }} />}
+                      >
+                        Mercado
                       </Button>
                     )}
                   </Box>

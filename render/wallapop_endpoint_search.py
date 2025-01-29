@@ -17,6 +17,10 @@ UNWANTED_KEYWORDS = [
     'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', 'averiada', '647 358 133', 'mallorca', 'palma'
 ]
 
+def format_price_text(price: float) -> str:
+    """Format price as text with euro symbol"""
+    return f"{price:,.0f} €".replace(",", ".")
+
 def has_unwanted_keywords(text: str, unwanted_keywords: list) -> bool:
     """Check if text contains any unwanted keywords"""
     if not text:
@@ -24,6 +28,22 @@ def has_unwanted_keywords(text: str, unwanted_keywords: list) -> bool:
     
     text = text.lower()
     return any(keyword in text for keyword in unwanted_keywords)
+
+def convert_api_url_to_web_url(api_url: str) -> str:
+    """Convert an API URL to a web-friendly URL"""
+    # Extract the query parameters
+    params = dict(param.split('=') for param in api_url.split('?')[1].split('&'))
+    
+    # Build the web URL base
+    web_url = "https://es.wallapop.com/app/search"
+    
+    # Keep all original parameters and just add filters_source=deep_link
+    params['filters_source'] = 'deep_link'
+    
+    # Build the query string
+    query_string = '&'.join(f'{k}={quote(str(v))}' for k, v in params.items())
+    
+    return f"{web_url}?{query_string}"
 
 def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """Get market price for the given parameters"""
@@ -87,7 +107,9 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         search_params = {k: v for k, v in search_params.items() if v and v != ''}
 
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
+        web_url = convert_api_url_to_web_url(url)
         logger.info(f"\nMarket price search URL: {url}")
+        logger.info(f"\nMarket price web URL: {web_url}")
         
         response = requests.get(url)
         response.raise_for_status()
@@ -95,7 +117,7 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         
         # Filter and process all listings
         valid_prices = []
-        for listing in data.get('search_objects', []):  # Process all listings
+        for listing in data.get('search_objects', []):
             content = listing['content']
             
             # Apply same filtering logic
@@ -125,15 +147,15 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             
             avg_price = sum(filtered_prices) / len(filtered_prices) if filtered_prices else mean
             
+            # Format market data to match the new database schema
             market_data = {
-                'market_price': median_price,  # Use median as market price
+                'average_price': avg_price,
                 'median_price': median_price,
-                'average_price': avg_price,  # Average price excluding outliers
-                'min_price': valid_prices[0],  # Minimum actual price
-                'max_price': valid_prices[-1],  # Maximum actual price
+                'min_price': valid_prices[0],
+                'max_price': valid_prices[-1],
                 'total_listings': len(data.get('search_objects', [])),
                 'valid_listings': num_prices,
-                'sample_size': len(filtered_prices)  # Number of prices used for average calculation
+                'search_url': web_url
             }
             
             logger.info(f"Calculated market data: {market_data}")
@@ -209,7 +231,9 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
         search_params = {k: v for k, v in search_params.items() if v and v != ''}
 
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
+        web_url = convert_api_url_to_web_url(url)
         logger.info(f"\nListing search URL: {url}")
+        logger.info(f"\nListing web URL: {web_url}")
         
         response = requests.get(url)
         response.raise_for_status()
@@ -246,72 +270,55 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
             
             # Update the kilometers value in the listing
             content['km'] = kilometers
-            filtered_results.append(listing)
-
-        # Do a second search with expanded parameters
-        logger.info("Performing expanded search for suggestions...")
-        expanded_params = search_params.copy()
-        
-        # Increase max_km and distance by 10%
-        if 'max_km' in expanded_params:
-            expanded_params['max_km'] = str(int(int(expanded_params['max_km']) * 1.1))
-        if 'distance' in expanded_params:
-            expanded_params['distance'] = str(int(int(expanded_params['distance']) * 1.1))
-        
-        # Decrease min_year by 1 if present
-        if 'min_year' in expanded_params:
-            expanded_params['min_year'] = str(int(expanded_params['min_year']) - 1)
-        
-        expanded_url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in expanded_params.items())}"
-        logger.info(f"\nExpanded search URL: {expanded_url}")
-        
-        expanded_response = requests.get(expanded_url)
-        expanded_response.raise_for_status()
-        expanded_data = expanded_response.json()
-        
-        expanded_results = expanded_data.get('search_objects', [])
-        suggested_filtered = []
-        
-        # Keep track of seen listing IDs
-        seen_ids = {listing['id'] for listing in filtered_results}
-        
-        # Filter expanded results
-        for listing in expanded_results:
-            # Skip if we've already seen this listing
-            if listing['id'] in seen_ids:
-                continue
-                
-            content = listing['content']
             
-            # Apply same filtering logic as before
-            kilometers = int(content.get('km', 0))
-            if kilometers < 1000 and kilometers >= 200:
-                kilometers *= 1000
-            elif kilometers <= 200 or kilometers > 200000:
-                continue
-
-            if has_unwanted_keywords(content['title'], UNWANTED_KEYWORDS) or \
-               has_unwanted_keywords(content.get('storytelling', ''), UNWANTED_KEYWORDS):
-                continue
+            # Transform listing to match the new database schema
+            price = float(content['price'])
+            market_price = market_data['median_price']
+            price_difference = market_price - price
+            price_difference_percentage = (price_difference / market_price * 100) if market_price > 0 else 0
             
-            content['km'] = kilometers
-            suggested_filtered.append(listing)
+            try:
+                distance_km = round(float(content.get('distance', 0)))
+            except Exception as e:
+                distance_km = 0
+            
+            transformed_listing = {
+                'listing_id': content['id'],
+                'title': content['title'],
+                'price': price,
+                'price_text': format_price_text(price),
+                'market_price': market_price,
+                'market_price_text': format_price_text(market_price),
+                'price_difference': round(price_difference, 2),
+                'price_difference_percentage': f"{abs(price_difference_percentage):.1f}%",
+                'location': f"{content['location']['city']}, {content['location']['postal_code']}",
+                'year': int(content['year']),
+                'kilometers': kilometers,
+                'fuel_type': content['engine'].capitalize() if content['engine'] else '',
+                'transmission': content['gearbox'].capitalize() if content['gearbox'] else '',
+                'url': f"https://es.wallapop.com/item/{content['web_slug']}",
+                'horsepower': float(content.get('horsepower', 0)),
+                'distance': distance_km,
+                'listing_images': [
+                    {'image_url': img.get('large', img.get('original'))} 
+                    for img in content.get('images', [])
+                    if isinstance(img, dict) and (img.get('large') or img.get('original'))
+                ]
+            }
+            filtered_results.append(transformed_listing)
         
-        logger.info(f"Found {len(suggested_filtered)} suggested listings")
-        
-        # Create the final result after both searches are complete
+        # Create the final result matching the new database schema
         result = {
             'success': True,
             'search_parameters': search_params,
             'listings': filtered_results,
             'total_results': len(search_results),
             'filtered_results': len(filtered_results),
-            'search_url': url,
-            'market_data': market_data,  # Include the complete market_data
-            'suggested_listings': suggested_filtered  # Add suggested listings to the response
+            'search_url': web_url,
+            'market_data': market_data,
+            'market_search_url': market_data['search_url']
         }
         
-        logger.info(f"Final response includes {len(result['suggested_listings'])} suggested listings")
         logger.info(f"Final response structure: {list(result.keys())}")  # Log the keys to verify structure
         return result
         
