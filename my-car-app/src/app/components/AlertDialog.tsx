@@ -240,6 +240,11 @@ export default function AlertDialog({
       brand: newValue ? newValue.name : '',
       model: ''
     }))
+    if (newValue) {
+      fetchModels(newValue.id.toString())
+    } else {
+      setModels([])
+    }
   }
 
   const handleModelChange = (event: React.SyntheticEvent | null, newValue: Model | null) => {

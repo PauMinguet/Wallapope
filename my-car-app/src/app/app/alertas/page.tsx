@@ -780,7 +780,7 @@ export default function AlertasPage() {
             borderRadius: 2,
             border: '1px solid rgba(255,255,255,0.1)'
           }}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
               No tienes alertas configuradas
             </Typography>
             <Typography variant="body2" sx={{ mb: 3, color: 'rgba(255,255,255,0.7)' }}>

@@ -1020,13 +1020,13 @@ export default function AlertDetailPage() {
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
                     {alertRuns.map((run, ) => (
                       <Card key={run.id} sx={{
-                        bgcolor: 'rgba(255,255,255,0.05)',
+                        bgcolor: 'rgba(40,40,40)',
                         backdropFilter: 'blur(10px)',
                         borderRadius: 2,
                         border: '1px solid rgba(255,255,255,0.1)',
                         transition: 'all 0.3s ease',
                         '&:hover': {
-                          bgcolor: 'rgba(255,255,255,0.08)',
+                          bgcolor: 'rgba(35,35,35)',
                           transform: 'translateY(-2px)',
                           boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
                         }
