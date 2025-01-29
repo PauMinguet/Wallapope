@@ -12,6 +12,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'ChollosCars',
   description: 'Encuentra los mejores chollos de coches',
+  icons: [
+    { rel: 'icon', url: '/logo.png' },
+    { rel: 'apple-touch-icon', url: '/logo.png' }
+  ],
 }
 
 export default function RootLayout({
