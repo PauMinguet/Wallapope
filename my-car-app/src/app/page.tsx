@@ -45,37 +45,29 @@ interface MarketData {
   median_price: number;
 }
 
-interface ListingImage {
-  large?: string;
-  original: string;
-}
-
-interface ListingContent {
+interface QuickSearchListing {
+  id: string;
+  listing_id?: string;
   title: string;
-  storytelling: string;
   price: number;
-  location: {
-    city: string;
-    postal_code: string;
-  };
+  price_text?: string;
+  location: string;
   year: number;
-  km: number;
-  engine: string;
-  gearbox: string;
-  web_slug: string;
+  kilometers: number;
+  fuel_type: string;
+  transmission: string;
+  url: string;
   horsepower: number;
   distance: number;
-  images: ListingImage[];
-}
-
-interface Listing {
-  id: string;
-  content: ListingContent;
+  listing_images: Array<{
+    image_url: string;
+  }>;
+  price_difference_percentage?: string;
 }
 
 interface QuickSearchResults {
   market_data?: MarketData;
-  listings?: Listing[];
+  listings?: QuickSearchListing[];
 }
 
 export default function HomePage() {
@@ -679,7 +671,7 @@ export default function HomePage() {
                             fontWeight: 'bold',
                             color: 'white'
                           }}>
-                            {quickSearchResults.listings.length} anuncios encontrados
+                            Viendo 3 de {quickSearchResults.listings.length * 3} anuncios encontrados
                           </Typography>
 
                           <Box sx={{ 
@@ -691,27 +683,24 @@ export default function HomePage() {
                             }
                           }}>
                             <ListingsGrid 
-                              listings={quickSearchResults.listings.map((listing: Listing) => ({
-                                id: listing.id,
-                                title: listing.content.title,
-                                description: listing.content.storytelling,
-                                price: listing.content.price,
-                                price_text: formatPrice(listing.content.price),
+                              listings={quickSearchResults.listings.slice(0, 3).map((listing: QuickSearchListing) => ({
+                                id: listing.listing_id || listing.id,
+                                title: listing.title,
+                                price: listing.price,
+                                price_text: listing.price_text || formatPrice(listing.price),
                                 market_price: quickSearchResults.market_data?.median_price || 0,
                                 market_price_text: formatPrice(quickSearchResults.market_data?.median_price || 0),
-                                price_difference: (quickSearchResults.market_data?.median_price || 0) - listing.content.price,
-                                price_difference_percentage: `${Math.abs(((quickSearchResults.market_data?.median_price || 0) - listing.content.price) / (quickSearchResults.market_data?.median_price || 1) * 100).toFixed(1)}%`,
-                                location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-                                year: listing.content.year,
-                                kilometers: listing.content.km,
-                                fuel_type: listing.content.engine,
-                                transmission: listing.content.gearbox,
-                                url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-                                horsepower: listing.content.horsepower,
-                                distance: listing.content.distance,
-                                listing_images: listing.content.images.map((img: ListingImage) => ({
-                                  image_url: img.large || img.original
-                                }))
+                                price_difference: (quickSearchResults.market_data?.median_price || 0) - listing.price,
+                                price_difference_percentage: listing.price_difference_percentage || `${Math.abs(((quickSearchResults.market_data?.median_price || 0) - listing.price) / (quickSearchResults.market_data?.median_price || 1) * 100).toFixed(1)}%`,
+                                location: listing.location,
+                                year: listing.year,
+                                kilometers: listing.kilometers,
+                                fuel_type: listing.fuel_type,
+                                transmission: listing.transmission,
+                                url: listing.url,
+                                horsepower: listing.horsepower,
+                                distance: listing.distance,
+                                listing_images: listing.listing_images || []
                               }))}
                               loading={isQuickSearching}
                               showNoResults={!isQuickSearching && (!quickSearchResults.listings || quickSearchResults.listings.length === 0)}
