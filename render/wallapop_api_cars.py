@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 # Define unwanted keywords as a global constant
 UNWANTED_KEYWORDS = [
     'accidentado', 'accidentada', 'inundado', 'motor roto', 'siniestro', 'ocasionplus', 'accidente', 'inundó', 'averias', 'golpe', 'averia', 'gripado', 
-    'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', 'averiada', '647 358 133', 'mallorca', 'palma'
+    'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', '¡No contesto mensajes!', 'averiada', '647 358 133', 'mallorca', 'palma'
 ]
 
 def init_supabase() -> Client:
