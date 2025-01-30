@@ -16,6 +16,11 @@ import {
   Chip,
   IconButton,
   Popover,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Stack,
 } from '@mui/material'
 import {
   Email,
@@ -36,6 +41,7 @@ import {
   ArrowBack,
   Edit,
   Search,
+  NotificationsOff,
 } from '@mui/icons-material'
 import TopBar from '../../../components/TopBar'
 import ListingsGrid from '../../../components/ListingsGrid'
@@ -240,6 +246,8 @@ export default function AlertDetailPage() {
   const openMap = Boolean(mapAnchorEl)
   const [visibleTestResults, setVisibleTestResults] = useState(true)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const loadData = useCallback(async () => {
     try {
@@ -396,6 +404,24 @@ export default function AlertDetailPage() {
     }
   }
 
+  const handleDeleteAlert = async () => {
+    try {
+      setIsDeleting(true)
+      const response = await fetch(`/api/alerts/${id}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) throw new Error('Failed to delete alert')
+      router.push('/app/alertas')
+    } catch (err) {
+      console.error('Error deleting alert:', err)
+      setError('Error al eliminar la alerta')
+    } finally {
+      setIsDeleting(false)
+      setIsDeleteDialogOpen(false)
+    }
+  }
+
   if (!isLoaded || loading) {
     return (
       <Box sx={{ 
@@ -508,6 +534,21 @@ export default function AlertDetailPage() {
               }}
             >
               Editar
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => setIsDeleteDialogOpen(true)}
+              color="error"
+              sx={{
+                borderColor: 'rgba(255,99,71,0.5)',
+                color: '#FF6347',
+                '&:hover': {
+                  borderColor: '#FF6347',
+                  background: 'rgba(255,99,71,0.1)'
+                }
+              }}
+            >
+              Eliminar
             </Button>
             <Button
               variant="contained"
@@ -738,7 +779,7 @@ export default function AlertDetailPage() {
                   {alert.email_notifications && (
                     <Chip 
                       icon={<Email sx={{ color: 'white !important' }} />}
-                      label={`Resultados por email cada día a las ${new Date(alert.created_at).getHours().toString().padStart(2, '0')}:00`}
+                      label={`Resultados por email cada 24 horas`}
                       size="small"
                       sx={{
                         background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
@@ -1378,6 +1419,99 @@ export default function AlertDetailPage() {
         onSubmit={handleEditAlert}
         isEditing={true}
       />
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={isDeleteDialogOpen}
+        onClose={() => !isDeleting && setIsDeleteDialogOpen(false)}
+        PaperProps={{
+          sx: {
+            bgcolor: 'rgba(25,25,25,0.9)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 3,
+            color: 'white',
+            minWidth: { xs: '90%', sm: 400 }
+          }
+        }}
+      >
+        <DialogTitle sx={{ 
+          textAlign: 'center',
+          pb: 1,
+          pt: 3,
+          color: '#FF6347',
+          fontWeight: 'bold'
+        }}>
+          Eliminar Alerta
+        </DialogTitle>
+        <DialogContent sx={{ pt: 3 }}>
+          <Stack spacing={3} alignItems="center">
+            <Box sx={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: 'rgba(255,99,71,0.1)',
+              border: '2px solid rgba(255,99,71,0.3)'
+            }}>
+              <NotificationsOff sx={{ fontSize: 30, color: '#FF6347' }} />
+            </Box>
+            <Typography variant="body1" sx={{ textAlign: 'center', color: 'rgba(255,255,255,0.9)' }}>
+              ¿Estás seguro de que quieres eliminar esta alerta? Esta acción no se puede deshacer.
+            </Typography>
+          </Stack>
+        </DialogContent>
+        <DialogActions sx={{ p: 3, justifyContent: 'center', gap: 2 }}>
+          <Button
+            variant="contained"
+            onClick={handleDeleteAlert}
+            disabled={isDeleting}
+            sx={{
+              px: 3,
+              py: 1,
+              bgcolor: '#FF6347',
+              color: 'white',
+              borderRadius: '20px',
+              textTransform: 'none',
+              fontSize: '0.9rem',
+              minWidth: '140px',
+              '&:hover': {
+                bgcolor: '#FF6347',
+                opacity: 0.9
+              },
+              '&:disabled': {
+                bgcolor: 'rgba(255,99,71,0.5)',
+                color: 'white'
+              }
+            }}
+          >
+            {isDeleting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Eliminar'}
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => setIsDeleteDialogOpen(false)}
+            disabled={isDeleting}
+            sx={{
+              px: 3,
+              py: 1,
+              borderColor: 'rgba(255,255,255,0.2)',
+              color: 'white',
+              borderRadius: '20px',
+              textTransform: 'none',
+              fontSize: '0.9rem',
+              minWidth: '140px',
+              '&:hover': {
+                borderColor: '#FF6347',
+                background: 'rgba(255,255,255,0.05)'
+              }
+            }}
+          >
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
     <Footer />
     </>

@@ -16,7 +16,8 @@ import {
   FormControl,
   InputLabel,
   Chip,
-  Stack,
+  Collapse,
+  Slider,
 } from '@mui/material'
 import { motion } from 'framer-motion'
 import { 
@@ -46,31 +47,15 @@ import {
 const MotionTypography = motion(Typography)
 const MotionBox = motion(Box)
 
-interface MarketAnalytics {
+interface BaseAnalytics {
   totalScans: number
   averageMarketPrice: number
   medianMarketPrice: number
   totalListingsAnalyzed: number
   validListingsPercentage: number
-  brandAnalysis: {
+  brands: {
     [key: string]: {
-      totalScans: number
-      averagePrice: number
-      totalListings: number
       models: string[]
-      priceDistribution: {
-        [year: string]: {
-          ranges: {
-            '0-5000': number
-            '5000-10000': number
-            '10000-15000': number
-            '15000-20000': number
-            '20000-30000': number
-            '30000-50000': number
-            '50000+': number
-          }
-        }
-      }
     }
   }
   priceRanges: {
@@ -89,6 +74,47 @@ interface MarketAnalytics {
   }
   lastUpdate: string
 }
+
+interface BrandAnalytics {
+  totalScans: number
+  averagePrice: number
+  totalListings: number
+  models: {
+    [key: string]: {
+      totalScans: number
+      averagePrice: number
+      totalListings: number
+    }
+  }
+  fuelTypeDistribution: {
+    [key: string]: number
+  }
+  yearDistribution: {
+    [key: string]: number
+  }
+}
+
+interface ModelAnalytics {
+  totalScans: number
+  averagePrice: number
+  totalListings: number
+  yearPriceDistribution: {
+    [key: string]: {
+      ranges: {
+        '0-5000': number
+        '5000-10000': number
+        '10000-15000': number
+        '15000-20000': number
+        '20000-30000': number
+        '30000-50000': number
+        '50000+': number
+      }
+      averagePrice: number
+      totalListings: number
+    }
+  }
+}
+
 
 const LoadingScreen = () => (
   <Box sx={{ 
@@ -114,11 +140,102 @@ export default function MercadoPage() {
   const [initialLoad, setInitialLoad] = useState(true)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [analytics, setAnalytics] = useState<MarketAnalytics | null>(null)
+  const [baseAnalytics, setBaseAnalytics] = useState<BaseAnalytics | null>(null)
+  const [brandAnalytics, setBrandAnalytics] = useState<BrandAnalytics | null>(null)
+  const [modelAnalytics, setModelAnalytics] = useState<ModelAnalytics | null>(null)
   const [selectedBrand, setSelectedBrand] = useState<string>('')
-  const [selectedYear, setSelectedYear] = useState<string>('all')
+  const [selectedModel, setSelectedModel] = useState<string>('')
+  const [yearRange, setYearRange] = useState<[number, number]>([2000, new Date().getFullYear()])
+  const [availableYears, setAvailableYears] = useState<[number, number]>([2000, new Date().getFullYear()])
+  const [ , setDataScope] = useState<'all' | 'brand' | 'model'>('all')
+  const [loadingBrand, setLoadingBrand] = useState(false)
+  const [loadingModel, setLoadingModel] = useState(false)
 
-  // Handle subscription check and redirect
+  // Move getPriceDistributionData up here, before any conditional returns
+  const getPriceDistributionData = useCallback((modelData: ModelAnalytics | null) => {
+    if (!modelData?.yearPriceDistribution) return []
+
+    const yearData = Object.entries(modelData.yearPriceDistribution)
+      .filter(([year]) => {
+        const yearNum = parseInt(year)
+        return yearNum >= yearRange[0] && yearNum <= yearRange[1]
+      })
+      .reduce((acc: { [key: string]: number }, [ , data]) => {
+        Object.entries(data.ranges).forEach(([range, count]) => {
+          acc[range] = (acc[range] || 0) + count
+        })
+        return acc
+      }, {})
+
+    return Object.entries(yearData)
+      .map(([range, count]) => ({
+        range: range,
+        count: count,
+      }))
+      .sort((a, b) => {
+        const getMinPrice = (range: string) => {
+          const match = range.match(/\d+/)
+          return match ? parseInt(match[0]) : 0
+        }
+        return getMinPrice(a.range) - getMinPrice(b.range)
+      })
+  }, [yearRange])
+
+  // Fetch base analytics
+  const fetchBaseAnalytics = useCallback(async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/market-analytics/base')
+      if (!response.ok) {
+        throw new Error('Failed to fetch base analytics')
+      }
+      const data = await response.json()
+      setBaseAnalytics(data)
+    } catch (err) {
+      console.error('Error fetching base analytics:', err)
+      setError('Error al cargar los datos básicos del mercado')
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  // Fetch brand analytics
+  const fetchBrandAnalytics = useCallback(async (brand: string) => {
+    try {
+      setLoadingBrand(true)
+      const response = await fetch(`/api/market-analytics/brand/${encodeURIComponent(brand)}`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch brand analytics')
+      }
+      const data = await response.json()
+      setBrandAnalytics(data)
+    } catch (err) {
+      console.error('Error fetching brand analytics:', err)
+      setError('Error al cargar los datos de la marca')
+    } finally {
+      setLoadingBrand(false)
+    }
+  }, [])
+
+  // Fetch model analytics
+  const fetchModelAnalytics = useCallback(async (brand: string, model: string) => {
+    try {
+      setLoadingModel(true)
+      const response = await fetch(`/api/market-analytics/model/${encodeURIComponent(brand)}/${encodeURIComponent(model)}`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch model analytics')
+      }
+      const data = await response.json()
+      setModelAnalytics(data)
+    } catch (err) {
+      console.error('Error fetching model analytics:', err)
+      setError('Error al cargar los datos del modelo')
+    } finally {
+      setLoadingModel(false)
+    }
+  }, [])
+
+  // Authentication and subscription check
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       router.push('/')
@@ -134,35 +251,45 @@ export default function MercadoPage() {
     }
   }, [subscriptionLoading, isSubscribed, router, isLoaded, isSignedIn])
 
-  const fetchAnalytics = useCallback(async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/market-analytics')
-      if (!response.ok) {
-        throw new Error('Failed to fetch analytics')
-      }
-      const data = await response.json()
-      setAnalytics(data)
-      // Set first brand as default if none selected
-      if (!selectedBrand && data.brandAnalysis) {
-        const brands = Object.keys(data.brandAnalysis)
-        if (brands.length > 0) {
-          setSelectedBrand(brands[0])
-        }
-      }
-    } catch (err) {
-      console.error('Error fetching analytics:', err)
-      setError('Error al cargar los datos del mercado')
-    } finally {
-      setLoading(false)
-    }
-  }, [selectedBrand])
-
+  // Initial load of base analytics
   useEffect(() => {
     if (!initialLoad && !subscriptionLoading && isSignedIn) {
-      fetchAnalytics()
+      fetchBaseAnalytics()
     }
-  }, [isSignedIn, initialLoad, subscriptionLoading, fetchAnalytics])
+  }, [isSignedIn, initialLoad, subscriptionLoading, fetchBaseAnalytics])
+
+  // Load brand analytics when brand is selected
+  useEffect(() => {
+    if (selectedBrand) {
+      fetchBrandAnalytics(selectedBrand)
+      setSelectedModel('') // Reset model selection
+      setModelAnalytics(null)
+    } else {
+      setBrandAnalytics(null)
+    }
+  }, [selectedBrand, fetchBrandAnalytics])
+
+  // Load model analytics when model is selected
+  useEffect(() => {
+    if (selectedBrand && selectedModel) {
+      fetchModelAnalytics(selectedBrand, selectedModel)
+    } else {
+      setModelAnalytics(null)
+    }
+  }, [selectedBrand, selectedModel, fetchModelAnalytics])
+
+  // Update year range when model analytics change
+  useEffect(() => {
+    if (modelAnalytics?.yearPriceDistribution) {
+      const years = Object.keys(modelAnalytics.yearPriceDistribution).map(Number)
+      if (years.length > 0) {
+        const minYear = Math.min(...years)
+        const maxYear = Math.max(...years)
+        setAvailableYears([minYear, maxYear])
+        setYearRange([minYear, maxYear])
+      }
+    }
+  }, [modelAnalytics])
 
   // Show loading screen during initial load or subscription check
   if (initialLoad || subscriptionLoading || !isLoaded) {
@@ -187,52 +314,6 @@ export default function MercadoPage() {
     })
   }
 
-  const getBrandStats = () => {
-    if (!analytics || !selectedBrand) return null
-    return analytics.brandAnalysis[selectedBrand]
-  }
-
-  interface PriceRange {
-    [key: string]: number
-  }
-
-  interface YearRanges {
-    ranges: {
-      [key: string]: number
-    }
-  }
-
-  interface PriceDistribution {
-    [year: string]: YearRanges
-  }
-
-  interface BrandStats {
-    priceDistribution?: PriceDistribution
-  }
-
-  const getPriceDistributionData = (brandStats: BrandStats) => {
-    if (!brandStats?.priceDistribution) return []
-
-    const yearData = selectedYear === 'all' 
-      ? Object.values(brandStats.priceDistribution).reduce((acc: PriceRange, curr: YearRanges) => {
-          Object.entries(curr.ranges).forEach(([range, count]) => {
-            acc[range] = (acc[range] || 0) + count
-          })
-          return acc
-        }, {})
-      : brandStats.priceDistribution[selectedYear]?.ranges || {}
-
-    return Object.entries(yearData).map(([range, count]) => ({
-      range: range,
-      count: count,
-    }))
-  }
-
-  const getAvailableYears = (brandStats: BrandStats) => {
-    if (!brandStats?.priceDistribution) return []
-    return Object.keys(brandStats.priceDistribution)
-  }
-
   if (loading) {
     return (
       <Box sx={{ 
@@ -254,8 +335,6 @@ export default function MercadoPage() {
       </Box>
     )
   }
-
-  const brandStats = getBrandStats()
 
   return (
     <Box sx={{ 
@@ -330,7 +409,7 @@ export default function MercadoPage() {
           <MotionTypography 
             variant="body1" 
             sx={{ 
-              mb: 3,
+              mb: 4,
               color: 'rgba(255,255,255,0.7)',
               maxWidth: 600
             }}
@@ -341,438 +420,543 @@ export default function MercadoPage() {
             Explora las tendencias actuales del mercado de coches de segunda mano. Datos actualizados en tiempo real para ayudarte a tomar mejores decisiones.
           </MotionTypography>
 
-          {/* Brand Selector */}
+          {/* Market Overview Section */}
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             sx={{ mb: 4 }}
           >
-            <FormControl 
-              fullWidth 
-              variant="outlined" 
-              sx={{ 
-                maxWidth: 300,
-                '& .MuiOutlinedInput-root': {
-                  color: 'white',
-                  '& fieldset': {
-                    borderColor: 'rgba(255,255,255,0.2)',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: 'rgba(255,255,255,0.3)',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: 'primary.main',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(255,255,255,0.7)',
-                },
-                '& .MuiSelect-icon': {
-                  color: 'rgba(255,255,255,0.7)',
-                },
-              }}
-            >
-              <InputLabel>Seleccionar Marca</InputLabel>
-              <Select
-                value={selectedBrand}
-                label="Seleccionar Marca"
-                onChange={(e) => setSelectedBrand(e.target.value)}
-              >
-                {analytics && Object.entries(analytics.brandAnalysis)
-                  .sort((a, b) => b[1].totalScans - a[1].totalScans)
-                  .map(([brand, data]) => (
-                    <MenuItem key={brand} value={brand}>
-                      {brand} ({data.totalScans} análisis)
-                    </MenuItem>
-                  ))
-                }
-              </Select>
-            </FormControl>
+            <Card sx={{ 
+              background: 'rgba(255,255,255,0.02)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+            }}>
+              <CardContent>
+                <Box sx={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  mb: 3
+                }}>
+                  <Box sx={{ 
+                    p: 2,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(45deg, #4169E120, #9400D340)',
+                    color: '#4169E1',
+                  }}>
+                    <AnalyticsIcon sx={{ fontSize: 40 }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ 
+                      color: 'white',
+                      fontWeight: 600,
+                      mb: 0.5
+                    }}>
+                      Resumen del Mercado
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                      Visión general del mercado de coches
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <Box sx={{ textAlign: 'center', p: 2 }}>
+                      <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                        {baseAnalytics?.totalScans.toLocaleString()}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                        Análisis Realizados
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <Box sx={{ textAlign: 'center', p: 2 }}>
+                      <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                        {formatPrice(baseAnalytics?.averageMarketPrice || 0)}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                        Precio Medio
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <Box sx={{ textAlign: 'center', p: 2 }}>
+                      <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                        {baseAnalytics?.totalListingsAnalyzed.toLocaleString()}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                        Anuncios Analizados
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <Box sx={{ textAlign: 'center', p: 2 }}>
+                      <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                        {Object.keys(baseAnalytics?.brands || {}).length}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                        Marcas Analizadas
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </MotionBox>
 
-          {/* Brand Stats */}
-          {brandStats && (
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              sx={{ mb: 4 }}
-            >
-              <Typography 
-                variant="h5" 
-                sx={{ 
-                  mb: 2,
-                  color: 'white',
-                  fontWeight: 600
-                }}
-              >
-                Estadísticas de {selectedBrand}
-              </Typography>
-              <Grid container spacing={2}>
-                {/* Brand Overview Card */}
-                <Grid item xs={12} md={6}>
-                  <Card sx={{ 
-                    background: 'rgba(255,255,255,0.02)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    height: '100%'
-                  }}>
-                    <CardContent>
-                      <Box sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 2,
-                        mb: 3
+          {/* Brand Selection Section */}
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            sx={{ mb: 4 }}
+          >
+            <Card sx={{ 
+              background: 'rgba(255,255,255,0.02)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+            }}>
+              <CardContent>
+                <Box sx={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 2,
+                  mb: 3
+                }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Box sx={{ 
+                      p: 2,
+                      borderRadius: '50%',
+                      background: 'linear-gradient(45deg, #FF408120, #9400D340)',
+                      color: '#FF4081',
+                    }}>
+                      <CarIcon sx={{ fontSize: 40 }} />
+                    </Box>
+                    <Box>
+                      <Typography variant="h6" sx={{ 
+                        color: 'white',
+                        fontWeight: 600,
+                        mb: 0.5
                       }}>
-                        <Box sx={{ 
-                          p: 2,
-                          borderRadius: '50%',
-                          background: 'linear-gradient(45deg, #4169E120, #9400D340)',
-                          color: '#4169E1',
-                        }}>
-                          <CarIcon sx={{ fontSize: 40 }} />
-                        </Box>
-                        <Box>
-                          <Typography variant="h6" sx={{ 
-                            color: 'white',
-                            fontWeight: 600,
-                            mb: 0.5
-                          }}>
-                            Resumen de Marca
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Métricas principales
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Divider sx={{ 
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        my: 2
-                      }} />
-
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {formatPrice(brandStats.averagePrice)}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Precio medio
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {brandStats.totalScans}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Análisis realizados
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {brandStats.totalListings}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Anuncios analizados
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {brandStats.models.length}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Modelos diferentes
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-
-                {/* Models Card */}
-                <Grid item xs={12} md={6}>
-                  <Card sx={{ 
-                    background: 'rgba(255,255,255,0.02)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    height: '100%'
-                  }}>
-                    <CardContent>
-                      <Box sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 2,
-                        mb: 3
-                      }}>
-                        <Box sx={{ 
-                          p: 2,
-                          borderRadius: '50%',
-                          background: 'linear-gradient(45deg, #FF408120, #9400D340)',
-                          color: '#FF4081',
-                        }}>
-                          <AnalyticsIcon sx={{ fontSize: 40 }} />
-                        </Box>
-                        <Box>
-                          <Typography variant="h6" sx={{ 
-                            color: 'white',
-                            fontWeight: 600,
-                            mb: 0.5
-                          }}>
-                            Modelos Analizados
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Distribución por modelo
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Divider sx={{ 
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        my: 2
-                      }} />
-
-                      <Stack direction="row" spacing={1} flexWrap="wrap" gap={1} sx={{ maxHeight: 200, overflowY: 'auto' }}>
-                        {brandStats.models.map((model) => (
-                          <Chip
-                            key={model}
-                            label={model}
-                            sx={{
-                              bgcolor: 'rgba(255,255,255,0.05)',
+                        Análisis por Marca
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                        Selecciona una marca para ver análisis detallado
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <FormControl 
+                    variant="outlined" 
+                    sx={{ 
+                      minWidth: 200,
+                      '& .MuiOutlinedInput-root': {
+                        color: 'white',
+                        '& fieldset': {
+                          borderColor: 'rgba(255,255,255,0.2)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: 'rgba(255,255,255,0.3)',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: 'primary.main',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: 'rgba(255,255,255,0.7)',
+                      },
+                      '& .MuiSelect-icon': {
+                        color: 'rgba(255,255,255,0.7)',
+                      },
+                    }}
+                  >
+                    <InputLabel>Seleccionar Marca</InputLabel>
+                    <Select
+                      value={selectedBrand}
+                      label="Seleccionar Marca"
+                      onChange={(e) => {
+                        e.preventDefault()
+                        const value = e.target.value
+                        setSelectedBrand(value)
+                        setSelectedModel('') // Reset model selection when brand changes
+                        setDataScope(value ? 'brand' : 'all')
+                      }}
+                      disabled={loadingBrand}
+                      MenuProps={{
+                        PaperProps: {
+                          sx: {
+                            bgcolor: 'rgba(0,0,0,0.9)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            '& .MuiMenuItem-root': {
                               color: 'white',
                               '&:hover': {
                                 bgcolor: 'rgba(255,255,255,0.1)',
-                              }
-                            }}
-                          />
-                        ))}
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                              },
+                              '&.Mui-selected': {
+                                bgcolor: 'rgba(65,105,225,0.2)',
+                                '&:hover': {
+                                  bgcolor: 'rgba(65,105,225,0.3)',
+                                },
+                              },
+                            },
+                          },
+                        },
+                      }}
+                    >
+                      <MenuItem value="">Todas las marcas</MenuItem>
+                      {Object.entries(baseAnalytics?.brands || {}).map(([brand]) => (
+                        <MenuItem key={brand} value={brand}>
+                          {brand}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
 
-                {/* Price Distribution Card */}
-                <Grid item xs={12}>
-                  <Card sx={{ 
-                    background: 'rgba(255,255,255,0.02)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                  }}>
-                    <CardContent>
-                      <Box sx={{ 
+                {/* Brand Stats Section - Only show when a brand is selected */}
+                <Collapse in={!!selectedBrand}>
+                  <Box sx={{ position: 'relative' }}>
+                    {loadingBrand && (
+                      <Box sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 2,
-                        mb: 3
+                        justifyContent: 'center',
+                        bgcolor: 'rgba(0,0,0,0.7)',
+                        zIndex: 1,
+                        borderRadius: 1
                       }}>
-                        <Box sx={{ 
-                          p: 2,
-                          borderRadius: '50%',
-                          background: 'linear-gradient(45deg, #00C85320, #4169E140)',
-                          color: '#00C853',
-                        }}>
-                          <LocalOfferIcon sx={{ fontSize: 40 }} />
+                        <CircularProgress />
+                      </Box>
+                    )}
+                    <Grid container spacing={3}>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ textAlign: 'center', p: 2 }}>
+                          <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                            {brandAnalytics?.totalScans.toLocaleString()}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                            Análisis
+                          </Typography>
                         </Box>
-                        <Box>
-                          <Typography variant="h6" sx={{ 
-                            color: 'white',
-                            fontWeight: 600,
-                            mb: 0.5
-                          }}>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ textAlign: 'center', p: 2 }}>
+                          <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                            {formatPrice(brandAnalytics?.averagePrice || 0)}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                            Precio Medio
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ textAlign: 'center', p: 2 }}>
+                          <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                            {brandAnalytics?.totalListings.toLocaleString()}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                            Anuncios
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <Box sx={{ textAlign: 'center', p: 2 }}>
+                          <Typography variant="h4" sx={{ color: 'white', fontWeight: 600 }}>
+                            {Object.keys(brandAnalytics?.models || {}).length}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                            Modelos
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+
+                  {/* Model Selection */}
+                  <Box sx={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 2,
+                    mb: 3
+                  }}>
+                    <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
+                      Modelos de {selectedBrand}
+                    </Typography>
+                    <FormControl 
+                      variant="outlined"
+                      sx={{ 
+                        minWidth: 200,
+                        '& .MuiOutlinedInput-root': {
+                          color: 'white',
+                          '& fieldset': {
+                            borderColor: 'rgba(255,255,255,0.2)',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'rgba(255,255,255,0.3)',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'primary.main',
+                          },
+                        },
+                        '& .MuiInputLabel-root': {
+                          color: 'rgba(255,255,255,0.7)',
+                        },
+                        '& .MuiSelect-icon': {
+                          color: 'rgba(255,255,255,0.7)',
+                        },
+                      }}
+                    >
+                      <InputLabel>Seleccionar Modelo</InputLabel>
+                      <Select
+                        value={selectedModel}
+                        label="Seleccionar Modelo"
+                        onChange={(e) => {
+                          e.preventDefault()
+                          const value = e.target.value
+                          setSelectedModel(value)
+                          setDataScope(value ? 'model' : 'brand')
+                        }}
+                        disabled={!brandAnalytics || loadingModel}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              bgcolor: 'rgba(0,0,0,0.9)',
+                              border: '1px solid rgba(255,255,255,0.1)',
+                              '& .MuiMenuItem-root': {
+                                color: 'white',
+                                '&:hover': {
+                                  bgcolor: 'rgba(255,255,255,0.1)',
+                                },
+                                '&.Mui-selected': {
+                                  bgcolor: 'rgba(65,105,225,0.2)',
+                                  '&:hover': {
+                                    bgcolor: 'rgba(65,105,225,0.3)',
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        }}
+                      >
+                        <MenuItem value="">Todos los modelos</MenuItem>
+                        {brandAnalytics && Object.keys(brandAnalytics.models).map((model) => (
+                          <MenuItem key={model} value={model}>
+                            {model}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    {brandAnalytics && Object.keys(brandAnalytics.models).map((model) => (
+                      <Chip
+                        key={model}
+                        label={`${model} (${brandAnalytics.models[model].totalScans})`}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setSelectedModel(model)
+                          setDataScope('model')
+                        }}
+                        disabled={loadingModel}
+                        sx={{
+                          bgcolor: model === selectedModel ? 'primary.main' : 'rgba(255,255,255,0.05)',
+                          color: 'white',
+                          cursor: 'pointer',
+                          '&:hover': {
+                            bgcolor: model === selectedModel ? 'primary.dark' : 'rgba(255,255,255,0.1)',
+                          }
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </Collapse>
+              </CardContent>
+            </Card>
+          </MotionBox>
+
+          {/* Model Stats Section - Only show when a model is selected */}
+          <Collapse in={!!selectedModel}>
+            <Box sx={{ position: 'relative' }}>
+              {loadingModel && (
+                <Box sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  bgcolor: 'rgba(0,0,0,0.7)',
+                  zIndex: 1,
+                  borderRadius: 1
+                }}>
+                  <CircularProgress />
+                </Box>
+              )}
+              <MotionBox
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                sx={{ mb: 4 }}
+              >
+                <Card sx={{ 
+                  background: 'rgba(255,255,255,0.02)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}>
+                  <CardContent>
+                    <Box sx={{ 
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      mb: 3
+                    }}>
+                      <Box sx={{ 
+                        p: 2,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(45deg, #00C85320, #4169E140)',
+                        color: '#00C853',
+                      }}>
+                        <TimelineIcon sx={{ fontSize: 40 }} />
+                      </Box>
+                      <Box>
+                        <Typography variant="h6" sx={{ 
+                          color: 'white',
+                          fontWeight: 600,
+                          mb: 0.5
+                        }}>
+                          Análisis de {selectedBrand} {selectedModel}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                          Estadísticas detalladas del modelo
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Grid container spacing={3}>
+                      <Grid item xs={12} md={6}>
+                        <Box sx={{ p: 2 }}>
+                          <Typography variant="subtitle1" sx={{ color: 'white', mb: 2 }}>
                             Distribución de Precios
                           </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Análisis de precios para {selectedBrand}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Divider sx={{ 
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        my: 2
-                      }} />
-
-                      <Box sx={{ 
-                        display: 'flex', 
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        flexWrap: 'wrap',
-                        gap: 2
-                      }}>
-                        <Box>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {formatPrice(brandStats.averagePrice)}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Precio medio
-                          </Typography>
-                        </Box>
-                        <Box>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {formatPrice(Math.min(...brandStats.models.map(() => brandStats.averagePrice * 0.8)))}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Precio mínimo
-                          </Typography>
-                        </Box>
-                        <Box>
-                          <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                            {formatPrice(Math.max(...brandStats.models.map(() => brandStats.averagePrice * 1.2)))}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Precio máximo
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-
-                {/* Price Distribution Graph Card */}
-                <Grid item xs={12}>
-                  <Card sx={{ 
-                    background: 'rgba(255,255,255,0.02)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                  }}>
-                    <CardContent>
-                      <Box sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        mb: 3
-                      }}>
-                        <Box sx={{ 
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 2,
-                        }}>
-                          <Box sx={{ 
-                            p: 2,
-                            borderRadius: '50%',
-                            background: 'linear-gradient(45deg, #FF408120, #4169E140)',
-                            color: '#FF4081',
-                          }}>
-                            <TimelineIcon sx={{ fontSize: 40 }} />
-                          </Box>
-                          <Box>
-                            <Typography variant="h6" sx={{ 
-                              color: 'white',
-                              fontWeight: 600,
-                              mb: 0.5
-                            }}>
-                              Distribución de Precios por Año
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                              Análisis detallado de rangos de precio
-                            </Typography>
+                          <Box sx={{ height: 300 }}>
+                            <ResponsiveContainer>
+                              <BarChart
+                                data={getPriceDistributionData(modelAnalytics || null)}
+                                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <XAxis dataKey="range" stroke="rgba(255,255,255,0.5)" />
+                                <YAxis stroke="rgba(255,255,255,0.5)" />
+                                <Tooltip
+                                  contentStyle={{
+                                    background: 'rgba(0,0,0,0.8)',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    borderRadius: '4px',
+                                    color: 'white'
+                                  }}
+                                />
+                                <Bar dataKey="count" fill="#00C853" radius={[4, 4, 0, 0]} />
+                              </BarChart>
+                            </ResponsiveContainer>
                           </Box>
                         </Box>
-                        <FormControl 
-                          variant="outlined" 
-                          size="small"
-                          sx={{ 
-                            minWidth: 120,
-                            '& .MuiOutlinedInput-root': {
-                              color: 'white',
-                              '& fieldset': {
-                                borderColor: 'rgba(255,255,255,0.2)',
-                              },
-                              '&:hover fieldset': {
-                                borderColor: 'rgba(255,255,255,0.3)',
-                              },
-                              '&.Mui-focused fieldset': {
-                                borderColor: 'primary.main',
-                              },
-                            },
-                            '& .MuiInputLabel-root': {
-                              color: 'rgba(255,255,255,0.7)',
-                            },
-                            '& .MuiSelect-icon': {
-                              color: 'rgba(255,255,255,0.7)',
-                            },
-                          }}
-                        >
-                          <InputLabel>Año</InputLabel>
-                          <Select
-                            value={selectedYear}
-                            label="Año"
-                            onChange={(e) => setSelectedYear(e.target.value)}
-                          >
-                            <MenuItem value="all">Todos</MenuItem>
-                            {getAvailableYears(brandStats).map((year) => (
-                              <MenuItem key={year} value={year}>
-                                {year}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Box>
-
-                      <Divider sx={{ 
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        my: 2
-                      }} />
-
-                      <Box sx={{ width: '100%', height: 300 }}>
-                        <ResponsiveContainer>
-                          <BarChart
-                            data={getPriceDistributionData(brandStats)}
-                            margin={{
-                              top: 20,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
-                            <CartesianGrid 
-                              strokeDasharray="3 3" 
-                              stroke="rgba(255,255,255,0.1)"
-                            />
-                            <XAxis 
-                              dataKey="range"
-                              stroke="rgba(255,255,255,0.5)"
-                              tick={{ fill: 'rgba(255,255,255,0.5)' }}
-                            />
-                            <YAxis 
-                              stroke="rgba(255,255,255,0.5)"
-                              tick={{ fill: 'rgba(255,255,255,0.5)' }}
-                            />
-                            <Tooltip
-                              contentStyle={{
-                                background: 'rgba(0,0,0,0.8)',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                borderRadius: '4px',
-                                color: 'white'
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <Box sx={{ p: 2 }}>
+                          <Typography variant="subtitle1" sx={{ color: 'white', mb: 2 }}>
+                            Rango de Años
+                          </Typography>
+                          <Box sx={{ px: 3, pt: 2, pb: 4 }}>
+                            <Slider
+                              value={yearRange}
+                              onChange={(_, newValue) => setYearRange(newValue as [number, number])}
+                              min={availableYears[0]}
+                              max={availableYears[1]}
+                              step={1}
+                              marks={[
+                                { value: availableYears[0], label: availableYears[0].toString() },
+                                { value: availableYears[1], label: availableYears[1].toString() }
+                              ]}
+                              valueLabelDisplay="on"
+                              sx={{
+                                '& .MuiSlider-rail': {
+                                  backgroundColor: 'rgba(255,255,255,0.1)',
+                                },
+                                '& .MuiSlider-track': {
+                                  backgroundColor: '#4169E1',
+                                },
+                                '& .MuiSlider-thumb': {
+                                  backgroundColor: '#4169E1',
+                                  '&:hover, &.Mui-focusVisible': {
+                                    boxShadow: '0 0 0 8px rgba(65,105,225,0.16)',
+                                  },
+                                },
+                                '& .MuiSlider-valueLabel': {
+                                  backgroundColor: '#4169E1',
+                                },
+                                '& .MuiSlider-mark': {
+                                  backgroundColor: 'rgba(255,255,255,0.3)',
+                                },
+                                '& .MuiSlider-markLabel': {
+                                  color: 'rgba(255,255,255,0.5)',
+                                },
                               }}
                             />
-                            <Bar 
-                              dataKey="count" 
-                              fill="#4169E1"
-                              radius={[4, 4, 0, 0]}
-                            />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-            </MotionBox>
-          )}
+                          </Box>
+                          <Box sx={{ height: 250 }}>
+                            <ResponsiveContainer>
+                              <BarChart
+                                data={getPriceDistributionData(modelAnalytics || null)}
+                                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <XAxis dataKey="range" stroke="rgba(255,255,255,0.5)" />
+                                <YAxis stroke="rgba(255,255,255,0.5)" />
+                                <Tooltip
+                                  contentStyle={{
+                                    background: 'rgba(0,0,0,0.8)',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    borderRadius: '4px',
+                                    color: 'white'
+                                  }}
+                                />
+                                <Bar dataKey="count" fill="#4169E1" radius={[4, 4, 0, 0]} />
+                              </BarChart>
+                            </ResponsiveContainer>
+                          </Box>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </MotionBox>
+            </Box>
+          </Collapse>
 
           {/* Global Stats */}
           <Grid container spacing={3}>
-            {analytics && [
+            {baseAnalytics && [
               {
                 title: 'Modo Rápido',
                 description: 'Análisis automático de oportunidades en tiempo real',
                 icon: <FlashOnIcon sx={{ fontSize: 40 }} />,
                 color: '#FF4081',
                 stats: [
-                  { label: 'Análisis realizados', value: analytics.totalScans.toString() },
-                  { label: 'Anuncios analizados', value: analytics.totalListingsAnalyzed.toLocaleString() },
-                  { label: 'Tasa de validez', value: `${analytics.validListingsPercentage.toFixed(1)}%` },
+                  { label: 'Análisis realizados', value: baseAnalytics.totalScans.toString() },
+                  { label: 'Anuncios analizados', value: baseAnalytics.totalListingsAnalyzed.toLocaleString() },
+                  { label: 'Tasa de validez', value: `${baseAnalytics.validListingsPercentage.toFixed(1)}%` },
                 ],
                 link: '/app/mercado/modo-rapido'
               },
@@ -782,9 +966,9 @@ export default function MercadoPage() {
                 icon: <TrendingUpIcon sx={{ fontSize: 40 }} />,
                 color: '#4169E1',
                 stats: [
-                  { label: 'Precio medio', value: formatPrice(analytics.averageMarketPrice) },
-                  { label: 'Precio mediano', value: formatPrice(analytics.medianMarketPrice) },
-                  { label: 'Última actualización', value: formatDate(analytics.lastUpdate) },
+                  { label: 'Precio medio', value: formatPrice(baseAnalytics.averageMarketPrice) },
+                  { label: 'Precio mediano', value: formatPrice(baseAnalytics.medianMarketPrice) },
+                  { label: 'Última actualización', value: formatDate(baseAnalytics.lastUpdate) },
                 ]
               },
               {
@@ -793,9 +977,9 @@ export default function MercadoPage() {
                 icon: <LocalOfferIcon sx={{ fontSize: 40 }} />,
                 color: '#00C853',
                 stats: [
-                  { label: 'Menos de 10k', value: `${analytics.priceRanges.under5k + analytics.priceRanges['5kTo10k']} coches` },
-                  { label: '10k - 30k', value: `${analytics.priceRanges['10kTo20k'] + analytics.priceRanges['20kTo30k']} coches` },
-                  { label: 'Más de 30k', value: `${analytics.priceRanges['30kTo50k'] + analytics.priceRanges.over50k} coches` },
+                  { label: 'Menos de 10k', value: `${baseAnalytics.priceRanges.under5k + baseAnalytics.priceRanges['5kTo10k']} coches` },
+                  { label: '10k - 30k', value: `${baseAnalytics.priceRanges['10kTo20k'] + baseAnalytics.priceRanges['20kTo30k']} coches` },
+                  { label: 'Más de 30k', value: `${baseAnalytics.priceRanges['30kTo50k'] + baseAnalytics.priceRanges.over50k} coches` },
                 ]
               },
               {
@@ -803,7 +987,7 @@ export default function MercadoPage() {
                 description: 'Distribución por tipo de combustible',
                 icon: <FuelIcon sx={{ fontSize: 40 }} />,
                 color: '#FFB300',
-                stats: Object.entries(analytics.fuelTypeDistribution)
+                stats: Object.entries(baseAnalytics.fuelTypeDistribution)
                   .sort((a, b) => b[1] - a[1])
                   .slice(0, 3)
                   .map(([type, count]) => ({
@@ -816,7 +1000,7 @@ export default function MercadoPage() {
                 description: 'Análisis de rangos de año más buscados',
                 icon: <CalendarIcon sx={{ fontSize: 40 }} />,
                 color: '#FF5722',
-                stats: Object.entries(analytics.yearDistribution)
+                stats: Object.entries(baseAnalytics.yearDistribution)
                   .sort((a, b) => b[1] - a[1])
                   .slice(0, 3)
                   .map(([range, count]) => ({

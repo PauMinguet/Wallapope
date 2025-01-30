@@ -101,3 +101,48 @@ export async function POST(request: NextRequest) {
     return new NextResponse('Error updating alert', { status: 500 })
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { userId } = getAuth(request)
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 })
+    }
+
+    const id = request.nextUrl.pathname.split('/').pop()
+
+    // First get the user's data from Supabase
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('clerk_id', userId)
+      .single()
+
+    if (userError) throw userError
+    if (!userData) throw new Error('User not found')
+
+    // Verify the alert belongs to the user
+    const { data: existingAlert, error: alertError } = await supabase
+      .from('alertas')
+      .select('user_id')
+      .eq('id', id)
+      .single()
+
+    if (alertError) throw alertError
+    if (!existingAlert) return new NextResponse('Alert not found', { status: 404 })
+    if (existingAlert.user_id !== userData.id) return new NextResponse('Unauthorized', { status: 403 })
+
+    // Delete the alert
+    const { error: deleteError } = await supabase
+      .from('alertas')
+      .delete()
+      .eq('id', id)
+
+    if (deleteError) throw deleteError
+
+    return new NextResponse(null, { status: 204 })
+  } catch (error) {
+    console.error('Error deleting alert:', error)
+    return new NextResponse('Error deleting alert', { status: 500 })
+  }
+}

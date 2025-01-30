@@ -19,6 +19,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  IconButton,
+  Popover,
 } from '@mui/material'
 import { 
   Add as AddIcon, 
@@ -41,7 +43,24 @@ import { getCurrentUser } from '@/lib/db'
 import { useSubscription } from '@/hooks/useSubscription'
 import AlertDialogComponent from '../../components/AlertDialog'
 import Footer from '../../components/Footer'
+import dynamic from 'next/dynamic'
 
+const MapComponent = dynamic(() => import('../../components/MapComponent'), {
+  ssr: false,
+  loading: () => (
+    <Box sx={{ 
+      width: '100%', 
+      height: 300, 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      bgcolor: 'rgba(255,255,255,0.05)',
+      borderRadius: 2
+    }}>
+      <CircularProgress sx={{ color: 'white' }} />
+    </Box>
+  )
+})
 
 interface Brand {
   id: number
@@ -146,6 +165,7 @@ export default function AlertasPage() {
   const [ , setLocationError] = useState<string | null>(null)
   const [ , setUserData] = useState<{ id: string } | null>(null)
   const [editingAlert, setEditingAlert] = useState<Alert | null>(null)
+  const [mapAnchorEl, setMapAnchorEl] = useState<HTMLElement | null>(null)
 
   // Handle subscription check and redirect
   useEffect(() => {
@@ -197,18 +217,21 @@ export default function AlertasPage() {
     const loadUserLocation = async () => {
       if (!isSignedIn || !isDialogOpen || editingAlert) return
 
-      // Try to get location from localStorage first
-      const cachedLocation = localStorage.getItem(LOCATION_STORAGE_KEY)
-      if (cachedLocation) {
-        const data = JSON.parse(cachedLocation)
-        setFormData(prev => ({
-          ...prev,
-          latitude: data.latitude,
-          longitude: data.longitude,
-          location_text: `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`,
-          distance: data.distance || 100
-        }))
-        return
+      // Only access localStorage on the client side
+      if (typeof window !== 'undefined') {
+        // Try to get location from localStorage first
+        const cachedLocation = localStorage.getItem(LOCATION_STORAGE_KEY)
+        if (cachedLocation) {
+          const data = JSON.parse(cachedLocation)
+          setFormData(prev => ({
+            ...prev,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            location_text: `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`,
+            distance: data.distance || 100
+          }))
+          return
+        }
       }
 
       // If not in localStorage, fetch from API
@@ -218,8 +241,10 @@ export default function AlertasPage() {
         
         const data = await response.json()
         if (data.latitude && data.longitude) {
-          // Save to localStorage for future use
-          localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(data))
+          // Save to localStorage only on the client side
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(data))
+          }
           
           setFormData(prev => ({
             ...prev,
@@ -490,17 +515,55 @@ export default function AlertasPage() {
                           height: '100%'
                         }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <Skeleton variant="circular" width={24} height={24} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} />
-                            <Skeleton variant="text" width={100} height={24} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} />
+                            <Place sx={{ color: 'white' }} />
+                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
+                              Ubicación
+                            </Typography>
                           </Box>
-                          <Stack spacing={1.5}>
-                            {[1, 2].map((item) => (
-                              <Box key={item} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Skeleton variant="circular" width={20} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} />
-                                <Skeleton variant="text" width={140} height={24} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} />
-                              </Box>
+                          <Grid container spacing={2}>
+                            {alerts.map((alert) => (
+                              <Grid item xs={12} key={alert.id}>
+                                <Box sx={{ 
+                                  display: 'flex', 
+                                  alignItems: 'center', 
+                                  gap: 1,
+                                  bgcolor: 'rgba(255,255,255,0.05)',
+                                  borderRadius: 2,
+                                  p: 1,
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s ease',
+                                  '&:hover': {
+                                    bgcolor: 'rgba(255,255,255,0.08)',
+                                  }
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const element = e.currentTarget;
+                                  element.setAttribute('data-location', JSON.stringify([alert.latitude, alert.longitude]));
+                                  element.setAttribute('data-distance', alert.distance.toString());
+                                  setMapAnchorEl(element);
+                                }}
+                                >
+                                  <Place sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography sx={{ color: 'white', flex: 1 }}>
+                                    {alert.location_text}
+                                  </Typography>
+                                  <IconButton 
+                                    size="small"
+                                    sx={{ 
+                                      color: 'rgba(255,255,255,0.7)',
+                                      '&:hover': {
+                                        color: 'white',
+                                        bgcolor: 'rgba(255,255,255,0.1)'
+                                      }
+                                    }}
+                                  >
+                                    <LocationOn />
+                                  </IconButton>
+                                </Box>
+                              </Grid>
                             ))}
-                          </Stack>
+                          </Grid>
                         </Box>
                       </Grid>
                     </Grid>
@@ -699,22 +762,36 @@ export default function AlertasPage() {
                           p: 2, 
                           bgcolor: 'rgba(255,255,255,0.05)',
                           borderRadius: 1,
-                          height: '100%'
+                          height: '100%',
                         }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <Place sx={{ color: 'white' }} />
-                            <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
-                              Ubicación
-                            </Typography>
-                          </Box>
                           <Grid container spacing={2}>
                             {alert.location_text && (
                               <Grid item xs={12}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                  <LocationOn sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
-                                  <Typography sx={{ color: 'white' }}>
-                                    {alert.location_text}
-                                  </Typography>
+                                <Box sx={{ 
+                                  display: 'flex', 
+                                  alignItems: 'center', 
+                                  gap: 1,
+                                  bgcolor: 'rgba(255,255,255,0.05)',
+                                  borderRadius: 2,
+                                  p: 1,
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s ease',
+                                  '&:hover': {
+                                    bgcolor: 'rgba(255,255,255,0.08)',
+                                  }
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const element = e.currentTarget;
+                                  element.setAttribute('data-location', JSON.stringify([alert.latitude, alert.longitude]));
+                                  element.setAttribute('data-distance', alert.distance.toString());
+                                  setMapAnchorEl(element);
+                                }}
+                                >
+                                  <Place sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20 }} />
+                                  <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
+                              Ubicación
+                            </Typography>
                                 </Box>
                               </Grid>
                             )}
@@ -738,7 +815,7 @@ export default function AlertasPage() {
                       {alert.email_notifications && (
                         <Chip 
                           icon={<Email sx={{ color: 'white !important' }} />}
-                          label={`Resultados por email cada día a las ${new Date(alert.created_at).getHours().toString().padStart(2, '0')}:00`}
+                          label={`Resultados por email cada 24 horas`}
                           size="small"
                           sx={{
                             background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
@@ -894,6 +971,40 @@ export default function AlertasPage() {
             </Button>
           </DialogActions>
         </Dialog>
+
+        {/* Map Popover */}
+        <Popover
+          open={Boolean(mapAnchorEl)}
+          anchorEl={mapAnchorEl}
+          onClose={() => setMapAnchorEl(null)}
+          anchorOrigin={{
+            vertical: 'center',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'center',
+            horizontal: 'left',
+          }}
+          sx={{
+            '& .MuiPopover-paper': {
+              bgcolor: 'rgba(0,0,0,0.9)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 2,
+              overflow: 'hidden',
+              width: 400,
+              height: 300
+            }
+          }}
+        >
+          <Box sx={{ height: 300 }}>
+            <MapComponent
+              center={[mapAnchorEl ? Number(JSON.parse(mapAnchorEl.getAttribute('data-location') || '[]')[0]) : 0, 
+                      mapAnchorEl ? Number(JSON.parse(mapAnchorEl.getAttribute('data-location') || '[]')[1]) : 0]}
+              distance={mapAnchorEl ? Number(mapAnchorEl.getAttribute('data-distance')) : 0}
+            />
+          </Box>
+        </Popover>
       </Container>
     </Box>
     <Footer />
