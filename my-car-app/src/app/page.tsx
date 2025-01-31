@@ -173,6 +173,29 @@ export default function HomePage() {
 
       const data = await response.json()
       setQuickSearchResults(data)
+
+      // Track the quick search
+      try {
+        await fetch('/api/quick-search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            selectedModel: prevModel,
+            selectedYear: year,
+            resultsCount: data.listings?.length || 0,
+            marketData: data.market_data,
+            location: {
+              latitude: searchParams.latitude,
+              longitude: searchParams.longitude
+            }
+          })
+        })
+      } catch (trackingError) {
+        // Silently handle tracking errors - don't affect the user experience
+        console.error('Error tracking quick search:', trackingError)
+      }
     } catch (error) {
       console.error('Error performing quick search:', error)
       setQuickSearchError('Error en la búsqueda rápida')
