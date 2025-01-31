@@ -8,6 +8,7 @@ import {
   Button, 
   Stack,
   useTheme,
+  Tooltip,
 } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
@@ -23,7 +24,9 @@ import {
   Notifications as NotificationsIcon,
   Menu as MenuIcon,
   Analytics as AnalyticsIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material'
+import { useSubscription } from '@/hooks/useSubscription'
 
 export default function TopBar() {
   const router = useRouter()
@@ -31,6 +34,7 @@ export default function TopBar() {
   const { isSignedIn } = useUser()
   const [isMobileView, setIsMobileView] = useState(false)
   const theme = useTheme()
+  const { isSubscribed } = useSubscription('pro')
   
   useEffect(() => {
     const checkMobile = () => {
@@ -58,6 +62,12 @@ export default function TopBar() {
       href: '/app/mercado', 
       icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />
     },
+    {
+      label: 'Búsqueda',
+      href: '/app/search',
+      icon: <SearchIcon sx={{ fontSize: '1.2rem' }} />,
+      requiresSubscription: true
+    },
     { 
       label: 'Alertas', 
       href: '/app/alertas', 
@@ -69,6 +79,14 @@ export default function TopBar() {
       icon: <Settings sx={{ fontSize: '1.2rem' }} />
     }
   ]
+
+  const handleNavigation = (section: typeof sections[0]) => {
+    if (section.requiresSubscription && !isSubscribed) {
+      router.push('/app/ajustes?upgrade=true')
+      return
+    }
+    router.push(section.href)
+  }
 
   return (
     <Box
@@ -153,23 +171,34 @@ export default function TopBar() {
                   }
                 }}>
                   {sections.map((section) => (
-                    <Button
+                    <Tooltip 
                       key={section.href}
-                      className={pathname === section.href ? 'active' : ''}
-                      onClick={() => router.push(section.href)}
-                      startIcon={!isMobileView ? section.icon : undefined}
-                      sx={{
-                        '& .MuiButton-startIcon': {
-                          margin: { xs: 0, md: '0 8px 0 -4px' }
-                        }
-                      }}
+                      title={section.requiresSubscription && !isSubscribed ? "Requiere suscripción Pro" : ""}
+                      arrow
                     >
-                      {isMobileView ? (
-                        section.icon
-                      ) : (
-                        section.label
-                      )}
-                    </Button>
+                      <Button
+                        className={pathname === section.href ? 'active' : ''}
+                        onClick={() => handleNavigation(section)}
+                        startIcon={!isMobileView ? section.icon : undefined}
+                        sx={{
+                          '& .MuiButton-startIcon': {
+                            margin: { xs: 0, md: '0 8px 0 -4px' }
+                          },
+                          ...(section.requiresSubscription && !isSubscribed && {
+                            opacity: 0.6,
+                            '&:hover': {
+                              opacity: 0.8
+                            }
+                          })
+                        }}
+                      >
+                        {isMobileView ? (
+                          section.icon
+                        ) : (
+                          section.label
+                        )}
+                      </Button>
+                    </Tooltip>
                   ))}
                 </Box>
 

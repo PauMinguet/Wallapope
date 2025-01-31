@@ -48,7 +48,7 @@ interface ListingsGridProps {
 const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoResults, sx, simplified = false }) => {
   if (loading) {
     return (
-      <Grid container spacing={3} sx={sx}>
+      <Grid container spacing={3} sx={sx} key="loading-grid">
         {[...Array(6)].map((_, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <ListingSkeleton />
@@ -76,7 +76,7 @@ const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoRe
   }
 
   return (
-    <Grid container spacing={3} sx={sx}>
+    <Grid container spacing={3} sx={sx} key="results-grid">
       {listings.map((listing, index) => (
         <Grid item xs={12} sm={6} md={4} key={listing.id}>
           <Box sx={{
@@ -199,28 +199,28 @@ const ListingsGrid: React.FC<ListingsGridProps> = ({ listings, loading, showNoRe
                   </Box>
                 </Box>
                 <Grid container spacing={1} sx={{ mb: 2 }}>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} key="year">
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Año</Typography>
                     <Typography variant="body2" sx={{ color: 'white' }}>{listing.year}</Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} key="kilometers">
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>KM</Typography>
                     <Typography variant="body2" sx={{ color: 'white' }}>{listing.kilometers?.toLocaleString() || 'N/D'}</Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} key="horsepower">
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Potencia</Typography>
                     <Typography variant="body2" sx={{ color: 'white' }}>{listing.horsepower ? `${listing.horsepower} CV` : 'N/D'}</Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} key="fuel">
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Motor</Typography>
                     <Typography variant="body2" sx={{ color: 'white' }}>{listing.fuel_type || 'N/D'}</Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} key="transmission">
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Cambio</Typography>
                     <Typography variant="body2" sx={{ color: 'white' }}>{listing.transmission || 'N/D'}</Typography>
                   </Grid>
                   {!simplified && (
-                    <Grid item xs={4}>
+                    <Grid item xs={4} key="distance">
                       <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Distancia</Typography>
                       <Typography variant="body2" sx={{ color: 'white' }}>{listing.distance ? `${listing.distance} km` : 'N/D'}</Typography>
                     </Grid>

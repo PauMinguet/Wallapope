@@ -23,17 +23,17 @@ import {
 } from '@mui/material'
 import {MyLocation } from '@mui/icons-material'
 import 'leaflet/dist/leaflet.css'
-import TopBar from '../components/TopBar'
-import ListingsGrid from '../components/ListingsGrid'
+import TopBar from '../../components/TopBar'
+import ListingsGrid from '../../components/ListingsGrid'
 import { useUser, SignIn } from '@clerk/nextjs'
 import { useSubscription } from '@/hooks/useSubscription'
-import Footer from '../components/Footer'
+import Footer from '../../components/Footer'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:10000'
 
 // Move MapComponent dynamic import to the top
 const MapComponent = dynamic(
-  () => import('../components/MapComponent'),
+  () => import('../../components/MapComponent'),
   { 
     ssr: false,
     loading: () => null
@@ -57,46 +57,6 @@ interface Model {
   nome: string
 }
 
-interface ApiImage {
-  original: string
-  large: string
-  medium: string
-  small: string
-  xsmall: string
-  xlarge: string
-  original_width: number
-  original_height: number
-}
-
-interface ApiLocation {
-  postal_code: string
-  city: string
-  country_code: string
-}
-
-interface ApiListingContent {
-  id: string
-  title: string
-  storytelling: string
-  price: number
-  currency: string
-  web_slug: string
-  year: number
-  km: number
-  engine: string
-  gearbox: string
-  horsepower: number
-  distance: number
-  images: ApiImage[]
-  location: ApiLocation
-}
-
-interface ApiListing {
-  id: string
-  type: string
-  content: ApiListingContent
-}
-
 interface SearchFormData {
   brand: string
   model: string
@@ -113,29 +73,30 @@ interface SearchFormData {
   max_kilometers: number
 }
 
-interface SearchResult {
-  listings: Array<{
-    id: string
-    title: string
-    price: number
-    price_text: string
-    market_price: number
-    market_price_text: string
-    price_difference: number
-    price_difference_percentage: string
-    location: string
-    year: number
-    kilometers: number
-    fuel_type: string
-    transmission: string
-    url: string
-    horsepower: number
-    distance: number
-    listing_images: Array<{
-      image_url: string
-    }>
+interface Listing {
+  id: string
+  title: string
+  price: number
+  price_text: string
+  market_price: number
+  market_price_text: string
+  price_difference: number
+  price_difference_percentage: string
+  location: string
+  year: number
+  kilometers: number
+  fuel_type: string
+  transmission: string
+  url: string
+  horsepower: number
+  distance: number
+  listing_images: Array<{
+    image_url: string
   }>
-  suggested_listings?: Array<ApiListing>
+}
+
+interface SearchResult {
+  listings: Listing[]
   market_data?: {
     average_price: number
     average_price_text: string
@@ -148,11 +109,12 @@ interface SearchResult {
     total_listings: number
     valid_listings: number
   }
+  market_search_url?: string
+  search_url?: string
   filtered_results: number
   total_results: number
   success: boolean
   search_parameters: Record<string, string>
-  url: string
 }
 
 const initialFormData: SearchFormData = {
@@ -204,78 +166,6 @@ const kilometerMarks = [
   { value: 240000, label: 'No limit' }
 ]
 
-type SuggestionCategory = {
-  listings: ApiListing[];
-  label: string;
-};
-
-// Add interface for search parameters
-interface SearchParameters {
-  max_kilometers?: number;
-  min_year?: number;
-  distance?: number;
-}
-
-function categorizeSuggestedListings(
-  suggestedListings: ApiListing[],
-  originalParams: SearchParameters
-): Record<string, SuggestionCategory> {
-  const categories: Record<string, SuggestionCategory> = {};
-  
-  suggestedListings.forEach(listing => {
-    const content = listing.content;
-    
-    // Check for higher kilometers
-    if (originalParams.max_kilometers && content.km > originalParams.max_kilometers) {
-      if (!categories.kilometers) {
-        categories.kilometers = {
-          listings: [],
-          label: 'resultados más con 10% más kms'
-        };
-      }
-      categories.kilometers.listings.push(listing);
-    }
-    
-    // Check for older year
-    if (originalParams.min_year && content.year < originalParams.min_year) {
-      if (!categories.year) {
-        categories.year = {
-          listings: [],
-          label: `resultados más del ${content.year}`
-        };
-      }
-      categories.year.listings.push(listing);
-    }
-    
-    // Check for greater distance
-    const listingDistance = content.distance / 1000; // Convert to km
-    if (originalParams.distance && listingDistance > originalParams.distance) {
-      if (!categories.distance) {
-        categories.distance = {
-          listings: [],
-          label: 'resultados más a mayor distancia'
-        };
-      }
-      categories.distance.listings.push(listing);
-    }
-  });
-  
-  // Update labels with correct counts
-  if (categories.kilometers) {
-    categories.kilometers.label = `${categories.kilometers.listings.length} ${categories.kilometers.label}`;
-  }
-  if (categories.year) {
-    categories.year.label = `${categories.year.listings.length} ${categories.year.label}`;
-  }
-  if (categories.distance && originalParams.distance) {
-    const maxDistance = Math.max(...categories.distance.listings.map(l => l.content.distance / 1000));
-    const extraDistance = Math.round(maxDistance - originalParams.distance);
-    categories.distance.label = `${categories.distance.listings.length} resultados más a ${extraDistance}km más de distancia`;
-  }
-  
-  return categories;
-}
-
 const STORAGE_KEY = 'carSearchFormData'
 
 export default function SearchPage() {
@@ -305,18 +195,66 @@ export default function SearchPage() {
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
   const [locationError, setLocationError] = useState<string | null>(null)
-  const [selectedSuggestionCategory, setSelectedSuggestionCategory] = useState<string | null>(null)
-  const [suggestionCategories, setSuggestionCategories] = useState<Record<string, SuggestionCategory>>({})
   const { isSignedIn } = useUser()
   const [showSignIn, setShowSignIn] = useState(false)
   const [hasAttemptedSearch, setHasAttemptedSearch] = useState(false)
+  const [loadingLocation, setLoadingLocation] = useState(false)
 
-  // Save form data whenever it changes
+  // Load user's location on mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
+    const loadUserLocation = async () => {
+      if (!isSignedIn) return
+
+      setLoadingLocation(true)
+      try {
+        const response = await fetch('/api/user/location')
+        if (!response.ok) throw new Error('Failed to fetch location')
+        
+        const data = await response.json()
+        if (data.latitude && data.longitude) {
+          setFormData(prev => ({
+            ...prev,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            location_text: `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`,
+            distance: data.distance || 100
+          }))
+        }
+      } catch (error) {
+        console.error('Error loading location:', error)
+        setLocationError('Error cargando la ubicación')
+      } finally {
+        setLoadingLocation(false)
+      }
     }
-  }, [formData])
+
+    loadUserLocation()
+  }, [isSignedIn])
+
+  // Save location when it changes
+  useEffect(() => {
+    if (!isSignedIn || !formData.latitude || !formData.longitude) return
+
+    const saveLocation = async () => {
+      try {
+        await fetch('/api/user/location', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            latitude: formData.latitude,
+            longitude: formData.longitude,
+            distance: formData.distance
+          })
+        })
+      } catch (error) {
+        console.error('Error saving location:', error)
+      }
+    }
+
+    saveLocation()
+  }, [isSignedIn, formData.latitude, formData.longitude, formData.distance])
 
   const fetchModels = useCallback(async (brandId: string) => {
     setLoadingModels(true)
@@ -446,16 +384,20 @@ export default function SearchPage() {
         min_year: formData.min_year ? parseInt(formData.min_year) : undefined,
         max_year: formData.max_year ? parseInt(formData.max_year) : undefined,
         min_horse_power: formData.min_horse_power ? parseInt(formData.min_horse_power) : undefined,
-        max_kilometers: formData.max_kilometers
+        max_kilometers: formData.max_kilometers,
+        min_sale_price: 3000,
+        order_by: 'price_low_to_high'
       }
 
       const cleanParams = Object.fromEntries(
-        Object.entries(searchParams).filter(([, value]) => 
-          value !== '' && 
-          value !== undefined && 
-          value !== null
-        )
-      )
+        Object.entries(searchParams)
+          .filter(([, value]) => 
+            value !== '' && 
+            value !== undefined && 
+            value !== null
+          )
+          .map(([key, value]) => [key, String(value)])
+      ) as Record<string, string>
 
       const response = await fetch(`${BACKEND_URL}/api/search-single-car`, {
         method: 'POST',
@@ -465,59 +407,41 @@ export default function SearchPage() {
         body: JSON.stringify(cleanParams)
       })
 
+      if (!response.ok) {
+        throw new Error('Search failed')
+      }
+
       const data = await response.json()
       
       if (data.error) {
-        setError(data.error)
-      } else {
-        // Transform the listings to match our frontend format
-        const marketData = data.market_data || {}
-        const marketPrice = marketData.average_price || 0
-        
-        const transformedData = {
-          ...data,
-          listings: data.listings.map((listing: ApiListing) => {
-            const price = listing.content.price
-            const priceDifference = marketPrice - price
-            const differencePercentage = (priceDifference / marketPrice) * 100
-
-            return {
-              id: listing.id,
-              title: listing.content.title,
-              description: listing.content.storytelling,
-              price: price,
-              price_text: formatPrice(price),
-              market_price: marketPrice,
-              market_price_text: formatPrice(marketPrice),
-              price_difference: priceDifference,
-              price_difference_percentage: `${Math.abs(differencePercentage).toFixed(1)}%`,
-              location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-              year: listing.content.year,
-              kilometers: listing.content.km,
-              fuel_type: listing.content.engine,
-              transmission: listing.content.gearbox,
-              url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-              horsepower: listing.content.horsepower,
-              distance: listing.content.distance / 1000, // Convert to km
-              listing_images: listing.content.images.map((img: ApiImage) => ({
-                image_url: img.large || img.original
-              }))
-            }
-          }),
-          market_data: marketData ? {
-            average_price: marketData.average_price || 0,
-            average_price_text: formatPrice(marketData.average_price || 0),
-            median_price: marketData.median_price || 0,
-            median_price_text: formatPrice(marketData.median_price || 0),
-            min_price: marketData.min_price || 0,
-            min_price_text: formatPrice(marketData.min_price || 0),
-            max_price: marketData.max_price || 0,
-            max_price_text: formatPrice(marketData.max_price || 0),
-            total_listings: marketData.total_listings || 0,
-            valid_listings: marketData.valid_listings || 0
-          } : undefined
+        if (data.error === 'Could not determine market price') {
+          setError(`No se encontraron suficientes datos de mercado para determinar el precio de referencia con estos parámetros.\nPrueba a ampliar el rango de búsqueda (años, kilómetros o distancia) para obtener más resultados.`)
+        } else {
+          setError(data.error)
         }
-        
+      } else {
+        // Transform the data to match our frontend format
+        const transformedData = {
+          listings: data.listings,
+          market_data: data.market_data ? {
+            average_price: data.market_data.average_price,
+            average_price_text: formatPrice(data.market_data.average_price),
+            median_price: data.market_data.median_price,
+            median_price_text: formatPrice(data.market_data.median_price),
+            min_price: data.market_data.min_price,
+            min_price_text: formatPrice(data.market_data.min_price),
+            max_price: data.market_data.max_price,
+            max_price_text: formatPrice(data.market_data.max_price),
+            total_listings: data.market_data.total_listings,
+            valid_listings: data.market_data.valid_listings
+          } : undefined,
+          market_search_url: data.market_search_url,
+          search_url: data.search_url,
+          filtered_results: data.listings.length,
+          total_results: data.market_data?.total_listings || 0,
+          success: true,
+          search_parameters: cleanParams
+        }
         setResults(transformedData)
       }
     } catch (err) {
@@ -575,14 +499,6 @@ export default function SearchPage() {
       location_text: `${lat.toFixed(4)}, ${lng.toFixed(4)}`
     }))
   }
-
-  useEffect(() => {
-    if (results?.suggested_listings && results.search_parameters) {
-      const categories = categorizeSuggestedListings(results.suggested_listings, results.search_parameters);
-      setSuggestionCategories(categories);
-      setSelectedSuggestionCategory(null);
-    }
-  }, [results]);
 
   // Add common styles for input fields
   const inputStyles = {
@@ -1099,7 +1015,7 @@ export default function SearchPage() {
                       width: '300px',
                       height: '150px',
                       border: 1,
-                      borderColor: 'grey.300',
+                      borderColor: 'rgba(255,255,255,0.1)',
                       borderRadius: 1,
                       overflow: 'hidden',
                       position: 'relative'
@@ -1108,12 +1024,12 @@ export default function SearchPage() {
                         <Box sx={{ 
                           width: '100%', 
                           height: '100%', 
-                          bgcolor: 'grey.200',
+                          bgcolor: 'rgba(255,255,255,0.05)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <CircularProgress />
+                          <CircularProgress sx={{ color: 'white' }} />
                         </Box>
                       }>
                         <MapComponent
@@ -1131,19 +1047,28 @@ export default function SearchPage() {
                       variant="contained"
                       onClick={handleLocationRequest}
                       startIcon={<MyLocation />}
+                      disabled={loadingLocation}
                       sx={{ 
                         height: 36,
-                        background: '#2C3E93',
+                        background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
                         color: 'rgba(255,255,255,0.95)',
                         textShadow: '0 1px 2px rgba(0,0,0,0.3)',
                         fontWeight: 500,
                         '&:hover': {
                           background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                         },
+                        '&:disabled': {
+                          background: 'rgba(255,255,255,0.12)',
+                          color: 'rgba(255,255,255,0.3)'
+                        },
                         marginBottom: 2
                       }}
                     >
-                      Encuentrame
+                      {loadingLocation ? (
+                        <CircularProgress size={20} sx={{ color: 'white', mr: 1 }} />
+                      ) : (
+                        'Encuentrame'
+                      )}
                     </Button>
 
                     {locationError && (
@@ -1155,7 +1080,7 @@ export default function SearchPage() {
                 </Grid>
               </Grid>
 
-              <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
                 <Button 
                   variant="contained" 
                   size="large"
@@ -1177,7 +1102,7 @@ export default function SearchPage() {
                     }
                   }}
                 >
-                  {loading ? <CircularProgress size={24} /> : 'Buscar'}
+                  {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Buscar'}
                 </Button>
               </Box>
             </CardContent>
@@ -1186,19 +1111,20 @@ export default function SearchPage() {
 
         {error && (
           <Alert 
-            severity="error" 
+            severity="info" 
             sx={{ 
               mb: 3,
               animation: 'slideIn 0.3s ease-out',
               '@keyframes slideIn': {
                 from: { transform: 'translateY(-20px)', opacity: 0 },
                 to: { transform: 'translateY(0)', opacity: 1 }
+              },
+              '& .MuiAlert-message': {
+                whiteSpace: 'pre-line'
               }
             }}
           >
-            {error === 'Search failed' ? 'Error en la búsqueda' : 
-             error === 'No listings found' ? 'No se encontraron resultados' : 
-             'Ha ocurrido un error'}
+            {error}
           </Alert>
         )}
 
@@ -1277,59 +1203,6 @@ export default function SearchPage() {
                   showNoResults={!loading && (!results.listings || results.listings.length === 0)}
                 />
               </>
-            )}
-
-            {/* Suggested Listings */}
-            {Object.keys(suggestionCategories).length > 0 && (
-              <Box sx={{ mt: 4 }}>
-                <Grid container spacing={2} sx={{ mb: 2 }}>
-                  {Object.entries(suggestionCategories).map(([key, category]) => (
-                    <Grid item key={key}>
-                      <Button
-                        variant={selectedSuggestionCategory === key ? "contained" : "outlined"}
-                        onClick={() => setSelectedSuggestionCategory(selectedSuggestionCategory === key ? null : key)}
-                        sx={{
-                          borderRadius: 4,
-                          textTransform: 'none',
-                          transition: 'all 0.2s ease-in-out',
-                          '&:hover': {
-                            transform: 'translateY(-2px)',
-                          }
-                        }}
-                      >
-                        {category.label}
-                      </Button>
-                    </Grid>
-                  ))}
-                </Grid>
-                
-                {selectedSuggestionCategory && suggestionCategories[selectedSuggestionCategory] && (
-                  <ListingsGrid 
-                    listings={suggestionCategories[selectedSuggestionCategory].listings.map(listing => ({
-                      id: listing.id,
-                      title: listing.content.title,
-                      description: listing.content.storytelling,
-                      price: listing.content.price,
-                      price_text: formatPrice(listing.content.price),
-                      market_price: results.market_data?.median_price || 0,
-                      market_price_text: formatPrice(results.market_data?.median_price || 0),
-                      price_difference: (results.market_data?.median_price || 0) - listing.content.price,
-                      price_difference_percentage: `${Math.abs(((results.market_data?.median_price || 0) - listing.content.price) / (results.market_data?.median_price || 1) * 100).toFixed(1)}%`,
-                      location: `${listing.content.location.city}, ${listing.content.location.postal_code}`,
-                      year: listing.content.year,
-                      kilometers: listing.content.km,
-                      fuel_type: listing.content.engine,
-                      transmission: listing.content.gearbox,
-                      url: `https://es.wallapop.com/item/${listing.content.web_slug}`,
-                      horsepower: listing.content.horsepower,
-                      distance: listing.content.distance,
-                      listing_images: listing.content.images.map(img => ({
-                        image_url: img.large || img.original
-                      }))
-                    }))}
-                  />
-                )}
-              </Box>
             )}
           </Box>
         )}

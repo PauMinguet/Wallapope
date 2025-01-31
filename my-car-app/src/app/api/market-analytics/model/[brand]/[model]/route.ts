@@ -6,8 +6,6 @@ if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_K
   throw new Error('Missing required environment variables')
 }
 
-
-
 interface MarketData {
   id: string
   average_price: number

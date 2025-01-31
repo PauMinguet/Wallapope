@@ -550,7 +550,7 @@ export default function MercadoPage() {
                         {baseAnalytics?.totalScans.toLocaleString()}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                        Análisis Realizados
+                        Análisis Realizados Hoy
                       </Typography>
                     </Box>
                   </Grid>
@@ -570,7 +570,7 @@ export default function MercadoPage() {
                         {baseAnalytics?.totalListingsAnalyzed.toLocaleString()}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                        Anuncios Analizados
+                        Anuncios Analizados Hoy
                       </Typography>
                     </Box>
                   </Grid>
