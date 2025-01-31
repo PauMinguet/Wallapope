@@ -101,20 +101,13 @@ interface ModelAnalytics {
   yearPriceDistribution: {
     [key: string]: {
       ranges: {
-        '0-5000': number
-        '5000-10000': number
-        '10000-15000': number
-        '15000-20000': number
-        '20000-30000': number
-        '30000-50000': number
-        '50000+': number
+        [key: string]: number
       }
       averagePrice: number
       totalListings: number
     }
   }
 }
-
 
 const LoadingScreen = () => (
   <Box sx={{ 
@@ -151,33 +144,122 @@ export default function MercadoPage() {
   const [loadingBrand, setLoadingBrand] = useState(false)
   const [loadingModel, setLoadingModel] = useState(false)
 
-  // Move getPriceDistributionData up here, before any conditional returns
   const getPriceDistributionData = useCallback((modelData: ModelAnalytics | null) => {
     if (!modelData?.yearPriceDistribution) return []
 
-    const yearData = Object.entries(modelData.yearPriceDistribution)
+    // Collect all prices and their counts from the ranges
+    const priceData: { price: number, count: number }[] = []
+    
+    Object.entries(modelData.yearPriceDistribution)
       .filter(([year]) => {
         const yearNum = parseInt(year)
         return yearNum >= yearRange[0] && yearNum <= yearRange[1]
       })
-      .reduce((acc: { [key: string]: number }, [ , data]) => {
-        Object.entries(data.ranges).forEach(([range, count]) => {
-          acc[range] = (acc[range] || 0) + count
-        })
-        return acc
-      }, {})
-
-    return Object.entries(yearData)
-      .map(([range, count]) => ({
-        range: range,
-        count: count,
-      }))
-      .sort((a, b) => {
-        const getMinPrice = (range: string) => {
-          const match = range.match(/\d+/)
-          return match ? parseInt(match[0]) : 0
+      .forEach(([year, yearData]) => {
+        if (!yearData.ranges) {
+          console.warn(`No ranges data for year ${year}`)
+          return
         }
-        return getMinPrice(a.range) - getMinPrice(b.range)
+        
+        Object.entries(yearData.ranges).forEach(([range, count]) => {
+          if (count > 0) {
+            try {
+              // Convert range to a representative price
+              let price: number
+              if (range === '50000+' || range === 'over50k') {
+                price = 50000
+              } else if (range === 'under5k') {
+                price = 2500 // midpoint of 0-5k
+              } else {
+                // Handle both formats: '5000-10000' and '5kTo10k'
+                const isNewFormat = range.includes('kTo')
+                if (isNewFormat) {
+                  const [start, end] = range.split('kTo').map(n => parseInt(n))
+                  if (isNaN(start) || isNaN(end)) {
+                    console.warn(`Invalid range format: ${range}`)
+                    return
+                  }
+                  price = ((start * 1000) + (end * 1000)) / 2
+                } else {
+                  const [start, end] = range.split('-').map(n => parseInt(n))
+                  if (isNaN(start) || isNaN(end)) {
+                    console.warn(`Invalid range format: ${range}`)
+                    return
+                  }
+                  price = (start + end) / 2
+                }
+              }
+              priceData.push({ price, count })
+            } catch (error) {
+              console.warn(`Error processing range ${range}:`, error)
+            }
+          }
+        })
+      })
+
+    if (priceData.length === 0) return []
+
+    // Find min and max prices
+    const minPrice = Math.min(...priceData.map(d => d.price))
+    const maxPrice = Math.max(...priceData.map(d => d.price))
+
+    // Create dynamic ranges based on the data spread
+    const numRanges = 8 // Target number of ranges
+    const rangeSize = Math.ceil((maxPrice - minPrice) / numRanges)
+    
+    // Create continuous ranges
+    const ranges: { min: number, max: number, count: number }[] = []
+    let currentMin = minPrice
+    
+    while (currentMin < maxPrice) {
+      const currentMax = Math.min(currentMin + rangeSize, maxPrice)
+      ranges.push({
+        min: currentMin,
+        max: currentMax,
+        count: 0
+      })
+      currentMin = currentMax
+    }
+
+    // Ensure we have at least one range for prices over 50k
+    if (maxPrice >= 50000 && ranges[ranges.length - 1].min < 50000) {
+      ranges.push({
+        min: 50000,
+        max: maxPrice,
+        count: 0
+      })
+    }
+
+    // Distribute data into ranges
+    priceData.forEach(({ price, count }) => {
+      const range = ranges.find(r => price >= r.min && price <= r.max)
+      if (range) {
+        range.count += count
+      }
+    })
+
+    // Convert to chart format, only including ranges with data
+    return ranges
+      .filter(range => range.count > 0)
+      .map(({ min, max, count }) => {
+        let label
+        if (min >= 50000) {
+          label = '>50k€'
+        } else {
+          const minK = (min/1000).toFixed(0)
+          const maxK = (max/1000).toFixed(0)
+          label = `${minK}-${maxK}k€`
+        }
+        return {
+          range: `${min}-${max}`,
+          count,
+          label
+        }
+      })
+      .sort((a, b) => {
+        const [aMin] = a.range.split('-').map(n => parseInt(n))
+        const [bMin] = b.range.split('-').map(n => parseInt(n))
+        return aMin - bMin
       })
   }, [yearRange])
 
@@ -854,10 +936,16 @@ export default function MercadoPage() {
                             <ResponsiveContainer>
                               <BarChart
                                 data={getPriceDistributionData(modelAnalytics || null)}
-                                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                                margin={{ top: 10, right: 30, left: 0, bottom: 30 }}
                               >
                                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                                <XAxis dataKey="range" stroke="rgba(255,255,255,0.5)" />
+                                <XAxis 
+                                  dataKey="label" 
+                                  stroke="rgba(255,255,255,0.5)"
+                                  angle={-45}
+                                  textAnchor="end"
+                                  height={60}
+                                />
                                 <YAxis stroke="rgba(255,255,255,0.5)" />
                                 <Tooltip
                                   contentStyle={{
@@ -866,6 +954,8 @@ export default function MercadoPage() {
                                     borderRadius: '4px',
                                     color: 'white'
                                   }}
+                                  formatter={(value) => [`${value} coches`, 'Cantidad']}
+                                  labelFormatter={(label) => label}
                                 />
                                 <Bar dataKey="count" fill="#00C853" radius={[4, 4, 0, 0]} />
                               </BarChart>
@@ -914,27 +1004,6 @@ export default function MercadoPage() {
                                 },
                               }}
                             />
-                          </Box>
-                          <Box sx={{ height: 250 }}>
-                            <ResponsiveContainer>
-                              <BarChart
-                                data={getPriceDistributionData(modelAnalytics || null)}
-                                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                              >
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                                <XAxis dataKey="range" stroke="rgba(255,255,255,0.5)" />
-                                <YAxis stroke="rgba(255,255,255,0.5)" />
-                                <Tooltip
-                                  contentStyle={{
-                                    background: 'rgba(0,0,0,0.8)',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    borderRadius: '4px',
-                                    color: 'white'
-                                  }}
-                                />
-                                <Bar dataKey="count" fill="#4169E1" radius={[4, 4, 0, 0]} />
-                              </BarChart>
-                            </ResponsiveContainer>
                           </Box>
                         </Box>
                       </Grid>

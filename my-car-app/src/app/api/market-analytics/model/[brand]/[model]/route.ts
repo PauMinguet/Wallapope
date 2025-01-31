@@ -6,21 +6,7 @@ if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_K
   throw new Error('Missing required environment variables')
 }
 
-interface ModoRapido {
-  marca: string
-  modelo: string
-}
 
-interface ModoRapidoListing {
-  price: number
-  year: number
-}
-
-interface ModoRapidoRun {
-  id: string
-  modo_rapido: ModoRapido
-  modo_rapido_listings: ModoRapidoListing[]
-}
 
 interface MarketData {
   id: string
@@ -52,8 +38,11 @@ export async function GET(request: NextRequest) {
     const pathParts = request.nextUrl.pathname.split('/')
     const model = decodeURIComponent(pathParts.pop() || '')
     const brand = decodeURIComponent(pathParts.pop() || '')
+    
+    console.log('Processing request for:', { brand, model, pathname: request.nextUrl.pathname })
 
     if (!brand || !model) {
+      console.log('Missing brand or model parameters')
       return NextResponse.json(
         { error: 'Brand and model parameters are required' },
         { status: 400 }
@@ -61,48 +50,102 @@ export async function GET(request: NextRequest) {
     }
 
     // Get the recent market_data entries
+    console.log('Fetching market data...')
     const { data: marketData, error: marketError } = await supabase
       .from('market_data')
       .select('*')
       .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
       .order('created_at', { ascending: false }) as { data: MarketData[] | null, error: PostgrestError | null }
 
-    if (marketError) throw marketError
+    if (marketError) {
+      console.error('Error fetching market data:', marketError)
+      throw marketError
+    }
     if (!marketData || marketData.length === 0) {
+      console.log('No market data found')
       return NextResponse.json(
         { error: 'No market data found' },
         { status: 404 }
       )
     }
+    console.log('Found market data entries:', marketData.length)
 
-    // Get model-specific data
+    // Get all modo_rapido IDs for this brand and model
+    console.log('Fetching modo_rapido entries for:', { brand, model })
+    const { data: modoRapidos, error: modoRapidoError } = await supabase
+      .from('modo_rapido')
+      .select('id, marca, modelo')
+      .eq('marca', brand)
+      .eq('modelo', model)
+
+    if (modoRapidoError) {
+      console.error('Error getting modo_rapido:', modoRapidoError)
+      return NextResponse.json(
+        { error: 'Model not found' },
+        { status: 404 }
+      )
+    }
+
+    if (!modoRapidos || modoRapidos.length === 0) {
+      console.log('No modo_rapido entries found for:', { brand, model })
+      return NextResponse.json(
+        { error: 'Model not found' },
+        { status: 404 }
+      )
+    }
+    console.log('Found modo_rapido entries:', modoRapidos.length, modoRapidos)
+
+    // Get model-specific data using all modo_rapido IDs
+    console.log('Fetching modo_rapido_runs with IDs:', modoRapidos.map(mr => mr.id))
     const { data: modelRuns, error: modelError } = await supabase
       .from('modo_rapido_runs')
-      .select(`
-        id,
-        market_data_id,
-        modo_rapido!inner (
-          marca,
-          modelo
-        ),
-        modo_rapido_listings!inner (
-          price,
-          year
-        )
-      `)
-      .in('market_data_id', marketData.map(md => md.id))
-      .eq('modo_rapido.marca', brand)
-      .eq('modo_rapido.modelo', model) as { data: ModoRapidoRun[] | null, error: PostgrestError | null }
+      .select('id, market_data_id, modo_rapido_id')
+      .in('modo_rapido_id', modoRapidos.map(mr => mr.id))
 
-    if (modelError) throw modelError
+    console.log('Initial query result:', { data: modelRuns, error: modelError })
+
+    if (modelError) {
+      console.error('Error fetching model runs:', modelError)
+      throw modelError
+    }
     if (!modelRuns || modelRuns.length === 0) {
+      console.log('No model runs found for IDs:', modoRapidos.map(mr => mr.id))
       return NextResponse.json(
         { error: 'No data found for this model' },
         { status: 404 }
       )
     }
 
+    // If we get here, try to fetch the related data separately
+    console.log('Fetching related data for runs:', modelRuns.map(run => run.id))
+    const { data: fullModelRuns, error: fullModelError } = await supabase
+      .from('modo_rapido_runs')
+      .select(`
+        id,
+        market_data_id,
+        modo_rapido_id,
+        modo_rapido:modo_rapido_id (
+          id,
+          marca,
+          modelo
+        ),
+        modo_rapido_listings (
+          id,
+          price,
+          year
+        )
+      `)
+      .in('id', modelRuns.map(run => run.id))
+
+    if (fullModelError) {
+      console.error('Error fetching full model runs:', fullModelError)
+      throw fullModelError
+    }
+
+    console.log('Found model runs:', fullModelRuns?.length || 0)
+
     // Process model data
+    console.log('Processing model data...')
     const yearPriceDistribution: { 
       [key: string]: { 
         ranges: PriceRanges,
@@ -114,7 +157,7 @@ export async function GET(request: NextRequest) {
     let totalPrice = 0
     let validListingsCount = 0
 
-    modelRuns.forEach(run => {
+    fullModelRuns.forEach(run => {
       const listings = run.modo_rapido_listings || []
       const validListings = listings.filter(l => l.price && l.year)
 
@@ -161,7 +204,7 @@ export async function GET(request: NextRequest) {
     })
 
     const modelAnalytics = {
-      totalScans: modelRuns.length,
+      totalScans: fullModelRuns.length,
       averagePrice: validListingsCount > 0 ? totalPrice / validListingsCount : 0,
       totalListings,
       yearPriceDistribution
