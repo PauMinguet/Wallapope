@@ -89,6 +89,15 @@ export default function DashboardPage() {
       ]
     },
     {
+      title: 'Importación',
+      description: 'Oportunidades desde Suiza',
+      longDescription: 'Descubre oportunidades únicas importando coches desde Suiza. Análisis detallado de costes, impuestos y trámites necesarios para la importación.',
+      icon: <TrendingUpIcon sx={{ fontSize: 40 }} />,
+      href: '/app/imports',
+      color: '#4169E1',
+      isPro: true,
+    },
+    {
       title: 'Sistema de Alertas',
       description: 'Monitorización automática del mercado',
       longDescription: 'Configura alertas personalizadas y recibe notificaciones cuando aparezcan coches que coincidan con tus criterios. Límites por plan: Básico (1 alerta), Pro (5 alertas), Compraventa (alertas ilimitadas).',
@@ -285,7 +294,7 @@ export default function DashboardPage() {
 
           <Grid container spacing={3} sx={{ mb: 6 }}>
             {featuredServices.map((service, index) => (
-              <Grid item xs={12} md={4} key={service.title}>
+              <Grid item xs={12} sm={6} key={service.title}>
                 <MotionBox
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

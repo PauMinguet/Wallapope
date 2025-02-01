@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['cdn.wallapop.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.wallapop.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'listing-images.autoscout24.ch',
+      }
+    ],
   },
 }
 
