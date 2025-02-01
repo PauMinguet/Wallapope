@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       results_count: body.resultsCount,
       market_data: body.marketData,
       device_type: deviceType,
-      location: location,
+      location: location, // Changed from user_location to location to match DB schema
       created_at: new Date().toISOString()
     }
 

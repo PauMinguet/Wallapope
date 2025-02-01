@@ -118,6 +118,31 @@ export default function HomePage() {
     setSearchStep('year')
   }
 
+  // Function to get user's location without blocking
+  const getUserLocation = async () => {
+    if (!navigator.geolocation) {
+      return null
+    }
+
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        })
+      })
+
+      return {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }
+    } catch (error) {
+      console.warn('Error getting location:', error)
+      return null
+    }
+  }
+
   const handleYearSelect = async (year: string) => {
     setSelectedYear(year)
     setSearchStep('results')
@@ -174,7 +199,10 @@ export default function HomePage() {
       const data = await response.json()
       setQuickSearchResults(data)
 
-      // Track the quick search
+      // Get location in parallel with the search
+      const location = await getUserLocation()
+
+      // Track the quick search with location if available
       try {
         await fetch('/api/quick-search', {
           method: 'POST',
@@ -186,10 +214,7 @@ export default function HomePage() {
             selectedYear: year,
             resultsCount: data.listings?.length || 0,
             marketData: data.market_data,
-            location: {
-              latitude: searchParams.latitude,
-              longitude: searchParams.longitude
-            }
+            location: location // This will be null if location is not available
           })
         })
       } catch (trackingError) {
@@ -609,8 +634,11 @@ export default function HomePage() {
 
                   {/* Loading State */}
                   {isQuickSearching && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
-                      <CircularProgress sx={{ color: 'white' }} />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4 }}>
+                      <CircularProgress sx={{ color: 'white', mb: 2 }} />
+                      <Typography sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                        Buscando coches...
+                      </Typography>
                     </Box>
                   )}
 
