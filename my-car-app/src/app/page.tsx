@@ -9,14 +9,12 @@ import {
   Card,
   CardContent,
   Stack,
-  CircularProgress,
-  Alert,
-  Chip,
 } from '@mui/material'
 import { 
   Search,
   TrendingDown,
   Notifications,
+  LocalOffer,
 } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
@@ -26,6 +24,7 @@ import { useState } from 'react'
 import PricingSection from './components/PricingSection'
 import Footer from './components/Footer'
 import ListingsGrid from './components/ListingsGrid'
+import { weeklyListings } from './data/weeklyListings'
 
 const Chat = dynamic(() => import('./components/Chat'), {
   ssr: false,
@@ -37,58 +36,10 @@ const LiveActivityToast = dynamic(() => import('./components/LiveActivityToast')
 
 const MotionTypography = motion.create(Typography)
 
-interface MarketData {
-  average_price: number;
-  min_price: number;
-  max_price: number;
-  total_listings: number;
-  median_price: number;
-}
-
-interface QuickSearchListing {
-  id: string;
-  listing_id?: string;
-  title: string;
-  price: number;
-  price_text?: string;
-  location: string;
-  year: number;
-  kilometers: number;
-  fuel_type: string;
-  transmission: string;
-  url: string;
-  horsepower: number;
-  distance: number;
-  listing_images: Array<{
-    image_url: string;
-  }>;
-  price_difference_percentage?: string;
-}
-
-interface QuickSearchResults {
-  market_data?: MarketData;
-  listings?: QuickSearchListing[];
-}
 
 export default function HomePage() {
   const router = useRouter()
   const [isChatOpen, setIsChatOpen] = useState(false)
-  const [searchStep, setSearchStep] = useState<'model' | 'year' | 'results'>('model')
-  const [selectedModel, setSelectedModel] = useState<string | null>(null)
-  const [selectedYear, setSelectedYear] = useState<string | null>(null)
-  const [quickSearchResults, setQuickSearchResults] = useState<QuickSearchResults | null>(null)
-  const [quickSearchError, setQuickSearchError] = useState<string | null>(null)
-  const [isQuickSearching, setIsQuickSearching] = useState(false)
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price)
-  }
-
   const features = [
     {
       icon: <Search sx={{ fontSize: 40 }} />,
@@ -112,130 +63,6 @@ export default function HomePage() {
     { number: '20%', label: 'Ahorro medio' },
     { number: '24/7', label: 'Monitorización' }
   ]
-
-  const handleModelSelect = (make: string) => {
-    setSelectedModel(make)
-    setSearchStep('year')
-  }
-
-  // Function to get user's location without blocking
-  const getUserLocation = async () => {
-    if (!navigator.geolocation) {
-      return null
-    }
-
-    try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
-        })
-      })
-
-      return {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      }
-    } catch (error) {
-      console.warn('Error getting location:', error)
-      return null
-    }
-  }
-
-  const handleYearSelect = async (year: string) => {
-    setSelectedYear(year)
-    setSearchStep('results')
-    
-    // Automatically trigger search
-    const prevModel = selectedModel
-    setIsQuickSearching(true)
-    setQuickSearchError(null)
-
-    try {
-      // Parse the selected model into brand and model, handling special cases
-      let brand, model
-      if (prevModel) {
-        if (prevModel.startsWith('BMW')) {
-          brand = 'BMW'
-          model = prevModel.replace('BMW ', '')
-        } else if (prevModel.startsWith('Mercedes')) {
-          brand = 'Mercedes'
-          model = prevModel.replace('Mercedes ', '')
-        } else {
-          [brand, model] = prevModel.split(' ')
-        }
-      }
-
-      // Parse the selected year range
-      const [minYear, maxYear] = year.split(' - ').map(Number)
-
-      const searchParams = {
-        brand,
-        model,
-        min_year: minYear,
-        max_year: maxYear,
-        latitude: 40.4637,
-        longitude: -3.7492,
-        distance: 500000
-      }
-
-      const cleanParams = Object.fromEntries(
-        Object.entries(searchParams).filter(([, v]) => v !== undefined)
-      )
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search-single-car`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cleanParams)
-      })
-
-      if (!response.ok) {
-        throw new Error('Search failed')
-      }
-
-      const data = await response.json()
-      setQuickSearchResults(data)
-
-      // Get location in parallel with the search
-      const location = await getUserLocation()
-
-      // Track the quick search with location if available
-      try {
-        await fetch('/api/quick-search', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            selectedModel: prevModel,
-            selectedYear: year,
-            resultsCount: data.listings?.length || 0,
-            marketData: data.market_data,
-            location: location // This will be null if location is not available
-          })
-        })
-      } catch (trackingError) {
-        // Silently handle tracking errors - don't affect the user experience
-        console.error('Error tracking quick search:', trackingError)
-      }
-    } catch (error) {
-      console.error('Error performing quick search:', error)
-      setQuickSearchError('Error en la búsqueda rápida')
-    } finally {
-      setIsQuickSearching(false)
-    }
-  }
-
-  const resetSearch = () => {
-    setSearchStep('model')
-    setSelectedModel(null)
-    setSelectedYear(null)
-    setQuickSearchResults(null)
-    setQuickSearchError(null)
-  }
 
   return (
     <Box sx={{ 
@@ -434,7 +261,7 @@ export default function HomePage() {
             </Card>
           </Container>
 
-          {/* Quick Search Section - Card Style */}
+          {/* Weekly Deals Section */}
           <Container maxWidth="lg" sx={{ mb: { xs: 8, md: 10 } }}>
             <Card sx={{ 
               borderRadius: { xs: 3, md: 4 },
@@ -453,7 +280,7 @@ export default function HomePage() {
                   component={motion.div}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
+                  transition={{ duration: 0.8 }}
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -461,307 +288,66 @@ export default function HomePage() {
                     gap: 2
                   }}
                 >
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontWeight: 600,
-                      color: 'white',
-                      textAlign: 'center',
-                      mb: 0.5
-                    }}
-                  >
-                    Prueba rápida 🚀
-                  </Typography>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+                    <LocalOffer sx={{ 
+                      color: '#4169E1',
+                      fontSize: { xs: 24, md: 32 }
+                    }} />
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontWeight: 600,
+                        color: 'white',
+                        textAlign: 'center',
+                        fontSize: { xs: '1.5rem', md: '2rem' }
+                      }}
+                    >
+                      Chollos de la Semana
+                    </Typography>
+                  </Stack>
+
                   <Typography
                     sx={{
                       color: 'rgba(255,255,255,0.7)',
                       textAlign: 'center',
-                      mb: 1,
+                      mb: 3,
                       maxWidth: 600,
                       mx: 'auto',
                       fontSize: '0.9rem',
                       lineHeight: 1.4
                     }}
                   >
-                    {searchStep === 'model' && 'Selecciona un modelo para empezar'}
-                    {searchStep === 'year' && 'Ahora, elige un rango de años'}
-                    {searchStep === 'results' && 'Resultados de tu búsqueda'}
+                    Las mejores ofertas seleccionadas por nuestro equipo esta semana
                   </Typography>
 
-                  {/* Selected Options Display */}
-                  {(selectedModel || selectedYear) && (
-                    <Stack 
-                      direction="row" 
-                      spacing={1} 
-                      sx={{ 
-                        mb: 2,
-                        flexWrap: 'wrap',
-                        gap: 1,
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {selectedModel && (
-                        <Chip
-                          label={selectedModel}
-                          onDelete={resetSearch}
-                          sx={{
-                            background: 'linear-gradient(45deg, rgba(65,105,225,0.2), rgba(148,0,211,0.2))',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            color: 'white',
-                            '& .MuiChip-deleteIcon': {
-                              color: 'rgba(255,255,255,0.7)',
-                              '&:hover': { color: 'white' }
-                            }
-                          }}
-                        />
-                      )}
-                      {selectedYear && (
-                        <Chip
-                          label={selectedYear}
-                          onDelete={resetSearch}
-                          sx={{
-                            background: 'linear-gradient(45deg, rgba(65,105,225,0.2), rgba(148,0,211,0.2))',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            color: 'white',
-                            '& .MuiChip-deleteIcon': {
-                              color: 'rgba(255,255,255,0.7)',
-                              '&:hover': { color: 'white' }
-                            }
-                          }}
-                        />
-                      )}
-                    </Stack>
-                  )}
+                  <Box sx={{ width: '100%' }}>
+                    <ListingsGrid 
+                      listings={weeklyListings}
+                      loading={false}
+                      showNoResults={false}
+                      simplified={true}
+                    />
+                  </Box>
 
-                  {/* Model Selection */}
-                  {searchStep === 'model' && (
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      sx={{
-                        flexWrap: 'wrap',
-                        gap: 0.5,
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {['Volkswagen Golf', 'BMW Serie 3', 'Mercedes Clase A', 'Audi A3', 'Seat León'].map((make, index) => (
-                        <Button
-                          key={make}
-                          variant="contained"
-                          onClick={() => handleModelSelect(make)}
-                          sx={{
-                            background: [
-                              'linear-gradient(45deg, rgba(65,105,225,0.7), rgba(107,35,142,0.7))',
-                              'linear-gradient(45deg, rgba(107,35,142,0.7), rgba(148,0,211,0.7))',
-                              'linear-gradient(45deg, rgba(44,62,147,0.7), rgba(65,105,225,0.7))',
-                              'linear-gradient(45deg, rgba(148,0,211,0.7), rgba(65,105,225,0.7))',
-                              'linear-gradient(45deg, rgba(65,105,225,0.7), rgba(44,62,147,0.7))',
-                            ][index],
-                            color: 'white',
-                            borderRadius: '20px',
-                            px: 2,
-                            py: 1,
-                            textTransform: 'none',
-                            '&:hover': {
-                              background: [
-                                'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(125,43,166,0.8))',
-                                'linear-gradient(45deg, rgba(125,43,166,0.8), rgba(128,0,179,0.8))',
-                                'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(54,74,173,0.8))',
-                                'linear-gradient(45deg, rgba(128,0,179,0.8), rgba(54,74,173,0.8))',
-                                'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(54,74,173,0.8))',
-                              ][index],
-                              transform: 'translateY(-2px)',
-                              boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                            },
-                            transition: 'all 0.3s ease'
-                          }}
-                        >
-                          {make}
-                        </Button>
-                      ))}
-                    </Stack>
-                  )}
-
-                  {/* Year Selection */}
-                  {searchStep === 'year' && (
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      sx={{
-                        flexWrap: 'wrap',
-                        gap: 0.5,
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {[
-                        { range: '2020 - 2022' },
-                        { range: '2017 - 2019' },
-                        { range: '2014 - 2016' },
-                        { range: '2011 - 2013' }
-                      ].map((year, index) => (
-                        <Button
-                          key={year.range}
-                          variant="contained"
-                          onClick={() => handleYearSelect(year.range)}
-                          sx={{
-                            background: [
-                              'linear-gradient(45deg, rgba(65,105,225,0.7), rgba(44,62,147,0.7))',
-                              'linear-gradient(45deg, rgba(107,35,142,0.7), rgba(65,105,225,0.7))',
-                              'linear-gradient(45deg, rgba(148,0,211,0.7), rgba(107,35,142,0.7))',
-                            ][index],
-                            color: 'white',
-                            borderRadius: '20px',
-                            px: 2,
-                            py: 1,
-                            textTransform: 'none',
-                            '&:hover': {
-                              background: [
-                                'linear-gradient(45deg, rgba(54,74,173,0.8), rgba(54,74,173,0.8))',
-                                'linear-gradient(45deg, rgba(125,43,166,0.8), rgba(54,74,173,0.8))',
-                                'linear-gradient(45deg, rgba(128,0,179,0.8), rgba(125,43,166,0.8))',
-                              ][index],
-                              transform: 'translateY(-2px)',
-                              boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                            },
-                            transition: 'all 0.3s ease'
-                          }}
-                        >
-                          {year.range}
-                        </Button>
-                      ))}
-                    </Stack>
-                  )}
-
-                  {/* Loading State */}
-                  {isQuickSearching && (
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4 }}>
-                      <CircularProgress sx={{ color: 'white', mb: 2 }} />
-                      <Typography sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                        Buscando coches...
-                      </Typography>
-                    </Box>
-                  )}
-
-                  {/* Error State */}
-                  {quickSearchError && (
-                    <Alert 
-                      severity="error" 
-                      sx={{ 
-                        mt: 3,
-                        animation: 'slideIn 0.3s ease-out',
-                        '@keyframes slideIn': {
-                          from: { transform: 'translateY(-20px)', opacity: 0 },
-                          to: { transform: 'translateY(0)', opacity: 1 }
-                        }
-                      }}
-                    >
-                      {quickSearchError}
-                    </Alert>
-                  )}
-
-                  {/* Results Section */}
-                  {searchStep === 'results' && quickSearchResults && !isQuickSearching && (
-                    <Box sx={{ 
+                  <Button
+                    variant="contained"
+                    onClick={() => router.push('/pricing')}
+                    sx={{
                       mt: 4,
-                      animation: 'fadeIn 0.5s ease-out',
-                      '@keyframes fadeIn': {
-                        from: { opacity: 0 },
-                        to: { opacity: 1 }
-                      },
-                      width: '100%'
-                    }}>
-                      {/* Market Analysis Section */}
-                      {quickSearchResults.market_data && (
-                        <Box sx={{ mb: 4 }}>
-                          <Grid container spacing={3} alignItems="center">
-                            <Grid item>
-                              <Typography variant="h6" sx={{ mr: 3, color: 'white' }}>
-                                Análisis de Mercado
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                                Media:
-                              </Typography>
-                              <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
-                                {formatPrice(quickSearchResults.market_data.average_price)}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                                Rango:
-                              </Typography>
-                              <Typography component="span" sx={{ mr: 3, fontWeight: 'bold', color: 'white' }}>
-                                {formatPrice(quickSearchResults.market_data.min_price)} - {formatPrice(quickSearchResults.market_data.max_price)}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography component="span" sx={{ mr: 1, color: 'rgba(255,255,255,0.7)' }}>
-                                Total anuncios:
-                              </Typography>
-                              <Typography component="span" sx={{ fontWeight: 'bold', color: 'white' }}>
-                                {quickSearchResults.market_data.total_listings}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      )}
-
-                      {/* Divider */}
-                      <Box sx={{ 
-                        height: 1, 
-                        bgcolor: 'rgba(255,255,255,0.1)', 
-                        mb: 4 
-                      }} />
-
-                      {/* Quick Search Listings */}
-                      {quickSearchResults?.listings && quickSearchResults.listings.length > 0 && (
-                        <>
-                          <Typography variant="h6" sx={{ 
-                            mb: 3,
-                            fontWeight: 'bold',
-                            color: 'white'
-                          }}>
-                            Viendo 3 de {quickSearchResults.listings.length * 3} anuncios encontrados
-                          </Typography>
-
-                          <Box sx={{ 
-                            '& .MuiGrid-container': { 
-                              justifyContent: 'center',
-                              '& .MuiGrid-item': {
-                                maxWidth: { xs: '100%', sm: '50%', md: '33.333%' }
-                              }
-                            }
-                          }}>
-                            <ListingsGrid 
-                              listings={quickSearchResults.listings.slice(0, 3).map((listing: QuickSearchListing) => ({
-                                id: listing.listing_id || listing.id,
-                                title: listing.title,
-                                price: listing.price,
-                                price_text: listing.price_text || formatPrice(listing.price),
-                                market_price: quickSearchResults.market_data?.median_price || 0,
-                                market_price_text: formatPrice(quickSearchResults.market_data?.median_price || 0),
-                                price_difference: (quickSearchResults.market_data?.median_price || 0) - listing.price,
-                                price_difference_percentage: listing.price_difference_percentage || `${Math.abs(((quickSearchResults.market_data?.median_price || 0) - listing.price) / (quickSearchResults.market_data?.median_price || 1) * 100).toFixed(1)}%`,
-                                location: listing.location,
-                                year: listing.year,
-                                kilometers: listing.kilometers,
-                                fuel_type: listing.fuel_type,
-                                transmission: listing.transmission,
-                                url: listing.url,
-                                horsepower: listing.horsepower,
-                                distance: listing.distance,
-                                listing_images: listing.listing_images || []
-                              }))}
-                              loading={isQuickSearching}
-                              showNoResults={!isQuickSearching && (!quickSearchResults.listings || quickSearchResults.listings.length === 0)}
-                              simplified={true}
-                            />
-                          </Box>
-                        </>
-                      )}
-                    </Box>
-                  )}
+                      background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                      borderRadius: '28px',
+                      color: 'white',
+                      px: { xs: 3, md: 4 },
+                      py: { xs: 1.5, md: 2 },
+                      textTransform: 'none',
+                      fontSize: { xs: '0.9rem', md: '1rem' },
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                      }
+                    }}
+                  >
+                    Ver más ofertas
+                  </Button>
                 </Box>
               </CardContent>
             </Card>

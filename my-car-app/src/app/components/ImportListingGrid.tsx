@@ -59,7 +59,15 @@ interface CostsBreakdownModalProps {
 }
 
 const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose, listing }) => {
+  const [customTaxPrice, setCustomTaxPrice] = useState<number | null>(null);
+  
   const formatPrice = (price: number) => price.toLocaleString('es-ES') + ' €';
+
+  // Calculate costs
+  const basePrice = listing.price_chf * 1.0590;
+  const priceForTax = customTaxPrice ?? basePrice;
+  const importTax = priceForTax * 0.31;
+  const totalCost = basePrice + importTax + (listing.emissions_tax ? listing.emissions_tax * 1.0590 : 0);
 
   return (
     <Dialog 
@@ -102,6 +110,33 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
             {listing.year} · {listing.kilometers?.toLocaleString()} km · {listing.horsepower} CV
           </Typography>
         </Box>
+
+        {/* Custom Tax Price Input */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
+            Precio para Cálculo de Impuestos (EUR)
+          </Typography>
+          <input
+            type="number"
+            value={customTaxPrice ?? ''}
+            onChange={(e) => setCustomTaxPrice(e.target.value ? Number(e.target.value) : null)}
+            placeholder={formatPrice(basePrice)}
+            style={{
+              width: '100%',
+              padding: '8px 12px',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '4px',
+              color: 'white',
+              fontSize: '1rem',
+              outline: 'none'
+            }}
+          />
+          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', mt: 1, display: 'block' }}>
+            Introduce un precio personalizado para calcular la tasa de importación (31%)
+          </Typography>
+        </Box>
+
         <TableContainer 
           component={Paper} 
           sx={{ 
@@ -125,7 +160,7 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
                   </Typography>
                 </TableCell>
                 <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
-                  {formatPrice(listing.price_chf * 1.0590)}
+                  {formatPrice(basePrice)}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -137,11 +172,11 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
                 }}>
                   Tasa de Importación
                   <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                    31% del precio base
+                    31% de {formatPrice(priceForTax)}
                   </Typography>
                 </TableCell>
                 <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
-                  {formatPrice(listing.import_fee * 1.0590)}
+                  {formatPrice(importTax)}
                 </TableCell>
               </TableRow>
               {listing.emissions_tax !== null && (
@@ -193,7 +228,7 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>
-                    {formatPrice(listing.total_cost * 1.0590)}
+                    {formatPrice(totalCost)}
                   </Typography>
                 </TableCell>
               </TableRow>

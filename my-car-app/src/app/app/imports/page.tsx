@@ -42,6 +42,22 @@ export default function ImportsPage() {
   const [searchRuns, setSearchRuns] = useState<SearchRun[]>([])
   const [loading, setLoading] = useState(true)
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
+  const [carPrice, setCarPrice] = useState<number>(0)
+
+  // Calculate tax values
+  const importTax = carPrice * 0.10
+  const iva = (carPrice + importTax) * 0.21
+  const totalCost = carPrice + importTax + iva
+
+  // Format currency
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value)
+  }
 
   // Fetch data
   useEffect(() => {
@@ -235,6 +251,71 @@ export default function ImportsPage() {
                 </Box>
               </Grid>
             </Grid>
+
+            {/* Tax Calculator Demo */}
+            <Box sx={{ 
+              mt: 4, 
+              mb: 4, 
+              p: 3, 
+              borderRadius: 2, 
+              bgcolor: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)'
+            }}>
+              <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
+                Calculadora de Importación
+              </Typography>
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
+                  Precio del vehículo en Suiza (EUR)
+                </Typography>
+                <input
+                  type="number"
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '4px',
+                    color: 'white',
+                    fontSize: '1rem',
+                    outline: 'none'
+                  }}
+                  placeholder="Introduce el precio del vehículo"
+                  value={carPrice || ''}
+                  onChange={(e) => setCarPrice(Number(e.target.value))}
+                />
+              </Box>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={4}>
+                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 0.5 }}>
+                    Tasa de importación (10%)
+                  </Typography>
+                  <Typography variant="h6" sx={{ color: '#4169E1' }}>
+                    {carPrice ? formatCurrency(importTax) : '--'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 0.5 }}>
+                    IVA (21%)
+                  </Typography>
+                  <Typography variant="h6" sx={{ color: '#4169E1' }}>
+                    {carPrice ? formatCurrency(iva) : '--'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 0.5 }}>
+                    Coste Total
+                  </Typography>
+                  <Typography variant="h6" sx={{ color: '#4169E1' }}>
+                    {carPrice ? formatCurrency(totalCost) : '--'}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', display: 'block', mt: 2 }}>
+                * Los cálculos son aproximados. Las tasas pueden variar según el tipo de vehículo y otros factores.
+              </Typography>
+            </Box>
+
             <Button
               href="/pricing"
               variant="contained"
