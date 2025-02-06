@@ -17,7 +17,9 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Paper
+  Paper,
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import { OpenInNew, Info } from '@mui/icons-material';
 import ListingSkeleton from './ListingSkeleton';
@@ -40,6 +42,7 @@ export interface ImportListing {
   transmission: string;
   url: string;
   horsepower: number;
+  boe_precio: number;
   listing_images: Array<{
     image_url: string;
   }>;
@@ -58,16 +61,23 @@ interface CostsBreakdownModalProps {
   listing: ImportListing;
 }
 
-const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose, listing }) => {
-  const [customTaxPrice, setCustomTaxPrice] = useState<number | null>(null);
-  
-  const formatPrice = (price: number) => price.toLocaleString('es-ES') + ' €';
+interface CO2TaxInfoModalProps {
+  open: boolean;
+  onClose: () => void;
+  boePrice: number;
+  co2Emissions: number | null;
+}
 
-  // Calculate costs
-  const basePrice = listing.price_chf * 1.0590;
-  const priceForTax = customTaxPrice ?? basePrice;
-  const importTax = priceForTax * 0.31;
-  const totalCost = basePrice + importTax + (listing.emissions_tax ? listing.emissions_tax * 1.0590 : 0);
+const CO2TaxInfoModal: React.FC<CO2TaxInfoModalProps> = ({ open, onClose, boePrice, co2Emissions }) => {
+  const formatPrice = (price: number | null | undefined) => {
+    if (price == null) return '-- €';
+    return price.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' €';
+  };
+  
+  const baseCalc = boePrice ? Number((boePrice * 0.17).toFixed(2)) : 0;
+  const reduction = boePrice ? Number((boePrice * 0.04).toFixed(2)) : 0;
+  const taxBase = Number((baseCalc - reduction).toFixed(2));
+  const finalTax = Number((taxBase * 0.0975).toFixed(2));
 
   return (
     <Dialog 
@@ -95,47 +105,12 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
         fontSize: '1.25rem',
         fontWeight: 'bold'
       }}>
-        Desglose de Costes de Importación
+        Cálculo de la Tasa CO2
       </DialogTitle>
       <DialogContent sx={{ p: 3 }}>
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="h6" sx={{ 
-            color: 'white',
-            mb: 0.5,
-            fontWeight: 'bold'
-          }}>
-            {listing.title}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-            {listing.year} · {listing.kilometers?.toLocaleString()} km · {listing.horsepower} CV
-          </Typography>
-        </Box>
-
-        {/* Custom Tax Price Input */}
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
-            Precio para Cálculo de Impuestos (EUR)
-          </Typography>
-          <input
-            type="number"
-            value={customTaxPrice ?? ''}
-            onChange={(e) => setCustomTaxPrice(e.target.value ? Number(e.target.value) : null)}
-            placeholder={formatPrice(basePrice)}
-            style={{
-              width: '100%',
-              padding: '8px 12px',
-              backgroundColor: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: '4px',
-              color: 'white',
-              fontSize: '1rem',
-              outline: 'none'
-            }}
-          />
-          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', mt: 1, display: 'block' }}>
-            Introduce un precio personalizado para calcular la tasa de importación (31%)
-          </Typography>
-        </Box>
+        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 3 }}>
+          El cálculo de la tasa CO2 se realiza según la siguiente fórmula:
+        </Typography>
 
         <TableContainer 
           component={Paper} 
@@ -154,13 +129,10 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
                   pl: 0,
                   py: 2
                 }}>
-                  Precio Base
-                  <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                    Precio del vehículo
-                  </Typography>
+                  Precio BOE
                 </TableCell>
                 <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
-                  {formatPrice(basePrice)}
+                  {formatPrice(boePrice)}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -170,66 +142,60 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
                   pl: 0,
                   py: 2
                 }}>
-                  Tasa de Importación
-                  <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                    31% de {formatPrice(priceForTax)}
-                  </Typography>
+                  Base (17%)
                 </TableCell>
                 <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
-                  {formatPrice(importTax)}
+                  {formatPrice(baseCalc)}
                 </TableCell>
               </TableRow>
-              {listing.emissions_tax !== null && (
-                <TableRow>
-                  <TableCell sx={{ 
-                    color: 'rgba(255,255,255,0.7)', 
-                    border: 'none',
-                    pl: 0,
-                    py: 2
-                  }}>
-                    Tasa CO2
-                    <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                      {listing.emissions_tax_percentage}% ({listing.co2_emissions} g/km)
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
-                    {formatPrice(listing.emissions_tax * 1.0590)}
-                  </TableCell>
-                </TableRow>
-              )}
               <TableRow>
                 <TableCell sx={{ 
-                  color: 'white', 
-                  fontWeight: 'bold', 
+                  color: 'rgba(255,255,255,0.7)', 
                   border: 'none',
-                  borderTop: '1px solid rgba(255,255,255,0.1)',
                   pl: 0,
-                  pt: 3
+                  py: 2
                 }}>
-                  Coste Total
-                  <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                    Incluye todos los impuestos
-                  </Typography>
+                  Reducción (4%)
                 </TableCell>
-                <TableCell 
-                  align="right" 
-                  sx={{ 
-                    border: 'none',
-                    borderTop: '1px solid rgba(255,255,255,0.1)',
-                    pt: 3
-                  }}
-                >
-                  <Typography sx={{ 
-                    color: 'white',
-                    fontWeight: 'bold',
-                    fontSize: '1.25rem',
-                    background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}>
-                    {formatPrice(totalCost)}
-                  </Typography>
+                <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
+                  -{formatPrice(reduction)}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ 
+                  color: 'rgba(255,255,255,0.7)', 
+                  border: 'none',
+                  pl: 0,
+                  py: 2
+                }}>
+                  Base Imponible
+                </TableCell>
+                <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
+                  {formatPrice(taxBase)}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ 
+                  color: 'rgba(255,255,255,0.7)', 
+                  border: 'none',
+                  pl: 0,
+                  py: 2
+                }}>
+                  Tasa CO2 (9.75%)
+                  {co2Emissions && (
+                    <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
+                      Basado en emisiones de {co2Emissions} g/km
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell align="right" sx={{ 
+                  color: 'white', 
+                  border: 'none', 
+                  py: 2,
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem'
+                }}>
+                  {formatPrice(finalTax)}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -248,10 +214,9 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
           sx={{ 
             color: 'white', 
             borderColor: 'rgba(255,255,255,0.3)',
-            px: 3,
             '&:hover': {
-              borderColor: 'rgba(255,255,255,0.5)',
-              background: 'rgba(255,255,255,0.1)'
+              borderColor: 'white',
+              bgcolor: 'rgba(255,255,255,0.1)'
             }
           }}
         >
@@ -262,8 +227,260 @@ const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose
   );
 };
 
+const CostsBreakdownModal: React.FC<CostsBreakdownModalProps> = ({ open, onClose, listing }) => {
+  const [customTaxPrice, setCustomTaxPrice] = useState<number | null>(null);
+  const [showCO2Info, setShowCO2Info] = useState(false);
+  
+  const formatPrice = (price: number | null | undefined) => {
+    if (price == null) return '-- €';
+    return price.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' €';
+  };
+
+  // Calculate costs with null checks and round to 2 decimal places
+  const basePrice = listing.price_chf ? Number((listing.price_chf * 1.0590).toFixed(2)) : 0;
+  const priceForTax = customTaxPrice ?? basePrice;
+  const importTax = Number((priceForTax * 0.31).toFixed(2));
+  
+  // Calculate new CO2 tax with null checks and round to 2 decimal places
+  const baseCalc = listing.boe_precio ? Number((listing.boe_precio * 0.17).toFixed(2)) : 0;
+  const reduction = listing.boe_precio ? Number((listing.boe_precio * 0.04).toFixed(2)) : 0;
+  const taxBase = Number((baseCalc - reduction).toFixed(2));
+  const co2Tax = Number((taxBase * 0.0975).toFixed(2));
+  
+  const totalCost = Number((basePrice + importTax + co2Tax).toFixed(2));
+
+  return (
+    <>
+      <Dialog 
+        open={open} 
+        onClose={onClose}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            background: 'linear-gradient(135deg, rgba(17, 25, 54, 0.95), rgba(35, 23, 65, 0.95))',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 3,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+            overflow: 'hidden'
+          }
+        }}
+      >
+        <DialogTitle sx={{ 
+          color: 'white',
+          background: 'linear-gradient(45deg, rgba(44,62,147,0.6), rgba(107,35,142,0.6))',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          py: 2.5,
+          px: 3,
+          fontSize: '1.25rem',
+          fontWeight: 'bold'
+        }}>
+          Desglose de Costes de Importación
+        </DialogTitle>
+        <DialogContent sx={{ p: 3 }}>
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="h6" sx={{ 
+              color: 'white',
+              mb: 0.5,
+              fontWeight: 'bold'
+            }}>
+              {listing.title}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+              {listing.year} · {listing.kilometers?.toLocaleString()} km · {listing.horsepower} CV
+            </Typography>
+          </Box>
+
+          {/* Custom Tax Price Input */}
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
+              Precio para Cálculo de Impuestos (EUR)
+            </Typography>
+            <input
+              type="number"
+              value={customTaxPrice ?? ''}
+              onChange={(e) => setCustomTaxPrice(e.target.value ? Number(e.target.value) : null)}
+              placeholder={formatPrice(basePrice)}
+              style={{
+                width: '100%',
+                padding: '8px 12px',
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '4px',
+                color: 'white',
+                fontSize: '1rem',
+                outline: 'none'
+              }}
+            />
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', mt: 1, display: 'block' }}>
+              Introduce un precio personalizado para calcular la tasa de importación (31%)
+            </Typography>
+          </Box>
+
+          <TableContainer 
+            component={Paper} 
+            sx={{ 
+              bgcolor: 'transparent',
+              backgroundImage: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell sx={{ 
+                    color: 'rgba(255,255,255,0.7)', 
+                    border: 'none',
+                    pl: 0,
+                    py: 2
+                  }}>
+                    Precio Base
+                    <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
+                      Precio del vehículo
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
+                    {formatPrice(basePrice)}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ 
+                    color: 'rgba(255,255,255,0.7)', 
+                    border: 'none',
+                    pl: 0,
+                    py: 2
+                  }}>
+                    Tasa de Importación
+                    <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
+                      31% de {formatPrice(priceForTax)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
+                    {formatPrice(importTax)}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ 
+                    color: 'rgba(255,255,255,0.7)', 
+                    border: 'none',
+                    pl: 0,
+                    py: 2
+                  }}>
+                    Tasa CO2
+                    <Box component="span" sx={{ ml: 1 }}>
+                      <Tooltip title="Ver cálculo">
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowCO2Info(true);
+                          }}
+                          sx={{ 
+                            color: 'rgba(255,255,255,0.7)',
+                            '&:hover': { color: 'white' }
+                          }}
+                        >
+                          <Info fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                    <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
+                      {listing.co2_emissions} g/km
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right" sx={{ color: 'white', border: 'none', py: 2 }}>
+                    {formatPrice(co2Tax)}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ 
+                    color: 'white', 
+                    fontWeight: 'bold', 
+                    border: 'none',
+                    borderTop: '1px solid rgba(255,255,255,0.1)',
+                    pl: 0,
+                    pt: 3
+                  }}>
+                    Coste Total
+                    <Typography variant="caption" display="block" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
+                      Incluye todos los impuestos
+                    </Typography>
+                  </TableCell>
+                  <TableCell 
+                    align="right" 
+                    sx={{ 
+                      border: 'none',
+                      borderTop: '1px solid rgba(255,255,255,0.1)',
+                      pt: 3
+                    }}
+                  >
+                    <Typography sx={{ 
+                      color: 'white',
+                      fontWeight: 'bold',
+                      fontSize: '1.25rem',
+                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                    }}>
+                      {formatPrice(totalCost)}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </DialogContent>
+        <DialogActions sx={{ 
+          p: 3,
+          pt: 2,
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          background: 'linear-gradient(45deg, rgba(44,62,147,0.3), rgba(107,35,142,0.3))'
+        }}>
+          <Button 
+            onClick={onClose} 
+            variant="outlined" 
+            sx={{ 
+              color: 'white', 
+              borderColor: 'rgba(255,255,255,0.3)',
+              px: 3,
+              '&:hover': {
+                borderColor: 'rgba(255,255,255,0.5)',
+                background: 'rgba(255,255,255,0.1)'
+              }
+            }}
+          >
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
+      <CO2TaxInfoModal
+        open={showCO2Info}
+        onClose={() => setShowCO2Info(false)}
+        boePrice={listing.boe_precio}
+        co2Emissions={listing.co2_emissions}
+      />
+    </>
+  );
+};
+
 const ImportListingGrid: React.FC<ImportListingGridProps> = ({ listings, loading, showNoResults, sx }) => {
   const [selectedListing, setSelectedListing] = useState<ImportListing | null>(null);
+
+  const calculateTotalCost = (listing: ImportListing) => {
+    const basePrice = listing.price_chf ? Number((listing.price_chf * 1.0590).toFixed(2)) : 0;
+    const importTax = Number((basePrice * 0.31).toFixed(2));
+    
+    // Calculate new CO2 tax
+    const baseCalc = listing.boe_precio ? Number((listing.boe_precio * 0.17).toFixed(2)) : 0;
+    const reduction = listing.boe_precio ? Number((listing.boe_precio * 0.04).toFixed(2)) : 0;
+    const taxBase = Number((baseCalc - reduction).toFixed(2));
+    const co2Tax = Number((taxBase * 0.0975).toFixed(2));
+    
+    return Number((basePrice + importTax + co2Tax).toFixed(2));
+  };
 
   if (loading) {
     return (
@@ -421,10 +638,16 @@ const ImportListingGrid: React.FC<ImportListingGridProps> = ({ listings, loading
                         WebkitTextFillColor: 'transparent',
                         fontWeight: 'bold'
                       }}>
-                        {Math.round(listing.total_cost * 1.0590).toLocaleString('es-ES')} €
+                        {calculateTotalCost(listing).toLocaleString('es-ES', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })} €
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                        Base: {Math.round(listing.price_chf * 1.0590).toLocaleString('es-ES')} €
+                        Base: {(listing.price_chf * 1.0590).toLocaleString('es-ES', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })} €
                       </Typography>
                     </Box>
                   </Box>

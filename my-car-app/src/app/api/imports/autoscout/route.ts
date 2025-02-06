@@ -47,6 +47,7 @@ export async function GET() {
           transmission: listing.transmission_type,
           url: listing.listing_url,
           horsepower: listing.horse_power,
+          boe_precio: run.precio_boe,
           listing_images: listing.images.map((url: string) => ({ image_url: url }))
         }))
 
