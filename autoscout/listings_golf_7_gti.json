@@ -1,0 +1,2155 @@
+{
+  "listings": [
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-14T10:48:25.458Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12122722&amount=10900.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-07-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 220,
+      "id": 12122722,
+      "images": [
+        {
+          "key": "722/12122722/358036443.jpeg"
+        },
+        {
+          "key": "722/12122722/173890284.jpeg"
+        },
+        {
+          "key": "722/12122722/512124863.jpeg"
+        },
+        {
+          "key": "722/12122722/1758012096.jpeg"
+        },
+        {
+          "key": "722/12122722/153572779.jpeg"
+        },
+        {
+          "key": "722/12122722/1845984819.jpeg"
+        },
+        {
+          "key": "722/12122722/1748867800.jpeg"
+        },
+        {
+          "key": "722/12122722/1944963770.jpeg"
+        },
+        {
+          "key": "722/12122722/235680292.jpeg"
+        },
+        {
+          "key": "722/12122722/1644985974.jpeg"
+        },
+        {
+          "key": "722/12122722/1991591523.jpeg"
+        },
+        {
+          "key": "722/12122722/598019041.jpeg"
+        },
+        {
+          "key": "722/12122722/1519618740.jpeg"
+        },
+        {
+          "key": "722/12122722/1272437639.jpeg"
+        },
+        {
+          "key": "722/12122722/834530726.jpeg"
+        },
+        {
+          "key": "722/12122722/411585613.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12122722"
+      },
+      "kiloWatts": 162,
+      "lastModifiedDate": "2025-01-25T11:09:31.384Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 182000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 10900.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Gebenstorf AG",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 2401907,
+        "logoKey": null,
+        "name": "Ukshinaj Automobile GmbH",
+        "type": "professional",
+        "zipCode": "5412"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-dsg-12122722"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.3
+      },
+      "createdDate": "2024-12-04T08:11:58.359Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12037697&amount=10980.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2015-10-01",
+      "firstRegistrationYear": 2015,
+      "fuelType": "petrol",
+      "horsePower": 264,
+      "id": 12037697,
+      "images": [
+        {
+          "key": "697/12037697/1715346381.jpg"
+        },
+        {
+          "key": "697/12037697/1003343061.jpg"
+        },
+        {
+          "key": "697/12037697/1316405479.jpg"
+        },
+        {
+          "key": "697/12037697/1567309702.jpg"
+        },
+        {
+          "key": "697/12037697/1581513380.jpg"
+        },
+        {
+          "key": "697/12037697/436050669.jpg"
+        },
+        {
+          "key": "697/12037697/1791386552.jpg"
+        },
+        {
+          "key": "697/12037697/939876597.jpg"
+        },
+        {
+          "key": "697/12037697/467466357.jpg"
+        },
+        {
+          "key": "697/12037697/1201739657.jpg"
+        },
+        {
+          "key": "697/12037697/516017760.jpg"
+        },
+        {
+          "key": "697/12037697/1678523646.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12037697"
+      },
+      "kiloWatts": 194,
+      "lastModifiedDate": "2025-01-30T07:18:36.94Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 190000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 10980.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Les Evouettes",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 1926005,
+        "logoKey": "/dealerlogos/1926005/Logo 7.10.2021.png",
+        "name": "Garage du Haut-Lac",
+        "type": "professional",
+        "zipCode": "1897"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-dsg-12037697"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2024-10-15T16:35:21.912Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=11913676&amount=11499.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2013-08-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 11913676,
+      "images": [
+        {
+          "key": "676/11913676/634513835.jpg"
+        },
+        {
+          "key": "676/11913676/758198986.jpg"
+        },
+        {
+          "key": "676/11913676/999133645.jpg"
+        },
+        {
+          "key": "676/11913676/1119306353.jpg"
+        },
+        {
+          "key": "676/11913676/1211433659.jpg"
+        },
+        {
+          "key": "676/11913676/958376464.jpg"
+        },
+        {
+          "key": "676/11913676/70748086.jpg"
+        },
+        {
+          "key": "676/11913676/1252319145.jpg"
+        },
+        {
+          "key": "676/11913676/1712677404.jpg"
+        },
+        {
+          "key": "676/11913676/118409819.jpg"
+        },
+        {
+          "key": "676/11913676/502188959.jpg"
+        },
+        {
+          "key": "676/11913676/1149139457.jpg"
+        },
+        {
+          "key": "676/11913676/1910375820.jpg"
+        },
+        {
+          "key": "676/11913676/79409308.jpg"
+        },
+        {
+          "key": "676/11913676/6803596.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=11913676"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-29T14:15:51.483Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 179850,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 11499.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Steffisburg",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 1809999,
+        "logoKey": null,
+        "name": "DHM Auto GmbH",
+        "type": "professional",
+        "zipCode": "3612"
+      },
+      "teaser": "Ab MFK & Service / 1Hand / Gepflegtes Fahrzeug  / Tempomat / Parkhilfe / Service gepflegt bei VW Garage",
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-11913676"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": null
+      },
+      "createdDate": "2024-08-25T18:53:10.014Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=11785159&amount=11900.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-05-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 220,
+      "id": 11785159,
+      "images": [
+        {
+          "key": "159/11785159/432686757.jpeg"
+        },
+        {
+          "key": "159/11785159/391221635.jpeg"
+        },
+        {
+          "key": "159/11785159/1027075035.jpeg"
+        },
+        {
+          "key": "159/11785159/1037252192.jpeg"
+        },
+        {
+          "key": "159/11785159/939430695.jpeg"
+        },
+        {
+          "key": "159/11785159/359458499.jpeg"
+        },
+        {
+          "key": "159/11785159/137422630.jpeg"
+        },
+        {
+          "key": "159/11785159/1707309991.jpeg"
+        },
+        {
+          "key": "159/11785159/238271851.jpeg"
+        },
+        {
+          "key": "159/11785159/753548687.jpeg"
+        },
+        {
+          "key": "159/11785159/1625525254.jpeg"
+        },
+        {
+          "key": "159/11785159/1455005800.jpeg"
+        },
+        {
+          "key": "159/11785159/2023613765.jpeg"
+        },
+        {
+          "key": "159/11785159/1228186452.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=11785159"
+      },
+      "kiloWatts": 164,
+      "lastModifiedDate": "2025-01-06T11:34:39.142Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 145500,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 11900.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Landquart",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 61681,
+        "logoKey": null,
+        "name": "AUTORADAK",
+        "type": "professional",
+        "zipCode": "7302"
+      },
+      "teaser": null,
+      "transmissionType": "manual",
+      "transmissionTypeGroup": "manual",
+      "vehicleCategory": "car",
+      "versionFullName": "2.0 TSI GTI",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/20-tsi-gti-11785159"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-19T09:42:15.052Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12136457&amount=11900.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2016-04-01",
+      "firstRegistrationYear": 2016,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12136457,
+      "images": [
+        {
+          "key": "457/12136457/7005543.jpeg"
+        },
+        {
+          "key": "457/12136457/729726487.jpeg"
+        },
+        {
+          "key": "457/12136457/735419918.jpeg"
+        },
+        {
+          "key": "457/12136457/1448609936.jpeg"
+        },
+        {
+          "key": "457/12136457/703878016.jpeg"
+        },
+        {
+          "key": "457/12136457/1275793997.jpeg"
+        },
+        {
+          "key": "457/12136457/1800505844.jpeg"
+        },
+        {
+          "key": "457/12136457/2122442013.jpeg"
+        },
+        {
+          "key": "457/12136457/1517303674.jpeg"
+        },
+        {
+          "key": "457/12136457/1036447549.jpeg"
+        },
+        {
+          "key": "457/12136457/1725322110.jpeg"
+        },
+        {
+          "key": "457/12136457/287889301.jpeg"
+        },
+        {
+          "key": "457/12136457/942074902.jpeg"
+        },
+        {
+          "key": "457/12136457/2032181930.jpeg"
+        },
+        {
+          "key": "457/12136457/1003317232.jpeg"
+        },
+        {
+          "key": "457/12136457/1568422612.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12136457"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-25T14:41:28.984Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 180000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 11900.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Gebenstorf AG",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 2401907,
+        "logoKey": null,
+        "name": "Ukshinaj Automobile GmbH",
+        "type": "professional",
+        "zipCode": "5412"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-12136457"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.0
+      },
+      "createdDate": "2024-03-18T13:26:06.385Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=11372450&amount=11999.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2013-08-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 220,
+      "id": 11372450,
+      "images": [
+        {
+          "key": "450/11372450/1136480388.JPG"
+        },
+        {
+          "key": "450/11372450/1189927523.JPG"
+        },
+        {
+          "key": "450/11372450/1958510789.JPG"
+        },
+        {
+          "key": "450/11372450/1667483900.JPG"
+        },
+        {
+          "key": "450/11372450/1734629997.JPG"
+        },
+        {
+          "key": "450/11372450/2121445784.JPG"
+        },
+        {
+          "key": "450/11372450/628929261.jpg"
+        },
+        {
+          "key": "450/11372450/858576961.jpg"
+        },
+        {
+          "key": "450/11372450/237590491.jpg"
+        },
+        {
+          "key": "450/11372450/20570107.jpg"
+        },
+        {
+          "key": "450/11372450/306754253.jpg"
+        },
+        {
+          "key": "450/11372450/362991715.jpg"
+        },
+        {
+          "key": "450/11372450/822854804.jpg"
+        },
+        {
+          "key": "450/11372450/304771632.jpg"
+        },
+        {
+          "key": "450/11372450/28511926.jpg"
+        },
+        {
+          "key": "450/11372450/780975301.png"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=11372450"
+      },
+      "kiloWatts": 162,
+      "lastModifiedDate": "2024-12-27T10:01:00.987Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 172000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 11999.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Koblenz",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "showroom-listing"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 67707,
+        "logoKey": "/dealerlogos/67707/UGC Logo.jpg",
+        "name": "Universal Garage-Cars",
+        "type": "professional",
+        "zipCode": "5322"
+      },
+      "teaser": "Frisch ab MFK & Frisch ab Service ! 12 Monate Garantie auf Motor & Getriebe ! 8-Fach bereift !\nDistanzregelung!Rückfahrkamera",
+      "transmissionType": "manual",
+      "transmissionTypeGroup": "manual",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-11372450"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2023-09-20T12:54:13.854Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=10873075&amount=12000.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-02-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 300,
+      "id": 10873075,
+      "images": [
+        {
+          "key": "75/10873075/2.jpg"
+        },
+        {
+          "key": "75/10873075/0.jpg"
+        },
+        {
+          "key": "75/10873075/1.jpg"
+        },
+        {
+          "key": "75/10873075/3.jpg"
+        },
+        {
+          "key": "75/10873075/5.jpg"
+        },
+        {
+          "key": "75/10873075/4.jpg"
+        },
+        {
+          "key": "75/10873075/6.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=10873075"
+      },
+      "kiloWatts": 221,
+      "lastModifiedDate": "2025-01-27T14:41:31.096Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 161000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": 15500.0,
+      "price": 12000.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Neftenbach",
+        "features": [
+          {
+            "feature": "listing-visibility-standard"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "showroom-listing"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 65226,
+        "logoKey": null,
+        "name": "Neftenbach Cars GmbH",
+        "type": "professional",
+        "zipCode": "8413"
+      },
+      "teaser": "Sternenhimmel nachgerüstet *Top Occasion* Ab MFK und Service! Eintausch und 12 Mt. Garantie möglich!",
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-dsg-10873075"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.0
+      },
+      "createdDate": "2024-09-09T09:32:31.837Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=11823826&amount=12499.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-06-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 11823826,
+      "images": [
+        {
+          "key": "826/11823826/576578973.JPG"
+        },
+        {
+          "key": "826/11823826/189117540.JPG"
+        },
+        {
+          "key": "826/11823826/1501502715.JPG"
+        },
+        {
+          "key": "826/11823826/1811322122.JPG"
+        },
+        {
+          "key": "826/11823826/842840004.JPG"
+        },
+        {
+          "key": "826/11823826/715861529.JPG"
+        },
+        {
+          "key": "826/11823826/1127401823.JPG"
+        },
+        {
+          "key": "826/11823826/1281410388.JPG"
+        },
+        {
+          "key": "826/11823826/241537065.JPG"
+        },
+        {
+          "key": "826/11823826/1492212798.JPG"
+        },
+        {
+          "key": "826/11823826/212505614.JPG"
+        },
+        {
+          "key": "826/11823826/1290073612.JPG"
+        },
+        {
+          "key": "826/11823826/783530058.JPG"
+        },
+        {
+          "key": "826/11823826/2028223400.png"
+        },
+        {
+          "key": "826/11823826/1161197600.png"
+        },
+        {
+          "key": "826/11823826/1235017135.png"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=11823826"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2024-12-27T09:53:36.484Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 164000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12499.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Koblenz",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "showroom-listing"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 67707,
+        "logoKey": "/dealerlogos/67707/UGC Logo.jpg",
+        "name": "Universal Garage-Cars",
+        "type": "professional",
+        "zipCode": "5322"
+      },
+      "teaser": "Frisch ab MFK 15.04.2024 & Frisch ab Service ! 12 Monate Garantie ! BULL-X Abgasanlage ! CAE-Shifter ! KW-Gewindefahrwerk !",
+      "transmissionType": "manual",
+      "transmissionTypeGroup": "manual",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-11823826"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.0
+      },
+      "createdDate": "2025-01-19T12:36:02.731Z",
+      "features": [
+        {
+          "feature": "top-list"
+        }
+      ],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12136663&amount=12500.00&userTypeId=3"
+      },
+      "firstRegistrationDate": "2013-11-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12136663,
+      "images": [
+        {
+          "key": "663/12136663/1331357918.jpg"
+        },
+        {
+          "key": "663/12136663/264893923.jpg"
+        },
+        {
+          "key": "663/12136663/613091507.jpg"
+        },
+        {
+          "key": "663/12136663/1305055035.jpg"
+        },
+        {
+          "key": "663/12136663/1510036505.jpg"
+        },
+        {
+          "key": "663/12136663/240262683.jpg"
+        },
+        {
+          "key": "663/12136663/1857107280.jpg"
+        },
+        {
+          "key": "663/12136663/779969085.jpg"
+        },
+        {
+          "key": "663/12136663/748059091.jpg"
+        },
+        {
+          "key": "663/12136663/641804787.PNG"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12136663"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-24T00:57:41.128Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 185000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12500.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Aarau",
+        "features": [],
+        "id": 1497104,
+        "logoKey": null,
+        "name": "Sophia Bürgi",
+        "type": "private",
+        "zipCode": "5000"
+      },
+      "teaser": "VW GOLF GTI PERFORMANCE LEDER",
+      "transmissionType": "manual",
+      "transmissionTypeGroup": "manual",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-12136663"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-01T13:16:03.485Z",
+      "features": [
+        {
+          "feature": "top-list"
+        }
+      ],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12096453&amount=12500.00&userTypeId=3"
+      },
+      "firstRegistrationDate": "2013-12-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12096453,
+      "images": [
+        {
+          "key": "453/12096453/40316036.jpg"
+        },
+        {
+          "key": "453/12096453/779085878.jpg"
+        },
+        {
+          "key": "453/12096453/396813831.jpg"
+        },
+        {
+          "key": "453/12096453/401390285.jpg"
+        },
+        {
+          "key": "453/12096453/1371123923.jpg"
+        },
+        {
+          "key": "453/12096453/391361772.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12096453"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-01T13:47:30.034Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 185000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12500.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Rickenbach",
+        "features": [],
+        "id": 2212056,
+        "logoKey": null,
+        "name": "SMPerformance Martins",
+        "type": "private",
+        "zipCode": "6221"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-12096453"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2024-12-09T16:18:12.088Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12052804&amount=12500.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2015-03-01",
+      "firstRegistrationYear": 2015,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12052804,
+      "images": [
+        {
+          "key": "804/12052804/720087443.jpeg"
+        },
+        {
+          "key": "804/12052804/142318609.jpeg"
+        },
+        {
+          "key": "804/12052804/891750491.jpeg"
+        },
+        {
+          "key": "804/12052804/1326811784.jpeg"
+        },
+        {
+          "key": "804/12052804/1801982578.jpeg"
+        },
+        {
+          "key": "804/12052804/1606241576.jpeg"
+        },
+        {
+          "key": "804/12052804/1399282575.jpeg"
+        },
+        {
+          "key": "804/12052804/1309768166.jpeg"
+        },
+        {
+          "key": "804/12052804/1762602097.jpeg"
+        },
+        {
+          "key": "804/12052804/1356877915.jpeg"
+        },
+        {
+          "key": "804/12052804/1461306907.jpeg"
+        },
+        {
+          "key": "804/12052804/367637235.jpeg"
+        },
+        {
+          "key": "804/12052804/419894753.jpeg"
+        },
+        {
+          "key": "804/12052804/1477437119.jpeg"
+        },
+        {
+          "key": "804/12052804/718819273.jpeg"
+        },
+        {
+          "key": "804/12052804/263238956.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12052804"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-14T18:40:59.569Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 175000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12500.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Adlikon b. Andelfingen",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 2369354,
+        "logoKey": "/dealerlogos/2369354/Logo 02.08.2022.jpg",
+        "name": "RPM Garage GmbH",
+        "type": "professional",
+        "zipCode": "8452"
+      },
+      "teaser": "//Frisch ab MFK & Service//",
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-12052804"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 7.0
+      },
+      "createdDate": "2024-12-11T12:22:29.767Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12056921&amount=12500.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2015-07-01",
+      "firstRegistrationYear": 2015,
+      "fuelType": "petrol",
+      "horsePower": 301,
+      "id": 12056921,
+      "images": [
+        {
+          "key": "921/12056921/1023284214.jpeg"
+        },
+        {
+          "key": "921/12056921/1011283913.jpeg"
+        },
+        {
+          "key": "921/12056921/1823253880.jpeg"
+        },
+        {
+          "key": "921/12056921/1352335414.jpeg"
+        },
+        {
+          "key": "921/12056921/819666946.jpeg"
+        },
+        {
+          "key": "921/12056921/1327147009.jpeg"
+        },
+        {
+          "key": "921/12056921/482481883.jpeg"
+        },
+        {
+          "key": "921/12056921/1766698595.jpeg"
+        },
+        {
+          "key": "921/12056921/831189084.jpeg"
+        },
+        {
+          "key": "921/12056921/695483136.jpeg"
+        },
+        {
+          "key": "921/12056921/1179389328.jpeg"
+        },
+        {
+          "key": "921/12056921/1597943655.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12056921"
+      },
+      "kiloWatts": 221,
+      "lastModifiedDate": "2025-01-22T12:56:29.603Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 179872,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12500.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Pieterlen",
+        "features": [
+          {
+            "feature": "listing-visibility-standard"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "showroom-listing"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 1880443,
+        "logoKey": null,
+        "name": "A. H Automobiles Sàrl",
+        "type": "professional",
+        "zipCode": "2542"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf Variant 2.0 TSI R 4 Motion DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-variant-20-tsi-r-4-motion-dsg-12056921"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-16T08:19:38.084Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12127948&amount=12880.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2013-09-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 220,
+      "id": 12127948,
+      "images": [
+        {
+          "key": "948/12127948/82211031.jpeg"
+        },
+        {
+          "key": "948/12127948/2112796852.jpeg"
+        },
+        {
+          "key": "948/12127948/391939967.jpeg"
+        },
+        {
+          "key": "948/12127948/2041691864.jpeg"
+        },
+        {
+          "key": "948/12127948/550943196.jpeg"
+        },
+        {
+          "key": "948/12127948/2067413693.jpeg"
+        },
+        {
+          "key": "948/12127948/1643880054.jpeg"
+        },
+        {
+          "key": "948/12127948/745380903.jpeg"
+        },
+        {
+          "key": "948/12127948/200908206.jpeg"
+        },
+        {
+          "key": "948/12127948/2009362855.jpeg"
+        },
+        {
+          "key": "948/12127948/1743849947.jpeg"
+        },
+        {
+          "key": "948/12127948/107336852.jpeg"
+        },
+        {
+          "key": "948/12127948/479992035.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12127948"
+      },
+      "kiloWatts": 162,
+      "lastModifiedDate": "2025-01-16T08:41:00.061Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 179000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12880.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Hunzenschwil AG",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 66106,
+        "logoKey": "/dealerlogos/66106/abaga.jpg",
+        "name": "AUTO BLITZ AG",
+        "type": "professional",
+        "zipCode": "5502"
+      },
+      "teaser": "* Top Zustand * Frisch ab Service & ab MFK *",
+      "transmissionType": "automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf VII 2.0 TSI GTI DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-vii-20-tsi-gti-dsg-12127948"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-13T14:06:03.564Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12120058&amount=12900.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-10-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12120058,
+      "images": [
+        {
+          "key": "58/12120058/1248196932.png"
+        },
+        {
+          "key": "58/12120058/267228292.png"
+        },
+        {
+          "key": "58/12120058/577317723.png"
+        },
+        {
+          "key": "58/12120058/1606194544.png"
+        },
+        {
+          "key": "58/12120058/1672132564.png"
+        },
+        {
+          "key": "58/12120058/675372771.png"
+        },
+        {
+          "key": "58/12120058/1022682485.png"
+        },
+        {
+          "key": "58/12120058/959415841.png"
+        },
+        {
+          "key": "58/12120058/1918234056.png"
+        },
+        {
+          "key": "58/12120058/94382212.png"
+        },
+        {
+          "key": "58/12120058/524870636.png"
+        },
+        {
+          "key": "58/12120058/1096606164.png"
+        },
+        {
+          "key": "58/12120058/763638529.png"
+        },
+        {
+          "key": "58/12120058/1969249906.png"
+        },
+        {
+          "key": "58/12120058/1959950078.png"
+        },
+        {
+          "key": "58/12120058/2134534005.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12120058"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-13T14:29:30.134Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 184500,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12900.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Bellinzona",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 1980744,
+        "logoKey": null,
+        "name": "HAPPY CARS",
+        "type": "professional",
+        "zipCode": "6500"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-12120058"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2024-09-10T08:51:21.314Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=11826512&amount=12990.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2013-05-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 11826512,
+      "images": [
+        {
+          "key": "512/11826512/787129121.jpg"
+        },
+        {
+          "key": "512/11826512/1844109358.jpg"
+        },
+        {
+          "key": "512/11826512/2047165894.jpg"
+        },
+        {
+          "key": "512/11826512/139911713.jpg"
+        },
+        {
+          "key": "512/11826512/826605435.jpg"
+        },
+        {
+          "key": "512/11826512/600618995.jpg"
+        },
+        {
+          "key": "512/11826512/1584135374.jpg"
+        },
+        {
+          "key": "512/11826512/1039591307.jpg"
+        },
+        {
+          "key": "512/11826512/420344449.jpg"
+        },
+        {
+          "key": "512/11826512/981875476.jpg"
+        },
+        {
+          "key": "512/11826512/725270431.jpg"
+        },
+        {
+          "key": "512/11826512/1834327427.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=11826512"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-17T16:09:42.341Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 185700,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12990.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Turbenthal",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 2694070,
+        "logoKey": null,
+        "name": "ALK Garage GmbH",
+        "type": "professional",
+        "zipCode": "8488"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-11826512"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-26T15:49:40.516Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12156282&amount=12999.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-03-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12156282,
+      "images": [
+        {
+          "key": "282/12156282/702794166.jpeg"
+        },
+        {
+          "key": "282/12156282/270274113.jpeg"
+        },
+        {
+          "key": "282/12156282/296321681.jpeg"
+        },
+        {
+          "key": "282/12156282/649728761.jpeg"
+        },
+        {
+          "key": "282/12156282/477364124.jpeg"
+        },
+        {
+          "key": "282/12156282/1410557625.jpeg"
+        },
+        {
+          "key": "282/12156282/553248191.jpeg"
+        },
+        {
+          "key": "282/12156282/1648637752.jpeg"
+        },
+        {
+          "key": "282/12156282/1990803313.jpeg"
+        },
+        {
+          "key": "282/12156282/736984630.jpeg"
+        },
+        {
+          "key": "282/12156282/1031118694.jpeg"
+        },
+        {
+          "key": "282/12156282/910325980.jpeg"
+        },
+        {
+          "key": "282/12156282/2012588368.jpeg"
+        },
+        {
+          "key": "282/12156282/407561564.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12156282"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-29T00:26:21.203Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 170000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 12999.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Schlatt TG",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 2067529,
+        "logoKey": "/dealerlogos/2067529/2067529_220x80.png",
+        "name": "ALTHERR AUTOMOBILE &            AULETTA AUTOMOBILE",
+        "type": "professional",
+        "zipCode": "8252"
+      },
+      "teaser": null,
+      "transmissionType": "automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-12156282"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2025-01-29T16:43:20.485Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12164780&amount=13000.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-05-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 12164780,
+      "images": [
+        {
+          "key": "780/12164780/124424200.jpg"
+        },
+        {
+          "key": "780/12164780/1084782528.jpg"
+        },
+        {
+          "key": "780/12164780/584631772.jpg"
+        },
+        {
+          "key": "780/12164780/1882606921.jpg"
+        },
+        {
+          "key": "780/12164780/2030084277.jpg"
+        },
+        {
+          "key": "780/12164780/669612639.jpg"
+        },
+        {
+          "key": "780/12164780/1488150119.jpg"
+        },
+        {
+          "key": "780/12164780/1005412479.jpg"
+        },
+        {
+          "key": "780/12164780/224217951.jpg"
+        },
+        {
+          "key": "780/12164780/1538038064.jpg"
+        },
+        {
+          "key": "780/12164780/1043948670.jpg"
+        },
+        {
+          "key": "780/12164780/183820008.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12164780"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-29T17:03:45.09Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 172000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 13000.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "Meyrin",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 1526941,
+        "logoKey": "/dealerlogos/1526941/2022-03-21_13-08-23.jpg",
+        "name": "AutoGeneve SA",
+        "type": "professional",
+        "zipCode": "1217"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-12164780"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.9
+      },
+      "createdDate": "2025-01-25T13:03:54.753Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=12154193&amount=13500.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2014-09-01",
+      "firstRegistrationYear": 2014,
+      "fuelType": "petrol",
+      "horsePower": 301,
+      "id": 12154193,
+      "images": [
+        {
+          "key": "193/12154193/1267656618.jpeg"
+        },
+        {
+          "key": "193/12154193/1689764548.jpeg"
+        },
+        {
+          "key": "193/12154193/1525383083.jpeg"
+        },
+        {
+          "key": "193/12154193/1339297936.jpeg"
+        },
+        {
+          "key": "193/12154193/1136631970.jpeg"
+        },
+        {
+          "key": "193/12154193/2095313430.jpeg"
+        },
+        {
+          "key": "193/12154193/58000431.jpeg"
+        },
+        {
+          "key": "193/12154193/1425818958.jpeg"
+        },
+        {
+          "key": "193/12154193/241665848.jpeg"
+        },
+        {
+          "key": "193/12154193/1768988474.jpeg"
+        },
+        {
+          "key": "193/12154193/2146953672.jpeg"
+        },
+        {
+          "key": "193/12154193/759542023.jpeg"
+        },
+        {
+          "key": "193/12154193/426162721.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=12154193"
+      },
+      "kiloWatts": 221,
+      "lastModifiedDate": "2025-01-25T13:24:15.021Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 173000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 13500.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Selzach",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 1161310,
+        "logoKey": null,
+        "name": "M+S Autohandel",
+        "type": "professional",
+        "zipCode": "2545"
+      },
+      "teaser": null,
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI R 4Motion DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-r-4motion-dsg-12154193"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": null
+      },
+      "createdDate": "2024-10-29T07:42:50.936Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=11952852&amount=13900.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2013-11-01",
+      "firstRegistrationYear": 2013,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 11952852,
+      "images": [
+        {
+          "key": "852/11952852/2131210916.jpeg"
+        },
+        {
+          "key": "852/11952852/815137907.jpeg"
+        },
+        {
+          "key": "852/11952852/287978937.jpeg"
+        },
+        {
+          "key": "852/11952852/1324609026.jpeg"
+        },
+        {
+          "key": "852/11952852/156351151.jpeg"
+        },
+        {
+          "key": "852/11952852/1175309420.jpeg"
+        },
+        {
+          "key": "852/11952852/2062007534.jpeg"
+        },
+        {
+          "key": "852/11952852/109543354.jpeg"
+        },
+        {
+          "key": "852/11952852/980213028.jpeg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=11952852"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2025-01-20T13:38:44.207Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 198000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 13900.0,
+      "qualiLogoId": null,
+      "qualiLogo": null,
+      "range": null,
+      "seller": {
+        "city": "PERLY",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 60498,
+        "logoKey": null,
+        "name": "Perly Automobiles",
+        "type": "professional",
+        "zipCode": "1258"
+      },
+      "teaser": "Très belle voiture, carnet de service complet",
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Perform.",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-perform-11952852"
+    },
+    {
+      "conditionType": "used",
+      "consumption": {
+        "combined": 6.4
+      },
+      "createdDate": "2023-08-12T07:49:21.657Z",
+      "features": [],
+      "financing": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autokredit-finden?vehicleId=10765008&amount=13900.00&userTypeId=1"
+      },
+      "firstRegistrationDate": "2015-05-01",
+      "firstRegistrationYear": 2015,
+      "fuelType": "petrol",
+      "horsePower": 230,
+      "id": 10765008,
+      "images": [
+        {
+          "key": "8/10765008/7.jpg"
+        },
+        {
+          "key": "8/10765008/10.jpg"
+        },
+        {
+          "key": "8/10765008/14.jpg"
+        },
+        {
+          "key": "8/10765008/6.jpg"
+        },
+        {
+          "key": "8/10765008/3.jpg"
+        },
+        {
+          "key": "8/10765008/1.jpg"
+        },
+        {
+          "key": "8/10765008/5.jpg"
+        },
+        {
+          "key": "8/10765008/11.jpg"
+        },
+        {
+          "key": "8/10765008/8.jpg"
+        },
+        {
+          "key": "8/10765008/0.jpg"
+        },
+        {
+          "key": "8/10765008/2.jpg"
+        },
+        {
+          "key": "8/10765008/12.jpg"
+        },
+        {
+          "key": "8/10765008/13.jpg"
+        },
+        {
+          "key": "8/10765008/9.jpg"
+        },
+        {
+          "key": "8/10765008/15.jpg"
+        },
+        {
+          "key": "8/10765008/4.jpg"
+        }
+      ],
+      "insurance": {
+        "providerName": "FinanceScout24",
+        "url": "https://www.financescout24.ch/de/autoversicherung-finden?vehicleId=10765008"
+      },
+      "kiloWatts": 169,
+      "lastModifiedDate": "2024-07-08T20:11:20.814Z",
+      "leasing": null,
+      "make": {
+        "id": 82,
+        "name": "VW",
+        "key": "vw"
+      },
+      "mileage": 183000,
+      "model": {
+        "id": 585,
+        "name": "GOLF",
+        "key": "golf"
+      },
+      "previousPrice": null,
+      "price": 13900.0,
+      "qualiLogoId": 37,
+      "qualiLogo": {
+        "id": 37,
+        "imageKey": "/qualilogos/37.svg",
+        "url": "https://www.quality1.ch/de/angebote/auto.html"
+      },
+      "range": null,
+      "seller": {
+        "city": "Steinebrunn",
+        "features": [
+          {
+            "feature": "listing-visibility-basic"
+          },
+          {
+            "feature": "list"
+          },
+          {
+            "feature": "test-drive"
+          }
+        ],
+        "id": 67850,
+        "logoKey": null,
+        "name": "Autocenter Steinebrunn AG",
+        "type": "professional",
+        "zipCode": "9314"
+      },
+      "teaser": "CH-Fahrzeug - Lederausstattung, Navi, Rückfahrkamera, 19\" Alufelgen, Sportsitze vorne ...",
+      "transmissionType": "semi-automatic",
+      "transmissionTypeGroup": "automatic",
+      "vehicleCategory": "car",
+      "versionFullName": "Golf 2.0 TSI GTI Performance DSG",
+      "listingUrl": "https://www.autoscout24.ch/fr/d/golf-20-tsi-gti-performance-dsg-10765008"
+    }
+  ]
+}

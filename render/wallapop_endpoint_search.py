@@ -14,7 +14,7 @@ SPAIN_CENTER = {
 # Define unwanted keywords as a global constant
 UNWANTED_KEYWORDS = [
     'accidentado', 'accidentada', 'inundado', 'accidente', 'inundó', 'flexicar', 'dana', 'averias', 'golpe', 'averia', 'gripado', 
-    'gripada', 'despiece', 'reparar', 'no arranca', 'averiado', '¡No contesto mensajes!', 'averiada', '647 358 133', 'mallorca', 'palma'
+    'gripada', 'despiece', 'no arranca', 'averiado', 'cambiar motor', '¡No contesto mensajes!', 'averiada', '647 358 133', 'mallorca', 'palma'
 ]
 
 def format_price_text(price: float) -> str:

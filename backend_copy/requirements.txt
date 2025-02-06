@@ -1,7 +1,0 @@
-selenium==4.16.0
-fastapi==0.109.0
-uvicorn==0.25.0
-python-dotenv==1.0.0
-supabase-py==0.0.2
-httpx==0.16.1
-requests==2.25.1 

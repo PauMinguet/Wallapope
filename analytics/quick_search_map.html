@@ -1,0 +1,2828 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_b15b8ed957ee0d371be69fec31668a37 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_b15b8ed957ee0d371be69fec31668a37" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_b15b8ed957ee0d371be69fec31668a37 = L.map(
+                "map_b15b8ed957ee0d371be69fec31668a37",
+                {
+                    center: [40.4637, -3.7492],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 6,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7f5821676e8367eb0bd3d555ee4f34aa = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_b15b8ed957ee0d371be69fec31668a37);
+        
+    
+            var marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5 = L.markerClusterGroup(
+                {}
+            );
+            map_b15b8ed957ee0d371be69fec31668a37.addLayer(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var marker_a5066a71d110a62de0333a8927307f60 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_50c9fdc88fe11edb88c6fa466f79bf5c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_a5066a71d110a62de0333a8927307f60.setIcon(icon_50c9fdc88fe11edb88c6fa466f79bf5c);
+        
+    
+        var popup_3d3915dde502e8046abeb94eddf35331 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_0e4b057b2307fda4f599147053c01d5a = $(`<div id="html_0e4b057b2307fda4f599147053c01d5a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_3d3915dde502e8046abeb94eddf35331.setContent(html_0e4b057b2307fda4f599147053c01d5a);
+            
+        
+
+        marker_a5066a71d110a62de0333a8927307f60.bindPopup(popup_3d3915dde502e8046abeb94eddf35331)
+        ;
+
+        
+    
+    
+            var marker_84e8f0a0afb5fc9ae963755e702af1d9 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_75a16ee0112956133aceb46d175bcbd7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_84e8f0a0afb5fc9ae963755e702af1d9.setIcon(icon_75a16ee0112956133aceb46d175bcbd7);
+        
+    
+        var popup_e4678d67f1cb7bc0cb8b67dd89fbebf1 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_1d605c57c6794a317b1687ed4c8b21b5 = $(`<div id="html_1d605c57c6794a317b1687ed4c8b21b5" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_e4678d67f1cb7bc0cb8b67dd89fbebf1.setContent(html_1d605c57c6794a317b1687ed4c8b21b5);
+            
+        
+
+        marker_84e8f0a0afb5fc9ae963755e702af1d9.bindPopup(popup_e4678d67f1cb7bc0cb8b67dd89fbebf1)
+        ;
+
+        
+    
+    
+            var marker_cac715b30c3cacc2e5f113d7b63a2cf2 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2c85872779122631ee70e32832598c56 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_cac715b30c3cacc2e5f113d7b63a2cf2.setIcon(icon_2c85872779122631ee70e32832598c56);
+        
+    
+        var popup_6e7c8e35100866773d7c94d5a3b4547b = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_ba4e992327c3d8f8c48f9cb4332f9a7a = $(`<div id="html_ba4e992327c3d8f8c48f9cb4332f9a7a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Seat León</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 14</p>         </div>         </div>`)[0];
+                popup_6e7c8e35100866773d7c94d5a3b4547b.setContent(html_ba4e992327c3d8f8c48f9cb4332f9a7a);
+            
+        
+
+        marker_cac715b30c3cacc2e5f113d7b63a2cf2.bindPopup(popup_6e7c8e35100866773d7c94d5a3b4547b)
+        ;
+
+        
+    
+    
+            var marker_5204011cce2258a3839bf524001d9e59 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_574e658f30847f94b4285c3b2ed96677 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_5204011cce2258a3839bf524001d9e59.setIcon(icon_574e658f30847f94b4285c3b2ed96677);
+        
+    
+        var popup_12438ab8a627a787fe0a2e922147edd8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4417b370697d887dccb205d1e8a77f98 = $(`<div id="html_4417b370697d887dccb205d1e8a77f98" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_12438ab8a627a787fe0a2e922147edd8.setContent(html_4417b370697d887dccb205d1e8a77f98);
+            
+        
+
+        marker_5204011cce2258a3839bf524001d9e59.bindPopup(popup_12438ab8a627a787fe0a2e922147edd8)
+        ;
+
+        
+    
+    
+            var marker_1ad73f4e5a711fd6d3161142386eed1a = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_49dca6c8de41529c00876ddc68a8e8b3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_1ad73f4e5a711fd6d3161142386eed1a.setIcon(icon_49dca6c8de41529c00876ddc68a8e8b3);
+        
+    
+        var popup_0c9b4372637d86167fb9b8400463f01e = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_d733d2dac0a0109e369561fa4273bc1d = $(`<div id="html_d733d2dac0a0109e369561fa4273bc1d" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_0c9b4372637d86167fb9b8400463f01e.setContent(html_d733d2dac0a0109e369561fa4273bc1d);
+            
+        
+
+        marker_1ad73f4e5a711fd6d3161142386eed1a.bindPopup(popup_0c9b4372637d86167fb9b8400463f01e)
+        ;
+
+        
+    
+    
+            var marker_4660f71d38ebe5f905eccd6230950e90 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_85197995916ff3b2d52624e3d4715d73 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_4660f71d38ebe5f905eccd6230950e90.setIcon(icon_85197995916ff3b2d52624e3d4715d73);
+        
+    
+        var popup_efe7693e7966869410686ee9a66bd25c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_fbf38b8aab04faf99e567c3c15e4591c = $(`<div id="html_fbf38b8aab04faf99e567c3c15e4591c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_efe7693e7966869410686ee9a66bd25c.setContent(html_fbf38b8aab04faf99e567c3c15e4591c);
+            
+        
+
+        marker_4660f71d38ebe5f905eccd6230950e90.bindPopup(popup_efe7693e7966869410686ee9a66bd25c)
+        ;
+
+        
+    
+    
+            var marker_c9ab3fe736f61ca598c7289a5353ec49 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_d63e9aced990741d8c1b89e3c57116b5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c9ab3fe736f61ca598c7289a5353ec49.setIcon(icon_d63e9aced990741d8c1b89e3c57116b5);
+        
+    
+        var popup_cb264c3dcf1a1d808fd06904be57ac3f = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_bd6c74983c914ef24518025333e991ef = $(`<div id="html_bd6c74983c914ef24518025333e991ef" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Seat León</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_cb264c3dcf1a1d808fd06904be57ac3f.setContent(html_bd6c74983c914ef24518025333e991ef);
+            
+        
+
+        marker_c9ab3fe736f61ca598c7289a5353ec49.bindPopup(popup_cb264c3dcf1a1d808fd06904be57ac3f)
+        ;
+
+        
+    
+    
+            var marker_c0c90de6b7451f884f696de0c0ccb26e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_386b8296e6db56de74c39560783374ad = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c0c90de6b7451f884f696de0c0ccb26e.setIcon(icon_386b8296e6db56de74c39560783374ad);
+        
+    
+        var popup_d577b387c1fb9d275e5354ec0a962fef = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_6c37fdebbc12738e347d1425cd03ec80 = $(`<div id="html_6c37fdebbc12738e347d1425cd03ec80" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_d577b387c1fb9d275e5354ec0a962fef.setContent(html_6c37fdebbc12738e347d1425cd03ec80);
+            
+        
+
+        marker_c0c90de6b7451f884f696de0c0ccb26e.bindPopup(popup_d577b387c1fb9d275e5354ec0a962fef)
+        ;
+
+        
+    
+    
+            var marker_5d5a9015822c98c4c58773d4114c5f78 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_3276b60e13ee6f5d70b3fd96be7ea6d9 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_5d5a9015822c98c4c58773d4114c5f78.setIcon(icon_3276b60e13ee6f5d70b3fd96be7ea6d9);
+        
+    
+        var popup_1fc91c97ae65130ad5794c184c1f9cea = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_73940b6dc8a2b42ca2288d3b66284b1d = $(`<div id="html_73940b6dc8a2b42ca2288d3b66284b1d" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_1fc91c97ae65130ad5794c184c1f9cea.setContent(html_73940b6dc8a2b42ca2288d3b66284b1d);
+            
+        
+
+        marker_5d5a9015822c98c4c58773d4114c5f78.bindPopup(popup_1fc91c97ae65130ad5794c184c1f9cea)
+        ;
+
+        
+    
+    
+            var marker_c4cd256ba0ab0e6f8b186215c8b1e351 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_faaeab155ada33be6dd86e0bf05789b0 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c4cd256ba0ab0e6f8b186215c8b1e351.setIcon(icon_faaeab155ada33be6dd86e0bf05789b0);
+        
+    
+        var popup_29dfc142bc9e04ac524c18e8c9787cd1 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2a47f8a578cd238ddd5fe06c3921e60b = $(`<div id="html_2a47f8a578cd238ddd5fe06c3921e60b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_29dfc142bc9e04ac524c18e8c9787cd1.setContent(html_2a47f8a578cd238ddd5fe06c3921e60b);
+            
+        
+
+        marker_c4cd256ba0ab0e6f8b186215c8b1e351.bindPopup(popup_29dfc142bc9e04ac524c18e8c9787cd1)
+        ;
+
+        
+    
+    
+            var marker_8283128c996b074f3fae2060d8c19f6c = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_967a52f457b2fbe234e16923b84bc162 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_8283128c996b074f3fae2060d8c19f6c.setIcon(icon_967a52f457b2fbe234e16923b84bc162);
+        
+    
+        var popup_d65bd3f24fb31cc16d25936f0bcc352a = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_87c42416b91b29a6cbdafa8b669f25af = $(`<div id="html_87c42416b91b29a6cbdafa8b669f25af" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_d65bd3f24fb31cc16d25936f0bcc352a.setContent(html_87c42416b91b29a6cbdafa8b669f25af);
+            
+        
+
+        marker_8283128c996b074f3fae2060d8c19f6c.bindPopup(popup_d65bd3f24fb31cc16d25936f0bcc352a)
+        ;
+
+        
+    
+    
+            var marker_0e4513dc345a1d3cd801f068fa2e5e50 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_a2fdec6bf068c68592c8d45a744be116 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_0e4513dc345a1d3cd801f068fa2e5e50.setIcon(icon_a2fdec6bf068c68592c8d45a744be116);
+        
+    
+        var popup_dee305b1d21a9d02d2b0f3556cfaabbc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_d1d8baa3f40c200a1801ac66f68fb164 = $(`<div id="html_d1d8baa3f40c200a1801ac66f68fb164" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_dee305b1d21a9d02d2b0f3556cfaabbc.setContent(html_d1d8baa3f40c200a1801ac66f68fb164);
+            
+        
+
+        marker_0e4513dc345a1d3cd801f068fa2e5e50.bindPopup(popup_dee305b1d21a9d02d2b0f3556cfaabbc)
+        ;
+
+        
+    
+    
+            var marker_d15e9699fe2127cc2e50859bb015a608 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2f7fc565601cc081800ae91402b73f70 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_d15e9699fe2127cc2e50859bb015a608.setIcon(icon_2f7fc565601cc081800ae91402b73f70);
+        
+    
+        var popup_24be36a74ace05f33b5adf104f93c639 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_1c9d91f606ec3b8d697e183498b9d93a = $(`<div id="html_1c9d91f606ec3b8d697e183498b9d93a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_24be36a74ace05f33b5adf104f93c639.setContent(html_1c9d91f606ec3b8d697e183498b9d93a);
+            
+        
+
+        marker_d15e9699fe2127cc2e50859bb015a608.bindPopup(popup_24be36a74ace05f33b5adf104f93c639)
+        ;
+
+        
+    
+    
+            var marker_789abc22df3ba10b5802737320ccb077 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_64634ae7faf47d9c20526a12044fcf6a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_789abc22df3ba10b5802737320ccb077.setIcon(icon_64634ae7faf47d9c20526a12044fcf6a);
+        
+    
+        var popup_1f60bdd8761269a37ea296fd760e2a6f = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_ea6915b02cc087c0a44d21211a595ba2 = $(`<div id="html_ea6915b02cc087c0a44d21211a595ba2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_1f60bdd8761269a37ea296fd760e2a6f.setContent(html_ea6915b02cc087c0a44d21211a595ba2);
+            
+        
+
+        marker_789abc22df3ba10b5802737320ccb077.bindPopup(popup_1f60bdd8761269a37ea296fd760e2a6f)
+        ;
+
+        
+    
+    
+            var marker_3bffbb8e3635b1e6274a09b76806eb44 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_f753d8882e2e23894f9543d2428d3bd8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_3bffbb8e3635b1e6274a09b76806eb44.setIcon(icon_f753d8882e2e23894f9543d2428d3bd8);
+        
+    
+        var popup_e122689d455da7a1a932b0d75e8ff56c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_7ed29747260ff4317335dd3497334b1c = $(`<div id="html_7ed29747260ff4317335dd3497334b1c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_e122689d455da7a1a932b0d75e8ff56c.setContent(html_7ed29747260ff4317335dd3497334b1c);
+            
+        
+
+        marker_3bffbb8e3635b1e6274a09b76806eb44.bindPopup(popup_e122689d455da7a1a932b0d75e8ff56c)
+        ;
+
+        
+    
+    
+            var marker_5703c0b125ac97e42d3a84e157c1a086 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_346d701ae72c417f435f85a36f0fbba0 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_5703c0b125ac97e42d3a84e157c1a086.setIcon(icon_346d701ae72c417f435f85a36f0fbba0);
+        
+    
+        var popup_29c2484fe207cafb0a042c934a644d98 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_763461cf6483eec6e52fa884f9314a4b = $(`<div id="html_763461cf6483eec6e52fa884f9314a4b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_29c2484fe207cafb0a042c934a644d98.setContent(html_763461cf6483eec6e52fa884f9314a4b);
+            
+        
+
+        marker_5703c0b125ac97e42d3a84e157c1a086.bindPopup(popup_29c2484fe207cafb0a042c934a644d98)
+        ;
+
+        
+    
+    
+            var marker_5cbca4a961f952d5211067b13a4c0547 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2a0d96537bddf25cdda5ac353374aaa6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_5cbca4a961f952d5211067b13a4c0547.setIcon(icon_2a0d96537bddf25cdda5ac353374aaa6);
+        
+    
+        var popup_c66a77bd85a9a3bffc063f1352e2905e = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_bb5fc3af3b4171404842cd6305fdac6e = $(`<div id="html_bb5fc3af3b4171404842cd6305fdac6e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_c66a77bd85a9a3bffc063f1352e2905e.setContent(html_bb5fc3af3b4171404842cd6305fdac6e);
+            
+        
+
+        marker_5cbca4a961f952d5211067b13a4c0547.bindPopup(popup_c66a77bd85a9a3bffc063f1352e2905e)
+        ;
+
+        
+    
+    
+            var marker_15ef0905affb735b4c477e2dfd83785e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_0d121bce07d489ea72a3ab8f76497842 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_15ef0905affb735b4c477e2dfd83785e.setIcon(icon_0d121bce07d489ea72a3ab8f76497842);
+        
+    
+        var popup_0fbe24a6d7c5f747f94b3aa2f3a71f5c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_6842c9c9b6b8cbb533f95e0c81177d3f = $(`<div id="html_6842c9c9b6b8cbb533f95e0c81177d3f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_0fbe24a6d7c5f747f94b3aa2f3a71f5c.setContent(html_6842c9c9b6b8cbb533f95e0c81177d3f);
+            
+        
+
+        marker_15ef0905affb735b4c477e2dfd83785e.bindPopup(popup_0fbe24a6d7c5f747f94b3aa2f3a71f5c)
+        ;
+
+        
+    
+    
+            var marker_7c903978f9c6452f6d8041ddad8003cc = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_6db413b0b6d3495ab826417128de95c3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_7c903978f9c6452f6d8041ddad8003cc.setIcon(icon_6db413b0b6d3495ab826417128de95c3);
+        
+    
+        var popup_2b00ac24b9dd1b9aa4a26dc6f41a0c6b = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_eb8eb3b476a5038c3582cadeb5796c19 = $(`<div id="html_eb8eb3b476a5038c3582cadeb5796c19" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_2b00ac24b9dd1b9aa4a26dc6f41a0c6b.setContent(html_eb8eb3b476a5038c3582cadeb5796c19);
+            
+        
+
+        marker_7c903978f9c6452f6d8041ddad8003cc.bindPopup(popup_2b00ac24b9dd1b9aa4a26dc6f41a0c6b)
+        ;
+
+        
+    
+    
+            var marker_a4cf44468f37cdd0c75410417185351a = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8757d47a1a87257835939348b8894734 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_a4cf44468f37cdd0c75410417185351a.setIcon(icon_8757d47a1a87257835939348b8894734);
+        
+    
+        var popup_3413644675dc5b725184f9b3f7d3cddc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2effe2c399a5169cea25beec7497f1e6 = $(`<div id="html_2effe2c399a5169cea25beec7497f1e6" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_3413644675dc5b725184f9b3f7d3cddc.setContent(html_2effe2c399a5169cea25beec7497f1e6);
+            
+        
+
+        marker_a4cf44468f37cdd0c75410417185351a.bindPopup(popup_3413644675dc5b725184f9b3f7d3cddc)
+        ;
+
+        
+    
+    
+            var marker_9636e7793d22ad9288297f68b3ace06d = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_26a3b4032e9db70682e330c28e656c7a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_9636e7793d22ad9288297f68b3ace06d.setIcon(icon_26a3b4032e9db70682e330c28e656c7a);
+        
+    
+        var popup_12075895f38aeae6e70f2e0e08e2a15b = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_c7da9afa59bdef9934a36c1ae77e1c3a = $(`<div id="html_c7da9afa59bdef9934a36c1ae77e1c3a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 11</p>         </div>         </div>`)[0];
+                popup_12075895f38aeae6e70f2e0e08e2a15b.setContent(html_c7da9afa59bdef9934a36c1ae77e1c3a);
+            
+        
+
+        marker_9636e7793d22ad9288297f68b3ace06d.bindPopup(popup_12075895f38aeae6e70f2e0e08e2a15b)
+        ;
+
+        
+    
+    
+            var marker_44a6559492082bcbe13427b1012492b3 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_c1e88d0f7bdc77d4c9acc62d86457561 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_44a6559492082bcbe13427b1012492b3.setIcon(icon_c1e88d0f7bdc77d4c9acc62d86457561);
+        
+    
+        var popup_060ac1dd98b8ac210b2ce43e7dd5a9de = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_0719f46a2f4820f6c53a2cdf61853b07 = $(`<div id="html_0719f46a2f4820f6c53a2cdf61853b07" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_060ac1dd98b8ac210b2ce43e7dd5a9de.setContent(html_0719f46a2f4820f6c53a2cdf61853b07);
+            
+        
+
+        marker_44a6559492082bcbe13427b1012492b3.bindPopup(popup_060ac1dd98b8ac210b2ce43e7dd5a9de)
+        ;
+
+        
+    
+    
+            var marker_2c664d0f2da294325d11ddabefed1380 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_4447f50d9638252ef9805dd3d8d60923 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_2c664d0f2da294325d11ddabefed1380.setIcon(icon_4447f50d9638252ef9805dd3d8d60923);
+        
+    
+        var popup_befd872e73442eb158162f27b16a99c0 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_1930ece470a40b7cc7e8110bdeff72ff = $(`<div id="html_1930ece470a40b7cc7e8110bdeff72ff" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 5</p>         </div>         </div>`)[0];
+                popup_befd872e73442eb158162f27b16a99c0.setContent(html_1930ece470a40b7cc7e8110bdeff72ff);
+            
+        
+
+        marker_2c664d0f2da294325d11ddabefed1380.bindPopup(popup_befd872e73442eb158162f27b16a99c0)
+        ;
+
+        
+    
+    
+            var marker_c4e12f39fe905b260bd1beaf53e9fb45 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_f99ea96c140954741db700d86bd6175a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c4e12f39fe905b260bd1beaf53e9fb45.setIcon(icon_f99ea96c140954741db700d86bd6175a);
+        
+    
+        var popup_b71ab64da31f1cd800253d8d0085c3cc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_72ce1440ba2a9a8079e93d3bc475e627 = $(`<div id="html_72ce1440ba2a9a8079e93d3bc475e627" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_b71ab64da31f1cd800253d8d0085c3cc.setContent(html_72ce1440ba2a9a8079e93d3bc475e627);
+            
+        
+
+        marker_c4e12f39fe905b260bd1beaf53e9fb45.bindPopup(popup_b71ab64da31f1cd800253d8d0085c3cc)
+        ;
+
+        
+    
+    
+            var marker_cbc4542c3b9774eb20dcb016934c1541 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_472459522dfe760c9b129d14d0c978cc = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_cbc4542c3b9774eb20dcb016934c1541.setIcon(icon_472459522dfe760c9b129d14d0c978cc);
+        
+    
+        var popup_19d3387125c01e291dad6c0e964d7b17 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_894850a255c572aee1d3734ac05b00ff = $(`<div id="html_894850a255c572aee1d3734ac05b00ff" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_19d3387125c01e291dad6c0e964d7b17.setContent(html_894850a255c572aee1d3734ac05b00ff);
+            
+        
+
+        marker_cbc4542c3b9774eb20dcb016934c1541.bindPopup(popup_19d3387125c01e291dad6c0e964d7b17)
+        ;
+
+        
+    
+    
+            var marker_d598cba37a5a6d1617b6c3a61590d89e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_0dd58afd105243e45141b0c394fca5ed = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_d598cba37a5a6d1617b6c3a61590d89e.setIcon(icon_0dd58afd105243e45141b0c394fca5ed);
+        
+    
+        var popup_e172a9bf3a82d50503fe3c67a72f7d24 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_5d302a3cfec024208f10c5bb1165b69f = $(`<div id="html_5d302a3cfec024208f10c5bb1165b69f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_e172a9bf3a82d50503fe3c67a72f7d24.setContent(html_5d302a3cfec024208f10c5bb1165b69f);
+            
+        
+
+        marker_d598cba37a5a6d1617b6c3a61590d89e.bindPopup(popup_e172a9bf3a82d50503fe3c67a72f7d24)
+        ;
+
+        
+    
+    
+            var marker_80aafba8cefb6b18c35b55b0ce517e6e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_837f505c11bc69e3687f7b27a1eeebe6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_80aafba8cefb6b18c35b55b0ce517e6e.setIcon(icon_837f505c11bc69e3687f7b27a1eeebe6);
+        
+    
+        var popup_ab3870296d3ae1a6102c98d208d390b6 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_cce067c662cebae76d1d512105abfe1b = $(`<div id="html_cce067c662cebae76d1d512105abfe1b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_ab3870296d3ae1a6102c98d208d390b6.setContent(html_cce067c662cebae76d1d512105abfe1b);
+            
+        
+
+        marker_80aafba8cefb6b18c35b55b0ce517e6e.bindPopup(popup_ab3870296d3ae1a6102c98d208d390b6)
+        ;
+
+        
+    
+    
+            var marker_17464e66ad8c1330a83f8cdbcf8c01fc = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_36fd91a2fdb26e534a4d22a85a5b5b2d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_17464e66ad8c1330a83f8cdbcf8c01fc.setIcon(icon_36fd91a2fdb26e534a4d22a85a5b5b2d);
+        
+    
+        var popup_c4bdc33c74d2a2835f63a9c360ba4339 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_a4981682c8ef714622b8546c7a987023 = $(`<div id="html_a4981682c8ef714622b8546c7a987023" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_c4bdc33c74d2a2835f63a9c360ba4339.setContent(html_a4981682c8ef714622b8546c7a987023);
+            
+        
+
+        marker_17464e66ad8c1330a83f8cdbcf8c01fc.bindPopup(popup_c4bdc33c74d2a2835f63a9c360ba4339)
+        ;
+
+        
+    
+    
+            var marker_1bf7d3aae479ee084c576c52cbe1e487 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_456b042777489707907f35ab653408c8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_1bf7d3aae479ee084c576c52cbe1e487.setIcon(icon_456b042777489707907f35ab653408c8);
+        
+    
+        var popup_60590a96873d7f2f0700dbd2f34bf1ff = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_72d6ba3e56cf835740e478b3e63f736f = $(`<div id="html_72d6ba3e56cf835740e478b3e63f736f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 7</p>         </div>         </div>`)[0];
+                popup_60590a96873d7f2f0700dbd2f34bf1ff.setContent(html_72d6ba3e56cf835740e478b3e63f736f);
+            
+        
+
+        marker_1bf7d3aae479ee084c576c52cbe1e487.bindPopup(popup_60590a96873d7f2f0700dbd2f34bf1ff)
+        ;
+
+        
+    
+    
+            var marker_b3f7308a9d22221c8e39e3e2e73e1009 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_5a183f9226129a762cdc3ba26f4617b4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_b3f7308a9d22221c8e39e3e2e73e1009.setIcon(icon_5a183f9226129a762cdc3ba26f4617b4);
+        
+    
+        var popup_4a76d217641d12f3e4dc07dbc0179f39 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_ea06f09048d28c456ebb8b8d75eef406 = $(`<div id="html_ea06f09048d28c456ebb8b8d75eef406" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_4a76d217641d12f3e4dc07dbc0179f39.setContent(html_ea06f09048d28c456ebb8b8d75eef406);
+            
+        
+
+        marker_b3f7308a9d22221c8e39e3e2e73e1009.bindPopup(popup_4a76d217641d12f3e4dc07dbc0179f39)
+        ;
+
+        
+    
+    
+            var marker_07855a99ca6c4042c8eb12403e57c54f = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8287bdbb75357d5b9cb386850e36a264 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_07855a99ca6c4042c8eb12403e57c54f.setIcon(icon_8287bdbb75357d5b9cb386850e36a264);
+        
+    
+        var popup_5e4b734f6e05854493ece6347661e8e8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_89b401cc527cfae5f81e7dc325fc5ab9 = $(`<div id="html_89b401cc527cfae5f81e7dc325fc5ab9" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 7</p>         </div>         </div>`)[0];
+                popup_5e4b734f6e05854493ece6347661e8e8.setContent(html_89b401cc527cfae5f81e7dc325fc5ab9);
+            
+        
+
+        marker_07855a99ca6c4042c8eb12403e57c54f.bindPopup(popup_5e4b734f6e05854493ece6347661e8e8)
+        ;
+
+        
+    
+    
+            var marker_4234526cdefd58fc851a7aa09f5f3069 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_0b3a0c92a1f37efc0aacbd7f3125b228 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_4234526cdefd58fc851a7aa09f5f3069.setIcon(icon_0b3a0c92a1f37efc0aacbd7f3125b228);
+        
+    
+        var popup_65252f6af8e58f2fb0cb75bb23c2834c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_d0339261d38b2aedd858094c84ab05fa = $(`<div id="html_d0339261d38b2aedd858094c84ab05fa" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_65252f6af8e58f2fb0cb75bb23c2834c.setContent(html_d0339261d38b2aedd858094c84ab05fa);
+            
+        
+
+        marker_4234526cdefd58fc851a7aa09f5f3069.bindPopup(popup_65252f6af8e58f2fb0cb75bb23c2834c)
+        ;
+
+        
+    
+    
+            var marker_44f8c9caf7aeef5f3e051e74f786ec83 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_f54dd1f24a48765ac621e72944d01c16 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_44f8c9caf7aeef5f3e051e74f786ec83.setIcon(icon_f54dd1f24a48765ac621e72944d01c16);
+        
+    
+        var popup_eb3cb412bc733d999f502445577edfb2 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_b95cd0c48b5e03e59e6bd930ea1ba9d2 = $(`<div id="html_b95cd0c48b5e03e59e6bd930ea1ba9d2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_eb3cb412bc733d999f502445577edfb2.setContent(html_b95cd0c48b5e03e59e6bd930ea1ba9d2);
+            
+        
+
+        marker_44f8c9caf7aeef5f3e051e74f786ec83.bindPopup(popup_eb3cb412bc733d999f502445577edfb2)
+        ;
+
+        
+    
+    
+            var marker_c7e341176533b3542fe7a1c2041f3b53 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_0df3fba371e399f889df1061744f1898 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c7e341176533b3542fe7a1c2041f3b53.setIcon(icon_0df3fba371e399f889df1061744f1898);
+        
+    
+        var popup_0f2b06c4bffb598b68068b4b0c543785 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_c67312ef180b99ceb7876d8be077a357 = $(`<div id="html_c67312ef180b99ceb7876d8be077a357" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_0f2b06c4bffb598b68068b4b0c543785.setContent(html_c67312ef180b99ceb7876d8be077a357);
+            
+        
+
+        marker_c7e341176533b3542fe7a1c2041f3b53.bindPopup(popup_0f2b06c4bffb598b68068b4b0c543785)
+        ;
+
+        
+    
+    
+            var marker_b4a22d621164331cde3f67c763ae694b = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8b9e131c97398232c00ce8d35ad54f7d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_b4a22d621164331cde3f67c763ae694b.setIcon(icon_8b9e131c97398232c00ce8d35ad54f7d);
+        
+    
+        var popup_10b10b6a7ab37471e58430b83f070964 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_b62eaf13931432f9f055bf8acfdb88f2 = $(`<div id="html_b62eaf13931432f9f055bf8acfdb88f2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_10b10b6a7ab37471e58430b83f070964.setContent(html_b62eaf13931432f9f055bf8acfdb88f2);
+            
+        
+
+        marker_b4a22d621164331cde3f67c763ae694b.bindPopup(popup_10b10b6a7ab37471e58430b83f070964)
+        ;
+
+        
+    
+    
+            var marker_b3f84b8cd64e60530cb468507bb43f3b = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_5c9b73d24ab1c487e4773f05be05d5ec = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_b3f84b8cd64e60530cb468507bb43f3b.setIcon(icon_5c9b73d24ab1c487e4773f05be05d5ec);
+        
+    
+        var popup_8ead473036f927a570fde6b61fbd2804 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_597d585eab83f89602a8232ce3ce7c0b = $(`<div id="html_597d585eab83f89602a8232ce3ce7c0b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_8ead473036f927a570fde6b61fbd2804.setContent(html_597d585eab83f89602a8232ce3ce7c0b);
+            
+        
+
+        marker_b3f84b8cd64e60530cb468507bb43f3b.bindPopup(popup_8ead473036f927a570fde6b61fbd2804)
+        ;
+
+        
+    
+    
+            var marker_af30218c73bdb0ea9b105467b5da0e60 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_7dbb1703d0c78c12142c1eca5a4f5209 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_af30218c73bdb0ea9b105467b5da0e60.setIcon(icon_7dbb1703d0c78c12142c1eca5a4f5209);
+        
+    
+        var popup_e195357f9cc9713f9d23b8066a52f5af = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_74ee3d6e7230b6c8d1c1e6f974fdbc45 = $(`<div id="html_74ee3d6e7230b6c8d1c1e6f974fdbc45" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_e195357f9cc9713f9d23b8066a52f5af.setContent(html_74ee3d6e7230b6c8d1c1e6f974fdbc45);
+            
+        
+
+        marker_af30218c73bdb0ea9b105467b5da0e60.bindPopup(popup_e195357f9cc9713f9d23b8066a52f5af)
+        ;
+
+        
+    
+    
+            var marker_ed19a3208fc61328d7b85df17b90afa2 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_12c570a5f010c129c2745c681213f4db = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_ed19a3208fc61328d7b85df17b90afa2.setIcon(icon_12c570a5f010c129c2745c681213f4db);
+        
+    
+        var popup_653cabf84462287e2a39640a6daa77be = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_27c2c6d00a5bb088cacfd762d63f96e4 = $(`<div id="html_27c2c6d00a5bb088cacfd762d63f96e4" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 7</p>         </div>         </div>`)[0];
+                popup_653cabf84462287e2a39640a6daa77be.setContent(html_27c2c6d00a5bb088cacfd762d63f96e4);
+            
+        
+
+        marker_ed19a3208fc61328d7b85df17b90afa2.bindPopup(popup_653cabf84462287e2a39640a6daa77be)
+        ;
+
+        
+    
+    
+            var marker_40ce7214b134c74b708ca766214274b1 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_29fe12fe266d7538f065ec7410cd3e62 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_40ce7214b134c74b708ca766214274b1.setIcon(icon_29fe12fe266d7538f065ec7410cd3e62);
+        
+    
+        var popup_27f1b0013ca5136a74d475100900e8ec = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_7f1b4ccca4ef7b7a44f5ed01d65a0b9d = $(`<div id="html_7f1b4ccca4ef7b7a44f5ed01d65a0b9d" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_27f1b0013ca5136a74d475100900e8ec.setContent(html_7f1b4ccca4ef7b7a44f5ed01d65a0b9d);
+            
+        
+
+        marker_40ce7214b134c74b708ca766214274b1.bindPopup(popup_27f1b0013ca5136a74d475100900e8ec)
+        ;
+
+        
+    
+    
+            var marker_048dee75d78bde61dadb6cc6fd88a368 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_ebc2f5188817511dfd2d46ac7660142b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_048dee75d78bde61dadb6cc6fd88a368.setIcon(icon_ebc2f5188817511dfd2d46ac7660142b);
+        
+    
+        var popup_1f8f38871efa1244acce45a2bdeb10d8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4df71e4d66add99ff1784850345a7f7d = $(`<div id="html_4df71e4d66add99ff1784850345a7f7d" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_1f8f38871efa1244acce45a2bdeb10d8.setContent(html_4df71e4d66add99ff1784850345a7f7d);
+            
+        
+
+        marker_048dee75d78bde61dadb6cc6fd88a368.bindPopup(popup_1f8f38871efa1244acce45a2bdeb10d8)
+        ;
+
+        
+    
+    
+            var marker_037994ae815d3123e0ab00485a3f5b40 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_4d4c4c221127b16e698ab719c047b2a4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_037994ae815d3123e0ab00485a3f5b40.setIcon(icon_4d4c4c221127b16e698ab719c047b2a4);
+        
+    
+        var popup_25b26eec8d24e676725bda562d8f72d3 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_5c2d91c9694b953b4e7b8e33847be9c8 = $(`<div id="html_5c2d91c9694b953b4e7b8e33847be9c8" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_25b26eec8d24e676725bda562d8f72d3.setContent(html_5c2d91c9694b953b4e7b8e33847be9c8);
+            
+        
+
+        marker_037994ae815d3123e0ab00485a3f5b40.bindPopup(popup_25b26eec8d24e676725bda562d8f72d3)
+        ;
+
+        
+    
+    
+            var marker_4a19cdb770aa62b236bb67211490de7c = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_15dda0686a57141dca223dcc2ab87b40 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_4a19cdb770aa62b236bb67211490de7c.setIcon(icon_15dda0686a57141dca223dcc2ab87b40);
+        
+    
+        var popup_2f6de178b3bdc80d64c772a2a934e11f = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_1bb34e83a0af999e20c9ce8683ff565c = $(`<div id="html_1bb34e83a0af999e20c9ce8683ff565c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_2f6de178b3bdc80d64c772a2a934e11f.setContent(html_1bb34e83a0af999e20c9ce8683ff565c);
+            
+        
+
+        marker_4a19cdb770aa62b236bb67211490de7c.bindPopup(popup_2f6de178b3bdc80d64c772a2a934e11f)
+        ;
+
+        
+    
+    
+            var marker_a64184897d6eff556a88245987c6607a = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_d8348ae56662345f4bee6730aef3e21a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_a64184897d6eff556a88245987c6607a.setIcon(icon_d8348ae56662345f4bee6730aef3e21a);
+        
+    
+        var popup_bef2566a1481f21617848b3364a11913 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2c5013fd57707d20a3360d597df67480 = $(`<div id="html_2c5013fd57707d20a3360d597df67480" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_bef2566a1481f21617848b3364a11913.setContent(html_2c5013fd57707d20a3360d597df67480);
+            
+        
+
+        marker_a64184897d6eff556a88245987c6607a.bindPopup(popup_bef2566a1481f21617848b3364a11913)
+        ;
+
+        
+    
+    
+            var marker_f850159d3c98aed3e689f3e761f8c716 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8273cf3cd58056fca086caa082d08245 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_f850159d3c98aed3e689f3e761f8c716.setIcon(icon_8273cf3cd58056fca086caa082d08245);
+        
+    
+        var popup_a549fc42436859aa9d67bc094c2c83b8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_3d4fafe51add01234e189897b8815e3a = $(`<div id="html_3d4fafe51add01234e189897b8815e3a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_a549fc42436859aa9d67bc094c2c83b8.setContent(html_3d4fafe51add01234e189897b8815e3a);
+            
+        
+
+        marker_f850159d3c98aed3e689f3e761f8c716.bindPopup(popup_a549fc42436859aa9d67bc094c2c83b8)
+        ;
+
+        
+    
+    
+            var marker_2f7e532c9cfc0a2b5e84c54e349a9775 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_b259f55508084223219395057c043222 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_2f7e532c9cfc0a2b5e84c54e349a9775.setIcon(icon_b259f55508084223219395057c043222);
+        
+    
+        var popup_15df0a8ceb20cf24abed4d4a362a1b54 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_bd1bed2ae074f4b8ceec815facb3dc1b = $(`<div id="html_bd1bed2ae074f4b8ceec815facb3dc1b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_15df0a8ceb20cf24abed4d4a362a1b54.setContent(html_bd1bed2ae074f4b8ceec815facb3dc1b);
+            
+        
+
+        marker_2f7e532c9cfc0a2b5e84c54e349a9775.bindPopup(popup_15df0a8ceb20cf24abed4d4a362a1b54)
+        ;
+
+        
+    
+    
+            var marker_81f55b78b2f1a47f2624db4e5bcf2b7b = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_5471f92a4c9e156fa53b36b3d7443079 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_81f55b78b2f1a47f2624db4e5bcf2b7b.setIcon(icon_5471f92a4c9e156fa53b36b3d7443079);
+        
+    
+        var popup_4173fdd14ee706ae41ca4655bf60a1ed = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_3164770799427a44af7c8e57e13d630e = $(`<div id="html_3164770799427a44af7c8e57e13d630e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 6</p>         </div>         </div>`)[0];
+                popup_4173fdd14ee706ae41ca4655bf60a1ed.setContent(html_3164770799427a44af7c8e57e13d630e);
+            
+        
+
+        marker_81f55b78b2f1a47f2624db4e5bcf2b7b.bindPopup(popup_4173fdd14ee706ae41ca4655bf60a1ed)
+        ;
+
+        
+    
+    
+            var marker_f86587c9a840c4e622582017f2cc5c8e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8e901f74ad2db5b1d6b6860bbab3dd44 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_f86587c9a840c4e622582017f2cc5c8e.setIcon(icon_8e901f74ad2db5b1d6b6860bbab3dd44);
+        
+    
+        var popup_7f87c963b49e8c0fafabf32b9ab2fbdd = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_e54e9838404cefffcdb88071c50a04fb = $(`<div id="html_e54e9838404cefffcdb88071c50a04fb" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_7f87c963b49e8c0fafabf32b9ab2fbdd.setContent(html_e54e9838404cefffcdb88071c50a04fb);
+            
+        
+
+        marker_f86587c9a840c4e622582017f2cc5c8e.bindPopup(popup_7f87c963b49e8c0fafabf32b9ab2fbdd)
+        ;
+
+        
+    
+    
+            var marker_ee517dcc860c1ba11363522c60603326 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8c87cc4a61b6dd85c5c410a617853247 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_ee517dcc860c1ba11363522c60603326.setIcon(icon_8c87cc4a61b6dd85c5c410a617853247);
+        
+    
+        var popup_19abd21b79b2966efb5e0d2796dc2921 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_86a83eff11a3f5308f09f628bbb9c840 = $(`<div id="html_86a83eff11a3f5308f09f628bbb9c840" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_19abd21b79b2966efb5e0d2796dc2921.setContent(html_86a83eff11a3f5308f09f628bbb9c840);
+            
+        
+
+        marker_ee517dcc860c1ba11363522c60603326.bindPopup(popup_19abd21b79b2966efb5e0d2796dc2921)
+        ;
+
+        
+    
+    
+            var marker_0e453829850a1bf3501560927bebe8aa = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_7478e04b9d41907695dae0709f48d4b6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_0e453829850a1bf3501560927bebe8aa.setIcon(icon_7478e04b9d41907695dae0709f48d4b6);
+        
+    
+        var popup_f86ddb33dbbfb3490bb1b233f4468afe = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_8b30abd9af5703167c3c7e88e1800f03 = $(`<div id="html_8b30abd9af5703167c3c7e88e1800f03" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_f86ddb33dbbfb3490bb1b233f4468afe.setContent(html_8b30abd9af5703167c3c7e88e1800f03);
+            
+        
+
+        marker_0e453829850a1bf3501560927bebe8aa.bindPopup(popup_f86ddb33dbbfb3490bb1b233f4468afe)
+        ;
+
+        
+    
+    
+            var marker_515cde500e8923b39eca21102ffe0cb0 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_8ff69a0ec4ced9f0f165c7db189de4ba = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_515cde500e8923b39eca21102ffe0cb0.setIcon(icon_8ff69a0ec4ced9f0f165c7db189de4ba);
+        
+    
+        var popup_0dbbd160385b370f5e3537bf04b2b74a = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2a62ea2e5a433b4ea1c96f368c3d347a = $(`<div id="html_2a62ea2e5a433b4ea1c96f368c3d347a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_0dbbd160385b370f5e3537bf04b2b74a.setContent(html_2a62ea2e5a433b4ea1c96f368c3d347a);
+            
+        
+
+        marker_515cde500e8923b39eca21102ffe0cb0.bindPopup(popup_0dbbd160385b370f5e3537bf04b2b74a)
+        ;
+
+        
+    
+    
+            var marker_83a4c2d23ac822d2019b89964561d69a = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2b6f6510ea43af6660d96d5bbd8e1802 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_83a4c2d23ac822d2019b89964561d69a.setIcon(icon_2b6f6510ea43af6660d96d5bbd8e1802);
+        
+    
+        var popup_2197268864abdaa041a46d1498a8b6ff = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_bc436d38ca55afdc9d723a28416b866f = $(`<div id="html_bc436d38ca55afdc9d723a28416b866f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 3</p>         </div>         </div>`)[0];
+                popup_2197268864abdaa041a46d1498a8b6ff.setContent(html_bc436d38ca55afdc9d723a28416b866f);
+            
+        
+
+        marker_83a4c2d23ac822d2019b89964561d69a.bindPopup(popup_2197268864abdaa041a46d1498a8b6ff)
+        ;
+
+        
+    
+    
+            var marker_9c3ef42d44de9d6eaaaf407cc3c19804 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_d6a7d4652c0f264f43b2507d28f1c50b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_9c3ef42d44de9d6eaaaf407cc3c19804.setIcon(icon_d6a7d4652c0f264f43b2507d28f1c50b);
+        
+    
+        var popup_828efde756940cdd4dc1890750e3bc88 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_5d41fff2653f7b89a416d59e8f0b55bf = $(`<div id="html_5d41fff2653f7b89a416d59e8f0b55bf" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_828efde756940cdd4dc1890750e3bc88.setContent(html_5d41fff2653f7b89a416d59e8f0b55bf);
+            
+        
+
+        marker_9c3ef42d44de9d6eaaaf407cc3c19804.bindPopup(popup_828efde756940cdd4dc1890750e3bc88)
+        ;
+
+        
+    
+    
+            var marker_1146203ba6ecd05c90a2b4163b709d8a = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_1e57dc8fa33cffa2e26567b756996989 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_1146203ba6ecd05c90a2b4163b709d8a.setIcon(icon_1e57dc8fa33cffa2e26567b756996989);
+        
+    
+        var popup_0d0dafd445178813e4da147ada021792 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_67fd05a7113b91066096652df132310e = $(`<div id="html_67fd05a7113b91066096652df132310e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_0d0dafd445178813e4da147ada021792.setContent(html_67fd05a7113b91066096652df132310e);
+            
+        
+
+        marker_1146203ba6ecd05c90a2b4163b709d8a.bindPopup(popup_0d0dafd445178813e4da147ada021792)
+        ;
+
+        
+    
+    
+            var marker_af79f40955a80a0e1f307996c17c6d97 = L.marker(
+                [35.2765301, -120.6556472],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_6f3ee23bfca37017426f5a0ef968bb3a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_af79f40955a80a0e1f307996c17c6d97.setIcon(icon_6f3ee23bfca37017426f5a0ef968bb3a);
+        
+    
+        var popup_843d3d926cd1f9664c6b407dce17a059 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_c872a15e83530ae3db6a834f664c390a = $(`<div id="html_c872a15e83530ae3db6a834f664c390a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_843d3d926cd1f9664c6b407dce17a059.setContent(html_c872a15e83530ae3db6a834f664c390a);
+            
+        
+
+        marker_af79f40955a80a0e1f307996c17c6d97.bindPopup(popup_843d3d926cd1f9664c6b407dce17a059)
+        ;
+
+        
+    
+    
+            var marker_8a92af61f480e10d8b0ca8b1624ee7f6 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_1a766eda48d9dec2c9f303f5cd721c7c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_8a92af61f480e10d8b0ca8b1624ee7f6.setIcon(icon_1a766eda48d9dec2c9f303f5cd721c7c);
+        
+    
+        var popup_8cc906603412b301530a5e59e13c54c7 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_25215d2625ec104d97d72de817125e5f = $(`<div id="html_25215d2625ec104d97d72de817125e5f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_8cc906603412b301530a5e59e13c54c7.setContent(html_25215d2625ec104d97d72de817125e5f);
+            
+        
+
+        marker_8a92af61f480e10d8b0ca8b1624ee7f6.bindPopup(popup_8cc906603412b301530a5e59e13c54c7)
+        ;
+
+        
+    
+    
+            var marker_dec2a66ac0cea36529796d0c7933c3a6 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_e454309b49b70a241439430bdbbf39f8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_dec2a66ac0cea36529796d0c7933c3a6.setIcon(icon_e454309b49b70a241439430bdbbf39f8);
+        
+    
+        var popup_f7a212b8c27c612a002948c3e36aa612 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_8960af8c0cb05ef9227047cf459db0dd = $(`<div id="html_8960af8c0cb05ef9227047cf459db0dd" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_f7a212b8c27c612a002948c3e36aa612.setContent(html_8960af8c0cb05ef9227047cf459db0dd);
+            
+        
+
+        marker_dec2a66ac0cea36529796d0c7933c3a6.bindPopup(popup_f7a212b8c27c612a002948c3e36aa612)
+        ;
+
+        
+    
+    
+            var marker_e93fac2f3ccdf80ec344399523e76552 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_6df473cf95c9f0a03447713748377368 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_e93fac2f3ccdf80ec344399523e76552.setIcon(icon_6df473cf95c9f0a03447713748377368);
+        
+    
+        var popup_3dd22ed414b6b40d84a12fb007f6127b = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_5744cc0b33f7ff5254ccdd9b9dbc5b46 = $(`<div id="html_5744cc0b33f7ff5254ccdd9b9dbc5b46" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_3dd22ed414b6b40d84a12fb007f6127b.setContent(html_5744cc0b33f7ff5254ccdd9b9dbc5b46);
+            
+        
+
+        marker_e93fac2f3ccdf80ec344399523e76552.bindPopup(popup_3dd22ed414b6b40d84a12fb007f6127b)
+        ;
+
+        
+    
+    
+            var marker_ae575f7675a3ca4a5b7ca4f5c49ed78e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_9fc74f215032589db272c30635436591 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_ae575f7675a3ca4a5b7ca4f5c49ed78e.setIcon(icon_9fc74f215032589db272c30635436591);
+        
+    
+        var popup_27a5f51154a5c49ef3d37d17659fc4bb = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_a63fe165a76e2898c0605772e7f9a325 = $(`<div id="html_a63fe165a76e2898c0605772e7f9a325" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_27a5f51154a5c49ef3d37d17659fc4bb.setContent(html_a63fe165a76e2898c0605772e7f9a325);
+            
+        
+
+        marker_ae575f7675a3ca4a5b7ca4f5c49ed78e.bindPopup(popup_27a5f51154a5c49ef3d37d17659fc4bb)
+        ;
+
+        
+    
+    
+            var marker_2d24e065a687e8f55a4ffa6caeeb79b8 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_a8fc69669a26627721e2215e7568c012 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_2d24e065a687e8f55a4ffa6caeeb79b8.setIcon(icon_a8fc69669a26627721e2215e7568c012);
+        
+    
+        var popup_909a2b8e498893833a61278edfa8275d = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_0f913037ec85cb64e1e90ec1744e3eac = $(`<div id="html_0f913037ec85cb64e1e90ec1744e3eac" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_909a2b8e498893833a61278edfa8275d.setContent(html_0f913037ec85cb64e1e90ec1744e3eac);
+            
+        
+
+        marker_2d24e065a687e8f55a4ffa6caeeb79b8.bindPopup(popup_909a2b8e498893833a61278edfa8275d)
+        ;
+
+        
+    
+    
+            var marker_ecb5a79779abdc36f5a2b64700a271f4 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2b363acc3763db1a5c59a20818758893 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_ecb5a79779abdc36f5a2b64700a271f4.setIcon(icon_2b363acc3763db1a5c59a20818758893);
+        
+    
+        var popup_3ad9d315f0b00f944fc20907ecda8ea3 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_3052fda61d9a89de78974f4b75f81e05 = $(`<div id="html_3052fda61d9a89de78974f4b75f81e05" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_3ad9d315f0b00f944fc20907ecda8ea3.setContent(html_3052fda61d9a89de78974f4b75f81e05);
+            
+        
+
+        marker_ecb5a79779abdc36f5a2b64700a271f4.bindPopup(popup_3ad9d315f0b00f944fc20907ecda8ea3)
+        ;
+
+        
+    
+    
+            var marker_1fe75c477e584cb6fe44c2d2f46742aa = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_b26a46e4b097da629361f86e067293c8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_1fe75c477e584cb6fe44c2d2f46742aa.setIcon(icon_b26a46e4b097da629361f86e067293c8);
+        
+    
+        var popup_d6bee0899259ad26d20c8cb3a00557af = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_9e0e116bba0ff3df435b1e7710748173 = $(`<div id="html_9e0e116bba0ff3df435b1e7710748173" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_d6bee0899259ad26d20c8cb3a00557af.setContent(html_9e0e116bba0ff3df435b1e7710748173);
+            
+        
+
+        marker_1fe75c477e584cb6fe44c2d2f46742aa.bindPopup(popup_d6bee0899259ad26d20c8cb3a00557af)
+        ;
+
+        
+    
+    
+            var marker_67bdafd04234e5c0d66c30728936a48f = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2a3a08bf98b3ed3841236ff49fc5a508 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_67bdafd04234e5c0d66c30728936a48f.setIcon(icon_2a3a08bf98b3ed3841236ff49fc5a508);
+        
+    
+        var popup_8f3158b337951975e51a7dce89c6fbbc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_63ae038a1b70712441ece9607d308f16 = $(`<div id="html_63ae038a1b70712441ece9607d308f16" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_8f3158b337951975e51a7dce89c6fbbc.setContent(html_63ae038a1b70712441ece9607d308f16);
+            
+        
+
+        marker_67bdafd04234e5c0d66c30728936a48f.bindPopup(popup_8f3158b337951975e51a7dce89c6fbbc)
+        ;
+
+        
+    
+    
+            var marker_d26fcb928e9e12eb947e6314901ad937 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_3374d82c25fcc664aec51895aa644685 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_d26fcb928e9e12eb947e6314901ad937.setIcon(icon_3374d82c25fcc664aec51895aa644685);
+        
+    
+        var popup_141525b5348fb13c897829bfd58c40cf = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_b4f479de3c1e6a92e95084ea7da88061 = $(`<div id="html_b4f479de3c1e6a92e95084ea7da88061" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_141525b5348fb13c897829bfd58c40cf.setContent(html_b4f479de3c1e6a92e95084ea7da88061);
+            
+        
+
+        marker_d26fcb928e9e12eb947e6314901ad937.bindPopup(popup_141525b5348fb13c897829bfd58c40cf)
+        ;
+
+        
+    
+    
+            var marker_9093f54d967babd60fc3e963b3abd3dc = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2b159d8fff0d21f58c03d894a1bf8f00 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_9093f54d967babd60fc3e963b3abd3dc.setIcon(icon_2b159d8fff0d21f58c03d894a1bf8f00);
+        
+    
+        var popup_88cdade5c5d3e04bab1faf616732c20a = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_76ae50e3a1d4a9fe5fecdc7166dd272e = $(`<div id="html_76ae50e3a1d4a9fe5fecdc7166dd272e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_88cdade5c5d3e04bab1faf616732c20a.setContent(html_76ae50e3a1d4a9fe5fecdc7166dd272e);
+            
+        
+
+        marker_9093f54d967babd60fc3e963b3abd3dc.bindPopup(popup_88cdade5c5d3e04bab1faf616732c20a)
+        ;
+
+        
+    
+    
+            var marker_17153159366e1e952b4e55521bd3c51e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_e1b13be240d131b372f15b84f01cfa74 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_17153159366e1e952b4e55521bd3c51e.setIcon(icon_e1b13be240d131b372f15b84f01cfa74);
+        
+    
+        var popup_e04365cabcc301b34016a592a00af9b9 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_5ab7aa41c6fbaf6c9ca965b7e04082c9 = $(`<div id="html_5ab7aa41c6fbaf6c9ca965b7e04082c9" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_e04365cabcc301b34016a592a00af9b9.setContent(html_5ab7aa41c6fbaf6c9ca965b7e04082c9);
+            
+        
+
+        marker_17153159366e1e952b4e55521bd3c51e.bindPopup(popup_e04365cabcc301b34016a592a00af9b9)
+        ;
+
+        
+    
+    
+            var marker_1d704f9b721473237bee416ec6d65fd3 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_fe4da8c976b1257f6e196cc0c18449ee = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_1d704f9b721473237bee416ec6d65fd3.setIcon(icon_fe4da8c976b1257f6e196cc0c18449ee);
+        
+    
+        var popup_ede042f2e1a297510750a092c132af9d = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4decba1d0c778d62252fcbd2b47b7c06 = $(`<div id="html_4decba1d0c778d62252fcbd2b47b7c06" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_ede042f2e1a297510750a092c132af9d.setContent(html_4decba1d0c778d62252fcbd2b47b7c06);
+            
+        
+
+        marker_1d704f9b721473237bee416ec6d65fd3.bindPopup(popup_ede042f2e1a297510750a092c132af9d)
+        ;
+
+        
+    
+    
+            var marker_ee3fc98be2f277ca2959e386a786eb31 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_84d0107101647ec0805781644c4d2a20 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_ee3fc98be2f277ca2959e386a786eb31.setIcon(icon_84d0107101647ec0805781644c4d2a20);
+        
+    
+        var popup_a721c4e70b4ae7e9f5aae864213c6d30 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_6492a82b472e3e55a98319220052cb2a = $(`<div id="html_6492a82b472e3e55a98319220052cb2a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_a721c4e70b4ae7e9f5aae864213c6d30.setContent(html_6492a82b472e3e55a98319220052cb2a);
+            
+        
+
+        marker_ee3fc98be2f277ca2959e386a786eb31.bindPopup(popup_a721c4e70b4ae7e9f5aae864213c6d30)
+        ;
+
+        
+    
+    
+            var marker_daa254669c997b30c532fa56d2282529 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_79c7c77e22c10f81f237c393f44d5d9d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_daa254669c997b30c532fa56d2282529.setIcon(icon_79c7c77e22c10f81f237c393f44d5d9d);
+        
+    
+        var popup_d09ff526ca0b0eb95c18bde45fad9b25 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_83a71636231f4db2d83bd1bb12e6b183 = $(`<div id="html_83a71636231f4db2d83bd1bb12e6b183" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_d09ff526ca0b0eb95c18bde45fad9b25.setContent(html_83a71636231f4db2d83bd1bb12e6b183);
+            
+        
+
+        marker_daa254669c997b30c532fa56d2282529.bindPopup(popup_d09ff526ca0b0eb95c18bde45fad9b25)
+        ;
+
+        
+    
+    
+            var marker_b355ab74f735da8672288783704fb9fb = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2bf62fab8b44255c8068d3bd6d113f81 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_b355ab74f735da8672288783704fb9fb.setIcon(icon_2bf62fab8b44255c8068d3bd6d113f81);
+        
+    
+        var popup_a537e2024c90f6e0e1f66a26e20b221f = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_dec94245f24ed880ee4e0ffa00184d53 = $(`<div id="html_dec94245f24ed880ee4e0ffa00184d53" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 11</p>         </div>         </div>`)[0];
+                popup_a537e2024c90f6e0e1f66a26e20b221f.setContent(html_dec94245f24ed880ee4e0ffa00184d53);
+            
+        
+
+        marker_b355ab74f735da8672288783704fb9fb.bindPopup(popup_a537e2024c90f6e0e1f66a26e20b221f)
+        ;
+
+        
+    
+    
+            var marker_7746a2f278084f44a8e75aac87cb7435 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_3c67c6a0fab06683823acd9c68ddfd1d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_7746a2f278084f44a8e75aac87cb7435.setIcon(icon_3c67c6a0fab06683823acd9c68ddfd1d);
+        
+    
+        var popup_59412ac40e311cc3901e92b1a28aae56 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_feafb91d518419e8e446460e7572e58d = $(`<div id="html_feafb91d518419e8e446460e7572e58d" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_59412ac40e311cc3901e92b1a28aae56.setContent(html_feafb91d518419e8e446460e7572e58d);
+            
+        
+
+        marker_7746a2f278084f44a8e75aac87cb7435.bindPopup(popup_59412ac40e311cc3901e92b1a28aae56)
+        ;
+
+        
+    
+    
+            var marker_eb5894a0b81beb700323f9507a132ec5 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2ac86d0b968cdc95a094272386d1064f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_eb5894a0b81beb700323f9507a132ec5.setIcon(icon_2ac86d0b968cdc95a094272386d1064f);
+        
+    
+        var popup_4371344e0b3a5770e8b82e52f49e1a6d = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_785735d2b4acf6542c68742aca30b9ba = $(`<div id="html_785735d2b4acf6542c68742aca30b9ba" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_4371344e0b3a5770e8b82e52f49e1a6d.setContent(html_785735d2b4acf6542c68742aca30b9ba);
+            
+        
+
+        marker_eb5894a0b81beb700323f9507a132ec5.bindPopup(popup_4371344e0b3a5770e8b82e52f49e1a6d)
+        ;
+
+        
+    
+    
+            var marker_fefe435a296f473effa84d699a43bf5b = L.marker(
+                [35.2765138, -120.6556889],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_59c84b91dbd8ca6a64ef7ade183c56d3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_fefe435a296f473effa84d699a43bf5b.setIcon(icon_59c84b91dbd8ca6a64ef7ade183c56d3);
+        
+    
+        var popup_5657ccdd9fbd72c9e3b8c5c3f7fb07b6 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_a4441c76a852b1e9a43258781e1e552b = $(`<div id="html_a4441c76a852b1e9a43258781e1e552b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_5657ccdd9fbd72c9e3b8c5c3f7fb07b6.setContent(html_a4441c76a852b1e9a43258781e1e552b);
+            
+        
+
+        marker_fefe435a296f473effa84d699a43bf5b.bindPopup(popup_5657ccdd9fbd72c9e3b8c5c3f7fb07b6)
+        ;
+
+        
+    
+    
+            var marker_cedd9ec9bfeea0000b548ab4b5bdc5f9 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_99f0edb785ab205699e827bcdcf00efd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_cedd9ec9bfeea0000b548ab4b5bdc5f9.setIcon(icon_99f0edb785ab205699e827bcdcf00efd);
+        
+    
+        var popup_dfe46f3ce28a317280f69672106da9cb = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2e9f91d8de08a826ef36de5c40d79084 = $(`<div id="html_2e9f91d8de08a826ef36de5c40d79084" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_dfe46f3ce28a317280f69672106da9cb.setContent(html_2e9f91d8de08a826ef36de5c40d79084);
+            
+        
+
+        marker_cedd9ec9bfeea0000b548ab4b5bdc5f9.bindPopup(popup_dfe46f3ce28a317280f69672106da9cb)
+        ;
+
+        
+    
+    
+            var marker_9ddf259c92776a8ba58fad51f910743d = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_1ed3200fcd475f6678512d3011e74c3e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_9ddf259c92776a8ba58fad51f910743d.setIcon(icon_1ed3200fcd475f6678512d3011e74c3e);
+        
+    
+        var popup_b400dad7a3ef788704d0a0fcea9a1d99 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_b19bcdcb39df6f939992cd26d20e611e = $(`<div id="html_b19bcdcb39df6f939992cd26d20e611e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_b400dad7a3ef788704d0a0fcea9a1d99.setContent(html_b19bcdcb39df6f939992cd26d20e611e);
+            
+        
+
+        marker_9ddf259c92776a8ba58fad51f910743d.bindPopup(popup_b400dad7a3ef788704d0a0fcea9a1d99)
+        ;
+
+        
+    
+    
+            var marker_9a413dba1c8cf7220bc74e78c7fef8a2 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_7cc8d4efa3857718de046830605b291a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_9a413dba1c8cf7220bc74e78c7fef8a2.setIcon(icon_7cc8d4efa3857718de046830605b291a);
+        
+    
+        var popup_4693522d99e82e217f5072b6bd5372c8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_52fd7d77814ca0a0df853e67f1065732 = $(`<div id="html_52fd7d77814ca0a0df853e67f1065732" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_4693522d99e82e217f5072b6bd5372c8.setContent(html_52fd7d77814ca0a0df853e67f1065732);
+            
+        
+
+        marker_9a413dba1c8cf7220bc74e78c7fef8a2.bindPopup(popup_4693522d99e82e217f5072b6bd5372c8)
+        ;
+
+        
+    
+    
+            var marker_c23aa329dfa7b3ead13406206ff04f6d = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_0d7d30dab2268bf60f28d466d98290f1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c23aa329dfa7b3ead13406206ff04f6d.setIcon(icon_0d7d30dab2268bf60f28d466d98290f1);
+        
+    
+        var popup_d728bd3447b0d35b669e1cb45f9584d6 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_351460eac8cf821e586204448c908794 = $(`<div id="html_351460eac8cf821e586204448c908794" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_d728bd3447b0d35b669e1cb45f9584d6.setContent(html_351460eac8cf821e586204448c908794);
+            
+        
+
+        marker_c23aa329dfa7b3ead13406206ff04f6d.bindPopup(popup_d728bd3447b0d35b669e1cb45f9584d6)
+        ;
+
+        
+    
+    
+            var marker_059306bbaa2c34f44578f47786791835 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_b9079778bcdf65e70ad85f2d31fb7804 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_059306bbaa2c34f44578f47786791835.setIcon(icon_b9079778bcdf65e70ad85f2d31fb7804);
+        
+    
+        var popup_8032546a11da63750fef3a08c06c76dc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2bb445752e7d8353fc035efd90e6efc0 = $(`<div id="html_2bb445752e7d8353fc035efd90e6efc0" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_8032546a11da63750fef3a08c06c76dc.setContent(html_2bb445752e7d8353fc035efd90e6efc0);
+            
+        
+
+        marker_059306bbaa2c34f44578f47786791835.bindPopup(popup_8032546a11da63750fef3a08c06c76dc)
+        ;
+
+        
+    
+    
+            var marker_6bd027b685649fb3ed4e689c405ea6a3 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_4f6b04087065b03d920b8f7545ace8aa = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_6bd027b685649fb3ed4e689c405ea6a3.setIcon(icon_4f6b04087065b03d920b8f7545ace8aa);
+        
+    
+        var popup_676d5d1a0aa2b102063a6f7fc99b7b85 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_269ee0dc92eb33f82d1caa5b4af8ef09 = $(`<div id="html_269ee0dc92eb33f82d1caa5b4af8ef09" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_676d5d1a0aa2b102063a6f7fc99b7b85.setContent(html_269ee0dc92eb33f82d1caa5b4af8ef09);
+            
+        
+
+        marker_6bd027b685649fb3ed4e689c405ea6a3.bindPopup(popup_676d5d1a0aa2b102063a6f7fc99b7b85)
+        ;
+
+        
+    
+    
+            var marker_a5c55074d0e92f8d18ca3672266ce03e = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_1d3ae3a0670d2fa625964f8dd381c4a3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_a5c55074d0e92f8d18ca3672266ce03e.setIcon(icon_1d3ae3a0670d2fa625964f8dd381c4a3);
+        
+    
+        var popup_e084038ac38548b7a906f061f98916ce = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_c3a38f744e4b380748acd1d50902138b = $(`<div id="html_c3a38f744e4b380748acd1d50902138b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_e084038ac38548b7a906f061f98916ce.setContent(html_c3a38f744e4b380748acd1d50902138b);
+            
+        
+
+        marker_a5c55074d0e92f8d18ca3672266ce03e.bindPopup(popup_e084038ac38548b7a906f061f98916ce)
+        ;
+
+        
+    
+    
+            var marker_8398802ad9f25fa8e7ebc168d1b441d4 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_e04f972c2b5b1fe292e45440711df800 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_8398802ad9f25fa8e7ebc168d1b441d4.setIcon(icon_e04f972c2b5b1fe292e45440711df800);
+        
+    
+        var popup_6b179566871def7f2007e31c9bf9b6ef = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_528463bd64527ef0d05113ad0841b51c = $(`<div id="html_528463bd64527ef0d05113ad0841b51c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_6b179566871def7f2007e31c9bf9b6ef.setContent(html_528463bd64527ef0d05113ad0841b51c);
+            
+        
+
+        marker_8398802ad9f25fa8e7ebc168d1b441d4.bindPopup(popup_6b179566871def7f2007e31c9bf9b6ef)
+        ;
+
+        
+    
+    
+            var marker_d36192b266e42242a909aea747a41138 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_7e181b101847b2242c6701e7b1821aa3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_d36192b266e42242a909aea747a41138.setIcon(icon_7e181b101847b2242c6701e7b1821aa3);
+        
+    
+        var popup_df75774453c7aaba5c832b4dbd82c41a = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_6be1cc0e7a20f6c3ceadd93ae3645d37 = $(`<div id="html_6be1cc0e7a20f6c3ceadd93ae3645d37" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_df75774453c7aaba5c832b4dbd82c41a.setContent(html_6be1cc0e7a20f6c3ceadd93ae3645d37);
+            
+        
+
+        marker_d36192b266e42242a909aea747a41138.bindPopup(popup_df75774453c7aaba5c832b4dbd82c41a)
+        ;
+
+        
+    
+    
+            var marker_e301fcc05bbb6205c6004baaee5a011d = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_4c96176fb08b5a7026e50e515a45b3ff = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_e301fcc05bbb6205c6004baaee5a011d.setIcon(icon_4c96176fb08b5a7026e50e515a45b3ff);
+        
+    
+        var popup_092864b5996e0143ec524a3335ec00d5 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_e59b7ddaebbb247cfa46feffa1a2a642 = $(`<div id="html_e59b7ddaebbb247cfa46feffa1a2a642" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 4</p>         </div>         </div>`)[0];
+                popup_092864b5996e0143ec524a3335ec00d5.setContent(html_e59b7ddaebbb247cfa46feffa1a2a642);
+            
+        
+
+        marker_e301fcc05bbb6205c6004baaee5a011d.bindPopup(popup_092864b5996e0143ec524a3335ec00d5)
+        ;
+
+        
+    
+    
+            var marker_329b0cbd03582c249af1d38a77742687 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_520a4f6a9bbb2b4451978d4a18d546e3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_329b0cbd03582c249af1d38a77742687.setIcon(icon_520a4f6a9bbb2b4451978d4a18d546e3);
+        
+    
+        var popup_049a6b73d1d06dccd848452db43414fd = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_20c734982e182239e26c51afd1ccb90a = $(`<div id="html_20c734982e182239e26c51afd1ccb90a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Audi A3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_049a6b73d1d06dccd848452db43414fd.setContent(html_20c734982e182239e26c51afd1ccb90a);
+            
+        
+
+        marker_329b0cbd03582c249af1d38a77742687.bindPopup(popup_049a6b73d1d06dccd848452db43414fd)
+        ;
+
+        
+    
+    
+            var marker_4a3343a57dd33c6d3440982accd924a5 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_618f4e116f23519c01efd3d3e4eab563 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_4a3343a57dd33c6d3440982accd924a5.setIcon(icon_618f4e116f23519c01efd3d3e4eab563);
+        
+    
+        var popup_2ab0735cee35f3bffc7b6e3557dad409 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_02ec45abc5a920e19ede2cd8bc12f2d9 = $(`<div id="html_02ec45abc5a920e19ede2cd8bc12f2d9" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_2ab0735cee35f3bffc7b6e3557dad409.setContent(html_02ec45abc5a920e19ede2cd8bc12f2d9);
+            
+        
+
+        marker_4a3343a57dd33c6d3440982accd924a5.bindPopup(popup_2ab0735cee35f3bffc7b6e3557dad409)
+        ;
+
+        
+    
+    
+            var marker_939c27097d8c25dc6b412bfc131701f6 = L.marker(
+                [40.4637, -3.7492],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_34764861ff9dd71a17fa4db8aefb39b8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_939c27097d8c25dc6b412bfc131701f6.setIcon(icon_34764861ff9dd71a17fa4db8aefb39b8);
+        
+    
+        var popup_4be55c7ec4de24624a93ddbd2b391fcc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_c6aad3ec40604a3a62978d2bfe81ac02 = $(`<div id="html_c6aad3ec40604a3a62978d2bfe81ac02" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_4be55c7ec4de24624a93ddbd2b391fcc.setContent(html_c6aad3ec40604a3a62978d2bfe81ac02);
+            
+        
+
+        marker_939c27097d8c25dc6b412bfc131701f6.bindPopup(popup_4be55c7ec4de24624a93ddbd2b391fcc)
+        ;
+
+        
+    
+    
+            var marker_2d975ddce70cace4f9ef30e51c566638 = L.marker(
+                [42.06965112852885, -6.5441710234460135],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_eb43a1817b2d1358ecca9aa33e4bb037 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_2d975ddce70cace4f9ef30e51c566638.setIcon(icon_eb43a1817b2d1358ecca9aa33e4bb037);
+        
+    
+        var popup_29511b094c807f05d81a91832a7899a2 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4e158f7d70767c0d7bca65e4680aa19b = $(`<div id="html_4e158f7d70767c0d7bca65e4680aa19b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_29511b094c807f05d81a91832a7899a2.setContent(html_4e158f7d70767c0d7bca65e4680aa19b);
+            
+        
+
+        marker_2d975ddce70cace4f9ef30e51c566638.bindPopup(popup_29511b094c807f05d81a91832a7899a2)
+        ;
+
+        
+    
+    
+            var marker_ed75fadcaa0e2e64515977f1e276f96d = L.marker(
+                [38.046070410421635, -1.0038371099511283],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_a9086d4594c2082ee61ac5d1ad3df72d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_ed75fadcaa0e2e64515977f1e276f96d.setIcon(icon_a9086d4594c2082ee61ac5d1ad3df72d);
+        
+    
+        var popup_4dc1f4c1e3da755f69a63fe4b025fba2 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_d299a11685d2232d7a276a36318e095a = $(`<div id="html_d299a11685d2232d7a276a36318e095a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Seat León</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 4</p>         </div>         </div>`)[0];
+                popup_4dc1f4c1e3da755f69a63fe4b025fba2.setContent(html_d299a11685d2232d7a276a36318e095a);
+            
+        
+
+        marker_ed75fadcaa0e2e64515977f1e276f96d.bindPopup(popup_4dc1f4c1e3da755f69a63fe4b025fba2)
+        ;
+
+        
+    
+    
+            var marker_69400b30b0781bd0282c6445f283bcf1 = L.marker(
+                [38.046070410421635, -1.0038371099511283],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_3164c5dbe71f0e1b63c5e6a0c0281183 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_69400b30b0781bd0282c6445f283bcf1.setIcon(icon_3164c5dbe71f0e1b63c5e6a0c0281183);
+        
+    
+        var popup_40b3e1ab6014900ed4da163acfd08674 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_38a1fea88b72287ae91374f8e01d1363 = $(`<div id="html_38a1fea88b72287ae91374f8e01d1363" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_40b3e1ab6014900ed4da163acfd08674.setContent(html_38a1fea88b72287ae91374f8e01d1363);
+            
+        
+
+        marker_69400b30b0781bd0282c6445f283bcf1.bindPopup(popup_40b3e1ab6014900ed4da163acfd08674)
+        ;
+
+        
+    
+    
+            var marker_fb9ca7a9fe0ef11f513b343cf08d4d02 = L.marker(
+                [38.046070410421635, -1.0038371099511283],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_62444d4905a1b4b5813a28244bdd421d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_fb9ca7a9fe0ef11f513b343cf08d4d02.setIcon(icon_62444d4905a1b4b5813a28244bdd421d);
+        
+    
+        var popup_a5752c83171a9a67e9dc00a55cbd02fe = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_777cefdea5143781718cf6ba9d6b001e = $(`<div id="html_777cefdea5143781718cf6ba9d6b001e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 7</p>         </div>         </div>`)[0];
+                popup_a5752c83171a9a67e9dc00a55cbd02fe.setContent(html_777cefdea5143781718cf6ba9d6b001e);
+            
+        
+
+        marker_fb9ca7a9fe0ef11f513b343cf08d4d02.bindPopup(popup_a5752c83171a9a67e9dc00a55cbd02fe)
+        ;
+
+        
+    
+    
+            var marker_acda7c5648711b8d2abf3ca35870fc55 = L.marker(
+                [37.1637852, -5.9276178],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_3f86181efe51c74a04f2049fc43d2032 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_acda7c5648711b8d2abf3ca35870fc55.setIcon(icon_3f86181efe51c74a04f2049fc43d2032);
+        
+    
+        var popup_5f2ed55f675c852a74e4829ebee06a9c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4585e0c0ec05347ddd3b39944a6b570c = $(`<div id="html_4585e0c0ec05347ddd3b39944a6b570c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_5f2ed55f675c852a74e4829ebee06a9c.setContent(html_4585e0c0ec05347ddd3b39944a6b570c);
+            
+        
+
+        marker_acda7c5648711b8d2abf3ca35870fc55.bindPopup(popup_5f2ed55f675c852a74e4829ebee06a9c)
+        ;
+
+        
+    
+    
+            var marker_cf1609bb3da89eb622abd590aef5db17 = L.marker(
+                [39.560145, 2.8775702],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_782058534ab48dff80acd836c5743a00 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_cf1609bb3da89eb622abd590aef5db17.setIcon(icon_782058534ab48dff80acd836c5743a00);
+        
+    
+        var popup_c83d6266e78ed4c28ea431b5e5a47f73 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_964c9d414e2f3c097478912ec3c6977e = $(`<div id="html_964c9d414e2f3c097478912ec3c6977e" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_c83d6266e78ed4c28ea431b5e5a47f73.setContent(html_964c9d414e2f3c097478912ec3c6977e);
+            
+        
+
+        marker_cf1609bb3da89eb622abd590aef5db17.bindPopup(popup_c83d6266e78ed4c28ea431b5e5a47f73)
+        ;
+
+        
+    
+    
+            var marker_c9697260912fe24fca021679e3e827fb = L.marker(
+                [39.5601508, 2.8777093],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_78fa52bf1be0075a4cb2251514e586d8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c9697260912fe24fca021679e3e827fb.setIcon(icon_78fa52bf1be0075a4cb2251514e586d8);
+        
+    
+        var popup_b021fa57a78edd5cfc3f9c3979e75870 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_815a8e957214395c3bc02714ec4ece93 = $(`<div id="html_815a8e957214395c3bc02714ec4ece93" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Seat León</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 9</p>         </div>         </div>`)[0];
+                popup_b021fa57a78edd5cfc3f9c3979e75870.setContent(html_815a8e957214395c3bc02714ec4ece93);
+            
+        
+
+        marker_c9697260912fe24fca021679e3e827fb.bindPopup(popup_b021fa57a78edd5cfc3f9c3979e75870)
+        ;
+
+        
+    
+    
+            var marker_8056ba1fdf30d0f7e57d5ea4b3b9f726 = L.marker(
+                [41.2188672, 1.7268736],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_2d331df8419540008a49181b727ef88c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_8056ba1fdf30d0f7e57d5ea4b3b9f726.setIcon(icon_2d331df8419540008a49181b727ef88c);
+        
+    
+        var popup_90f1b6bdaa2bde8fcf57b8c6b6829e2a = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_eb91431aa87d78263f9808ed8ff4940f = $(`<div id="html_eb91431aa87d78263f9808ed8ff4940f" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2011 - 2013</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_90f1b6bdaa2bde8fcf57b8c6b6829e2a.setContent(html_eb91431aa87d78263f9808ed8ff4940f);
+            
+        
+
+        marker_8056ba1fdf30d0f7e57d5ea4b3b9f726.bindPopup(popup_90f1b6bdaa2bde8fcf57b8c6b6829e2a)
+        ;
+
+        
+    
+    
+            var marker_7d8141e3fd3cb5f080dda505fb7a2851 = L.marker(
+                [41.11295674102285, 0.9365596503501376],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_6109fe19ed82ae64ad6629667409fdd4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_7d8141e3fd3cb5f080dda505fb7a2851.setIcon(icon_6109fe19ed82ae64ad6629667409fdd4);
+        
+    
+        var popup_ce6d69fe835265258c82993da78f9f40 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_212c8157e2023e629d7ed52ba26a49a2 = $(`<div id="html_212c8157e2023e629d7ed52ba26a49a2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>BMW Serie 3</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_ce6d69fe835265258c82993da78f9f40.setContent(html_212c8157e2023e629d7ed52ba26a49a2);
+            
+        
+
+        marker_7d8141e3fd3cb5f080dda505fb7a2851.bindPopup(popup_ce6d69fe835265258c82993da78f9f40)
+        ;
+
+        
+    
+    
+            var marker_af76bb808457fbfcecd24adef5c0fb75 = L.marker(
+                [41.11291981956207, 0.936445158977105],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_4ec7bc0212d3b761d373ba0b1478a9e3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_af76bb808457fbfcecd24adef5c0fb75.setIcon(icon_4ec7bc0212d3b761d373ba0b1478a9e3);
+        
+    
+        var popup_c13a7834935cf9c9269c7f72c932fed8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_5b066b2d73136fa23e9aebdc1019657a = $(`<div id="html_5b066b2d73136fa23e9aebdc1019657a" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Seat León</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 9</p>         </div>         </div>`)[0];
+                popup_c13a7834935cf9c9269c7f72c932fed8.setContent(html_5b066b2d73136fa23e9aebdc1019657a);
+            
+        
+
+        marker_af76bb808457fbfcecd24adef5c0fb75.bindPopup(popup_c13a7834935cf9c9269c7f72c932fed8)
+        ;
+
+        
+    
+    
+            var marker_8a066a706c26ce32e546889b4a2c12c4 = L.marker(
+                [41.11295662902698, 0.9365179860346179],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_891c10d5ad3b712ccefe198a685447c6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_8a066a706c26ce32e546889b4a2c12c4.setIcon(icon_891c10d5ad3b712ccefe198a685447c6);
+        
+    
+        var popup_da9f4d68fc852f9c9014f60e79130511 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_e028fe9563468386aa3c1d82174e7e62 = $(`<div id="html_e028fe9563468386aa3c1d82174e7e62" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 1</p>         </div>         </div>`)[0];
+                popup_da9f4d68fc852f9c9014f60e79130511.setContent(html_e028fe9563468386aa3c1d82174e7e62);
+            
+        
+
+        marker_8a066a706c26ce32e546889b4a2c12c4.bindPopup(popup_da9f4d68fc852f9c9014f60e79130511)
+        ;
+
+        
+    
+    
+            var marker_e9144cab888381a31383ec0433d1528b = L.marker(
+                [41.11292595216215, 0.9365788635694706],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_f106f834c807f5e55fe6a66ed7dd5984 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_e9144cab888381a31383ec0433d1528b.setIcon(icon_f106f834c807f5e55fe6a66ed7dd5984);
+        
+    
+        var popup_609c74ce745d7a58e5ee3b0e7b96603f = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_d806ef634d4062448ad607f7b16dcbb8 = $(`<div id="html_d806ef634d4062448ad607f7b16dcbb8" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Seat León</h4>             <p><b>Year Range:</b> 2017 - 2019</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_609c74ce745d7a58e5ee3b0e7b96603f.setContent(html_d806ef634d4062448ad607f7b16dcbb8);
+            
+        
+
+        marker_e9144cab888381a31383ec0433d1528b.bindPopup(popup_609c74ce745d7a58e5ee3b0e7b96603f)
+        ;
+
+        
+    
+    
+            var marker_c870823b8ed64d3d2adcdefa3aa4a119 = L.marker(
+                [41.11292850359039, 0.9366103340220281],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_c89bd25275e5c275c37eba8083d6b648 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_c870823b8ed64d3d2adcdefa3aa4a119.setIcon(icon_c89bd25275e5c275c37eba8083d6b648);
+        
+    
+        var popup_49428de7688912e69740825d72a192e6 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_14e185f956cfc58e9d4fcd2394ca5ffa = $(`<div id="html_14e185f956cfc58e9d4fcd2394ca5ffa" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2014 - 2016</p>             <p><b>Results Found:</b> 2</p>         </div>         </div>`)[0];
+                popup_49428de7688912e69740825d72a192e6.setContent(html_14e185f956cfc58e9d4fcd2394ca5ffa);
+            
+        
+
+        marker_c870823b8ed64d3d2adcdefa3aa4a119.bindPopup(popup_49428de7688912e69740825d72a192e6)
+        ;
+
+        
+    
+    
+            var marker_562b9bcc2c3a23b3352cc5ba750fe4b7 = L.marker(
+                [41.2188672, 1.7268736],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_b3f6b66fbceb9913411a8a44fa9ff135 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_562b9bcc2c3a23b3352cc5ba750fe4b7.setIcon(icon_b3f6b66fbceb9913411a8a44fa9ff135);
+        
+    
+        var popup_61351195188d61ccf4effce242322355 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_69b17cbd8b8e4e4658d1f4c7258f0af2 = $(`<div id="html_69b17cbd8b8e4e4658d1f4c7258f0af2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 7</p>         </div>         </div>`)[0];
+                popup_61351195188d61ccf4effce242322355.setContent(html_69b17cbd8b8e4e4658d1f4c7258f0af2);
+            
+        
+
+        marker_562b9bcc2c3a23b3352cc5ba750fe4b7.bindPopup(popup_61351195188d61ccf4effce242322355)
+        ;
+
+        
+    
+    
+            var marker_24fb535f47394389892735965d60a1a7 = L.marker(
+                [41.725799425656255, 1.8262401159544919],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_b0f239e425fc87973f3b3a5708732acc = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_24fb535f47394389892735965d60a1a7.setIcon(icon_b0f239e425fc87973f3b3a5708732acc);
+        
+    
+        var popup_b941ae98f6ece0df2c8ff6a5d1b7c247 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4d775b5740b52f36f09b97844d8bb972 = $(`<div id="html_4d775b5740b52f36f09b97844d8bb972" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Mercedes Clase A</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 0</p>         </div>         </div>`)[0];
+                popup_b941ae98f6ece0df2c8ff6a5d1b7c247.setContent(html_4d775b5740b52f36f09b97844d8bb972);
+            
+        
+
+        marker_24fb535f47394389892735965d60a1a7.bindPopup(popup_b941ae98f6ece0df2c8ff6a5d1b7c247)
+        ;
+
+        
+    
+    
+            var marker_9429c30a852a81fb2754dd95ecf197f2 = L.marker(
+                [41.72579745070326, 1.826242406122012],
+                {}
+            ).addTo(marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5);
+        
+    
+            var icon_1a6cdeafc94f92eaca1d34d4dd88d56d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_9429c30a852a81fb2754dd95ecf197f2.setIcon(icon_1a6cdeafc94f92eaca1d34d4dd88d56d);
+        
+    
+        var popup_0078fad34ae68be6ce6e4060d97c6fbb = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_63315bfeb7efdf05e3883827efcde593 = $(`<div id="html_63315bfeb7efdf05e3883827efcde593" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif;">             <h4>Volkswagen Golf</h4>             <p><b>Year Range:</b> 2020 - 2022</p>             <p><b>Results Found:</b> 7</p>         </div>         </div>`)[0];
+                popup_0078fad34ae68be6ce6e4060d97c6fbb.setContent(html_63315bfeb7efdf05e3883827efcde593);
+            
+        
+
+        marker_9429c30a852a81fb2754dd95ecf197f2.bindPopup(popup_0078fad34ae68be6ce6e4060d97c6fbb)
+        ;
+
+        
+    
+    
+            var heat_map_0d41347f4ce5a5aae02db782f07a347c = L.heatLayer(
+                [[40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.14], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.11], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.05], [40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.07], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.07], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.07], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.06], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.03], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.02], [35.2765301, -120.6556472, 0.0], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.11], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [35.2765138, -120.6556889, 0.01], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.0], [40.4637, -3.7492, 0.04], [40.4637, -3.7492, 0.01], [40.4637, -3.7492, 0.02], [40.4637, -3.7492, 0.0], [42.06965112852885, -6.5441710234460135, 0.0], [38.046070410421635, -1.0038371099511283, 0.04], [38.046070410421635, -1.0038371099511283, 0.01], [38.046070410421635, -1.0038371099511283, 0.07], [37.1637852, -5.9276178, 0.01], [39.560145, 2.8775702, 0.01], [39.5601508, 2.8777093, 0.09], [41.2188672, 1.7268736, 0.02], [41.11295674102285, 0.9365596503501376, 0.01], [41.11291981956207, 0.936445158977105, 0.09], [41.11295662902698, 0.9365179860346179, 0.01], [41.11292595216215, 0.9365788635694706, 0.02], [41.11292850359039, 0.9366103340220281, 0.02], [41.2188672, 1.7268736, 0.07], [41.725799425656255, 1.8262401159544919, 0.0], [41.72579745070326, 1.826242406122012, 0.07]],
+                {"blur": 10, "gradient": {"0.4": "blue", "0.65": "purple", "1": "red"}, "maxZoom": 13, "minOpacity": 0.5, "radius": 15}
+            ).addTo(map_b15b8ed957ee0d371be69fec31668a37);
+        
+    
+            var layer_control_5b7913a39f09ddd3a0821e637e339d9e = {
+                base_layers : {
+                    "cartodbdark_matter" : tile_layer_7f5821676e8367eb0bd3d555ee4f34aa,
+                },
+                overlays :  {
+                    "Search Locations" : marker_cluster_8babe29fa0a407d7056dadd1fc18b7b5,
+                    "macro_element_0d41347f4ce5a5aae02db782f07a347c" : heat_map_0d41347f4ce5a5aae02db782f07a347c,
+                },
+            };
+            L.control.layers(
+                layer_control_5b7913a39f09ddd3a0821e637e339d9e.base_layers,
+                layer_control_5b7913a39f09ddd3a0821e637e339d9e.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_b15b8ed957ee0d371be69fec31668a37);
+        
+</script>
+</html>
