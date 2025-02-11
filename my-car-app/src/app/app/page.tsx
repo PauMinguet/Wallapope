@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import { 
   Search as SearchIcon,
-  Favorite as FavoriteIcon,
   Settings as SettingsIcon,
   FlashOn as FlashOnIcon,
   TrendingUp as TrendingUpIcon,
@@ -128,20 +127,6 @@ export default function DashboardPage() {
       icon: <SearchIcon sx={{ fontSize: 30 }} />,
       href: '/app/search',
       color: '#4169E1',
-    },
-    {
-      title: 'Scoring',
-      description: 'Análisis de oportunidades',
-      icon: <TrendingUpIcon sx={{ fontSize: 30 }} />,
-      href: '/app/scoring',
-      color: '#00C853',
-    },
-    {
-      title: 'Favoritos',
-      description: 'Coches guardados',
-      icon: <FavoriteIcon sx={{ fontSize: 30 }} />,
-      href: '/app/liked',
-      color: '#E91E63',
     },
     {
       title: 'Ajustes',
@@ -408,7 +393,7 @@ export default function DashboardPage() {
             Acceso Rápido
           </Typography>
 
-          <Grid container spacing={2}>
+          <Grid container spacing={2} mb={12}>
             {quickLinks.map((link, index) => (
               <Grid item xs={12} sm={4} key={link.title}>
                 <MotionBox

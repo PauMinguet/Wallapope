@@ -64,25 +64,20 @@ export default function TopBar() {
       href: '/app/coches', 
       icon: <FlashOn sx={{ fontSize: '1.2rem' }} />
     },
-    { 
-      label: 'Alertas', 
-      href: '/app/alertas', 
-      icon: <NotificationsIcon sx={{ fontSize: '1.2rem' }} />
-    },
-    { 
-      label: 'Ajustes', 
-      href: '/app/ajustes', 
-      icon: <Settings sx={{ fontSize: '1.2rem' }} />
-    }
-  ]
-
-  const toolsSections = [
     {
       label: 'Búsqueda',
       href: '/app/search',
       icon: <SearchIcon sx={{ fontSize: '1.2rem' }} />,
       requiresSubscription: true
     },
+    { 
+      label: 'Alertas', 
+      href: '/app/alertas', 
+      icon: <NotificationsIcon sx={{ fontSize: '1.2rem' }} />
+    },
+  ]
+
+  const toolsSections = [
     {
       label: 'Importación',
       href: '/app/imports',
@@ -95,9 +90,9 @@ export default function TopBar() {
       icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />
     },
     {
-      label: 'Scoring',
-      href: '/app/scoring',
-      icon: <TrendingUpIcon sx={{ fontSize: '1.2rem' }} />
+      label: 'Ajustes',
+      href: '/app/ajustes',
+      icon: <Settings sx={{ fontSize: '1.2rem' }} />
     }
   ]
 
