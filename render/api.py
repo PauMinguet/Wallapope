@@ -381,13 +381,68 @@ async def process_alerts_endpoint():
         logger.error(f"Error in process_alerts: {str(e)}")
         return {"error": str(e)}
 
-@app.get("/api/process-modo-rapido")
-async def process_modo_rapido():
-    """Process all modo_rapido entries and run searches"""
+def cleanup_old_modo_rapido_data(supabase: Client):
+    """Clean up old modo rapido data, keeping only the last 24 hours"""
     try:
-        supabase = init_supabase()
-        return process_modo_rapido_entries(supabase)
+        # Calculate the cutoff time (24 hours ago)
+        cutoff_time = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+        
+        # First delete old listings as they reference runs
+        logger.info(f"Deleting modo_rapido_listings older than {cutoff_time}")
+        supabase.table('modo_rapido_listings')\
+            .delete()\
+            .lt('created_at', cutoff_time)\
+            .execute()
             
+        # Then delete old runs as they reference market data
+        logger.info(f"Deleting modo_rapido_runs older than {cutoff_time}")
+        supabase.table('modo_rapido_runs')\
+            .delete()\
+            .lt('created_at', cutoff_time)\
+            .execute()
+            
+        # Finally delete old market data
+        logger.info(f"Deleting market_data older than {cutoff_time}")
+        supabase.table('market_data')\
+            .delete()\
+            .lt('created_at', cutoff_time)\
+            .execute()
+            
+        logger.info("Successfully cleaned up old modo rapido data")
+        
     except Exception as e:
-        logger.error(f"Error in process_modo_rapido: {str(e)}")
+        logger.error(f"Error cleaning up old modo rapido data: {str(e)}", exc_info=True)
+
+def run_modo_rapido():
+    """Background task to run modo rapido processing"""
+    try:
+        supabase_url = os.getenv("SUPABASE_URL")
+        supabase_key = os.getenv("SUPABASE_KEY")
+        
+        if not supabase_url or not supabase_key:
+            logger.error("Missing Supabase credentials in environment variables")
+            return
+            
+        supabase = create_client(supabase_url, supabase_key)
+        
+        # First process new entries
+        logger.info("Starting modo rapido processing")
+        result = process_modo_rapido_entries(supabase)
+        logger.info(f"Modo rapido processing completed: {result}")
+        
+        # Then clean up old data
+        logger.info("Starting cleanup of old modo rapido data")
+        cleanup_old_modo_rapido_data(supabase)
+        
+    except Exception as e:
+        logger.error(f"Error in modo rapido background task: {str(e)}", exc_info=True)
+
+@app.get("/api/process-modo-rapido")
+async def process_modo_rapido_endpoint(background_tasks: BackgroundTasks):
+    """Process all modo_rapido entries in the background"""
+    try:
+        background_tasks.add_task(run_modo_rapido)
+        return {"message": "Modo rapido processing started in background"}
+    except Exception as e:
+        logger.error(f"Error starting modo rapido process: {str(e)}")
         return {"error": str(e)} 
