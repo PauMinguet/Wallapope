@@ -68,43 +68,51 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
 
         # First create the base search params
         search_params = {
-            'brand': params.get('brand', ''),
-            'model': params.get('model', ''),
-            'latitude': format(float(params.get('latitude', SPAIN_CENTER['lat'])), '.4f'),
-            'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
             'max_km': str(market_max_km),
             'min_sale_price': '3000',
             'order_by': 'price_low_to_high'
         }
+
+        # Add optional parameters only if they exist and are not empty
+        optional_params = [
+            ('brand', 'brand'),
+            ('model', 'model'),
+            ('min_year', 'min_year'),
+            ('max_year', 'max_year'),
+            ('engine', 'engine'),
+            ('latitude', 'latitude'),
+            ('longitude', 'longitude')
+        ]
+
+        for param_key, api_key in optional_params:
+            value = params.get(param_key)
+            if value and str(value).strip():  # Check if value exists and is not empty
+                if param_key in ['latitude', 'longitude']:
+                    search_params[api_key] = format(float(value), '.4f')
+                else:
+                    search_params[api_key] = str(value)
         
         # Calculate horsepower range for market analysis (80-130% of min_horse_power)
         min_hp = params.get('min_horse_power')
-        if min_hp is not None:
-            min_hp = int(float(min_hp))
-            market_min_hp = int(min_hp * 0.8)  # 80% of min horsepower
-            market_max_hp = int(min_hp * 1.30)  # 130% of min horsepower
-            logger.info(f"Market analysis horsepower range: {market_min_hp} - {market_max_hp}")
-            search_params['min_horse_power'] = str(market_min_hp)
-            search_params['max_horse_power'] = str(market_max_hp)
+        if min_hp and str(min_hp).strip():  # Check if value exists and is not empty
+            try:
+                min_hp = int(float(min_hp))
+                market_min_hp = int(min_hp * 0.8)  # 80% of min horsepower
+                market_max_hp = int(min_hp * 1.30)  # 130% of min horsepower
+                logger.info(f"Market analysis horsepower range: {market_min_hp} - {market_max_hp}")
+                search_params['min_horse_power'] = str(market_min_hp)
+                search_params['max_horse_power'] = str(market_max_hp)
+            except (ValueError, TypeError) as e:
+                logger.warning(f"Invalid horsepower value '{min_hp}': {str(e)}")
 
         # Add minimum kilometers for market analysis
         if market_min_km is not None:
             search_params['min_km'] = str(market_min_km)
 
-        # Add year parameters if provided
-        if 'min_year' in params:
-            search_params['min_year'] = str(params['min_year'])
-        if 'max_year' in params:
-            search_params['max_year'] = str(params['max_year'])
-
-        # Add engine type if specified
-        if 'engine' in params:
-            search_params['engine'] = str(params['engine'])
-
         # Remove empty parameters
-        search_params = {k: v for k, v in search_params.items() if v and v != ''}
+        search_params = {k: v for k, v in search_params.items() if v and str(v).strip()}
 
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
         web_url = convert_api_url_to_web_url(url)
@@ -198,10 +206,6 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
         
         # Create base search parameters
         search_params = {
-            'brand': params.get('brand', ''),
-            'model': params.get('model', ''),
-            'latitude': format(float(params.get('latitude', SPAIN_CENTER['lat'])), '.4f'),
-            'longitude': format(float(params.get('longitude', SPAIN_CENTER['lng'])), '.4f'),
             'category_ids': '100',
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
             'min_sale_price': str(min_price),
@@ -210,25 +214,37 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
             'order_by': params.get('order_by', 'price_low_to_high')
         }
 
-        # Add year parameters if provided
-        if 'min_year' in params:
-            search_params['min_year'] = str(params['min_year'])
-        if 'max_year' in params:
-            search_params['max_year'] = str(params['max_year'])
+        # Add optional parameters only if they exist and are not empty
+        optional_params = [
+            ('brand', 'brand'),
+            ('model', 'model'),
+            ('min_year', 'min_year'),
+            ('max_year', 'max_year'),
+            ('engine', 'engine'),
+            ('latitude', 'latitude'),
+            ('longitude', 'longitude')
+        ]
 
-        # Add engine type if specified
-        if 'engine' in params:
-            search_params['engine'] = str(params['engine'])
+        for param_key, api_key in optional_params:
+            value = params.get(param_key)
+            if value and str(value).strip():  # Check if value exists and is not empty
+                if param_key in ['latitude', 'longitude']:
+                    search_params[api_key] = format(float(value), '.4f')
+                else:
+                    search_params[api_key] = str(value)
 
         # Add horsepower if specified (use the same range as in market analysis)
         min_hp = params.get('min_horse_power')
-        if min_hp is not None:
-            min_hp = int(float(min_hp))
-            search_params['min_horse_power'] = str(min_hp)
-            search_params['max_horse_power'] = str(int(min_hp * 1.30))
+        if min_hp and str(min_hp).strip():  # Check if value exists and is not empty
+            try:
+                min_hp = int(float(min_hp))
+                search_params['min_horse_power'] = str(min_hp)
+                search_params['max_horse_power'] = str(int(min_hp * 1.30))
+            except (ValueError, TypeError) as e:
+                logger.warning(f"Invalid horsepower value '{min_hp}': {str(e)}")
 
         # Remove empty parameters
-        search_params = {k: v for k, v in search_params.items() if v and v != ''}
+        search_params = {k: v for k, v in search_params.items() if v and str(v).strip()}
 
         url = f"{base_url}?{'&'.join(f'{k}={quote(str(v))}' for k, v in search_params.items())}"
         web_url = convert_api_url_to_web_url(url)
@@ -292,10 +308,10 @@ def search_wallapop_endpoint(params: Dict[str, Any]) -> Optional[Dict[str, Any]]
                 'price_difference': round(price_difference, 2),
                 'price_difference_percentage': f"{abs(price_difference_percentage):.1f}%",
                 'location': f"{content['location']['city']}, {content['location']['postal_code']}",
-                'year': int(content['year']),
+                'year': int(content.get('year', 0)),
                 'kilometers': kilometers,
-                'fuel_type': content['engine'].capitalize() if content['engine'] else '',
-                'transmission': content['gearbox'].capitalize() if content['gearbox'] else '',
+                'fuel_type': content.get('engine', '').capitalize(),
+                'transmission': content.get('gearbox', '').capitalize(),
                 'url': f"https://es.wallapop.com/item/{content['web_slug']}",
                 'horsepower': float(content.get('horsepower', 0)),
                 'distance': distance_km,

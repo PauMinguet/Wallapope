@@ -39,7 +39,7 @@ def send_email_notification(to_email: str, new_listings: List[Dict], alert_info:
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 25px; text-align: center;">
-                <a href="https://wallapope-five.vercel.app/app/alertas/{alert_info['id']}" style="color: #3498db; text-decoration: none; font-size: 16px; font-weight: bold;">
+                <a href="https://cholloscars.com/app/alertas/{alert_info['id']}" style="color: #3498db; text-decoration: none; font-size: 16px; font-weight: bold;">
                     👉 Visita tu panel de alertas para gestionar tus búsquedas y ver todos los anuncios 👈
                 </a>
             </div>
@@ -127,7 +127,7 @@ def process_alerts(supabase):
                 
                 # Get the latest run for this alert
                 latest_run = supabase.table('alert_runs')\
-                    .select('*')\
+                    .select('*, market_data(*)')\
                     .eq('alert_id', alert['id'])\
                     .order('created_at', desc=True)\
                     .limit(1)\
@@ -139,8 +139,13 @@ def process_alerts(supabase):
                     last_run_time = datetime.fromisoformat(latest_run.data[0]['created_at'].replace('Z', '+00:00'))
                     time_since_last_run = datetime.now(timezone.utc) - last_run_time
                     should_run = time_since_last_run > timedelta(hours=23)
-                    # Get previous listing IDs
-                    previous_listing_ids = {listing['id'] for listing in latest_run.data[0]['listings']}
+                    # Get previous listing IDs from the market data
+                    if latest_run.data[0].get('market_data'):
+                        try:
+                            previous_listing_ids = {listing['id'] for listing in latest_run.data[0]['market_data'].get('listings', [])}
+                        except (KeyError, TypeError):
+                            logger.warning(f"Could not get previous listings for alert {alert['id']}")
+                            previous_listing_ids = set()
                 
                 if should_run:
                     logger.info(f"Processing alert {alert['id']} for user {user_email}")
@@ -163,90 +168,60 @@ def process_alerts(supabase):
                     # Remove None values
                     search_params = {k: v for k, v in search_params.items() if v is not None}
                     
-                    # Run the search
+                    # Perform search using the new endpoint search function
                     logger.info(f"Running search for alert {alert['id']}")
                     result = wallapop_endpoint_search.search_wallapop_endpoint(search_params)
                     
-                    if result and result.get('listings'):
-                        # Calculate market data
-                        market_data = result.get('market_data', {})
-                        
+                    if result and not result.get('error'):
                         # Transform listings to match frontend format
                         transformed_listings = []
                         new_listings = []  # Track new listings for notifications
                         
-                        for listing in result['listings']:
-                            content = listing['content']
-                            listing_id = content['id']
-                            
-                            # Check if this is a new listing
-                            is_new_listing = listing_id not in previous_listing_ids
-                            
-                            price = float(content['price'])
-                            market_price = market_data.get('median_price', 0)
-                            price_difference = market_price - price
-                            price_difference_percentage = (price_difference / market_price * 100) if market_price > 0 else 0
-                                                        
+                        for listing in result.get('listings', []):
                             try:
-                                distance_km = round(float(content.get('distance', 0)))  # Already in km, just round it
+                                listing_id = listing.get('listing_id')  # Use get() to safely access fields
+                                if not listing_id:
+                                    continue
+                                    
+                                # Check if this is a new listing
+                                is_new_listing = listing_id not in previous_listing_ids
+                                
+                                if is_new_listing:
+                                    new_listings.append(listing)
+                                transformed_listings.append(listing)
+                                
                             except Exception as e:
-                                distance_km = 0
-                            
-                            transformed_listing = {
-                                'id': listing_id,
-                                'title': content['title'],
-                                'price': price,
-                                'price_text': format_price_text(price),
-                                'market_price': market_price,
-                                'market_price_text': format_price_text(market_price),
-                                'price_difference': round(price_difference, 2),
-                                'price_difference_percentage': f"{abs(price_difference_percentage):.1f}%",
-                                'location': f"{content['location']['city']}, {content['location']['postal_code']}",
-                                'year': int(content['year']),
-                                'kilometers': int(content['km']),
-                                'fuel_type': content['engine'].capitalize() if content['engine'] else '',
-                                'transmission': content['gearbox'].capitalize() if content['gearbox'] else '',
-                                'url': f"https://es.wallapop.com/item/{content['web_slug']}",
-                                'horsepower': float(content.get('horsepower', 0)),
-                                'distance': distance_km,
-                                'listing_images': [
-                                    {'image_url': img.get('large', img.get('original'))} 
-                                    for img in content.get('images', [])
-                                    if isinstance(img, dict) and (img.get('large') or img.get('original'))
-                                ]
-                            }
-                            transformed_listings.append(transformed_listing)
-                            
-                            if is_new_listing:
-                                new_listings.append(transformed_listing)
+                                logger.error(f"Error processing listing in alert {alert['id']}: {str(e)}")
+                                continue
                         
-                        # Transform market data to match frontend format
-                        transformed_market_data = {
+                        # First create the market data entry
+                        market_data = result.get('market_data', {})
+                        market_data_entry = {
                             'average_price': market_data.get('average_price', 0),
-                            'average_price_text': format_price_text(market_data.get('average_price', 0)),
                             'median_price': market_data.get('median_price', 0),
-                            'median_price_text': format_price_text(market_data.get('median_price', 0)),
                             'min_price': market_data.get('min_price', 0),
-                            'min_price_text': format_price_text(market_data.get('min_price', 0)),
                             'max_price': market_data.get('max_price', 0),
-                            'max_price_text': format_price_text(market_data.get('max_price', 0)),
                             'total_listings': market_data.get('total_listings', 0),
-                            'valid_listings': market_data.get('valid_listings', 0)
-                        }
-                        
-                        # Insert run data in the same format as the frontend
-                        run_data = {
-                            'alert_id': alert['id'],
-                            'listings': transformed_listings,
-                            'market_data': transformed_market_data,
+                            'valid_listings': market_data.get('valid_listings', 0),
                             'created_at': datetime.now(timezone.utc).isoformat()
                         }
                         
-                        # Insert data matching NextJS implementation
+                        # Insert market data and get its ID
+                        market_data_response = supabase.table('market_data').insert(market_data_entry).execute()
+                        market_data_id = market_data_response.data[0]['id']
+                        
+                        # Create alert run with reference to market data
+                        run_data = {
+                            'alert_id': alert['id'],
+                            'market_data_id': market_data_id,
+                            'created_at': datetime.now(timezone.utc).isoformat()
+                        }
+                        
+                        # Insert alert run
                         supabase.table('alert_runs').insert(run_data).execute()
                         
                         # If there are new listings, send email notification
-                        if new_listings:
+                        if new_listings and alert.get('email_notifications', True):
                             alert_info = {
                                 'brand': alert['brand'],
                                 'model': alert['model'],
@@ -259,13 +234,14 @@ def process_alerts(supabase):
                             'success': True,
                             'listings_found': len(transformed_listings),
                             'new_listings_found': len(new_listings),
-                            'market_data': transformed_market_data
+                            'market_data': market_data
                         })
                     else:
+                        error_message = result.get('error') if result else 'Search returned no results'
                         processed_alerts.append({
                             'alert_id': alert['id'],
                             'success': False,
-                            'error': 'Search returned no results'
+                            'error': error_message
                         })
                 else:
                     logger.info(f"Skipping alert {alert['id']} - last run was less than 23 hours ago")
