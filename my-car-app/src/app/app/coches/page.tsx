@@ -13,6 +13,8 @@ import {
   DialogContent,
   DialogActions,
   Pagination,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import { motion } from 'framer-motion'
 import { 
@@ -30,7 +32,6 @@ const MotionTypography = motion(Typography)
 
 type SortOption = 'distance' | 'discount' | 'percentage' | null;
 
-const STORAGE_KEY = 'quick_listings'
 
 const LoadingScreen = () => (
   <Box sx={{ 
@@ -56,10 +57,14 @@ export default function CochesPage() {
   const [listings, setListings] = useState<Listing[]>([])
   const [loading, setLoading] = useState(true)
   const [sortBy, setSortBy] = useState<SortOption>('discount')
+  const [selectedMinYear, setSelectedMinYear] = useState<string>('')
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const [itemsPerPage] = useState(20)
+
+  // Generate years from 2010 to current year
+  const currentYear = new Date().getFullYear()
+  const years = Array.from({ length: currentYear - 2009 }, (_, i) => (currentYear - i).toString())
 
   // Handle subscription check and redirect
   useEffect(() => {
@@ -79,24 +84,8 @@ export default function CochesPage() {
     const fetchListings = async () => {
       try {
         setLoading(true)
-        const storedListings = localStorage.getItem(STORAGE_KEY)
-        
-        if (storedListings) {
-          const data = JSON.parse(storedListings)
-          if (Array.isArray(data)) {
-            data.sort((a: Listing, b: Listing) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
-            setListings(data)
-            setTotalPages(Math.ceil(data.length / itemsPerPage))
-          } else {
-            // If stored data is invalid, remove it
-            localStorage.removeItem(STORAGE_KEY)
-            throw new Error('Invalid stored data')
-          }
-          setLoading(false)
-          return
-        }
-
-        const response = await fetch(`/api/car-listings?page=${page}&limit=${itemsPerPage}`)
+        const minYearParam = selectedMinYear ? `&minYear=${selectedMinYear}` : ''
+        const response = await fetch(`/api/car-listings?page=${page}&sortBy=${sortBy}${minYearParam}`)
         if (!response.ok) {
           throw new Error('Failed to fetch listings')
         }
@@ -104,7 +93,6 @@ export default function CochesPage() {
         if (Array.isArray(data.listings)) {
           setListings(data.listings)
           setTotalPages(data.totalPages)
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data.listings))
         }
       } catch (error) {
         console.error('Error fetching listings:', error)
@@ -115,29 +103,7 @@ export default function CochesPage() {
     }
 
     fetchListings()
-  }, [initialLoad, subscriptionLoading, page, itemsPerPage])
-
-  // Handle sorting
-  useEffect(() => {
-    if (initialLoad || subscriptionLoading || !Array.isArray(listings) || listings.length === 0) return
-
-    const sortedData = [...listings]
-    if (sortBy === 'distance') {
-      sortedData.sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity))
-    } else if (sortBy === 'discount') {
-      sortedData.sort((a, b) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
-    } else if (sortBy === 'percentage') {
-      sortedData.sort((a, b) => {
-        const percentA = parseFloat(b.price_difference_percentage.replace('%', ''))
-        const percentB = parseFloat(a.price_difference_percentage.replace('%', ''))
-        return Math.abs(percentA) - Math.abs(percentB)
-      })
-    }
-    
-    if (JSON.stringify(sortedData) !== JSON.stringify(listings)) {
-      setListings(sortedData)
-    }
-  }, [sortBy, listings, initialLoad, subscriptionLoading])
+  }, [initialLoad, subscriptionLoading, page, sortBy, selectedMinYear])
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
@@ -200,6 +166,34 @@ export default function CochesPage() {
               }
             }}
           >
+            <Select
+              value={selectedMinYear}
+              onChange={(e) => setSelectedMinYear(e.target.value)}
+              displayEmpty
+              size="small"
+              sx={{
+                minWidth: 120,
+                color: 'white',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'rgba(255,255,255,0.2)',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'rgba(255,255,255,0.4)',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'rgba(255,255,255,0.6)',
+                },
+                '.MuiSvgIcon-root': {
+                  color: 'white',
+                }
+              }}
+            >
+              <MenuItem value="">Desde cualquier año</MenuItem>
+              {years.map((year) => (
+                <MenuItem key={year} value={year}>Desde {year}</MenuItem>
+              ))}
+            </Select>
+
             <Button
               variant="outlined"
               size="small"

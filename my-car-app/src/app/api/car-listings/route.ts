@@ -15,15 +15,46 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url)
     const page = parseInt(url.searchParams.get('page') || '1')
-    const limit = parseInt(url.searchParams.get('limit') || '12')
-    const offset = (page - 1) * limit
+    const sortBy = url.searchParams.get('sortBy') || 'discount'
+    const minYear = url.searchParams.get('minYear')
+    
+    // Fixed values
+    const ITEMS_PER_PAGE = 25
+    const TOTAL_ITEMS = 100
+    const offset = (page - 1) * ITEMS_PER_PAGE
 
-    // Get all listings from modo_rapido_listings
-    const { data: listings, error } = await supabase
+    // Calculate 24 hours ago
+    const twentyFourHoursAgo = new Date()
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24)
+
+    // Build the query based on sort parameter
+    let query = supabase
       .from('modo_rapido_listings')
       .select('*')
-      .order('created_at', { ascending: false })
-      .limit(300)
+      .gt('created_at', twentyFourHoursAgo.toISOString())
+
+    // Apply minimum year filter if provided
+    if (minYear) {
+      query = query.gte('year', parseInt(minYear))
+    }
+
+    // Add appropriate ordering based on sortBy parameter
+    switch (sortBy) {
+      case 'distance':
+        query = query.order('distance', { ascending: true })
+        break
+      case 'percentage':
+        // We'll sort by percentage after fetching
+        query = query.order('created_at', { ascending: false })
+        break
+      case 'discount':
+      default:
+        query = query.order('price_difference', { ascending: false })
+    }
+
+    // Get exactly 100 unique listings
+    const { data: listings, error } = await query
+      .limit(TOTAL_ITEMS)
 
     if (error) {
       console.error('Error fetching modo rapido listings:', error)
@@ -31,7 +62,12 @@ export async function GET(request: Request) {
     }
 
     if (!listings || listings.length === 0) {
-      return NextResponse.json({ listings: [], total: 0 })
+      return NextResponse.json({ 
+        listings: [], 
+        total: 0,
+        page: 1,
+        totalPages: 1
+      })
     }
 
     // Remove duplicates based on listing_id
@@ -39,20 +75,25 @@ export async function GET(request: Request) {
       index === self.findIndex((l) => l.listing_id === listing.listing_id)
     )
 
-    // Sort by price difference by default
-    const sortedListings = uniqueListings.sort((a, b) => Math.abs(b.price_difference) - Math.abs(a.price_difference))
+    // Sort by percentage if that's the selected sort option
+    if (sortBy === 'percentage') {
+      uniqueListings.sort((a, b) => {
+        const percentA = parseFloat(a.price_difference_percentage.replace('%', ''))
+        const percentB = parseFloat(b.price_difference_percentage.replace('%', ''))
+        return percentB - percentA // Descending order
+      })
+    }
 
-    // Apply pagination
-    const paginatedListings = sortedListings.slice(offset, offset + limit)
-    const total = sortedListings.length
+    // Get the page slice
+    const paginatedListings = uniqueListings.slice(offset, offset + ITEMS_PER_PAGE)
 
     return NextResponse.json({
       listings: paginatedListings,
-      total,
+      total: uniqueListings.length,
       page,
-      limit,
-      totalPages: Math.ceil(total / limit)
+      totalPages: Math.ceil(uniqueListings.length / ITEMS_PER_PAGE)
     })
+
   } catch (error) {
     console.error('Error in car-listings endpoint:', error)
     return NextResponse.json(
