@@ -8,10 +8,6 @@ import {
   Button, 
   Stack,
   useTheme,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
 } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
@@ -29,8 +25,6 @@ import {
   Analytics as AnalyticsIcon,
   Search as SearchIcon,
   TrendingUp as TrendingUpIcon,
-  ExpandMore as ExpandMoreIcon,
-  Build as BuildIcon,
 } from '@mui/icons-material'
 import { useSubscription } from '@/hooks/useSubscription'
 
@@ -41,7 +35,6 @@ export default function TopBar() {
   const [isMobileView, setIsMobileView] = useState(false)
   const theme = useTheme()
   const { isSubscribed } = useSubscription('pro')
-  const [toolsAnchorEl, setToolsAnchorEl] = useState<null | HTMLElement>(null)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -57,52 +50,41 @@ export default function TopBar() {
     { 
       label: 'Menú', 
       href: '/app', 
-      icon: <MenuIcon sx={{ fontSize: '1.2rem' }} />
+      icon: <MenuIcon sx={{ fontSize: '1.2rem', color: '#4169E1' }} />
     },
     { 
       label: 'Modo Rápido', 
       href: '/app/coches', 
-      icon: <FlashOn sx={{ fontSize: '1.2rem' }} />
+      icon: <FlashOn sx={{ fontSize: '1.2rem', color: '#00C853' }} />
     },
     {
       label: 'Búsqueda',
       href: '/app/search',
-      icon: <SearchIcon sx={{ fontSize: '1.2rem' }} />,
+      icon: <SearchIcon sx={{ fontSize: '1.2rem', color: '#4169E1' }} />,
       requiresSubscription: true
     },
     { 
       label: 'Alertas', 
       href: '/app/alertas', 
-      icon: <NotificationsIcon sx={{ fontSize: '1.2rem' }} />
+      icon: <NotificationsIcon sx={{ fontSize: '1.2rem', color: '#9400D3' }} />
     },
-  ]
-
-  const toolsSections = [
     {
       label: 'Importación',
       href: '/app/imports',
-      icon: <TrendingUpIcon sx={{ fontSize: '1.2rem' }} />,
+      icon: <TrendingUpIcon sx={{ fontSize: '1.2rem', color: '#4169E1' }} />,
       requiresSubscription: true
     },
     { 
       label: 'Mercado', 
       href: '/app/mercado', 
-      icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />
+      icon: <AnalyticsIcon sx={{ fontSize: '1.2rem', color: '#00C853' }} />
     },
     {
       label: 'Ajustes',
       href: '/app/ajustes',
-      icon: <Settings sx={{ fontSize: '1.2rem' }} />
+      icon: <Settings sx={{ fontSize: '1.2rem', color: '#9400D3' }} />
     }
   ]
-
-  const handleToolsClick = (event: React.MouseEvent<HTMLElement>) => {
-    setToolsAnchorEl(event.currentTarget)
-  }
-
-  const handleToolsClose = () => {
-    setToolsAnchorEl(null)
-  }
 
   const handleNavigation = (section: { href: string, requiresSubscription?: boolean }) => {
     if (section.requiresSubscription && !isSubscribed) {
@@ -110,7 +92,6 @@ export default function TopBar() {
       return
     }
     router.push(section.href)
-    if (toolsAnchorEl) handleToolsClose()
   }
 
   return (
@@ -127,7 +108,12 @@ export default function TopBar() {
         py: { xs: 1.5, md: 2 }
       }}
     >
-      <Container maxWidth="lg" sx={{ px: { xs: 0.25, sm: 1, md: 2 } }}>
+      <Container 
+        maxWidth={false}
+        sx={{ 
+          px: { xs: 0.25, sm: 1, md: 2 }
+        }}
+      >
         <Box sx={{ 
           display: 'flex', 
           alignItems: 'center', 
@@ -137,15 +123,14 @@ export default function TopBar() {
           <Box sx={{ 
             display: 'flex',
             alignItems: 'center',
-            gap: { xs: 0, md: 2 },
+            gap: { xs: 0},
             cursor: 'pointer',
             pl: { xs: 0.25, md: 0 }
-          }} onClick={() => router.push('/')}>
+          }} onClick={() => router.push(isSignedIn ? '/app' : '/')}>
             <Box sx={{ 
               position: 'relative',
-              width: { xs: 65, md: 120 },
-              height: { xs: 32, md: 50 },
-              borderRadius: 4,
+              width: { xs: 50, md: 90 },
+              height: { xs: 25, md: 50 },
               overflow: 'hidden'
             }}>
               <Image
@@ -154,7 +139,6 @@ export default function TopBar() {
                 fill
                 style={{
                   objectFit: 'contain',
-                  borderRadius: 'inherit'
                 }}
               />
             </Box>
@@ -213,114 +197,6 @@ export default function TopBar() {
                       {isMobileView ? section.icon : section.label}
                     </Button>
                   ))}
-
-                  {/* Tools Dropdown */}
-                  <Button
-                    onClick={handleToolsClick}
-                    startIcon={!isMobileView ? <BuildIcon sx={{ fontSize: '1.2rem' }} /> : undefined}
-                    endIcon={!isMobileView ? <ExpandMoreIcon /> : undefined}
-                    className={toolsSections.some(tool => pathname === tool.href) ? 'active' : ''}
-                    sx={{
-                      '& .MuiButton-startIcon': {
-                        margin: { xs: 0, md: '0 8px 0 -4px' }
-                      }
-                    }}
-                  >
-                    {isMobileView ? <BuildIcon sx={{ fontSize: '1.2rem' }} /> : 'Herramientas'}
-                  </Button>
-                  <Menu
-                    anchorEl={toolsAnchorEl}
-                    open={Boolean(toolsAnchorEl)}
-                    onClose={handleToolsClose}
-                    PaperProps={{
-                      sx: {
-                        mt: 1.5,
-                        background: 'rgba(0, 0, 0, 0.95)',
-                        backdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        borderRadius: 2,
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-                        minWidth: '200px',
-                        overflow: 'hidden',
-                        '& .MuiMenuItem-root': {
-                          color: 'white',
-                          py: 1.5,
-                          px: 2,
-                          transition: 'all 0.2s ease-in-out',
-                          position: 'relative',
-                          '&:hover': {
-                            background: 'linear-gradient(45deg, rgba(44,62,147,0.2), rgba(107,35,142,0.2))',
-                            '& .MuiListItemIcon-root': {
-                              color: 'white',
-                              transform: 'scale(1.1)',
-                            }
-                          },
-                          '&:after': {
-                            content: '""',
-                            position: 'absolute',
-                            bottom: 0,
-                            left: '10%',
-                            width: '80%',
-                            height: '1px',
-                            background: 'rgba(255,255,255,0.1)'
-                          },
-                          '&:last-child:after': {
-                            display: 'none'
-                          }
-                        }
-                      }
-                    }}
-                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                  >
-                    {toolsSections.map((tool) => (
-                      <MenuItem 
-                        key={tool.href}
-                        onClick={() => handleNavigation(tool)}
-                        sx={{
-                          opacity: tool.requiresSubscription && !isSubscribed ? 0.6 : 1,
-                          position: 'relative',
-                          '&::before': tool.requiresSubscription && !isSubscribed ? {
-                            content: '"PRO"',
-                            position: 'absolute',
-                            right: '8px',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            fontSize: '0.7rem',
-                            color: '#9400D3',
-                            fontWeight: 'bold',
-                            padding: '2px 6px',
-                            borderRadius: '4px',
-                            border: '1px solid #9400D3',
-                            background: 'rgba(148,0,211,0.1)',
-                            transition: 'all 0.2s ease-in-out'
-                          } : {},
-                          '&:hover': {
-                            '&::before': tool.requiresSubscription && !isSubscribed ? {
-                              background: 'rgba(148,0,211,0.2)',
-                              borderColor: '#a020f0'
-                            } : {}
-                          }
-                        }}
-                      >
-                        <ListItemIcon sx={{ 
-                          color: 'rgba(255,255,255,0.7)', 
-                          minWidth: 36,
-                          transition: 'all 0.2s ease-in-out'
-                        }}>
-                          {tool.icon}
-                        </ListItemIcon>
-                        <ListItemText 
-                          primary={tool.label} 
-                          sx={{
-                            '& .MuiTypography-root': {
-                              transition: 'all 0.2s ease-in-out'
-                            }
-                          }}
-                        />
-                      </MenuItem>
-                    ))}
-                  </Menu>
                 </Box>
 
                 <UserButton 

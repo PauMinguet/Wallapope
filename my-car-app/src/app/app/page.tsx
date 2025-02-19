@@ -2,32 +2,38 @@
 
 import { useState, useEffect } from 'react'
 import { 
-  Container, 
-  Typography, 
-  Grid, 
-  Card, 
-  CardContent,
   Box,
   CircularProgress,
-  Button,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+  Divider,
+  Typography,
+  Container,
 } from '@mui/material'
 import { 
   Search as SearchIcon,
-  Settings as SettingsIcon,
   FlashOn as FlashOnIcon,
   TrendingUp as TrendingUpIcon,
   NotificationsActive as NotificationsActiveIcon,
-  Feedback as FeedbackIcon,
+  Menu as MenuIcon,
 } from '@mui/icons-material'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { useSubscription } from '@/hooks/useSubscription'
 import { motion } from 'framer-motion'
-import FeedbackDialog from '../components/FeedbackDialog'
+import SearchPanel from '../components/SearchPanel'
 import Footer from '../components/Footer'
 
 const MotionBox = motion(Box)
 const MotionTypography = motion(Typography)
+
+const DRAWER_WIDTH = 280
 
 const LoadingScreen = () => (
   <Box sx={{ 
@@ -48,10 +54,13 @@ const LoadingScreen = () => (
 
 export default function DashboardPage() {
   const router = useRouter()
+  const pathname = usePathname()
   const { isSignedIn, isLoaded } = useUser()
   const { loading: subscriptionLoading, isSubscribed } = useSubscription()
   const [initialLoad, setInitialLoad] = useState(true)
-  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   // Handle subscription check and redirect
   useEffect(() => {
@@ -74,75 +83,157 @@ export default function DashboardPage() {
     return <LoadingScreen />
   }
 
-  const featuredServices = [
+  const menuItems = [
     {
-      title: 'Modo Rápido',
-      description: 'Encuentra oportunidades únicas en tiempo real',
-      longDescription: 'Accede a nuestro sistema de detección automática de oportunidades. Identifica coches con precios por debajo del mercado en tiempo real y sé el primero en contactar con el vendedor.',
-      icon: <FlashOnIcon sx={{ fontSize: 40 }} />,
+      title: 'Búsqueda Inteligente',
+      description: 'Encuentra coches usando nuestro sistema de búsqueda inteligente que analiza precios de mercado y te muestra las mejores oportunidades.',
+      icon: <SearchIcon sx={{ color: '#4169E1' }} />,
+      href: '/app',
+    },
+    {
+      title: 'Modo Flash',
+      description: 'Detecta oportunidades únicas en tiempo real. Identifica coches recién publicados con precios por debajo del mercado.',
+      icon: <FlashOnIcon sx={{ color: '#00C853' }} />,
       href: '/app/coches',
-      color: '#00C853',
-      tiers: [
-        { name: 'PRO', limit: '10 modelos', color: '#9400D3' },
-        { name: 'COMPRAVENTA', limit: '500+ modelos', color: '#FFD700' }
-      ]
-    },
-    {
-      title: 'Importación',
-      description: 'Oportunidades desde Suiza',
-      longDescription: 'Descubre oportunidades únicas importando coches desde Suiza. Análisis detallado de costes, impuestos y trámites necesarios para la importación.',
-      icon: <TrendingUpIcon sx={{ fontSize: 40 }} />,
-      href: '/app/imports',
-      color: '#4169E1',
-      isPro: true,
-    },
-    {
-      title: 'Sistema de Alertas',
-      description: 'Monitorización automática del mercado',
-      longDescription: 'Configura alertas personalizadas y recibe notificaciones cuando aparezcan coches que coincidan con tus criterios. Límites por plan: Básico (1 alerta), Pro (5 alertas), Compraventa (alertas ilimitadas).',
-      icon: <NotificationsActiveIcon sx={{ fontSize: 40 }} />,
-      href: '/app/alertas',
-      color: '#9400D3',
-      tiers: [
-        { name: 'BÁSICO', limit: '1 alerta', color: '#64B5F6' },
-        { name: 'PRO', limit: '5 alertas', color: '#9400D3' },
-        { name: 'COMPRAVENTA', limit: 'Sin límite', color: '#FFD700' }
-      ]
     },
     {
       title: 'Análisis de Mercado',
-      description: 'Datos y estadísticas en tiempo real',
-      longDescription: 'Accede a análisis detallados del mercado, tendencias de precios y estadísticas que te ayudarán a tomar mejores decisiones de compra y venta.',
-      icon: <TrendingUpIcon sx={{ fontSize: 40 }} />,
+      description: 'Accede a estadísticas detalladas sobre precios, tendencias y evolución del mercado para cada modelo.',
+      icon: <TrendingUpIcon sx={{ color: '#4169E1' }} />,
       href: '/app/mercado',
-      color: '#4169E1',
-      isPro: false,
-    },
-  ]
-  
-  const quickLinks = [
-    {
-      title: 'Buscar Coches',
-      description: 'Búsqueda avanzada',
-      icon: <SearchIcon sx={{ fontSize: 30 }} />,
-      href: '/app/search',
-      color: '#4169E1',
     },
     {
-      title: 'Ajustes',
-      description: 'Configuración',
-      icon: <SettingsIcon sx={{ fontSize: 30 }} />,
-      href: '/app/ajustes',
-      color: '#757575',
+      title: 'Sistema de Alertas',
+      description: 'Configura alertas personalizadas y recibe notificaciones cuando aparezcan coches que coincidan con tus criterios.',
+      icon: <NotificationsActiveIcon sx={{ color: '#9400D3' }} />,
+      href: '/app/alertas',
+    },
+    {
+      title: 'Importación Suiza',
+      description: 'Explora oportunidades de importación desde Suiza. Compara precios y calcula costes de importación.',
+      icon: <TrendingUpIcon sx={{ color: '#4169E1' }} />,
+      href: '/app/imports',
     },
   ]
 
+  const drawer = (
+    <Box sx={{ 
+      bgcolor: 'rgba(255,255,255,0.03)',
+      height: '100%',
+      borderRight: '1px solid rgba(255,255,255,0.1)',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      <Box sx={{ p: 3 }}>
+        <MotionTypography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 700,
+            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: 1
+          }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          CholloCars
+        </MotionTypography>
+        <MotionTypography 
+          variant="body2" 
+          sx={{ 
+            color: 'rgba(255,255,255,0.7)',
+            mt: 1,
+            lineHeight: 1.6
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Tu asistente inteligente para encontrar las mejores ofertas en coches de segunda mano
+        </MotionTypography>
+      </Box>
+      <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+      <List sx={{ flexGrow: 1, pt: 2 }}>
+        {menuItems.map((item, index) => (
+          <MotionBox
+            key={item.title}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+          >
+            <ListItem 
+              key={item.title}
+              onClick={() => router.push(item.href)}
+              sx={{
+                py: 2.5,
+                px: 2,
+                transition: 'all 0.3s ease',
+                cursor: 'pointer',
+                borderRadius: '0 24px 24px 0',
+                mr: 2,
+                ...(pathname === item.href ? {
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  '&:hover': {
+                    bgcolor: 'rgba(255,255,255,0.15)',
+                  }
+                } : {
+                  '&:hover': {
+                    bgcolor: 'rgba(255,255,255,0.05)',
+                  }
+                })
+              }}
+            >
+              <ListItemIcon>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText 
+                primary={item.title}
+                secondary={item.description}
+                primaryTypographyProps={{
+                  sx: { 
+                    color: 'white', 
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    mb: 0.5
+                  }
+                }}
+                secondaryTypographyProps={{
+                  sx: { 
+                    color: 'rgba(255,255,255,0.6)', 
+                    fontSize: '0.85rem',
+                    lineHeight: 1.4
+                  }
+                }}
+              />
+            </ListItem>
+          </MotionBox>
+        ))}
+      </List>
+      <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+      <Box sx={{ p: 3, textAlign: 'center' }}>
+        
+        <Typography 
+          variant="caption" 
+          sx={{ 
+            color: 'rgba(255,255,255,0.3)',
+            fontSize: '0.7rem'
+          }}
+        >
+          © 2025 CholloCars
+        </Typography>
+      </Box>
+    </Box>
+  )
+
   return (
     <Box sx={{ 
-      overflow: 'hidden',
+      display: 'flex',
+      minHeight: '100vh',
       bgcolor: '#000000',
       position: 'relative',
-      minHeight: '100vh',
     }}>
       {/* Background Pattern */}
       <Box
@@ -200,268 +291,151 @@ export default function DashboardPage() {
         />
       </Box>
 
-      {/* Content Container */}
-      <Box sx={{ position: 'relative', zIndex: 1 }}>
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Box sx={{ 
-            mb: 4, 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 2
-          }}>
-            <Box>
-              <MotionTypography 
-                variant="h4" 
-                sx={{ 
-                  mb: 1, 
-                  fontWeight: 700,
-                  background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' }
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Bienvenido a CholloCars
-              </MotionTypography>
+      {/* Navigation Drawer */}
+      <Box
+        component="nav"
+        sx={{
+          width: { md: DRAWER_WIDTH },
+          flexShrink: { md: 0 },
+          zIndex: 2,
+          mt: { xs: '56px', md: '72px' }
+        }}
+      >
+        {/* Mobile drawer */}
+        {isMobile ? (
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={() => setMobileOpen(false)}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: 'block', md: 'none' },
+              '& .MuiDrawer-paper': { 
+                boxSizing: 'border-box', 
+                width: DRAWER_WIDTH,
+                bgcolor: 'rgba(0,0,0,0.95)',
+                backdropFilter: 'blur(10px)',
+                mt: '56px'
+              },
+            }}
+          >
+            {drawer}
+          </Drawer>
+        ) : (
+          // Desktop drawer
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', md: 'block' },
+              '& .MuiDrawer-paper': { 
+                boxSizing: 'border-box', 
+                width: DRAWER_WIDTH,
+                bgcolor: 'rgba(0,0,0,0.95)',
+                backdropFilter: 'blur(10px)',
+                mt: '72px'
+              },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        )}
+      </Box>
 
-              <MotionTypography 
-                variant="body1" 
-                sx={{ 
-                  color: 'rgba(255,255,255,0.7)',
-                  maxWidth: 600
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                Accede a todas las herramientas y servicios para encontrar las mejores oportunidades en el mercado de coches de segunda mano.
-              </MotionTypography>
-            </Box>
+      {/* Main Content */}
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
+        {/* Mobile menu button */}
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={() => setMobileOpen(true)}
+            sx={{ 
+              mr: 2, 
+              display: { md: 'none' },
+              position: 'fixed',
+              top: 16,
+              left: 16,
+              bgcolor: 'rgba(0,0,0,0.5)',
+              backdropFilter: 'blur(10px)',
+              color: 'white',
+              zIndex: 10,
+              '&:hover': {
+                bgcolor: 'rgba(255,255,255,0.1)'
+              }
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
 
-            <Button
-              variant="outlined"
-              startIcon={<FeedbackIcon />}
-              onClick={() => setIsFeedbackOpen(true)}
+        {/* Content Container */}
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            py: { xs: 8, md: 6 },
+            px: { xs: 2, sm: 3, md: 4 },
+            flexGrow: 1
+          }}
+        >
+          {/* Welcome Section */}
+          <Box sx={{ mb: 6 }}>
+            <MotionTypography
+              variant="h4"
               sx={{
-                borderColor: 'rgba(255,255,255,0.2)',
+                fontWeight: 700,
                 color: 'white',
-                borderRadius: '20px',
-                textTransform: 'none',
-                px: 3,
-                py: 1,
-                '&:hover': {
-                  borderColor: '#4169E1',
-                  background: 'rgba(255,255,255,0.05)'
-                }
+                mb: 2
               }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              Sugerencias
-            </Button>
+              Bienvenido a CholloCars
+            </MotionTypography>
+            <MotionTypography
+              variant="body1"
+              sx={{
+                color: 'rgba(255,255,255,0.7)',
+                maxWidth: 600
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Encuentra las mejores oportunidades en el mercado de coches de segunda mano
+            </MotionTypography>
           </Box>
 
-          {/* Featured Services */}
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              mb: 3,
-              color: 'white',
-              fontWeight: 600
-            }}
+          {/* Search Panel */}
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Servicios Destacados
-          </Typography>
-
-          <Grid container spacing={3} sx={{ mb: 6 }}>
-            {featuredServices.map((service, index) => (
-              <Grid item xs={12} sm={6} key={service.title}>
-                <MotionBox
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card 
-                    sx={{ 
-                      height: '100%',
-                      background: 'rgba(255,255,255,0.02)',
-                      backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: { xs: 3, md: 4 },
-                      transition: 'all 0.3s ease-in-out',
-                      cursor: 'pointer',
-                      '&:hover': {
-                        transform: 'translateY(-8px)',
-                        borderColor: service.color,
-                        background: 'rgba(255,255,255,0.03)'
-                      }
-                    }}
-                    onClick={() => router.push(service.href)}
-                  >
-                    <CardContent sx={{ p: 3 }}>
-                      <Box sx={{ 
-                        p: 2,
-                        borderRadius: '50%',
-                        background: `linear-gradient(45deg, ${service.color}20, ${service.color}40)`,
-                        color: service.color,
-                        width: 'fit-content',
-                        mb: 2
-                      }}>
-                        {service.icon}
-                      </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                        <Typography variant="h6" sx={{ 
-                          fontWeight: 600,
-                          color: 'white'
-                        }}>
-                          {service.title}
-                        </Typography>
-                        {service.isPro && (
-                          <Box sx={{ 
-                            px: 1, 
-                            py: 0.5, 
-                            bgcolor: 'rgba(148,0,211,0.1)', 
-                            border: '1px solid #9400D3',
-                            borderRadius: 1,
-                            fontSize: '0.7rem',
-                            color: '#9400D3',
-                            fontWeight: 600
-                          }}>
-                            PRO
-                          </Box>
-                        )}
-                      </Box>
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 2 }}>
-                        {service.description}
-                      </Typography>
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', mb: service.tiers ? 2 : 0 }}>
-                        {service.longDescription}
-                      </Typography>
-                      {service.tiers && (
-                        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                          {service.tiers.map((tier) => (
-                            <Box
-                              key={tier.name}
-                              sx={{
-                                px: 1,
-                                py: 0.5,
-                                bgcolor: `${tier.color}10`,
-                                border: `1px solid ${tier.color}`,
-                                borderRadius: 1,
-                                fontSize: '0.7rem',
-                                color: tier.color,
-                                fontWeight: 600,
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 0.5
-                              }}
-                            >
-                              <span>{tier.name}</span>
-                              <Box
-                                component="span"
-                                sx={{
-                                  height: '12px',
-                                  width: '1px',
-                                  bgcolor: `${tier.color}40`
-                                }}
-                              />
-                              <span>{tier.limit}</span>
-                            </Box>
-                          ))}
-                        </Box>
-                      )}
-                    </CardContent>
-                  </Card>
-                </MotionBox>
-              </Grid>
-            ))}
-          </Grid>
-
-          {/* Quick Links */}
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              mb: 3,
-              color: 'white',
-              fontWeight: 600
-            }}
-          >
-            Acceso Rápido
-          </Typography>
-
-          <Grid container spacing={2} mb={12}>
-            {quickLinks.map((link, index) => (
-              <Grid item xs={12} sm={4} key={link.title}>
-                <MotionBox
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 + (index * 0.1) }}
-                >
-                  <Card 
-                    sx={{ 
-                      background: 'rgba(255,255,255,0.02)',
-                      backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: 2,
-                      transition: 'all 0.3s ease-in-out',
-                      cursor: 'pointer',
-                      '&:hover': {
-                        transform: 'translateY(-4px)',
-                        borderColor: link.color,
-                        background: 'rgba(255,255,255,0.03)'
-                      }
-                    }}
-                    onClick={() => router.push(link.href)}
-                  >
-                    <CardContent sx={{ 
-                      p: 2,
-                      '&:last-child': { pb: 2 }
-                    }}>
-                      <Box sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 2
-                      }}>
-                        <Box sx={{ 
-                          p: 1,
-                          borderRadius: '50%',
-                          background: `linear-gradient(45deg, ${link.color}20, ${link.color}40)`,
-                          color: link.color
-                        }}>
-                          {link.icon}
-                        </Box>
-                        <Box>
-                          <Typography variant="subtitle1" sx={{ 
-                            fontWeight: 600,
-                            color: 'white',
-                            lineHeight: 1.2
-                          }}>
-                            {link.title}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                            {link.description}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </MotionBox>
-              </Grid>
-            ))}
-          </Grid>
-
-          {/* Feedback Dialog */}
-          <FeedbackDialog 
-            open={isFeedbackOpen}
-            onClose={() => setIsFeedbackOpen(false)}
-          />
+            <SearchPanel />
+          </MotionBox>
         </Container>
+
+        {/* Footer */}
+        <Box sx={{ mt: 20 }}>
+          <Footer />
+        </Box>
       </Box>
-      <Footer />
     </Box>
   )
 } 

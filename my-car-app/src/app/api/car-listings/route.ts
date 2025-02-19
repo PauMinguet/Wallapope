@@ -23,15 +23,11 @@ export async function GET(request: Request) {
     const TOTAL_ITEMS = 100
     const offset = (page - 1) * ITEMS_PER_PAGE
 
-    // Calculate 24 hours ago
-    const twentyFourHoursAgo = new Date()
-    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24)
 
     // Build the query based on sort parameter
     let query = supabase
       .from('modo_rapido_listings')
       .select('*')
-      .gt('created_at', twentyFourHoursAgo.toISOString())
 
     // Apply minimum year filter if provided
     if (minYear) {
