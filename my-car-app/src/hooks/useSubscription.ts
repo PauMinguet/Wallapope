@@ -53,34 +53,10 @@ export function useSubscription(requiredTier?: 'basic' | 'pro' | 'business') {
           userData
         })
 
-        if (!isActive || isExpired) {
-          console.log('Redirecting to pricing - Reason:', !isActive ? 'inactive subscription' : 'expired subscription')
-          router.push('/pricing')
-          return
-        }
-
-        // Check tier requirements
-        if (requiredTier) {
-          const tierLevels = { basic: 0, pro: 1, business: 2 }
-          const requiredLevel = tierLevels[requiredTier]
-          const currentLevel = tierLevels[userData?.subscription_tier as keyof typeof tierLevels] || -1
-
-          console.log('Tier check:', {
-            currentTier: userData?.subscription_tier,
-            requiredTier,
-            currentLevel,
-            requiredLevel
-          })
-
-          if (currentLevel < requiredLevel) {
-            console.log('Redirecting to pricing - Reason: insufficient tier level')
-            router.push('/pricing')
-            return
-          }
-        }
+        // Don't redirect here, just update the state
+        setLoading(false)
       } catch (error) {
         console.error('Error checking subscription:', error)
-      } finally {
         setLoading(false)
       }
     }
@@ -88,11 +64,13 @@ export function useSubscription(requiredTier?: 'basic' | 'pro' | 'business') {
     checkSubscription()
   }, [user, router, requiredTier])
 
+  const isSubscribed = subscriptionData?.subscription_status === 'active' && 
+                      new Date(subscriptionData?.current_period_end) > new Date()
+
   return {
     loading,
     subscriptionData,
-    isSubscribed: subscriptionData?.subscription_status === 'active' && 
-                  new Date(subscriptionData?.current_period_end) > new Date(),
+    isSubscribed,
     currentTier: subscriptionData?.subscription_tier
   }
 } 

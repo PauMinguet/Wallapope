@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -14,6 +15,12 @@ import {
   Card,
   Grid,
   Button,
+  CardContent,
+  FormControl,
+  Select,
+  MenuItem,
+  TextField,
+  Autocomplete,
 } from '@mui/material'
 import { motion } from 'framer-motion'
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
@@ -21,6 +28,7 @@ import ImportListingGrid, { ImportListing } from '@/app/components/ImportListing
 import Footer from '@/app/components/Footer'
 import { useSubscription } from '@/hooks/useSubscription'
 import TopBar from '@/app/components/TopBar'
+import { SelectChangeEvent } from '@mui/material'
 
 const MotionTypography = motion(Typography)
 
@@ -37,17 +45,48 @@ interface SearchRun {
   listings: ImportListing[]
 }
 
+interface Brand {
+  id: number
+  name: string
+}
+
+interface Model {
+  id: number
+  marca_id: number
+  nome: string
+}
+
 export default function ImportsPage() {
   const { isSubscribed: isPro, loading: subscriptionLoading } = useSubscription('pro')
   const [searchRuns, setSearchRuns] = useState<SearchRun[]>([])
   const [loading, setLoading] = useState(true)
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
-  const [carPrice, setCarPrice] = useState<number>(0)
+  const [brands, setBrands] = useState<Brand[]>([])
+  const [models, setModels] = useState<Model[]>([])
+  const [loadingBrands, setLoadingBrands] = useState(true)
+  const [loadingModels, setLoadingModels] = useState(false)
+  const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
+  const [selectedModel, setSelectedModel] = useState<Model | null>(null)
+  const [formData, setFormData] = useState({
+    brand: '',
+    model: '',
+    engine: '',
+    gearbox: '',
+    min_year: '',
+    max_year: '',
+    min_horse_power: '',
+    max_price: '',
+    max_kilometers: ''
+  })
+
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   // Calculate tax values
-  const importTax = carPrice * 0.10
-  const iva = (carPrice + importTax) * 0.21
-  const totalCost = carPrice + importTax + iva
+  const importTax = 0 * 0.10
+  const iva = (0 + importTax) * 0.21
+  const totalCost = 0 + importTax + iva
 
   // Format currency
   const formatCurrency = (value: number) => {
@@ -80,6 +119,49 @@ export default function ImportsPage() {
     fetchData()
   }, [isPro])
 
+  // Fetch brands on component mount
+  useEffect(() => {
+    fetchBrands()
+  }, [])
+
+  // Fetch models when brand changes
+  useEffect(() => {
+    if (selectedBrand) {
+      fetchModels(selectedBrand.id.toString())
+    } else {
+      setModels([])
+    }
+  }, [selectedBrand])
+
+  const fetchBrands = async () => {
+    try {
+      const response = await fetch('/api/car-data?type=brands')
+      if (!response.ok) throw new Error('Failed to fetch brands')
+      const data = await response.json()
+      setBrands(data || [])
+    } catch (err) {
+      console.error('Error fetching brands:', err)
+      setSubmitError('Error cargando las marcas')
+    } finally {
+      setLoadingBrands(false)
+    }
+  }
+
+  const fetchModels = async (brandId: string) => {
+    setLoadingModels(true)
+    try {
+      const response = await fetch(`/api/car-data?type=models&brandId=${brandId}`)
+      if (!response.ok) throw new Error('Failed to fetch models')
+      const data = await response.json()
+      setModels(data || [])
+    } catch (err) {
+      console.error('Error fetching models:', err)
+      setSubmitError('Error cargando los modelos')
+    } finally {
+      setLoadingModels(false)
+    }
+  }
+
   const handleAccordionChange = (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedPanel(isExpanded ? panel : false)
   }
@@ -93,6 +175,72 @@ export default function ImportsPage() {
       hour: '2-digit',
       minute: '2-digit'
     })
+  }
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async () => {
+    try {
+      setSubmitting(true)
+      setSubmitError('')
+      setSubmitSuccess(false)
+
+      const response = await fetch('/api/car-requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit request')
+      }
+
+      setSubmitSuccess(true)
+      setFormData({
+        brand: '',
+        model: '',
+        engine: '',
+        gearbox: '',
+        min_year: '',
+        max_year: '',
+        min_horse_power: '',
+        max_price: '',
+        max_kilometers: ''
+      })
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitError('Failed to submit request. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleBrandChange = (event: React.SyntheticEvent | null, newValue: Brand | null) => {
+    setSelectedBrand(newValue)
+    setSelectedModel(null)
+    setFormData(prev => ({
+      ...prev,
+      brand: newValue ? newValue.name : '',
+      model: ''
+    }))
+  }
+
+  const handleModelChange = (event: React.SyntheticEvent | null, newValue: Model | null) => {
+    setSelectedModel(newValue)
+    setFormData(prev => ({
+      ...prev,
+      model: newValue ? newValue.nome : ''
+    }))
   }
 
   // Loading state
@@ -252,70 +400,6 @@ export default function ImportsPage() {
               </Grid>
             </Grid>
 
-            {/* Tax Calculator Demo */}
-            <Box sx={{ 
-              mt: 4, 
-              mb: 4, 
-              p: 3, 
-              borderRadius: 2, 
-              bgcolor: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)'
-            }}>
-              <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
-                Calculadora de Importación
-              </Typography>
-              <Box sx={{ mb: 3 }}>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
-                  Precio del vehículo en Suiza (EUR)
-                </Typography>
-                <input
-                  type="number"
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '4px',
-                    color: 'white',
-                    fontSize: '1rem',
-                    outline: 'none'
-                  }}
-                  placeholder="Introduce el precio del vehículo"
-                  value={carPrice || ''}
-                  onChange={(e) => setCarPrice(Number(e.target.value))}
-                />
-              </Box>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={4}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 0.5 }}>
-                    Tasa de importación (10%)
-                  </Typography>
-                  <Typography variant="h6" sx={{ color: '#4169E1' }}>
-                    {carPrice ? formatCurrency(importTax) : '--'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 0.5 }}>
-                    IVA (21%)
-                  </Typography>
-                  <Typography variant="h6" sx={{ color: '#4169E1' }}>
-                    {carPrice ? formatCurrency(iva) : '--'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 0.5 }}>
-                    Coste Total
-                  </Typography>
-                  <Typography variant="h6" sx={{ color: '#4169E1' }}>
-                    {carPrice ? formatCurrency(totalCost) : '--'}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', display: 'block', mt: 2 }}>
-                * Los cálculos son aproximados. Las tasas pueden variar según el tipo de vehículo y otros factores.
-              </Typography>
-            </Box>
-
             <Button
               href="/pricing"
               variant="contained"
@@ -336,6 +420,18 @@ export default function ImportsPage() {
               Actualizar a Pro
             </Button>
           </Card>
+
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: 'rgba(255,255,255,0.7)',
+              textAlign: 'center',
+              mb: 4,
+              fontStyle: 'italic'
+            }}
+          >
+            Una vez tengamos los resultados de la búsqueda, te enviaremos un correo electrónico con las mejores opciones disponibles.
+          </Typography>
         </Container>
         <Footer />
       </Box>
@@ -351,8 +447,8 @@ export default function ImportsPage() {
     }}>
       <TopBar />
       <Box sx={{ flex: 1 }}>
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Box sx={{ mb: 4 }}>
+        <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
+          <Box sx={{ mb: { xs: 6, md: 8 } }}>
             <MotionTypography
               variant="h1"
               sx={{
@@ -370,113 +466,414 @@ export default function ImportsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              Importaciones AutoScout24
+              Importación de Vehículos
+            </MotionTypography>
+             <MotionTypography
+              variant="h3"
+              sx={{
+                fontSize: { xs: '0.8rem', sm: '1rem', md: '1.2rem' },
+                fontWeight: 900,
+                lineHeight: { xs: 1.1, md: 1.1 },
+                background: 'white',
+                backgroundClip: 'text',
+                textFillColor: 'transparent',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                mb: 2
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Encuentra el Coche de tus Sueños desde el Extranjero
             </MotionTypography>
           </Box>
 
-          {loading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <Stack spacing={2}>
-              {searchRuns.map((run) => (
-                <Accordion
-                  key={run.id}
-                  expanded={expandedPanel === `panel-${run.id}`}
-                  onChange={handleAccordionChange(`panel-${run.id}`)}
-                  sx={{
-                    background: 'rgba(255,255,255,0.05)',
-                    borderRadius: '8px !important',
-                    '&:before': { display: 'none' },
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    mb: 2,
-                    '&.Mui-expanded': {
-                      margin: '0 0 16px 0',
-                    }
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}
-                    sx={{
-                      '& .MuiAccordionSummary-content': {
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: { xs: 'flex-start', sm: 'center' },
-                        gap: { xs: 1, sm: 2 },
+          {/* Search Form */}
+          <Card sx={{ 
+            mb: { xs: 6, md: 8 },
+            bgcolor: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: 2,
+            border: '1px solid rgba(255,255,255,0.1)',
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }
+          }}>
+            <CardContent>
+              <Typography variant="h6" sx={{ color: 'white', mb: 3 }}>
+                Pidenos tu coche.
+              </Typography>
+              <Grid container spacing={3}>
+                {/* First Row: Brand, Model, Engine, Transmission */}
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        options={brands}
+                        getOptionLabel={(option) => option.name}
+                        loading={loadingBrands}
+                        value={selectedBrand}
+                        onChange={handleBrandChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            placeholder="Marca"
+                            variant="outlined"
+                            size="small"
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                color: 'white',
+                                '& fieldset': {
+                                  borderColor: 'rgba(255, 255, 255, 0.23)',
+                                }
+                              }
+                            }}
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <>
+                                  {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                          />
+                        )}
+                        sx={{
+                          '& .MuiAutocomplete-paper': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            color: 'white',
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        options={models}
+                        getOptionLabel={(option) => option.nome}
+                        loading={loadingModels}
+                        value={selectedModel}
+                        onChange={handleModelChange}
+                        disabled={!selectedBrand}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            placeholder="Modelo"
+                            variant="outlined"
+                            size="small"
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                color: 'white',
+                                '& fieldset': {
+                                  borderColor: 'rgba(255, 255, 255, 0.23)',
+                                }
+                              }
+                            }}
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <>
+                                  {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                          />
+                        )}
+                        sx={{
+                          '& .MuiAutocomplete-paper': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            color: 'white',
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <Select
+                          name="engine"
+                          value={formData.engine}
+                          displayEmpty
+                          onChange={handleSelectChange}
+                          sx={{
+                            color: 'white',
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }}
+                        >
+                          <MenuItem value="">Motor</MenuItem>
+                          <MenuItem value="gasoline">Gasolina</MenuItem>
+                          <MenuItem value="gasoil">Diésel</MenuItem>
+                          <MenuItem value="electric">Eléctrico</MenuItem>
+                          <MenuItem value="hybrid">Híbrido</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <FormControl fullWidth variant="outlined" size="small">
+                        <Select
+                          name="gearbox"
+                          value={formData.gearbox}
+                          displayEmpty
+                          onChange={handleSelectChange}
+                          sx={{
+                            color: 'white',
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }}
+                        >
+                          <MenuItem value="">Cambio</MenuItem>
+                          <MenuItem value="manual">Manual</MenuItem>
+                          <MenuItem value="automatic">Automático</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                {/* Second Row: Years, Kilometers, Horsepower */}
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        type="number"
+                        name="min_year"
+                        placeholder="Año desde"
+                        value={formData.min_year}
+                        onChange={handleInputChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            color: 'white',
+                            '& fieldset': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        type="number"
+                        name="max_year"
+                        placeholder="Año hasta"
+                        value={formData.max_year}
+                        onChange={handleInputChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            color: 'white',
+                            '& fieldset': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        type="number"
+                        name="max_kilometers"
+                        placeholder="Max km"
+                        value={formData.max_kilometers}
+                        onChange={handleInputChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            color: 'white',
+                            '& fieldset': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        type="number"
+                        name="min_horse_power"
+                        placeholder="Min CV"
+                        value={formData.min_horse_power}
+                        onChange={handleInputChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            color: 'white',
+                            '& fieldset': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                {/* Submit Button */}
+                <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+                  {submitError && (
+                    <Typography color="error" sx={{ mb: 2 }}>
+                      {submitError}
+                    </Typography>
+                  )}
+                  {submitSuccess && (
+                    <Typography sx={{ color: '#4CAF50', mb: 2 }}>
+                      ¡Solicitud enviada con éxito!
+                    </Typography>
+                  )}
+                  <Button 
+                    variant="contained"
+                    onClick={handleSubmit}
+                    disabled={submitting}
+                    sx={{ 
+                      minWidth: '200px',
+                      height: '45px',
+                      background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                      color: 'white',
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
                       }
                     }}
                   >
-                    <Typography sx={{ 
-                      color: 'white',
-                      fontWeight: 'bold',
-                      fontSize: { xs: '1rem', sm: '1.1rem' }
-                    }}>
-                      {run.model_name}
-                    </Typography>
-                    <Stack 
-                      direction={{ xs: 'column', sm: 'row' }} 
-                      spacing={1}
-                      sx={{ 
-                        flexGrow: 1,
-                        alignItems: { xs: 'flex-start', sm: 'center' }
+                    {submitting ? 'Enviando...' : 'Enviar'}
+                  </Button>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: 'rgba(255,255,255,0.7)',
+              textAlign: 'center',
+              mb: 4,
+              fontStyle: 'italic'
+            }}
+          >
+            Una vez tengamos los resultados de la búsqueda, te enviaremos un correo electrónico con las mejores opciones disponibles.
+          </Typography>
+
+          {false && (
+            <>
+              {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Stack spacing={2}>
+                  {searchRuns.map((run) => (
+                    <Accordion
+                      key={run.id}
+                      expanded={expandedPanel === `panel-${run.id}`}
+                      onChange={handleAccordionChange(`panel-${run.id}`)}
+                      sx={{
+                        background: 'rgba(255,255,255,0.05)',
+                        borderRadius: '8px !important',
+                        '&:before': { display: 'none' },
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        mb: 2,
+                        '&.Mui-expanded': {
+                          margin: '0 0 16px 0',
+                        }
                       }}
                     >
-                      <Chip
-                        label={`${run.total_results} resultados`}
-                        size="small"
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}
                         sx={{
-                          bgcolor: 'rgba(255,255,255,0.1)',
-                          color: 'white',
-                          fontSize: '0.75rem'
+                          '& .MuiAccordionSummary-content': {
+                            display: 'flex',
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            alignItems: { xs: 'flex-start', sm: 'center' },
+                            gap: { xs: 1, sm: 2 },
+                          }
                         }}
-                      />
-                      <Chip
-                        label={`${run.registration_year_from}-${run.registration_year_to}`}
-                        size="small"
-                        sx={{
-                          bgcolor: 'rgba(255,255,255,0.1)',
+                      >
+                        <Typography sx={{ 
                           color: 'white',
-                          fontSize: '0.75rem'
-                        }}
-                      />
-                      <Chip
-                        label={`≥${run.horsepower_from}cv`}
-                        size="small"
-                        sx={{
-                          bgcolor: 'rgba(255,255,255,0.1)',
-                          color: 'white',
-                          fontSize: '0.75rem'
-                        }}
-                      />
-                      <Chip
-                        label={`≤${run.max_price_eur}€`}
-                        size="small"
-                        sx={{
-                          bgcolor: 'rgba(255,255,255,0.1)',
-                          color: 'white',
-                          fontSize: '0.75rem'
-                        }}
-                      />
-                    </Stack>
-                    <Typography sx={{ 
-                      color: 'rgba(255,255,255,0.6)',
-                      fontSize: '0.8rem',
-                      minWidth: 'fit-content'
-                    }}>
-                      {formatDate(run.created_at)}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <ImportListingGrid 
-                      listings={run.listings}
-                      loading={false}
-                      showNoResults={run.listings.length === 0}
-                    />
-                  </AccordionDetails>
-                </Accordion>
-              ))}
-            </Stack>
+                          fontWeight: 'bold',
+                          fontSize: { xs: '1rem', sm: '1.1rem' }
+                        }}>
+                          {run.model_name}
+                        </Typography>
+                        <Stack 
+                          direction={{ xs: 'column', sm: 'row' }} 
+                          spacing={1}
+                          sx={{ 
+                            flexGrow: 1,
+                            alignItems: { xs: 'flex-start', sm: 'center' }
+                          }}
+                        >
+                          <Chip
+                            label={`${run.total_results} resultados`}
+                            size="small"
+                            sx={{
+                              bgcolor: 'rgba(255,255,255,0.1)',
+                              color: 'white',
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                          <Chip
+                            label={`${run.registration_year_from}-${run.registration_year_to}`}
+                            size="small"
+                            sx={{
+                              bgcolor: 'rgba(255,255,255,0.1)',
+                              color: 'white',
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                          <Chip
+                            label={`≥${run.horsepower_from}cv`}
+                            size="small"
+                            sx={{
+                              bgcolor: 'rgba(255,255,255,0.1)',
+                              color: 'white',
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                          <Chip
+                            label={`≤${run.max_price_eur}€`}
+                            size="small"
+                            sx={{
+                              bgcolor: 'rgba(255,255,255,0.1)',
+                              color: 'white',
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                        </Stack>
+                        <Typography sx={{ 
+                          color: 'rgba(255,255,255,0.6)',
+                          fontSize: '0.8rem',
+                          minWidth: 'fit-content'
+                        }}>
+                          {formatDate(run.created_at)}
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <ImportListingGrid 
+                          listings={run.listings}
+                          loading={false}
+                          showNoResults={run.listings.length === 0}
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
+                </Stack>
+              )}
+            </>
           )}
         </Container>
       </Box>

@@ -20,7 +20,8 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import TopBar from './components/TopBar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useUser } from '@clerk/nextjs'
 import PricingSection from './components/PricingSection'
 import Footer from './components/Footer'
 import ListingsGrid from './components/ListingsGrid'
@@ -40,6 +41,14 @@ const MotionTypography = motion.create(Typography)
 export default function HomePage() {
   const router = useRouter()
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const { isSignedIn, isLoaded } = useUser()
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push('/app')
+    }
+  }, [isLoaded, isSignedIn, router])
+
   const features = [
     {
       icon: <Search sx={{ fontSize: 40 }} />,
@@ -60,7 +69,7 @@ export default function HomePage() {
 
   const stats = [
     { number: '50K+', label: 'Coches analizados' },
-    { number: '20%', label: 'Ahorro medio' },
+    { number: '25%', label: 'Ahorro medio' },
     { number: '24/7', label: 'Monitorización' }
   ]
 

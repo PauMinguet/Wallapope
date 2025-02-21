@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, Suspense } from 'react'
 import { 
   Typography, 
@@ -9,7 +10,6 @@ import {
   Button,
   TextField,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
   SelectChangeEvent,
@@ -82,7 +82,6 @@ interface SearchFormData {
   order_by: string
   latitude: number | null
   longitude: number | null
-  distance: number
   location_text: string
   max_kilometers: number
 }
@@ -157,7 +156,6 @@ const initialFormData: SearchFormData = {
   order_by: 'price_low_to_high',
   latitude: null,
   longitude: null,
-  distance: 100,
   location_text: '',
   max_kilometers: 100000
 }
@@ -210,67 +208,11 @@ export default function SearchPanel() {
   const [loadingModels, setLoadingModels] = useState(false)
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
   const [selectedModel, setSelectedModel] = useState<Model | null>(null)
-  const [,setLocationError] = useState<string | null>(null)
   const { isSignedIn } = useUser()
   const [showSignIn, setShowSignIn] = useState(false)
-  const [, setHasAttemptedSearch] = useState(false)
+  const [hasAttemptedSearch, setHasAttemptedSearch] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(false)
   const [loadingLocation, setLoadingLocation] = useState(false)
-
-  // Load user's location on mount
-  useEffect(() => {
-    const loadUserLocation = async () => {
-      if (!isSignedIn) return
-
-      setLoadingLocation(true)
-      try {
-        const response = await fetch('/api/user/location')
-        if (!response.ok) throw new Error('Failed to fetch location')
-        
-        const data = await response.json()
-        if (data.latitude && data.longitude) {
-          setFormData(prev => ({
-            ...prev,
-            latitude: data.latitude,
-            longitude: data.longitude,
-            location_text: `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`,
-            distance: data.distance || 100
-          }))
-        }
-      } catch (error) {
-        console.error('Error loading location:', error)
-        setLocationError('Error cargando la ubicación')
-      } finally {
-        setLoadingLocation(false)
-      }
-    }
-
-    loadUserLocation()
-  }, [isSignedIn])
-
-  // Save location when it changes
-  useEffect(() => {
-    if (!isSignedIn || !formData.latitude || !formData.longitude) return
-
-    const saveLocation = async () => {
-      try {
-        await fetch('/api/user/location', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            latitude: formData.latitude,
-            longitude: formData.longitude,
-            distance: formData.distance
-          })
-        })
-      } catch (error) {
-        console.error('Error saving location:', error)
-      }
-    }
-
-    saveLocation()
-  }, [isSignedIn, formData.latitude, formData.longitude, formData.distance])
 
   const fetchModels = async (brandId: string) => {
     setLoadingModels(true)
@@ -451,13 +393,14 @@ export default function SearchPanel() {
     }).format(price)
   }
 
+  // Add back location handlers
   const handleLocationRequest = () => {
     if (!navigator.geolocation) {
-      setLocationError('Geolocation is not supported by your browser')
+      setError('Geolocation is not supported by your browser')
       return
     }
 
-    setLocationError(null)
+    setLoadingLocation(true)
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setFormData(prev => ({
@@ -466,19 +409,14 @@ export default function SearchPanel() {
           longitude: position.coords.longitude,
           location_text: 'Current Location'
         }))
+        setLoadingLocation(false)
       },
       (error) => {
-        setLocationError('Unable to retrieve your location')
+        setError('Unable to retrieve your location')
         console.error('Geolocation error:', error)
+        setLoadingLocation(false)
       }
     )
-  }
-
-  const handleDistanceChange = (event: Event | null, newValue: number | number[]) => {
-    setFormData(prev => ({
-      ...prev,
-      distance: newValue as number
-    }))
   }
 
   const handleMapClick = (lat: number, lng: number) => {
@@ -492,267 +430,258 @@ export default function SearchPanel() {
 
   return (
     <Box sx={{ height: '100%', overflow: 'auto' }}>
-      <Card sx={{ 
-        bgcolor: 'rgba(255,255,255,0.1)',
-        backdropFilter: 'blur(10px)',
-        borderRadius: 2,
-        border: '1px solid rgba(255,255,255,0.1)',
-        transition: 'all 0.3s ease-in-out',
-        '&:hover': {
-          boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }
-      }}>
-        <form onSubmit={handleSubmit}>
-          <CardContent>
-            <Grid container spacing={3}>
-              {/* Top row with Year, Brand, and Model */}
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          {/* Left Card - Main Filters */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ 
+              bgcolor: 'rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 2,
+              border: '1px solid rgba(255,255,255,0.1)',
+              height: '100%',
+              transition: 'all 0.3s ease-in-out',
+              '&:hover': {
+                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                border: '1px solid rgba(255,255,255,0.2)'
+              }
+            }}>
+              <CardContent>
+                <Grid container spacing={2}>
+                  {/* Brand and Model */}
+                  <Grid item xs={12}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <Autocomplete
+                          options={brands}
+                          getOptionLabel={(option) => option.name}
+                          loading={loadingBrands}
+                          value={selectedBrand}
+                          onChange={handleBrandChange}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Marca"
+                              variant="outlined"
+                              size="small"
+                              sx={inputStyles}
+                              InputProps={{
+                                ...params.InputProps,
+                                endAdornment: (
+                                  <>
+                                    {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
+                                    {params.InputProps.endAdornment}
+                                  </>
+                                ),
+                              }}
+                            />
+                          )}
+                          sx={{
+                            '& .MuiAutocomplete-paper': {
+                              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                              color: 'white',
+                            }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Autocomplete
+                          options={models}
+                          getOptionLabel={(option) => option.nome}
+                          loading={loadingModels}
+                          value={selectedModel}
+                          onChange={handleModelChange}
+                          disabled={!selectedBrand}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Modelo"
+                              variant="outlined"
+                              size="small"
+                              sx={inputStyles}
+                              InputProps={{
+                                ...params.InputProps,
+                                endAdornment: (
+                                  <>
+                                    {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
+                                    {params.InputProps.endAdornment}
+                                  </>
+                                ),
+                              }}
+                            />
+                          )}
+                          sx={{
+                            '& .MuiAutocomplete-paper': {
+                              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                              color: 'white',
+                            }
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
 
-              <Grid item xs={12} sm={4}>
-                <Autocomplete
-                  options={brands}
-                  getOptionLabel={(option) => option.name}
-                  loading={loadingBrands}
-                  value={selectedBrand}
-                  onChange={handleBrandChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Marca"
-                      variant="outlined"
-                      size="small"
-                      sx={inputStyles}
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {loadingBrands ? <CircularProgress color="inherit" size={20} /> : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
-                    />
-                  )}
-                  sx={{
-                    '& .MuiAutocomplete-paper': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                      color: 'white',
-                    }
-                  }}
-                />
-              </Grid>
+                  {/* Engine and Transmission row */}
+                  <Grid item xs={12}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <FormControl fullWidth variant="outlined" size="small">
+                          <Select
+                            name="engine"
+                            value={formData.engine}
+                            displayEmpty
+                            onChange={handleSelectChange}
+                            sx={{
+                              color: 'white',
+                              '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'rgba(255, 255, 255, 0.23)',
+                              }
+                            }}
+                          >
+                            <MenuItem value="">Motor</MenuItem>
+                            <MenuItem value="gasoline">Gasolina</MenuItem>
+                            <MenuItem value="gasoil">Diésel</MenuItem>
+                            <MenuItem value="electric">Eléctrico</MenuItem>
+                            <MenuItem value="hybrid">Híbrido</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
 
-              <Grid item xs={12} sm={4}>
-                <Autocomplete
-                  options={models}
-                  getOptionLabel={(option) => option.nome}
-                  loading={loadingModels}
-                  value={selectedModel}
-                  onChange={handleModelChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Modelo"
-                      variant="outlined"
-                      size="small"
-                      sx={inputStyles}
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {loadingModels ? <CircularProgress color="inherit" size={20} /> : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
-                    />
-                  )}
-                  sx={{
-                    '& .MuiAutocomplete-paper': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                      color: 'white',
-                    }
-                  }}
-                />
-              </Grid>
-              
-              <Grid item xs={12} sm={4}>
-                <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
-                  Año: {formData.min_year || 2000} - {formData.max_year || 2025}
-                </Typography>
-                <Slider
-                  value={[
-                    parseInt(formData.min_year || '2000'),
-                    parseInt(formData.max_year || '2025')
-                  ]}
-                  onChange={(event: Event, newValue: number | number[]) => {
-                    const [min, max] = newValue as number[];
-                    setFormData(prev => ({
-                      ...prev,
-                      min_year: min.toString(),
-                      max_year: max.toString()
-                    }));
-                  }}
-                  min={2000}
-                  max={2025}
-                  step={1}
-                  marks={[
-                    { value: 2000, label: '2000' },
-                    { value: 2005, label: '2005' },
-                    { value: 2010, label: '2010' },
-                    { value: 2015, label: '2015' },
-                    { value: 2020, label: '2020' },
-                    { value: 2025, label: '2025' }
-                  ]}
-                  sx={{ 
-                    '& .MuiSlider-markLabel': {
-                      color: 'rgba(255,255,255,0.7)',
-                      fontSize: '0.75rem'
-                    },
-                    '& .MuiSlider-track': {
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    },
-                    '& .MuiSlider-thumb': {
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    }
-                  }}
-                />
-              </Grid>
+                      <Grid item xs={6}>
+                        <FormControl fullWidth variant="outlined" size="small">
+                          <Select
+                            name="gearbox"
+                            value={formData.gearbox}
+                            displayEmpty
+                            onChange={handleSelectChange}
+                            sx={{
+                              color: 'white',
+                              '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'rgba(255, 255, 255, 0.23)',
+                              }
+                            }}
+                          >
+                            <MenuItem value="">Cambio</MenuItem>
+                            <MenuItem value="manual">Manual</MenuItem>
+                            <MenuItem value="automatic">Automático</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </Grid>
 
-              {/* Engine, Transmission and Horsepower row */}
-              <Grid item xs={12} sm={4}>
-                <FormControl fullWidth variant="outlined" size="small">
-                  <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                    Tipo de motor
-                  </InputLabel>
-                  <Select
-                    name="engine"
-                    value={formData.engine}
-                    label="Tipo de motor"
-                    onChange={handleSelectChange}
-                    sx={{
-                      color: 'white',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'rgba(255, 255, 255, 0.23)',
-                      }
-                    }}
-                  >
-                    <MenuItem value="">Cualquiera</MenuItem>
-                    <MenuItem value="gasoline">Gasolina</MenuItem>
-                    <MenuItem value="gasoil">Diésel</MenuItem>
-                    <MenuItem value="electric">Eléctrico</MenuItem>
-                    <MenuItem value="hybrid">Híbrido</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+                  {/* Year Slider */}
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ color: 'white', mb: 1 }}>
+                      Año: {formData.min_year || '2000'} - {formData.max_year || '2025'}
+                    </Typography>
+                    <Box sx={{ px: 1 }}>
+                      <Slider
+                        value={[
+                          parseInt(formData.min_year || '2000'),
+                          parseInt(formData.max_year || '2025')
+                        ]}
+                        onChange={(event: Event, newValue: number | number[]) => {
+                          const [min, max] = newValue as number[];
+                          setFormData(prev => ({
+                            ...prev,
+                            min_year: min.toString(),
+                            max_year: max.toString()
+                          }));
+                        }}
+                        min={2000}
+                        max={2025}
+                        step={1}
+                        marks={[
+                          { value: 2000, label: '2000' },
+                          { value: 2025, label: '2025' }
+                        ]}
+                        sx={{ 
+                          '& .MuiSlider-markLabel': {
+                            color: 'rgba(255,255,255,0.7)',
+                            fontSize: '0.75rem'
+                          },
+                          '& .MuiSlider-track': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          },
+                          '& .MuiSlider-thumb': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          }
+                        }}
+                      />
+                    </Box>
+                  </Grid>
 
-              <Grid item xs={12} sm={4}>
-                <FormControl fullWidth variant="outlined" size="small">
-                  <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                    Cambio
-                  </InputLabel>
-                  <Select
-                    name="gearbox"
-                    value={formData.gearbox}
-                    label="Cambio"
-                    onChange={handleSelectChange}
-                    sx={{
-                      color: 'white',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'rgba(255, 255, 255, 0.23)',
-                      }
-                    }}
-                  >
-                    <MenuItem value="">Cualquiera</MenuItem>
-                    <MenuItem value="manual">Manual</MenuItem>
-                    <MenuItem value="automatic">Automático</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+                  {/* CV Slider */}
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ color: 'white', mb: 1 }}>
+                      Min CV: {formData.min_horse_power || '0'}
+                    </Typography>
+                    <Box sx={{ px: 1 }}>
+                      <Slider
+                        value={parseInt(formData.min_horse_power || '0')}
+                        onChange={(event: Event, newValue: number | number[]) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            min_horse_power: newValue.toString()
+                          }));
+                        }}
+                        min={0}
+                        max={500}
+                        step={10}
+                        marks={[
+                          { value: 0, label: '0' },
+                          { value: 500, label: '500' }
+                        ]}
+                        sx={{ 
+                          '& .MuiSlider-markLabel': {
+                            color: 'rgba(255,255,255,0.7)',
+                            fontSize: '0.75rem'
+                          },
+                          '& .MuiSlider-track': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          },
+                          '& .MuiSlider-thumb': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          }
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
 
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  fullWidth
-                  label="Potencia mínima (CV)"
-                  name="min_horse_power"
-                  type="number"
-                  value={formData.min_horse_power}
-                  onChange={handleInputChange}
-                  variant="outlined"
-                  size="small"
-                  sx={inputStyles}
-                />
-              </Grid>
-
-              {/* Distance, Kilometers and Location row */}
-              <Grid item xs={12} sm={4}>
-                <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
-                  Distancia de búsqueda: {formData.distance === 500 ? 'Sin límite' : `${formData.distance} km`}
-                </Typography>
-                <Slider
-                  value={formData.distance}
-                  onChange={handleDistanceChange}
-                  step={null}
-                  marks={distanceMarks}
-                  min={0}
-                  max={500}
-                  sx={{ 
-                    '& .MuiSlider-markLabel': {
-                      display: 'none'
-                    },
-                    '& .MuiSlider-track': {
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    },
-                    '& .MuiSlider-thumb': {
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    }
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={4}>
-                <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
-                  Kilómetros máximos: {formData.max_kilometers === 240000 ? 'Sin límite' : `${(formData.max_kilometers / 1000).toFixed(0)}k`}
-                </Typography>
-                <Slider
-                  value={formData.max_kilometers}
-                  onChange={(event: Event | null, newValue: number | number[]) => {
-                    setFormData(prev => ({
-                      ...prev,
-                      max_kilometers: newValue as number
-                    }))
-                  }}
-                  step={null}
-                  marks={kilometerMarks}
-                  min={0}
-                  max={240000}
-                  sx={{ 
-                    '& .MuiSlider-markLabel': {
-                      display: 'none'
-                    },
-                    '& .MuiSlider-track': {
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    },
-                    '& .MuiSlider-thumb': {
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                    }
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={4}>
-                <Typography variant="subtitle2" gutterBottom sx={{ color: 'white' }}>
-                  Ubicación
-                </Typography>
+          {/* Right Card - Map */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ 
+              bgcolor: 'rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 2,
+              border: '1px solid rgba(255,255,255,0.1)',
+              height: '100%',
+              transition: 'all 0.3s ease-in-out',
+              '&:hover': {
+                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                border: '1px solid rgba(255,255,255,0.2)'
+              }
+            }}>
+              <CardContent sx={{ 
+                p: { xs: 2, md: 3 },
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2
+              }}>
                 <Box sx={{ 
-                  width: '100%',
-                  height: '120px',
+                  flexGrow: 1,
                   border: 1,
                   borderColor: 'rgba(255,255,255,0.1)',
                   borderRadius: 1,
                   overflow: 'hidden',
                   position: 'relative',
-                  mb: 1
+                  minHeight: '300px'
                 }}>
                   <Suspense fallback={
                     <Box sx={{ 
@@ -772,11 +701,9 @@ export default function SearchPanel() {
                         formData.longitude ?? SPAIN_CENTER.lng
                       ]}
                       onLocationSelect={handleMapClick}
-                      distance={formData.distance}
                     />
                   </Suspense>
                 </Box>
-
                 <Button
                   fullWidth
                   variant="outlined"
@@ -794,39 +721,37 @@ export default function SearchPanel() {
                     }
                   }}
                 >
-                  {loadingLocation ? 'Cargando...' : 'Usar mi ubicación'}
+                  {loadingLocation ? 'Cargando...' : 'Encuéntrame'}
                 </Button>
-              </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
 
-              {/* Search button row */}
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button 
-                  fullWidth
-                  variant="contained" 
-                  onClick={handleSubmit}
-                  disabled={loading}
-                  sx={{ 
-                    height: '45px',
-                    maxWidth: '300px',
-                    background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
-                    color: 'white',
-                    fontSize: '1rem',
-                    fontWeight: 'bold',
-                    borderRadius: 2,
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    '&:hover': {
-                      background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
-                    }
-                  }}
-                >
-                  {loading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : 'Buscar'}
-                </Button>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </form>
-      </Card>
+          {/* Search Button - Centered Below */}
+          <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Button 
+              variant="contained" 
+              onClick={handleSubmit}
+              disabled={loading}
+              sx={{ 
+                minWidth: '200px',
+                height: '45px',
+                background: 'linear-gradient(45deg, #2C3E93, #6B238E)',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                borderRadius: 2,
+                textTransform: 'none',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #364AAD, #7D2BA6)',
+                }
+              }}
+            >
+              {loading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : 'Buscar'}
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
 
       {/* Search Results Section */}
       {results && (
@@ -894,7 +819,6 @@ export default function SearchPanel() {
               loading={loading}
               showNoResults={!loading && (!results.listings || results.listings.length === 0)}
             />
-
           </CardContent>
         </Card>
       )}

@@ -139,7 +139,7 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          CholloCars
+          ChollosCars
         </MotionTypography>
         <MotionTypography 
           variant="body2" 
@@ -222,7 +222,7 @@ export default function DashboardPage() {
             fontSize: '0.7rem'
           }}
         >
-          © 2025 CholloCars
+          © 2025 ChollosCars
         </Typography>
       </Box>
     </Box>
@@ -405,7 +405,7 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Bienvenido a CholloCars
+              Bienvenido a ChollosCars
             </MotionTypography>
             <MotionTypography
               variant="body1"

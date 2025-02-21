@@ -98,7 +98,7 @@ export default function FeedbackDialog({ open, onClose }: FeedbackDialogProps) {
             rows={4}
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Cuéntanos tu experiencia o sugerencias para mejorar CholloCars..."
+            placeholder="Cuéntanos tu experiencia o sugerencias para mejorar ChollosCars..."
             fullWidth
             sx={{
               '& .MuiOutlinedInput-root': {
