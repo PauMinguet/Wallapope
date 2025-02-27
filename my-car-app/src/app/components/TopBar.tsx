@@ -57,12 +57,6 @@ export default function TopBar() {
       href: '/app/coches', 
       icon: <FlashOn sx={{ fontSize: '1.2rem', color: '#00C853' }} />
     },
-    {
-      label: 'Búsqueda',
-      href: '/app/search',
-      icon: <SearchIcon sx={{ fontSize: '1.2rem', color: '#4169E1' }} />,
-      requiresSubscription: true
-    },
     { 
       label: 'Alertas', 
       href: '/app/alertas', 
