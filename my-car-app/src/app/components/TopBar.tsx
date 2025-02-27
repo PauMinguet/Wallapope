@@ -23,7 +23,6 @@ import {
   Notifications as NotificationsIcon,
   Menu as MenuIcon,
   Analytics as AnalyticsIcon,
-  Search as SearchIcon,
   TrendingUp as TrendingUpIcon,
 } from '@mui/icons-material'
 import { useSubscription } from '@/hooks/useSubscription'
