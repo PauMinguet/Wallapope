@@ -56,24 +56,26 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         
         # Create base search parameters for market analysis
         max_km = params.get('max_kilometers')
+        min_km = params.get('min_kilometers')
         
-        # Calculate kilometer range for market analysis (80-110% of max_km)
-        if max_km is not None:
-            market_max_km = int(float(max_km) * 1.20)  # 110% of max_km
-            market_min_km = int(float(max_km) * 0.60)  # 80% of max_km
-            logger.info(f"Market analysis km range: {market_min_km} - {market_max_km}")
-        else:
-            market_max_km = 240000
-            market_min_km = None
-
         # First create the base search params
         search_params = {
             'category_ids': '100',
             'distance': str(int(params.get('distance', 200)) * 1000),  # Convert km to meters
-            'max_km': str(market_max_km),
             'min_sale_price': '3000',
             'order_by': 'price_low_to_high'
         }
+
+        # Add kilometer parameters if provided
+        if max_km is not None:
+            # Add a slightly higher max_km for market analysis
+            market_max_km = int(float(max_km) * 1.20)  # 20% more than requested
+            search_params['max_km'] = str(market_max_km)
+
+        if min_km is not None:
+            # Add a slightly lower min_km for market analysis
+            market_min_km = int(float(min_km) * 0.80)  # 20% less than requested
+            search_params['min_km'] = str(market_min_km)
 
         # Add optional parameters only if they exist and are not empty
         optional_params = [
@@ -107,10 +109,6 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             except (ValueError, TypeError) as e:
                 logger.warning(f"Invalid horsepower value '{min_hp}': {str(e)}")
 
-        # Add minimum kilometers for market analysis
-        if market_min_km is not None:
-            search_params['min_km'] = str(market_min_km)
-
         # Remove empty parameters
         search_params = {k: v for k, v in search_params.items() if v and str(v).strip()}
 
@@ -128,11 +126,14 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         for listing in data.get('search_objects', []):
             content = listing['content']
             
-            # Apply same filtering logic
-            kilometers = int(content.get('km', 0))
-            if kilometers < 1000 and kilometers >= 200:
-                kilometers *= 1000
-            elif kilometers <= 200 or kilometers > 200000:
+            # Handle kilometer conversion more gracefully
+            try:
+                kilometers = int(content.get('km', 0))
+                # Convert if seems to be in thousands (e.g. 20 meaning 20,000)
+                if kilometers > 0 and kilometers < 200:
+                    kilometers *= 1000
+                    
+            except (ValueError, TypeError):
                 continue
 
             # Skip unwanted listings
@@ -143,9 +144,14 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             valid_prices.append(float(content['price']))
 
         if valid_prices:
-            # Sort prices to calculate median and percentiles
+            # Sort prices and take only the 10 cheapest
             valid_prices.sort()
+            valid_prices = valid_prices[:10]  # Only consider the 10 cheapest cars
             num_prices = len(valid_prices)
+            
+            # Log the number of valid prices found
+            logger.info(f"Found {num_prices} valid listings for market analysis (using cheapest 10)")
+            
             median_price = valid_prices[num_prices // 2]
             
             # Calculate average excluding outliers (prices beyond 2 standard deviations)

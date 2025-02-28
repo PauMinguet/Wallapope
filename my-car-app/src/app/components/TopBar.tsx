@@ -21,11 +21,11 @@ import {
   Settings,
   FlashOn,
   Notifications as NotificationsIcon,
-  Menu as MenuIcon,
   Analytics as AnalyticsIcon,
   TrendingUp as TrendingUpIcon,
 } from '@mui/icons-material'
 import { useSubscription } from '@/hooks/useSubscription'
+import { SearchIcon } from 'lucide-react'
 
 export default function TopBar() {
   const router = useRouter()
@@ -47,9 +47,9 @@ export default function TopBar() {
 
   const mainSections = [
     { 
-      label: 'Menú', 
+      label: 'Buscar', 
       href: '/app', 
-      icon: <MenuIcon sx={{ fontSize: '1.2rem', color: '#4169E1' }} />
+      icon: <SearchIcon size={24} color="#4169E1" />
     },
     { 
       label: 'Modo Rápido', 
@@ -71,13 +71,14 @@ export default function TopBar() {
       label: 'Mercado', 
       href: '/app/mercado', 
       icon: <AnalyticsIcon sx={{ fontSize: '1.2rem', color: '#00C853' }} />
-    },
-    {
-      label: 'Ajustes',
-      href: '/app/ajustes',
-      icon: <Settings sx={{ fontSize: '1.2rem', color: '#9400D3' }} />
     }
   ]
+
+  const settingsSection = {
+    label: 'Ajustes',
+    href: '/app/ajustes',
+    icon: <Settings sx={{ fontSize: '1.2rem', color: '#9400D3' }} />
+  }
 
   const handleNavigation = (section: { href: string, requiresSubscription?: boolean }) => {
     if (section.requiresSubscription && !isSubscribed) {
@@ -138,7 +139,7 @@ export default function TopBar() {
             <Typography
               variant="h6"
               sx={{
-                fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.5rem' },
+                fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
                 fontWeight: 700,
                 background: 'linear-gradient(45deg, #4169E1, #9400D3)',
                 backgroundClip: 'text',
@@ -152,12 +153,15 @@ export default function TopBar() {
           </Box>
 
           {/* Auth Buttons */}
-          <Stack direction="row" spacing={{ xs: 0.25, md: 2 }} sx={{ pr: { xs: 0.5, md: 0 } }}>
+          <Stack direction="row" spacing={{ xs: 0.25, md: 2 }} sx={{ pr: { xs: 0.5, md: 0 }, flex: '0 0 auto' }}>
             {isSignedIn ? (
               <>
                 {/* Navigation buttons for logged-in users */}
                 <Box sx={{ 
-                  display: 'flex', 
+                  display: 'flex',
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
                   gap: { xs: 0.25, md: 1 },
                   '& .MuiButton-root': {
                     color: 'white',
@@ -192,17 +196,38 @@ export default function TopBar() {
                   ))}
                 </Box>
 
-                <UserButton 
-                  afterSignOutUrl="/"
-                  appearance={{
-                    elements: {
-                      avatarBox: {
-                        width: '35px',
-                        height: '35px'
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Button
+                    className={pathname === settingsSection.href ? 'active' : ''}
+                    onClick={() => handleNavigation(settingsSection)}
+                    sx={{
+                      color: 'white',
+                      minWidth: '32px',
+                      p: 1,
+                      borderRadius: 2,
+                      '&:hover': {
+                        background: 'rgba(255,255,255,0.1)'
+                      },
+                      '&.active': {
+                        background: 'linear-gradient(45deg, rgba(44,62,147,0.8), rgba(107,35,142,0.8))',
                       }
-                    }
-                  }}
-                />
+                    }}
+                  >
+                    {settingsSection.icon}
+                  </Button>
+
+                  <UserButton 
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox: {
+                          width: '35px',
+                          height: '35px'
+                        }
+                      }
+                    }}
+                  />
+                </Stack>
               </>
             ) : (
               <>

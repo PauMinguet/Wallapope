@@ -35,16 +35,12 @@ type SortOption = 'distance' | 'discount' | 'percentage' | null;
 
 const LoadingScreen = () => (
   <Box sx={{ 
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    bgcolor: '#000000',
-    zIndex: 9999
+    minHeight: '60vh',
+    width: '100%',
+    bgcolor: 'transparent',
   }}>
     <CircularProgress sx={{ color: 'white' }} />
   </Box>
@@ -112,7 +108,11 @@ export default function CochesPage() {
 
   // Show loading screen during initial load or subscription check
   if (initialLoad || subscriptionLoading) {
-    return <LoadingScreen />
+    return (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <LoadingScreen />
+      </Container>
+    )
   }
 
   return (
