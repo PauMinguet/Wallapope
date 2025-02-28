@@ -7,7 +7,7 @@ import {
   Typography,
   Container,
 } from '@mui/material'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { useSubscription } from '@/hooks/useSubscription'
 import { motion } from 'framer-motion'
