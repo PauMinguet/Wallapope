@@ -43,7 +43,6 @@ const supabase = createClient(
 export async function GET() {
   try {
     // Get recent market data entries (last 24 hours)
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
     
     // Run queries in parallel
     const [marketDataResult, runsResult] = await Promise.all([
@@ -51,7 +50,6 @@ export async function GET() {
       supabase
         .from('market_data')
         .select('*')
-        .gte('created_at', twentyFourHoursAgo)
         .order('created_at', { ascending: false }),
       
       // Get aggregated runs data with their relationships
@@ -70,7 +68,6 @@ export async function GET() {
             year
           )
         `)
-        .gte('created_at', twentyFourHoursAgo)
     ]) as [
       { data: MarketData[] | null, error: PostgrestError | null },
       { data: ModoRapidoRun[] | null, error: PostgrestError | null }

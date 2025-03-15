@@ -72,12 +72,13 @@ export async function POST(req: NextRequest) {
       max_year,
       max_kilometers,
       min_horse_power,
-      max_price
+      max_price,
+      description
     } = await req.json()
 
     // Convert empty strings to null for numeric fields
     const processedData = {
-      user_id: userData.id, // Use the regular users table ID
+      user_id: userData.id, // Use the custom users table ID which is a proper UUID
       email: userData.email,
       brand,
       model,
@@ -87,7 +88,8 @@ export async function POST(req: NextRequest) {
       max_year: max_year === '' ? null : parseInt(max_year),
       max_kilometers: max_kilometers === '' ? null : parseInt(max_kilometers),
       min_horse_power: min_horse_power === '' ? null : parseInt(min_horse_power),
-      max_price: max_price === '' ? null : parseInt(max_price)
+      max_price: max_price === '' ? null : parseInt(max_price),
+      description: description || null // Description is optional
     }
 
     // Insert into database
@@ -107,7 +109,10 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Error creating car request:', error)
     return NextResponse.json(
-      { error: 'Failed to create car request' },
+      { 
+        error: 'Error al crear la solicitud de coche', 
+        details: error 
+      },
       { status: 500 }
     )
   }

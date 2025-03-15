@@ -52,7 +52,6 @@ export async function GET(request: NextRequest) {
     const decodedBrand = decodeURIComponent(brand)
 
     // Get recent data (last 24 hours)
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
     
     // Run queries in parallel
     const [marketDataResult, brandRunsResult] = await Promise.all([
@@ -60,7 +59,6 @@ export async function GET(request: NextRequest) {
       supabase
         .from('market_data')
         .select('*')
-        .gte('created_at', twentyFourHoursAgo)
         .order('created_at', { ascending: false }),
       
       // Get brand-specific data
@@ -79,7 +77,6 @@ export async function GET(request: NextRequest) {
             year
           )
         `)
-        .gte('created_at', twentyFourHoursAgo)
         .eq('modo_rapido.marca', decodedBrand)
     ]) as [
       { data: MarketData[] | null, error: PostgrestError | null },

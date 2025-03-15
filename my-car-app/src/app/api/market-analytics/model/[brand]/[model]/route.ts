@@ -52,7 +52,6 @@ export async function GET(request: NextRequest) {
     const { data: marketData, error: marketError } = await supabase
       .from('market_data')
       .select('*')
-      .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
       .order('created_at', { ascending: false }) as { data: MarketData[] | null, error: PostgrestError | null }
 
     if (marketError) {

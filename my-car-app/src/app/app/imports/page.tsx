@@ -76,7 +76,8 @@ export default function ImportsPage() {
     max_year: '',
     min_horse_power: '',
     max_price: '',
-    max_kilometers: ''
+    max_kilometers: '',
+    description: ''
   })
 
   const [submitting, setSubmitting] = useState(false)
@@ -136,12 +137,12 @@ export default function ImportsPage() {
   const fetchBrands = async () => {
     try {
       const response = await fetch('/api/car-data?type=brands')
-      if (!response.ok) throw new Error('Failed to fetch brands')
+      if (!response.ok) throw new Error('Error al cargar las marcas')
       const data = await response.json()
       setBrands(data || [])
     } catch (err) {
-      console.error('Error fetching brands:', err)
-      setSubmitError('Error cargando las marcas')
+      console.error('Error al cargar las marcas:', err)
+      setSubmitError('Error al cargar las marcas')
     } finally {
       setLoadingBrands(false)
     }
@@ -151,12 +152,12 @@ export default function ImportsPage() {
     setLoadingModels(true)
     try {
       const response = await fetch(`/api/car-data?type=models&brandId=${brandId}`)
-      if (!response.ok) throw new Error('Failed to fetch models')
+      if (!response.ok) throw new Error('Error al cargar los modelos')
       const data = await response.json()
       setModels(data || [])
     } catch (err) {
-      console.error('Error fetching models:', err)
-      setSubmitError('Error cargando los modelos')
+      console.error('Error al cargar los modelos:', err)
+      setSubmitError('Error al cargar los modelos')
     } finally {
       setLoadingModels(false)
     }
@@ -188,6 +189,26 @@ export default function ImportsPage() {
   }
 
   const handleSubmit = async () => {
+    // Validate all fields are filled
+    const requiredFields = [
+      { key: 'brand' as keyof typeof formData, name: 'Marca' },
+      { key: 'model' as keyof typeof formData, name: 'Modelo' },
+      { key: 'engine' as keyof typeof formData, name: 'Motor' },
+      { key: 'gearbox' as keyof typeof formData, name: 'Cambio' },
+      { key: 'min_year' as keyof typeof formData, name: 'Año desde' },
+      { key: 'max_year' as keyof typeof formData, name: 'Año hasta' },
+      { key: 'min_horse_power' as keyof typeof formData, name: 'Potencia mínima' },
+      { key: 'max_price' as keyof typeof formData, name: 'Precio máximo' },
+      { key: 'max_kilometers' as keyof typeof formData, name: 'Kilómetros máximos' }
+    ];
+
+    const missingFields = requiredFields.filter(field => !formData[field.key]);
+    
+    if (missingFields.length > 0) {
+      setSubmitError(`Por favor, completa los siguientes campos: ${missingFields.map(f => f.name).join(', ')}`);
+      return;
+    }
+
     try {
       setSubmitting(true)
       setSubmitError('')
@@ -202,7 +223,7 @@ export default function ImportsPage() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to submit request')
+        throw new Error('Error al enviar la solicitud')
       }
 
       setSubmitSuccess(true)
@@ -215,11 +236,12 @@ export default function ImportsPage() {
         max_year: '',
         min_horse_power: '',
         max_price: '',
-        max_kilometers: ''
+        max_kilometers: '',
+        description: ''
       })
     } catch (error) {
-      console.error('Error submitting form:', error)
-      setSubmitError('Failed to submit request. Please try again.')
+      console.error('Error al enviar el formulario:', error)
+      setSubmitError('Error al enviar la solicitud. Por favor, inténtalo de nuevo.')
     } finally {
       setSubmitting(false)
     }
@@ -704,6 +726,49 @@ export default function ImportsPage() {
                         name="min_horse_power"
                         placeholder="Min CV"
                         value={formData.min_horse_power}
+                        onChange={handleInputChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            color: 'white',
+                            '& fieldset': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                {/* Third Row: Max Price and Description */}
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        type="number"
+                        name="max_price"
+                        placeholder="Precio máximo"
+                        value={formData.max_price}
+                        onChange={handleInputChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            color: 'white',
+                            '& fieldset': {
+                              borderColor: 'rgba(255, 255, 255, 0.23)',
+                            }
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={9}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        name="description"
+                        placeholder="Descripción (opcional)"
+                        value={formData.description}
                         onChange={handleInputChange}
                         sx={{
                           '& .MuiOutlinedInput-root': {
