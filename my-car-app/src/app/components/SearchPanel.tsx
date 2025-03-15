@@ -157,7 +157,7 @@ const initialFormData: SearchFormData = {
   latitude: null,
   longitude: null,
   location_text: '',
-  max_kilometers: 100000
+  max_kilometers: 200000
 }
 
 const inputStyles = {
