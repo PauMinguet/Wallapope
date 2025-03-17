@@ -144,9 +144,9 @@ def get_market_price(params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             valid_prices.append(float(content['price']))
 
         if valid_prices:
-            # Sort prices and take only the 10 cheapest
+            # Sort prices and take only the 20 cheapest
             valid_prices.sort()
-            valid_prices = valid_prices[:10]  # Only consider the 10 cheapest cars
+            valid_prices = valid_prices[:20]  # Only consider the 20 cheapest cars
             num_prices = len(valid_prices)
             
             # Log the number of valid prices found
