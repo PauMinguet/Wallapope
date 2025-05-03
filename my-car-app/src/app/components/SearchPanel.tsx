@@ -154,9 +154,9 @@ const initialFormData: SearchFormData = {
   min_horse_power: '',
   gearbox: '',
   order_by: 'price_low_to_high',
-  latitude: null,
-  longitude: null,
-  location_text: '',
+  latitude: SPAIN_CENTER.lat,
+  longitude: SPAIN_CENTER.lng,
+  location_text: 'España',
   max_kilometers: 200000
 }
 
@@ -190,7 +190,14 @@ export default function SearchPanel() {
       const saved = localStorage.getItem(STORAGE_KEY)
       if (saved) {
         try {
-          return JSON.parse(saved)
+          const parsed = JSON.parse(saved)
+          // Ensure we have coordinates, even if they're missing or null in saved data
+          return {
+            ...parsed,
+            latitude: parsed.latitude !== null ? parsed.latitude : SPAIN_CENTER.lat,
+            longitude: parsed.longitude !== null ? parsed.longitude : SPAIN_CENTER.lng,
+            location_text: parsed.location_text || 'España'
+          }
         } catch (e) {
           console.error('Error parsing saved form data:', e)
         }
@@ -312,6 +319,11 @@ export default function SearchPanel() {
     setError(null)
     
     try {
+      // Always ensure we have latitude and longitude, even if they're not in formData
+      const lat = formData.latitude !== null ? formData.latitude : SPAIN_CENTER.lat;
+      const lng = formData.longitude !== null ? formData.longitude : SPAIN_CENTER.lng;
+      
+      // Create a copy of form data to ensure location is always included
       const searchParams = {
         ...formData,
         min_year: formData.min_year ? parseInt(formData.min_year) : undefined,
@@ -319,18 +331,24 @@ export default function SearchPanel() {
         min_horse_power: formData.min_horse_power ? parseInt(formData.min_horse_power) : undefined,
         max_kilometers: formData.max_kilometers,
         min_sale_price: 3000,
-        order_by: 'price_low_to_high'
+        order_by: 'price_low_to_high',
+        // Always include latitude and longitude
+        latitude: lat,
+        longitude: lng
       }
 
       const cleanParams = Object.fromEntries(
         Object.entries(searchParams)
-          .filter(([, value]) => 
+          .filter(([key, value]) => 
             value !== '' && 
             value !== undefined && 
             value !== null
           )
           .map(([key, value]) => [key, String(value)])
       ) as Record<string, string>
+      
+      // Log the params being sent (for debugging)
+      console.log('Sending search params:', cleanParams)
 
       const response = await fetch(`${BACKEND_URL}/api/search-single-car`, {
         method: 'POST',
