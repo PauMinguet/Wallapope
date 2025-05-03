@@ -399,7 +399,7 @@ export default function SearchPage() {
 
       const cleanParams = Object.fromEntries(
         Object.entries(searchParams)
-          .filter(([key, value]) => 
+          .filter(([ , value]) => 
             value !== '' && 
             value !== undefined && 
             value !== null
