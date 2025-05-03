@@ -93,7 +93,7 @@ export default function Footer() {
           <Button
             variant="text"
             component="a"
-            href="https://www.tiktok.com/@importxpress_"
+            href="https://www.tiktok.com/@cholloscars"
             target="_blank"
             rel="noopener noreferrer"
             startIcon={
