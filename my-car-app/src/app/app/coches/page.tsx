@@ -15,6 +15,9 @@ import {
   Pagination,
   Select,
   MenuItem,
+  TextField,
+  Popover,
+  InputAdornment,
 } from '@mui/material'
 import { motion } from 'framer-motion'
 import { 
@@ -22,6 +25,7 @@ import {
   Percent, 
   LocationOn,
   LockOutlined,
+  EuroSymbol,
 } from '@mui/icons-material'
 import { useRouter } from 'next/navigation'
 import { useSubscription } from '@/hooks/useSubscription'
@@ -57,10 +61,36 @@ export default function CochesPage() {
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  
+  // Price filter state
+  const [minPrice, setMinPrice] = useState<string>('')
+  const [maxPrice, setMaxPrice] = useState<string>('')
+  const [priceAnchorEl, setPriceAnchorEl] = useState<null | HTMLElement>(null)
+  const isPriceMenuOpen = Boolean(priceAnchorEl)
 
   // Generate years from 2010 to current year
   const currentYear = new Date().getFullYear()
   const years = Array.from({ length: currentYear - 2009 }, (_, i) => (currentYear - i).toString())
+
+  const handlePriceClick = (event: React.MouseEvent<HTMLElement>) => {
+    setPriceAnchorEl(event.currentTarget);
+  };
+
+  const handlePriceClose = () => {
+    setPriceAnchorEl(null);
+  };
+
+  const handleApplyPriceFilter = () => {
+    setPage(1); // Reset to first page when changing filters
+    handlePriceClose();
+  };
+
+  const handleClearPriceFilter = () => {
+    setMinPrice('');
+    setMaxPrice('');
+    setPage(1); // Reset to first page when changing filters
+    handlePriceClose();
+  };
 
   // Handle subscription check and redirect
   useEffect(() => {
@@ -81,7 +111,13 @@ export default function CochesPage() {
       try {
         setLoading(true)
         const minYearParam = selectedMinYear ? `&minYear=${selectedMinYear}` : ''
-        const response = await fetch(`/api/car-listings?page=${page}&sortBy=${sortBy}${minYearParam}`)
+        const minPriceParam = minPrice ? `&minPrice=${minPrice}` : ''
+        const maxPriceParam = maxPrice ? `&maxPrice=${maxPrice}` : ''
+        
+        const response = await fetch(
+          `/api/car-listings?page=${page}&sortBy=${sortBy}${minYearParam}${minPriceParam}${maxPriceParam}`
+        )
+        
         if (!response.ok) {
           throw new Error('Failed to fetch listings')
         }
@@ -99,7 +135,7 @@ export default function CochesPage() {
     }
 
     fetchListings()
-  }, [initialLoad, subscriptionLoading, page, sortBy, selectedMinYear])
+  }, [initialLoad, subscriptionLoading, page, sortBy, selectedMinYear, minPrice, maxPrice])
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
@@ -193,6 +229,148 @@ export default function CochesPage() {
                 <MenuItem key={year} value={year}>Desde {year}</MenuItem>
               ))}
             </Select>
+
+            {/* Price Filter Button */}
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<EuroSymbol sx={{ fontSize: '1rem' }} />}
+              onClick={handlePriceClick}
+              className={minPrice || maxPrice ? 'active' : ''}
+              aria-controls={isPriceMenuOpen ? 'price-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={isPriceMenuOpen ? 'true' : undefined}
+            >
+              Precio {minPrice || maxPrice ? '(filtrado)' : ''}
+            </Button>
+
+            <Popover
+              id="price-menu"
+              anchorEl={priceAnchorEl}
+              open={isPriceMenuOpen}
+              onClose={handlePriceClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              PaperProps={{
+                sx: {
+                  p: 2,
+                  width: 300,
+                  bgcolor: 'rgba(30,30,30,0.95)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                  borderRadius: 2,
+                }
+              }}
+            >
+              <Typography 
+                variant="subtitle1" 
+                sx={{ 
+                  mb: 2, 
+                  color: 'white',
+                  fontWeight: 'bold',
+                  textAlign: 'center'
+                }}
+              >
+                Filtro de Precio
+              </Typography>
+              <Stack spacing={2}>
+                <TextField
+                  label="Precio Mínimo"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  fullWidth
+                  type="number"
+                  size="small"
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                    sx: { color: 'white' }
+                  }}
+                  InputLabelProps={{
+                    sx: { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'rgba(255,255,255,0.2)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'rgba(255,255,255,0.4)',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'rgba(255,255,255,0.6)',
+                      },
+                    },
+                  }}
+                />
+                <TextField
+                  label="Precio Máximo"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  fullWidth
+                  type="number"
+                  size="small"
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                    sx: { color: 'white' }
+                  }}
+                  InputLabelProps={{
+                    sx: { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'rgba(255,255,255,0.2)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'rgba(255,255,255,0.4)',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'rgba(255,255,255,0.6)',
+                      },
+                    },
+                  }}
+                />
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 1 }}>
+                  <Button 
+                    variant="outlined"
+                    onClick={handleClearPriceFilter}
+                    fullWidth
+                    sx={{
+                      borderColor: 'rgba(255,255,255,0.2)',
+                      color: 'white',
+                      '&:hover': {
+                        borderColor: 'rgba(255,255,255,0.4)',
+                        background: 'rgba(255,255,255,0.05)'
+                      }
+                    }}
+                  >
+                    Limpiar
+                  </Button>
+                  <Button 
+                    variant="contained"
+                    onClick={handleApplyPriceFilter}
+                    fullWidth
+                    sx={{
+                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                      color: 'white',
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    Aplicar
+                  </Button>
+                </Box>
+              </Stack>
+            </Popover>
 
             <Button
               variant="outlined"

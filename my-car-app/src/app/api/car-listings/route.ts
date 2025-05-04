@@ -17,6 +17,8 @@ export async function GET(request: Request) {
     const page = parseInt(url.searchParams.get('page') || '1')
     const sortBy = url.searchParams.get('sortBy') || 'discount'
     const minYear = url.searchParams.get('minYear')
+    const minPrice = url.searchParams.get('minPrice')
+    const maxPrice = url.searchParams.get('maxPrice')
     
     // Fixed values
     const ITEMS_PER_PAGE = 25
@@ -32,6 +34,15 @@ export async function GET(request: Request) {
     // Apply minimum year filter if provided
     if (minYear) {
       query = query.gte('year', parseInt(minYear))
+    }
+
+    // Apply price filters if provided
+    if (minPrice) {
+      query = query.gte('price', parseInt(minPrice))
+    }
+    
+    if (maxPrice) {
+      query = query.lte('price', parseInt(maxPrice))
     }
 
     // Add appropriate ordering based on sortBy parameter
