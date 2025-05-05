@@ -1,14 +1,12 @@
 import { clerkMiddleware } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
+import type { NextRequest, NextFetchEvent } from "next/server"
 
 // Export a middleware function, then intercept and log any errors
 const middleware = clerkMiddleware()
 
-// Create a wrapped version to catch errors
-// Using 'any' explicitly for evt since we don't know its exact type
-// but need to pass it through
-const wrappedMiddleware = (req: NextRequest, evt: any) => {
+// Create a wrapped version to catch errors with proper type definitions
+const wrappedMiddleware = (req: NextRequest, evt: NextFetchEvent) => {
   try {
     // Call the original Clerk middleware
     return middleware(req, evt)
