@@ -9,4 +9,4 @@ export const config = {
     "/sign-up/[[...sign-up]]",
     "/((?!.+\\.[\\w]+$|_next).*)",
   ],
-} 
+}
