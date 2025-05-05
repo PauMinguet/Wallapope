@@ -233,7 +233,7 @@ const MapComponent = dynamic(() => import('../../../components/MapComponent'), {
 
 export default function AlertDetailPage() {
   const pathname = usePathname()
-  const id = pathname.split('/')[3]
+  const id = pathname ? pathname.split('/')[3] : ''
   const router = useRouter()
   const { isSignedIn, isLoaded } = useUser()
   const [alert, setAlert] = useState<Alert | null>(null)
@@ -302,8 +302,14 @@ export default function AlertDetailPage() {
       return
     }
 
+    // Don't load data if ID is empty
+    if (!id) {
+      router.push('/app/alertas')
+      return
+    }
+
     loadData()
-  }, [isSignedIn, isLoaded, loadData, router])
+  }, [isSignedIn, isLoaded, loadData, router, id])
 
   const handleTestAlert = async () => {
     try {
