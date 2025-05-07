@@ -64,8 +64,8 @@ export function useSubscription(requiredTier?: 'basic' | 'pro' | 'business') {
     checkSubscription()
   }, [user, router, requiredTier])
 
-  // Only check for active status without checking expiration date
-  const isSubscribed = subscriptionData?.subscription_status === 'active'
+  // Only check for active or trialing status without checking expiration date
+  const isSubscribed = subscriptionData?.subscription_status === 'active' || subscriptionData?.subscription_status === 'trialing'
 
   return {
     loading,

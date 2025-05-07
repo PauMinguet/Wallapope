@@ -71,7 +71,7 @@ export async function POST(
     if (!userData) throw new Error('User not found')
 
     // Check if subscription is active and not expired
-    const isActive = userData.subscription_status === 'active'
+    const isActive = userData.subscription_status === 'active' || userData.subscription_status === 'trialing'
     const isExpired = userData.current_period_end ? new Date(userData.current_period_end) < new Date() : true
 
     if (!isActive || isExpired) {
