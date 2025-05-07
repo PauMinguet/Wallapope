@@ -270,6 +270,73 @@ export default function HomePage() {
             </Card>
           </Container>
 
+          {/* How We Do It Section */}
+          <Container maxWidth="lg" sx={{ mb: { xs: 8, md: 10 }, position: 'relative', zIndex: 2 }}>
+            <Box sx={{
+              background: 'rgba(17,17,17,0.97)',
+              borderRadius: { xs: 3, md: 4 },
+              border: '1px solid rgba(65,105,225,0.12)',
+              boxShadow: '0 4px 24px 0 rgba(65,105,225,0.07)',
+              px: { xs: 2, md: 6 },
+              py: { xs: 4, md: 6 },
+              textAlign: 'center',
+            }}>
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <Typography variant="h3" sx={{
+                  fontWeight: 'bold',
+                  mb: { xs: 2, md: 3 },
+                  fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                  background: 'linear-gradient(45deg, #00C853, #4169E1)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
+                  ¿Cómo lo hacemos?
+                </Typography>
+                <Grid container spacing={{ xs: 2, md: 4 }} justifyContent="center" alignItems="flex-start" sx={{ mt: 1 }}>
+                  <Grid item xs={12} md={4}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                      <Search sx={{ fontSize: 40, color: '#4169E1', mb: 1 }} />
+                      <Typography variant="h6" sx={{ fontWeight: 600, color: 'white', mb: 1 }}>
+                        Búsqueda precisa
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+                        Analizamos decenas de webs y buscamos cada coche de forma individual, teniendo en cuenta motorización, modelo, combustible y más detalles clave.
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                      <TrendingDown sx={{ fontSize: 40, color: '#00C853', mb: 1 }} />
+                      <Typography variant="h6" sx={{ fontWeight: 600, color: 'white', mb: 1 }}>
+                        Solo auténticos chollos
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+                        Solo mostramos coches que están entre un 30% y un 35% por debajo del precio medio de mercado. Así, ves solo oportunidades reales.
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                      <LocalOffer sx={{ fontSize: 40, color: '#9400D3', mb: 1 }} />
+                      <Typography variant="h6" sx={{ fontWeight: 600, color: 'white', mb: 1 }}>
+                        Oportunidades inesperadas
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+                        Nuestro objetivo es mostrarte coches que realmente valen la pena, incluso modelos que quizá no habías considerado. Ahí está la verdadera oportunidad.
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </motion.div>
+            </Box>
+          </Container>
+
           {/* Weekly Deals Section */}
           <Container maxWidth="lg" sx={{ mb: { xs: 8, md: 10 } }}>
             <Card sx={{ 

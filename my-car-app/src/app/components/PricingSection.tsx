@@ -198,6 +198,28 @@ export default function PricingSection({ }: PricingSectionProps) {
                       Popular
                     </Box>
                   )}
+                  {tier.tier === 'business' && (
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: { xs: 8, md: 12 },
+                        right: { xs: 8, md: 12 },
+                        background: 'linear-gradient(90deg, #00C853, #4169E1)',
+                        color: 'white',
+                        py: 0.5,
+                        px: 2.5,
+                        borderRadius: 2,
+                        fontSize: { xs: '0.8rem', md: '1rem' },
+                        fontWeight: 'bold',
+                        boxShadow: '0 4px 12px rgba(65, 105, 225, 0.25)',
+                        zIndex: 2,
+                        letterSpacing: 1,
+                        textShadow: '0 1px 4px rgba(0,0,0,0.15)'
+                      }}
+                    >
+                      7 días de prueba gratis
+                    </Box>
+                  )}
                   <CardContent sx={{ 
                     p: { xs: 2.5, md: 4 }, 
                     flexGrow: 1,

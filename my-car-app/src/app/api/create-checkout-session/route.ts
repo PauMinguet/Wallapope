@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       mode: 'subscription',
       payment_method_types: ['card'],
       subscription_data: {
-        trial_period_days: 7
+        ...(tier === 'business' ? { trial_period_days: 7 } : {})
       },
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/`,
