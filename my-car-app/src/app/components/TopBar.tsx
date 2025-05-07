@@ -145,7 +145,8 @@ export default function TopBar() {
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                display: { xs: 'none', sm: 'block' }
               }}
             >
               ChollosCars

@@ -181,10 +181,13 @@ export default function CochesPage() {
             Modo Rápido
           </MotionTypography>
 
-          <Stack 
-            direction="row" 
-            spacing={1} 
-            sx={{ 
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              flexWrap: 'wrap',
+              rowGap: 1,
+              columnGap: 1,
               '& .MuiButton-root': {
                 py: 0.5,
                 px: 1.5,
@@ -202,176 +205,179 @@ export default function CochesPage() {
               }
             }}
           >
-            <Select
-              value={selectedMinYear}
-              onChange={(e) => setSelectedMinYear(e.target.value)}
-              displayEmpty
-              size="small"
-              sx={{
-                minWidth: 120,
-                color: 'white',
-                '.MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(255,255,255,0.2)',
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(255,255,255,0.4)',
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(255,255,255,0.6)',
-                },
-                '.MuiSvgIcon-root': {
-                  color: 'white',
-                }
-              }}
-            >
-              <MenuItem value="">Desde cualquier año</MenuItem>
-              {years.map((year) => (
-                <MenuItem key={year} value={year}>Desde {year}</MenuItem>
-              ))}
-            </Select>
-
-            {/* Price Filter Button */}
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<EuroSymbol sx={{ fontSize: '1rem' }} />}
-              onClick={handlePriceClick}
-              className={minPrice || maxPrice ? 'active' : ''}
-              aria-controls={isPriceMenuOpen ? 'price-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={isPriceMenuOpen ? 'true' : undefined}
-            >
-              Precio {minPrice || maxPrice ? '(filtrado)' : ''}
-            </Button>
-
-            <Popover
-              id="price-menu"
-              anchorEl={priceAnchorEl}
-              open={isPriceMenuOpen}
-              onClose={handlePriceClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              PaperProps={{
-                sx: {
-                  p: 2,
-                  width: 300,
-                  bgcolor: 'rgba(30,30,30,0.95)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                  borderRadius: 2,
-                }
-              }}
-            >
-              <Typography 
-                variant="subtitle1" 
-                sx={{ 
-                  mb: 2, 
-                  color: 'white',
-                  fontWeight: 'bold',
-                  textAlign: 'center'
-                }}
-              >
-                Filtro de Precio
-              </Typography>
-              <Stack spacing={2}>
-                <TextField
-                  label="Precio Mínimo"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  fullWidth
-                  type="number"
+            {currentTier === 'business' && (
+              <>
+                <Select
+                  value={selectedMinYear}
+                  onChange={(e) => setSelectedMinYear(e.target.value)}
+                  displayEmpty
                   size="small"
-                  InputProps={{
-                    endAdornment: <InputAdornment position="end">€</InputAdornment>,
-                    sx: { color: 'white' }
-                  }}
-                  InputLabelProps={{
-                    sx: { color: 'rgba(255,255,255,0.7)' }
-                  }}
                   sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'rgba(255,255,255,0.2)',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'rgba(255,255,255,0.4)',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'rgba(255,255,255,0.6)',
-                      },
-                    },
-                  }}
-                />
-                <TextField
-                  label="Precio Máximo"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  fullWidth
-                  type="number"
-                  size="small"
-                  InputProps={{
-                    endAdornment: <InputAdornment position="end">€</InputAdornment>,
-                    sx: { color: 'white' }
-                  }}
-                  InputLabelProps={{
-                    sx: { color: 'rgba(255,255,255,0.7)' }
-                  }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'rgba(255,255,255,0.2)',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'rgba(255,255,255,0.4)',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'rgba(255,255,255,0.6)',
-                      },
-                    },
-                  }}
-                />
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 1 }}>
-                  <Button 
-                    variant="outlined"
-                    onClick={handleClearPriceFilter}
-                    fullWidth
-                    sx={{
+                    minWidth: 120,
+                    color: 'white',
+                    '.MuiOutlinedInput-notchedOutline': {
                       borderColor: 'rgba(255,255,255,0.2)',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'rgba(255,255,255,0.4)',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'rgba(255,255,255,0.6)',
+                    },
+                    '.MuiSvgIcon-root': {
                       color: 'white',
-                      '&:hover': {
-                        borderColor: 'rgba(255,255,255,0.4)',
-                        background: 'rgba(255,255,255,0.05)'
-                      }
-                    }}
-                  >
-                    Limpiar
-                  </Button>
-                  <Button 
-                    variant="contained"
-                    onClick={handleApplyPriceFilter}
-                    fullWidth
-                    sx={{
-                      background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                      color: 'white',
-                      '&:hover': {
-                        background: 'linear-gradient(45deg, #4169E1, #9400D3)',
-                        opacity: 0.9
-                      }
-                    }}
-                  >
-                    Aplicar
-                  </Button>
-                </Box>
-              </Stack>
-            </Popover>
+                    }
+                  }}
+                >
+                  <MenuItem value="">Desde cualquier año</MenuItem>
+                  {years.map((year) => (
+                    <MenuItem key={year} value={year}>Desde {year}</MenuItem>
+                  ))}
+                </Select>
 
+                {/* Price Filter Button */}
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<EuroSymbol sx={{ fontSize: '1rem' }} />}
+                  onClick={handlePriceClick}
+                  className={minPrice || maxPrice ? 'active' : ''}
+                  aria-controls={isPriceMenuOpen ? 'price-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={isPriceMenuOpen ? 'true' : undefined}
+                >
+                  Precio {minPrice || maxPrice ? '(filtrado)' : ''}
+                </Button>
+
+                <Popover
+                  id="price-menu"
+                  anchorEl={priceAnchorEl}
+                  open={isPriceMenuOpen}
+                  onClose={handlePriceClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  PaperProps={{
+                    sx: {
+                      p: 2,
+                      width: 300,
+                      bgcolor: 'rgba(30,30,30,0.95)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                      borderRadius: 2,
+                    }
+                  }}
+                >
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      mb: 2, 
+                      color: 'white',
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }}
+                  >
+                    Filtro de Precio
+                  </Typography>
+                  <Stack spacing={2}>
+                    <TextField
+                      label="Precio Mínimo"
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(e.target.value)}
+                      fullWidth
+                      type="number"
+                      size="small"
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                        sx: { color: 'white' }
+                      }}
+                      InputLabelProps={{
+                        sx: { color: 'rgba(255,255,255,0.7)' }
+                      }}
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            borderColor: 'rgba(255,255,255,0.2)',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'rgba(255,255,255,0.4)',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'rgba(255,255,255,0.6)',
+                          },
+                        },
+                      }}
+                    />
+                    <TextField
+                      label="Precio Máximo"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(e.target.value)}
+                      fullWidth
+                      type="number"
+                      size="small"
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                        sx: { color: 'white' }
+                      }}
+                      InputLabelProps={{
+                        sx: { color: 'rgba(255,255,255,0.7)' }
+                      }}
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            borderColor: 'rgba(255,255,255,0.2)',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'rgba(255,255,255,0.4)',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'rgba(255,255,255,0.6)',
+                          },
+                        },
+                      }}
+                    />
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 1 }}>
+                      <Button 
+                        variant="outlined"
+                        onClick={handleClearPriceFilter}
+                        fullWidth
+                        sx={{
+                          borderColor: 'rgba(255,255,255,0.2)',
+                          color: 'white',
+                          '&:hover': {
+                            borderColor: 'rgba(255,255,255,0.4)',
+                            background: 'rgba(255,255,255,0.05)'
+                          }
+                        }}
+                      >
+                        Limpiar
+                      </Button>
+                      <Button 
+                        variant="contained"
+                        onClick={handleApplyPriceFilter}
+                        fullWidth
+                        sx={{
+                          background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                          color: 'white',
+                          '&:hover': {
+                            background: 'linear-gradient(45deg, #4169E1, #9400D3)',
+                            opacity: 0.9
+                          }
+                        }}
+                      >
+                        Aplicar
+                      </Button>
+                    </Box>
+                  </Stack>
+                </Popover>
+              </>
+            )}
             <Button
               variant="outlined"
               size="small"
